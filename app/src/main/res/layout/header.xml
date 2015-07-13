@@ -7,21 +7,20 @@
 
     <ImageButton
         android:id="@+id/ib_back"
-
-        android:layout_width="50dp"
+        android:layout_width="@dimen/header_height"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:background="@color/main_yellow"
         android:src="@drawable/icon_left_arrow" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="消息"
         android:textColor="@color/important_dark"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="2dp"
-
         android:layout_marginRight="5dp"
         android:layout_marginEnd="5dp">
 

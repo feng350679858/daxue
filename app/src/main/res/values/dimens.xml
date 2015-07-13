@@ -13,6 +13,7 @@
     <dimen name="badge_margin_right">-5dp</dimen>
     <dimen name="divider_height">1px</dimen>
     <dimen name="list_item_padding">10dp</dimen>
-    <dimen name="header_height">50dp</dimen>
-    <dimen name="bottom_tab_height">62dp</dimen>
+    <dimen name="header_height">40dp</dimen>
+    <dimen name="bottom_tab_height">50dp</dimen>
+    <dimen name="list_item_logo_text_margin">20dp</dimen>
 </resources>
