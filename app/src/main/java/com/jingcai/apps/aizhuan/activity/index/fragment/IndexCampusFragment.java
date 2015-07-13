@@ -12,12 +12,12 @@ import com.jingcai.apps.aizhuan.R;
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexSchoolFragment extends Fragment {
+public class IndexCampusFragment extends Fragment {
     private View mBaseView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mBaseView = inflater.inflate(R.layout.index_school_fragment,container,false);
+        mBaseView = inflater.inflate(R.layout.index_campus_fragment,container,false);
         return mBaseView;
     }
 }

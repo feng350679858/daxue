@@ -15,62 +15,31 @@ import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
-import com.jingcai.apps.aizhuan.activity.index.fragment.IndexSchoolFragment;
+import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
 
 /**
  * Created by Json Ding on 2015/7/9.
  */
 public class MainActivity extends BaseFragmentActivity {
-
     private static final String TAG = "MainActivity";
 
-
     //Tab相关
-    private LinearLayout mLlSchool;
+    private LinearLayout mLlCampus;
     private LinearLayout mLlMessgage;
     private LinearLayout mLlMoney;
     private LinearLayout mLlMine;
     private ImageButton mBtnRelease;
     private int mCurrentTabIndex;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-        initView();
-
-    }
-
-    private void initView() {
-        mLlSchool = (LinearLayout) findViewById(R.id.ll_school);
-        mLlMessgage = (LinearLayout) findViewById(R.id.ll_message);
-        mLlMoney = (LinearLayout) findViewById(R.id.ll_money);
-        mLlMine = (LinearLayout) findViewById(R.id.ll_mine);
-        mBtnRelease = (ImageButton) findViewById(R.id.btn_release);
-
-        mLlSchool.setOnClickListener(mTabClickListener);
-        mLlMessgage.setOnClickListener(mTabClickListener);
-        mLlMoney.setOnClickListener(mTabClickListener);
-        mLlMine.setOnClickListener(mTabClickListener);
-
-        initTabIconViews();
-    }
-
-    private void initTabIconViews() {
-        mIconViews[0] = (ImageView) findViewById(R.id.iv_school);
-        mIconViews[1] = (ImageView) findViewById(R.id.iv_message);
-        mIconViews[2] = (ImageView) findViewById(R.id.iv_money);
-        mIconViews[3] = (ImageView) findViewById(R.id.iv_mine);
-    }
-
     //TabIcon未获取焦点的情况下的DrawableId
-    private final int[] mNormalTabIconDrawableIds = {R.drawable.icon_index_tab_school_normal,R.drawable.icon_index_tab_message_normal,R.drawable.icon_index_tab_money_normal,R.drawable.icon_index_tab_mine_normal};
+    private final int[] mNormalTabIconDrawableIds = {R.drawable.icon_index_tab_campus_normal,R.drawable.icon_index_tab_message_normal,R.drawable.icon_index_tab_money_normal,R.drawable.icon_index_tab_mine_normal};
     //TabIcon获取焦点的情况下的DrawableId
-    private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_school_focused,R.drawable.icon_index_tab_message_focused,R.drawable.icon_index_tab_money_focused,R.drawable.icon_index_tab_mine_focused};
+    private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_campus_focused,R.drawable.icon_index_tab_message_focused,R.drawable.icon_index_tab_money_focused,R.drawable.icon_index_tab_mine_focused};
     //Fragment的Class
-    private final Class[] mTabFragments = {IndexSchoolFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class};
+    private final Class[] mTabFragments = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class};
     //TabIcon的ImageView对象
     private final ImageView[] mIconViews = new ImageView[mNormalTabIconDrawableIds.length];
+
     private View.OnClickListener mTabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -87,6 +56,35 @@ public class MainActivity extends BaseFragmentActivity {
             changeFragment(mCurrentTabIndex);
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
+        initView();
+    }
+
+    private void initView() {
+        mLlCampus = (LinearLayout) findViewById(R.id.ll_campus);
+        mLlMessgage = (LinearLayout) findViewById(R.id.ll_message);
+        mLlMoney = (LinearLayout) findViewById(R.id.ll_money);
+        mLlMine = (LinearLayout) findViewById(R.id.ll_mine);
+        mBtnRelease = (ImageButton) findViewById(R.id.btn_release);
+
+        mLlCampus.setOnClickListener(mTabClickListener);
+        mLlMessgage.setOnClickListener(mTabClickListener);
+        mLlMoney.setOnClickListener(mTabClickListener);
+        mLlMine.setOnClickListener(mTabClickListener);
+
+        initTabIconViews();
+    }
+
+    private void initTabIconViews() {
+        mIconViews[0] = (ImageView) findViewById(R.id.iv_campus);
+        mIconViews[1] = (ImageView) findViewById(R.id.iv_message);
+        mIconViews[2] = (ImageView) findViewById(R.id.iv_money);
+        mIconViews[3] = (ImageView) findViewById(R.id.iv_mine);
+    }
 
     private void changeFragment(int tabIndex) {
         FragmentManager fragmentManager = getSupportFragmentManager();
