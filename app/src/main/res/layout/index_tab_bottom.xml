@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/index_tab_bg"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:id="@+id/ll_school"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:tag="0">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_school"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_index_tab_school_normal" />
+
+                <ImageView
+                    android:id="@+id/iv_school_badge"
+                    style="@style/style_badge.tab"
+                    android:layout_alignEnd="@id/iv_school"
+                    android:layout_alignRight="@id/iv_school" />
+
+                <TextView
+                    android:id="@+id/tv_school_num_badge"
+                    style="@style/style_num_badge.tab"
+                    android:layout_alignEnd="@id/iv_school"
+                    android:layout_alignRight="@id/iv_school" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/index_tab_icon_text_margin"
+                android:text="@string/index_tab_school"
+                android:textColor="@color/light_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:tag="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_index_tab_message_normal" />
+
+                <ImageView
+                    android:id="@+id/iv_message_badge"
+                    style="@style/style_badge.tab"
+                    android:layout_alignEnd="@id/iv_message"
+                    android:layout_alignRight="@id/iv_message" />
+
+                <TextView
+                    android:id="@+id/tv_message_num_badge"
+                    style="@style/style_num_badge.tab"
+                    android:layout_alignEnd="@id/iv_message"
+                    android:layout_alignRight="@id/iv_message" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/index_tab_icon_text_margin"
+                android:text="@string/index_tab_message"
+                android:textColor="@color/light_dark" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/ll_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:tag="2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_index_tab_money_normal" />
+
+                <ImageView
+                    android:id="@+id/iv_money_badge"
+                    style="@style/style_badge.tab"
+                    android:layout_alignEnd="@id/iv_money"
+                    android:layout_alignRight="@id/iv_money" />
+
+                <TextView
+                    android:id="@+id/tv_money_num_badge"
+                    style="@style/style_num_badge.tab"
+                    android:layout_alignEnd="@id/iv_money"
+                    android:layout_alignRight="@id/iv_money" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/index_tab_icon_text_margin"
+                android:text="@string/index_tab_money"
+                android:textColor="@color/light_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:tag="3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_mine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_index_tab_mine_normal" />
+
+                <ImageView
+                    android:id="@+id/iv_mine_badge"
+                    style="@style/style_badge.tab"
+                    android:layout_alignEnd="@id/iv_mine"
+                    android:layout_alignRight="@id/iv_mine" />
+
+                <TextView
+                    android:id="@+id/tv_mine_num_badge"
+                    style="@style/style_num_badge.tab"
+                    android:layout_alignEnd="@id/iv_mine"
+                    android:layout_alignRight="@id/iv_mine" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/index_tab_icon_text_margin"
+                android:text="@string/index_tab_mine"
+                android:textColor="@color/light_dark" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_release"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_index_tab_release_selector" />
+</FrameLayout>

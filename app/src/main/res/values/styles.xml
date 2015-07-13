@@ -1,0 +1,36 @@
+<resources>
+
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+
+    <!-- 不带数字的badge -->
+    <style name="style_badge">
+        <item name="android:layout_width">@dimen/badge_diameter</item>
+        <item name="android:layout_height">@dimen/badge_diameter</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:src">@drawable/reg_circle_bg</item>
+    </style>
+    <!-- tab栏的不带数字的badge -->
+    <style name="style_badge.tab" parent="style_badge">
+        <item name="android:layout_marginRight">@dimen/badge_margin_right</item>
+    </style>
+    <!-- 带数字的badge -->
+    <style name="style_num_badge">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/num_badge_text_size</item>
+        <item name="android:layout_width">@dimen/num_badge_diameter</item>
+        <item name="android:layout_height">@dimen/num_badge_diameter</item>
+        <item name="android:background">@drawable/reg_circle_bg</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+    <!-- tab栏的带数字的badge -->
+    <style name="style_num_badge.tab" parent="style_num_badge">
+        <item name="android:layout_marginRight">@dimen/num_badge_margin_right</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,10 @@
+include ':app'
+
+if (!System.properties['buildToolsVersion']) {
+    System.properties['buildToolsVersion'] =  "21.1.2"
+}
+
+if (!System.properties['androidGradlePluginVersion']) {
+    //System.properties['androidGradlePluginVersion'] = "1.0.+"
+    System.properties['androidGradlePluginVersion'] = "1.1.0"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="light_dark">#222222</color>
+    <!-- 提示泡泡的颜色 -->
+    <color name="badge_color">#F93240</color>
+    <!-- 分割线颜色 -->
+    <color name="divider_color">#D7D7D7</color>
+    <!-- item选中颜色 -->
+    <color name="item_selected_color">#D7D7D7</color>
+</resources>

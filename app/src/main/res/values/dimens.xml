@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="index_tab_icon_text_margin">2dp</dimen>
+
+    <!-- badge的文字大小 -->
+    <dimen name="num_badge_text_size">12sp</dimen>
+    <!-- 带数字的badge的直径 -->
+    <dimen name="num_badge_diameter">20dp</dimen>
+    <!-- 不带数字的badge的直径 -->
+    <dimen name="badge_diameter">10dp</dimen>
+    <!-- 带数字的badge的margin_right 为badge的半径 -->
+    <dimen name="num_badge_margin_right">-10dp</dimen>
+    <!-- 不带数字的badge的margin_right,为badge的半径-->
+    <dimen name="badge_margin_right">-5dp</dimen>
+    <dimen name="divider_height">1px</dimen>
+    <dimen name="list_item_padding">10dp</dimen>
+</resources>
