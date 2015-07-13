@@ -3,3 +3,9 @@
 .idea
 .DS_Store
 /build
+
+**/build
+gen
+*.iml
+gradle
+gradlew*
