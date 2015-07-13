@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/index_tab_icon_text_margin"
                 android:text="@string/index_tab_school"
-                android:textColor="@color/light_dark" />
+                android:textColor="@color/important_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/index_tab_icon_text_margin"
                 android:text="@string/index_tab_message"
-                android:textColor="@color/light_dark" />
+                android:textColor="@color/important_dark" />
         </LinearLayout>
 
         <View
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/index_tab_icon_text_margin"
                 android:text="@string/index_tab_money"
-                android:textColor="@color/light_dark" />
+                android:textColor="@color/important_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/index_tab_icon_text_margin"
                 android:text="@string/index_tab_mine"
-                android:textColor="@color/light_dark" />
+                android:textColor="@color/important_dark" />
         </LinearLayout>
     </LinearLayout>
 
