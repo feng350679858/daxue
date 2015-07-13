@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--消息里 评论、赞、兼职商家的item布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/list_item_padding"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_index_message_list_item_comment" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/important_dark"
+            android:layout_marginLeft="@dimen/list_item_logo_text_margin"
+            android:textSize="20sp"
+            android:text="评论"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+
+            android:text="2"
+            android:layout_marginRight="5dp"
+            style="@style/style_num_badge"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_right_triangle"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"
+        android:layout_marginLeft="@dimen/list_item_padding"/>
+
+
+
+</LinearLayout>

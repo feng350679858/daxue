@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">大了个学</string>
     <string name="app_name_zh">大了个学</string>
-    <string name="index_tab_school">校园</string>
+    <string name="index_tab_campus">校园</string>
     <string name="index_tab_message">消息</string>
     <string name="index_tab_money">爱赚</string>
     <string name="index_tab_mine">我的</string>
