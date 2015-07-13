@@ -14,7 +14,7 @@
         android:weightSum="5">
 
         <LinearLayout
-            android:id="@+id/ll_school"
+            android:id="@+id/ll_campus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,30 +28,30 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_school"
+                    android:id="@+id/iv_campus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/icon_index_tab_school_normal" />
+                    android:src="@drawable/icon_index_tab_campus_normal" />
 
                 <ImageView
-                    android:id="@+id/iv_school_badge"
+                    android:id="@+id/iv_campus_badge"
                     style="@style/style_badge.tab"
-                    android:layout_alignEnd="@id/iv_school"
-                    android:layout_alignRight="@id/iv_school" />
+                    android:layout_alignEnd="@id/iv_campus"
+                    android:layout_alignRight="@id/iv_campus" />
 
                 <TextView
-                    android:id="@+id/tv_school_num_badge"
+                    android:id="@+id/tv_campus_num_badge"
                     style="@style/style_num_badge.tab"
-                    android:layout_alignEnd="@id/iv_school"
-                    android:layout_alignRight="@id/iv_school" />
+                    android:layout_alignEnd="@id/iv_campus"
+                    android:layout_alignRight="@id/iv_campus" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/index_tab_icon_text_margin"
-                android:text="@string/index_tab_school"
+                android:text="@string/index_tab_campus"
                 android:textColor="@color/light_dark" />
         </LinearLayout>
 

@@ -1,10 +1,11 @@
-include ':app'
+include ':app', ':pulltorefresh', ':umenglib'
+project(':pulltorefresh').projectDir = new File('libraries/pulltorefresh')
+project(':umenglib').projectDir = new File('libraries/umenglib')
 
 if (!System.properties['buildToolsVersion']) {
     System.properties['buildToolsVersion'] =  "21.1.2"
 }
 
 if (!System.properties['androidGradlePluginVersion']) {
-    //System.properties['androidGradlePluginVersion'] = "1.0.+"
     System.properties['androidGradlePluginVersion'] = "1.1.0"
 }
