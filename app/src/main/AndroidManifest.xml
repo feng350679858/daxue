@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.mine.PartjobCancelActivity"
+            android:label="@string/title_activity_partjob_cancel" >
+        </activity>
+        <activity
+            android:name=".activity.partjob.PartjobJoinSuccessActivity"
+            android:label="@string/title_activity_partjob_join_success" >
+        </activity>
     </application>
 
 </manifest>

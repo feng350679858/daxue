@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffffff</color>
+    <color name="red_normal">#e33839</color>
     <color name="light_dark">#222222</color>
+
+    <color name="content_background">#f3f5f7</color>
+    <!-- font color -->
+    <color name="font_important">#222222</color>
+    <color name="font_assistant">#999999</color>
+    <color name="font_red">#e33839</color>
     <!-- 提示泡泡的颜色 -->
     <color name="badge_color">#F93240</color>
     <!-- 分割线颜色 -->

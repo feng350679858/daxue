@@ -5,4 +5,14 @@
     <string name="index_tab_message">消息</string>
     <string name="index_tab_money">爱赚</string>
     <string name="index_tab_mine">我的</string>
+    <!-- 取消报名 -->
+    <string name="title_activity_partjob_cancel">PartjobCancelActivity</string>
+    <string name="mine_partjob_cancel_tip">建议先与商家取得联系</string>
+    <string name="mine_partjob_cancel_unable">为保证兼职的顺利进行，您无法取消已截至报名或已开始工作的兼职。若您有特殊情况不能前往兼职，请与商家联系。</string>
+    <string name="mine_partjob_cancel_no_chance">本周还有0次取消报名的操作权限，若您确有特殊情况不能前往兼职，请先联系商家。</string>
+    <string name="mine_partjob_cancel_have_chance">本周还有%s次取消报名的操作权限，我们将以短信形式提醒商家您已取消本次报名。请您谨慎考虑！</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_partjob_join_success">PartjobJoinSuccessActivity</string>
 </resources>
