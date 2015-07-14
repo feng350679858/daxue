@@ -27,7 +27,7 @@
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:text="校友可见"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <com.jingcai.apps.aizhuan.view.SlideButton
