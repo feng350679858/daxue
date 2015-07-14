@@ -67,6 +67,8 @@ public class MainActivity extends BaseFragmentActivity {
             changeFragment(mCurrentTabIndex);
         }
     };
+    private ImageView iv_campus_badge;
+    private TextView tv_message_num_badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,10 @@ public class MainActivity extends BaseFragmentActivity {
         mLlMine.setOnClickListener(mTabClickListener);
 
         initTabIconViews();
+
+        iv_campus_badge = (ImageView)findViewById(R.id.iv_campus_badge);
+        tv_message_num_badge = (TextView)findViewById(R.id.tv_message_num_badge);
+
 
         initService();
 
@@ -163,42 +169,19 @@ public class MainActivity extends BaseFragmentActivity {
     protected BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int count = intent.getIntExtra("count", 0);
-            TextView view = (TextView)findViewById(R.id.tv_message_num_badge);
-            if(count>0){
-                view.setVisibility(View.VISIBLE);
-                view.setText(String.valueOf(count));
-            }else{
-                view.setVisibility(View.INVISIBLE);
+            String type = intent.getStringExtra("type");
+            if("0".equals(type)){
+                int count = intent.getIntExtra("count", 0);
+                iv_campus_badge.setVisibility(count>0?View.VISIBLE:View.INVISIBLE);
+            }else if("1".equals(type)) {
+                int count = intent.getIntExtra("count", 0);
+                if (count > 0) {
+                    tv_message_num_badge.setVisibility(View.VISIBLE);
+                    tv_message_num_badge.setText(String.valueOf(count));
+                } else {
+                    tv_message_num_badge.setVisibility(View.INVISIBLE);
+                }
             }
-//            if(null != intent){
-//                BadgeBean badgeBean = (BadgeBean) intent.getSerializableExtra("badgeBean");
-//                if(null != badgeBean){
-//                    if(getClass().getSimpleName().equals(badgeBean.getTargetActivity())){
-//                        int id = badgeBean.getTargetViewId();
-//                        View view = findViewById(id);
-//                        view.setVisibility(badgeBean.isSetVisiable() ? View.VISIBLE : View.INVISIBLE);
-//                        if(badgeBean.getType() == BadgeBean.Type.TEXT){
-//                            TextView tv = (TextView)view;
-//                            int former;
-//                            try {
-//                                former = Integer.parseInt(tv.getText().toString());
-//                            }catch (NumberFormatException e){
-//                                Log.e(TAG, "The number in badge has a invalid format.");
-//                                former = 0;
-//                            }
-//                            former += badgeBean.getCount();
-//                            if(former <= 0){
-//                                tv.setVisibility(View.INVISIBLE);
-//                                tv.setText("");
-//                            }else{
-//                                tv.setText(String.valueOf(former));
-//                            }
-//
-//                        }
-//                    }
-//                }
-//            }
         }
     };
 

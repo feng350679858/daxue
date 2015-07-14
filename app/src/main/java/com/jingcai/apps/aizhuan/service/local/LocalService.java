@@ -30,10 +30,11 @@ public class LocalService extends Service {
 
         public void reset() {
             unreadMsgTask.reset();
+            boardCastCount("0", 0);
         }
 
         public void showUnread() {
-
+            boardCastCount("0", 1);
         }
     }
 
@@ -70,7 +71,7 @@ public class LocalService extends Service {
 
         public void reset() {
             waitFlag = true;
-            boardCastCount(count = 0);
+            boardCastCount("1", count = 0);
         }
 
         @Override
@@ -79,7 +80,7 @@ public class LocalService extends Service {
                 try {
                     if (!waitFlag) {
                         //获取远程数据
-                        boardCastCount(count += 2);
+                        boardCastCount("1", count += 2);
                     }
                     Thread.sleep(REQUEST_INTERVAL);
                 } catch (InterruptedException e) {
@@ -93,8 +94,9 @@ public class LocalService extends Service {
 
     }
 
-    private void boardCastCount(int count) {
+    private void boardCastCount(String type, int count) {
         Intent intent = new Intent(GlobalConstant.ACTION_UPDATE_BADGE);
+        intent.putExtra("type", type);
         intent.putExtra("count", count);
         LocalService.this.sendBroadcast(intent);
     }

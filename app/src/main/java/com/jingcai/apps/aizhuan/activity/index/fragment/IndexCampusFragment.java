@@ -34,13 +34,11 @@ public class IndexCampusFragment extends Fragment implements View.OnClickListene
 //        return mBaseView;
     }
 
-
     private void initView() {
         mBaseView.findViewById(R.id.button_start_count).setOnClickListener(this);
         mBaseView.findViewById(R.id.button_show_unread).setOnClickListener(this);
         mBaseView.findViewById(R.id.button_disappear).setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
