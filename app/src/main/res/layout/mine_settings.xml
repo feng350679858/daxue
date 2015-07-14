@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:divider="@drawable/field_divider"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:showDividers="middle">
+
+        <RelativeLayout
+            android:id="@+id/layout_isvisiable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:text="校友可见"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <com.jingcai.apps.aizhuan.view.SlideButton
+                android:id="@+id/switch_setting_isvisiable"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp" />
+            <!--
+            <Switch
+                android:id="@+id/switch_setting_isvisiable"
+                android:layout_width="120dip"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:maxHeight="40dp"
+                android:minWidth="120dp"
+                android:switchMinWidth="56dp"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/switch_thumb"
+                android:thumbTextPadding="16dp"
+                android:track="@drawable/track" />
+
+
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:thumb="@drawable/icon_switch_thumb"
+                android:track="@drawable/switch_bg"
+            -->
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sys_setting_invite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/sys_setting_field_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="朋友邀请"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_right_triangle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sys_setting_suggestion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/sys_setting_field_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="我有话说"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_right_triangle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:divider="@drawable/field_divider"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:showDividers="middle">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sys_setting_modify_psw"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/sys_setting_field_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="修改密码"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_right_triangle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sys_setting_update"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/sys_setting_field_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="版本更新"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_right_triangle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:divider="@drawable/field_divider"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sys_setting_about_us"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/sys_setting_field_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="关于我们"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_right_triangle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sys_setting_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/sys_setting_field_bg"
+        android:text="退出登录"
+        android:textColor="@color/font_red"
+        android:textSize="18sp" />
+</LinearLayout>
