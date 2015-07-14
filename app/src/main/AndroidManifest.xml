@@ -66,10 +66,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity"   />
 
+        <service android:name=".service.local.UnreadMsgService"/>
 
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
