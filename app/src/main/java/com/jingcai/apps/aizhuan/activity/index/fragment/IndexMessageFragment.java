@@ -5,15 +5,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
+import com.jingcai.apps.aizhuan.entity.TestMessageBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexMessageFragment extends BaseFragment implements View.OnClickListener {
+public class IndexMessageFragment extends BaseFragment {
+    private ListView mLvMessages;
+    private MessageListAdapter mMessageListAdapter;
     private View mBaseView;
 
     @Override
@@ -22,30 +29,18 @@ public class IndexMessageFragment extends BaseFragment implements View.OnClickLi
         mBaseView = inflater.inflate(R.layout.index_message_fragment, container, false);
         initView();
         return mBaseView;
+
     }
 
     private void initView() {
-        mBaseView.findViewById(R.id.button_start_count).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_show_unread).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_disappear).setOnClickListener(this);
+        mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
+        mMessageListAdapter = new MessageListAdapter(baseActivity);
+        List<TestMessageBean> messages = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            messages.add(new TestMessageBean("", "林" + i, "林三是" + i + "个哈哈哒", "昨天", String.valueOf(i)));
+        }
+        mMessageListAdapter.setListData(messages);
+        mLvMessages.setAdapter(mMessageListAdapter);
     }
 
-    @Override
-    public void onClick(View v) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        switch (v.getId()) {
-            case R.id.button_start_count: {
-                mainActivity.startCount();
-                break;
-            }
-            case R.id.button_show_unread: {
-                mainActivity.showUnread();
-                break;
-            }
-            case R.id.button_disappear: {
-                mainActivity.reset();
-                break;
-            }
-        }
-    }
 }
