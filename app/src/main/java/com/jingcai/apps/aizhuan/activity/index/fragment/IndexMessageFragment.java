@@ -1,17 +1,14 @@
 package com.jingcai.apps.aizhuan.activity.index.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.TestMessageBean;
 
@@ -34,8 +31,6 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         return mBaseView;
 
     }
-
-
 
     private void initView() {
         mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
