@@ -66,7 +66,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.help.JishiHelpDeployActivity" android:screenOrientation="portrait"/>
+
         <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
+
 
         <service android:name=".service.local.UnreadMsgService"/>
 
