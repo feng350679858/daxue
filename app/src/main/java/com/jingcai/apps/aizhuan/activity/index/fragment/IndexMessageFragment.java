@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
+import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.TestMessageBean;
@@ -58,6 +59,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
                     intent = new Intent(baseActivity, MessageCommentActivity.class);
                     break;
                 case MessageListAdapter.ITEM_POSITION_RECOMMEND:
+                    intent = new Intent(baseActivity, MessageCommendActivity.class);
                     break;
                 case MessageListAdapter.ITEM_POSITION_MERCHANT:
                     break;
