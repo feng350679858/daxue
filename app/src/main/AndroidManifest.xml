@@ -67,6 +67,9 @@
             </intent-filter>
         </activity>
 
+        <!-- Message -->
+        <activity android:name=".activity.message.MessageCommentActivity"   />
+
 
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
