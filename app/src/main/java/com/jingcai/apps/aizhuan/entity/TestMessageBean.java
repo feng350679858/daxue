@@ -1,8 +1,11 @@
 package com.jingcai.apps.aizhuan.entity;
 
 /**
+ * 这个对象为测试对象，暂时的替代从服务端取来的消息对象<br/>
+ * 请勿使用这个类
  * Created by Json Ding on 2015/7/13.
  */
+@Deprecated
 public class TestMessageBean {
     private String logourl;
     private String name;
