@@ -70,6 +70,7 @@
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity"   />
+        <activity android:name=".activity.message.MessageCommendActivity"   />
 
         <service android:name=".service.local.UnreadMsgService"/>
 
