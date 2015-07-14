@@ -96,6 +96,10 @@
             android:name=".activity.partjob.PartjobDetailActivity"
             android:label="@string/title_activity_partjob_detail" >
         </activity>
+        <activity
+            android:name=".activity.partjob.PartjobDetailMapActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
     </application>
 
 </manifest>

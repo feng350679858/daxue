@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -20,7 +21,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 
 /**
- * Created by lejing on 15/5/7.
+ * Created by chenchao on 15/7/13.
  */
 public class PartjobJoinSuccessActivity extends BaseActivity {
     private UmengShareUtil umengShareUtil;
@@ -40,13 +41,17 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
         logopath = getIntent().getStringExtra("logopath");
         umengShareUtil = new UmengShareUtil(PartjobJoinSuccessActivity.this);
         setContentView(R.layout.activity_partjob_join_success);
+        initHeader();
         initViews();
     }
 
-    private void initViews() {
-        ((TextView)findViewById(R.id.tv_title)).setText("报名成功");
-        findViewById(R.id.btn_back).setVisibility(View.GONE);
-        TextView tv_info = (TextView)findViewById(R.id.tv_info);
+    private void initHeader(){
+        ((TextView)findViewById(R.id.tv_content)).setText("报名成功");
+        findViewById(R.id.ib_back).setVisibility(View.GONE);
+        ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
+        ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
+        TextView tv_info=(TextView)findViewById(R.id.tv_func);
+        tv_info.setVisibility(View.VISIBLE);
         tv_info.setText("完成");
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +59,8 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+    private void initViews() {
 
         findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
             @Override

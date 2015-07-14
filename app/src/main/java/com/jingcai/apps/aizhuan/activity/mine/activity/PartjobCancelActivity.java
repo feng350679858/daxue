@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -26,7 +27,7 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import java.util.Date;
 
 /**
- * Created by Json Ding on 2015/5/3.
+ * Created by chenchao on 2015/7/13.
  */
 public class PartjobCancelActivity extends BaseActivity{
     private MessageHandler messageHandler;
@@ -40,8 +41,7 @@ public class PartjobCancelActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partjob_cancel);
-        ((TextView)findViewById(R.id.tv_title)).setText("取消报名");
-        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -50,7 +50,7 @@ public class PartjobCancelActivity extends BaseActivity{
         messageHandler = new MessageHandler(this);
         azService = new AzService(PartjobCancelActivity.this);
         if(UserSubject.isLogin()){
-
+            initHeader();//初始化头部
             initView();  //初始化控件
             initData();  //填充数据
         }else{
@@ -58,6 +58,15 @@ public class PartjobCancelActivity extends BaseActivity{
         }
     }
 
+
+    /**
+     * 初始化头部
+     */
+    private void initHeader(){
+        ((TextView)findViewById(R.id.tv_content)).setText("取消报名");
+        ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
+        ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
+    }
     /**
      * 初始化控件
      */
