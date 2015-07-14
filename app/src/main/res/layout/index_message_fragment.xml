@@ -4,19 +4,19 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button_add"
+        android:id="@+id/button_start_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Badge+1"/>
+        android:text="开始计数"/>
     <Button
-        android:id="@+id/button_minus"
+        android:id="@+id/button_show_unread"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Badge-1"/>
+        android:text="显示未读"/>
     <Button
         android:id="@+id/button_disappear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Badge消失"/>
+        android:text="重置计数"/>
 
 </LinearLayout>

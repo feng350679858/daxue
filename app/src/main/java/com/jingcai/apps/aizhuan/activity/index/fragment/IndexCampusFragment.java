@@ -13,11 +13,22 @@ import com.jingcai.apps.aizhuan.R;
  * Created by Json Ding on 2015/7/10.
  */
 public class IndexCampusFragment extends Fragment {
-    private View mBaseView;
+    private View mainView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mBaseView = inflater.inflate(R.layout.index_campus_fragment,container,false);
-        return mBaseView;
+        mainView = inflater.inflate(R.layout.index_campus_fragment,container,false);
+        return mainView;
+
+
+//        if (null == mainView) {
+//            mainView = inflater.inflate(R.layout.index_campus_fragment, null);
+//            //initView();
+//        }
+//        ViewGroup parent = (ViewGroup) mainView.getParent();
+//        if (parent != null) {
+//            parent.removeView(mainView);
+//        }
+//        return mainView;
     }
 }

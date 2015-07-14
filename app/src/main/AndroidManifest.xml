@@ -66,7 +66,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
+        <service android:name=".service.local.LocalService"/>
 
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
