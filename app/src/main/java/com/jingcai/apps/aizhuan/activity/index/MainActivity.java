@@ -20,11 +20,11 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
+import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
-import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
-import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.activity.index.fragment.IndexReleaseFragment;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 
 /**
@@ -41,19 +41,19 @@ public class MainActivity extends BaseFragmentActivity {
     private ImageButton mBtnRelease;
     private int mCurrentTabIndex;
 
-    private final int[] mNormalTabIconDrawableIds = {R.drawable.icon_index_tab_campus_normal,R.drawable.icon_index_tab_message_normal,R.drawable.icon_index_tab_money_normal,R.drawable.icon_index_tab_mine_normal};
-    private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_campus_focused,R.drawable.icon_index_tab_message_focused,R.drawable.icon_index_tab_money_focused,R.drawable.icon_index_tab_mine_focused};
-    private final Class[] mTabFragmentClassArr = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class};
-    private final Fragment[] mTabFragmentArr = new Fragment[mNormalTabIconDrawableIds.length];
+    private final int[] mNormalTabIconDrawableIds = {R.drawable.icon_index_tab_campus_normal, R.drawable.icon_index_tab_message_normal, R.drawable.icon_index_tab_money_normal, R.drawable.icon_index_tab_mine_normal};
+    private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_campus_focused, R.drawable.icon_index_tab_message_focused, R.drawable.icon_index_tab_money_focused, R.drawable.icon_index_tab_mine_focused};
     private final ImageView[] mIconViewArr = new ImageView[mNormalTabIconDrawableIds.length];
 
+    private final Class[] mTabFragmentClassArr = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class, IndexReleaseFragment.class};
+    private final Fragment[] mTabFragmentArr = new Fragment[mTabFragmentClassArr.length];
+
     private ServiceConnection serviceConnection;
-    private UnreadMsgService.SimpleBinder unreadMsgService;
+    private UnreadMsgService unreadMsgService;
 
     private View.OnClickListener mTabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mCurrentTabIndex = 0;
             try {
                 mCurrentTabIndex = Integer.parseInt(v.getTag().toString());
             } catch (NumberFormatException e) {
@@ -87,16 +87,19 @@ public class MainActivity extends BaseFragmentActivity {
         mLlMessgage.setOnClickListener(mTabClickListener);
         mLlMoney.setOnClickListener(mTabClickListener);
         mLlMine.setOnClickListener(mTabClickListener);
+        mBtnRelease.setOnClickListener(mTabClickListener);
 
-        initTabIconViews();
+        mIconViewArr[0] = (ImageView) findViewById(R.id.iv_campus);
+        mIconViewArr[1] = (ImageView) findViewById(R.id.iv_message);
+        mIconViewArr[2] = (ImageView) findViewById(R.id.iv_money);
+        mIconViewArr[3] = (ImageView) findViewById(R.id.iv_mine);
 
-        iv_campus_badge = (ImageView)findViewById(R.id.iv_campus_badge);
-        tv_message_num_badge = (TextView)findViewById(R.id.tv_message_num_badge);
-
+        iv_campus_badge = (ImageView) findViewById(R.id.iv_campus_badge);
+        tv_message_num_badge = (TextView) findViewById(R.id.tv_message_num_badge);
 
         initService();
 
-
+        mCurrentTabIndex = 0;
         //将点击的Icon设置为focused状态，其他设置为normal状态
         focusTapedIcon(mCurrentTabIndex);
         //切换当前显示的Fragment到指定的fragment
@@ -108,40 +111,49 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onServiceDisconnected(ComponentName name) {
             }
+
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                unreadMsgService = (UnreadMsgService.SimpleBinder)service;
+                unreadMsgService = ((UnreadMsgService.SimpleBinder) service).getService();
             }
         };
-        bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 
-        registerReceiver(mReceiver, new IntentFilter(GlobalConstant.ACTION_UPDATE_BADGE));
+        bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStart() {
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        if (null != unreadMsgService) {
+            unreadMsgService.startCount();
+        }
+        super.onStart();
     }
 
     @Override
     protected void onStop() {
+        unreadMsgService.reset();
         unregisterReceiver(mReceiver);
-        unbindService(serviceConnection);
         super.onStop();
     }
 
-    private void initTabIconViews() {
-        mIconViewArr[0] = (ImageView) findViewById(R.id.iv_campus);
-        mIconViewArr[1] = (ImageView) findViewById(R.id.iv_message);
-        mIconViewArr[2] = (ImageView) findViewById(R.id.iv_money);
-        mIconViewArr[3] = (ImageView) findViewById(R.id.iv_mine);
+    @Override
+    protected void onDestroy() {
+        unreadMsgService.startCount();
+        unbindService(serviceConnection);
+        super.onDestroy();
     }
 
     private void changeFragment(int tabIndex) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         try {
-            if(null == mTabFragmentArr[tabIndex]){
+            if (null == mTabFragmentArr[tabIndex]) {
                 mTabFragmentArr[tabIndex] = (Fragment) mTabFragmentClassArr[tabIndex].newInstance();
             }
             fragmentTransaction.replace(R.id.ll_fragment_container, mTabFragmentArr[tabIndex]);
         } catch (Exception e) {
-            Log.e(TAG,"MainActivity changeFragment get a new Fragment failed");
+            Log.e(TAG, "MainActivity changeFragment get a new Fragment failed");
         }
         fragmentTransaction.commit();
 //        fragmentTransaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -150,27 +162,29 @@ public class MainActivity extends BaseFragmentActivity {
 
     /**
      * 将选中的TabIcon设置为获取焦点状态，其他设置为普通状态
+     *
      * @param tabIndex 选中的index
      */
     private void focusTapedIcon(int tabIndex) {
         for (int i = 0; i < mNormalTabIconDrawableIds.length; i++) {
-            if(i != tabIndex){
+            if (i != tabIndex) {
                 mIconViewArr[i].setImageResource(mNormalTabIconDrawableIds[i]);
-            }else{
+            } else {
                 mIconViewArr[i].setImageResource(mFocusedTabIconDrawableIds[i]);
             }
         }
     }
 
 
+    public static final String ACTION_UPDATE_BADGE = "action_update_badge";  //更新badge的广播
     protected BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String type = intent.getStringExtra("type");
-            if("0".equals(type)){
+            if ("0".equals(type)) {
                 int count = intent.getIntExtra("count", 0);
-                iv_campus_badge.setVisibility(count>0?View.VISIBLE:View.INVISIBLE);
-            }else if("1".equals(type)) {
+                iv_campus_badge.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
+            } else if ("1".equals(type)) {
                 int count = intent.getIntExtra("count", 0);
                 if (count > 0) {
                     tv_message_num_badge.setVisibility(View.VISIBLE);
@@ -191,6 +205,7 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     public void reset() {
+        unreadMsgService.markAsRead();
         unreadMsgService.reset();
     }
 }
