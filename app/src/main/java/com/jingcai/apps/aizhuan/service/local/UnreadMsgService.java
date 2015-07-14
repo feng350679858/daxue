@@ -7,21 +7,12 @@ import android.os.IBinder;
 
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 
-public class LocalService extends Service {
+public class UnreadMsgService extends Service {
     public static final int REQUEST_INTERVAL = 1 * 1000;
 
     public class SimpleBinder extends Binder {
-        /**
-         * 获取 Service 实例
-         *
-         * @return
-         */
-        public LocalService getService() {
-            return LocalService.this;
-        }
-
-        public int add(int a, int b) {
-            return a + b;
+        public UnreadMsgService getService() {
+            return UnreadMsgService.this;
         }
 
         public void startCount() {
@@ -80,7 +71,7 @@ public class LocalService extends Service {
                 try {
                     if (!waitFlag) {
                         //获取远程数据
-                        boardCastCount("1", count += 2);
+                        boardCastCount("1", count ++);
                     }
                     Thread.sleep(REQUEST_INTERVAL);
                 } catch (InterruptedException e) {
@@ -98,6 +89,6 @@ public class LocalService extends Service {
         Intent intent = new Intent(GlobalConstant.ACTION_UPDATE_BADGE);
         intent.putExtra("type", type);
         intent.putExtra("count", count);
-        LocalService.this.sendBroadcast(intent);
+        UnreadMsgService.this.sendBroadcast(intent);
     }
 }

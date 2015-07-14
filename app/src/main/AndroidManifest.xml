@@ -68,7 +68,7 @@
         </activity>
         <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
-        <service android:name=".service.local.LocalService"/>
+        <service android:name=".service.local.UnreadMsgService"/>
 
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>

@@ -24,9 +24,8 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
-import com.jingcai.apps.aizhuan.entity.BadgeBean;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
-import com.jingcai.apps.aizhuan.service.local.LocalService;
+import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 
 /**
  * Created by Json Ding on 2015/7/9.
@@ -49,7 +48,7 @@ public class MainActivity extends BaseFragmentActivity {
     private final ImageView[] mIconViewArr = new ImageView[mNormalTabIconDrawableIds.length];
 
     private ServiceConnection serviceConnection;
-    private LocalService.SimpleBinder serviceBinder;
+    private UnreadMsgService.SimpleBinder unreadMsgService;
 
     private View.OnClickListener mTabClickListener = new View.OnClickListener() {
         @Override
@@ -111,12 +110,10 @@ public class MainActivity extends BaseFragmentActivity {
             }
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                serviceBinder = (LocalService.SimpleBinder)service;
-                Log.v(TAG, "3 + 5 = " + serviceBinder.add(3, 5));
-                Log.v(TAG, serviceBinder.getService().toString());
+                unreadMsgService = (UnreadMsgService.SimpleBinder)service;
             }
         };
-        bindService(new Intent(MainActivity.this, LocalService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 
         registerReceiver(mReceiver, new IntentFilter(GlobalConstant.ACTION_UPDATE_BADGE));
     }
@@ -186,14 +183,14 @@ public class MainActivity extends BaseFragmentActivity {
     };
 
     public void startCount() {
-        serviceBinder.startCount();
+        unreadMsgService.startCount();
     }
 
     public void showUnread() {
-        serviceBinder.showUnread();
+        unreadMsgService.showUnread();
     }
 
     public void reset() {
-        serviceBinder.reset();
+        unreadMsgService.reset();
     }
 }
