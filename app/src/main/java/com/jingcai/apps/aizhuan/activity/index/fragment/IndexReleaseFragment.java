@@ -13,12 +13,12 @@ import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexCampusFragment extends Fragment implements View.OnClickListener{
+public class IndexReleaseFragment extends Fragment implements View.OnClickListener{
     private View mBaseView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mBaseView = inflater.inflate(R.layout.index_campus_fragment,container,false);
+        mBaseView = inflater.inflate(R.layout.index_release_fragment,container,false);
         initView();
         return mBaseView;
 
@@ -38,6 +38,8 @@ public class IndexCampusFragment extends Fragment implements View.OnClickListene
         mBaseView.findViewById(R.id.button_start_count).setOnClickListener(this);
         mBaseView.findViewById(R.id.button_show_unread).setOnClickListener(this);
         mBaseView.findViewById(R.id.button_reset).setOnClickListener(this);
+        mBaseView.findViewById(R.id.button_immediate_help).setOnClickListener(this);
+        mBaseView.findViewById(R.id.button_wenda_help).setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +56,14 @@ public class IndexCampusFragment extends Fragment implements View.OnClickListene
             }
             case R.id.button_reset: {
                 mainActivity.reset();
+                break;
+            }
+            case R.id.button_immediate_help: {
+
+                break;
+            }
+            case R.id.button_wenda_help: {
+
                 break;
             }
         }
