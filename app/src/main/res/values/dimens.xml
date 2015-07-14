@@ -1,6 +1,6 @@
 <resources>
+    <!-- Tab栏中项的icon和文字的margin -->
     <dimen name="index_tab_icon_text_margin">2dp</dimen>
-
     <!-- badge的文字大小 -->
     <dimen name="num_badge_text_size">12sp</dimen>
     <!-- 带数字的badge的直径 -->
@@ -11,9 +11,14 @@
     <dimen name="num_badge_margin_right">-10dp</dimen>
     <!-- 不带数字的badge的margin_right,为badge的半径-->
     <dimen name="badge_margin_right">-5dp</dimen>
+    <!-- 分割条的高度 -->
     <dimen name="divider_height">1px</dimen>
+    <!-- list项的padding -->
     <dimen name="list_item_padding">10dp</dimen>
+    <!-- 头部的高度 -->
     <dimen name="header_height">40dp</dimen>
+    <!-- 首页底部的Tab的高度 -->
     <dimen name="bottom_tab_height">50dp</dimen>
+    <!-- list项中logo和文字的margin -->
     <dimen name="list_item_logo_text_margin">20dp</dimen>
 </resources>
