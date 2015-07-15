@@ -50,7 +50,7 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
         initHeader();
         initViews();
 //
-//        initData();
+        initData();
     }
 
     private void initHeader() {
@@ -201,10 +201,11 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
                 case 1: {
                     try {
                         showToast("获取商家失败:" + msg.obj);
+
                     }finally {
                         actionLock.unlock();
                     }
-                    break;
+//                    break;
                 }
                 case 2:{
                     try {
