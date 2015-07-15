@@ -13,6 +13,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.entity.TestCommentsBean;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,10 +31,13 @@ public class CommentListAdapter extends BaseAdapter {
     public CommentListAdapter(Context ctx) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
+        mComments = new ArrayList<>();
     }
 
     public void setListData(List<TestCommentsBean> comments){
-        mComments = comments;
+        if(comments != null){
+            mComments = comments;
+        }
     }
 
     @Override
