@@ -18,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -32,6 +33,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob02.Partjob02Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob02.Partjob02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
@@ -236,6 +238,47 @@ public class PartjobDetailActivity extends BaseActivity {
         }
         gisx=mParttimejob.getGisx();
         gisy=mParttimejob.getGisy();
+        partjob_isjoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!UserSubject.isLogin())
+                    requestLogin();
+                else if("1".equals(UserSubject.getLevel()))
+                    fullfillProfile();
+                else if(!UserSubject.getGender().equals(mParttimejob.getGenderlimit())) {
+                    Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else{
+                    final PopupDialog dialog = new PopupDialog(PartjobDetailActivity.this, R.layout.partjob_detail_popupdialog);
+                    View contentView = dialog.getContentView();
+                    ((ImageView)contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
+                    PartjobListAdapter.setSalary((TextView)contentView.findViewById(R.id.partjob_detail_popup_salary),(TextView)contentView.findViewById(R.id.partjob_content_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+                    PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
+                    PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), "0", mParttimejob.getWorkdays());
+                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
+                    contentView.findViewById(R.id.partjob_detail_popup_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    contentView.findViewById(R.id.partjob_detail_popup_confirm).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
+                            String msg = "求同行好友！我刚才在兼职兔报名了一个"+partjob_content_title.getText().toString()+
+                                    ",薪资可是"+partjob_content_salary.getText().toString()+
+                                    partjob_content_salaryunit.getText().toString()+
+                                    "！有没有一起的，还有"+num+"个名额，，快点击：";
+                            joinSuccess(msg,mParttimejob.getPhone());
+                        }
+                    });
+                    dialog.show();
+                }
+
+            }
+        });
     }
     private String getUrl() {
         String url = GlobalConstant.h5Url + "/partjob/detail?channel=" + GlobalConstant.TERMINAL_TYPE_ANDROID + "&id=" + partjobid;

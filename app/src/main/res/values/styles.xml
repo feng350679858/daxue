@@ -31,6 +31,16 @@
     <style name="style_num_badge.tab" parent="style_num_badge">
         <item name="android:layout_marginRight">@dimen/num_badge_margin_right</item>
     </style>
+    <!--  弹出框的style ٩(๑`灬´๑)۶ 去不掉边距-->
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
-
+    <!--弹出框动画的style-->
+    <style name="main_menu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out_anim</item>
+    </style>
 </resources>

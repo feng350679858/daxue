@@ -27,4 +27,6 @@
     <string name="mine_partjob_detail_settle_length_month">月结</string>
     <string name="mine_partjob_detail_settle_length_finish">完工结</string>
     <string name="title_activity_partjob_detail_map">PartjobDetailMapActivity</string>
+    <!--报名详情 => 弹窗=>温馨提示-->
+    <string name="partjob_detail_popup_tip">您即将报名'XXX'兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。</string>
 </resources>
