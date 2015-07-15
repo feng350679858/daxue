@@ -67,13 +67,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.help.JishiHelpDeployActivity" android:screenOrientation="portrait"/>
+        <!-- help -->
+        <activity android:name=".activity.help.JishiHelpDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
 
+        <!-- sys -->
         <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
+        <!-- Message -->
+        <activity android:name=".activity.message.MessageCommentActivity"   />
+        <activity android:name=".activity.message.MessageCommendActivity"   />
 
+        <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
 
+        <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
 

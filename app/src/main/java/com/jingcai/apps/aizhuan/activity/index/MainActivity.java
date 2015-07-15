@@ -45,7 +45,7 @@ public class MainActivity extends BaseFragmentActivity {
     private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_campus_focused, R.drawable.icon_index_tab_message_focused, R.drawable.icon_index_tab_money_focused, R.drawable.icon_index_tab_mine_focused};
     private final ImageView[] mIconViewArr = new ImageView[mNormalTabIconDrawableIds.length];
 
-    private final Class[] mTabFragmentClassArr = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class, IndexReleaseFragment.class};
+    private final Class[] mTabFragmentClassArr = {IndexReleaseFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class, IndexCampusFragment.class};
     private final Fragment[] mTabFragmentArr = new Fragment[mTabFragmentClassArr.length];
 
     private ServiceConnection serviceConnection;
