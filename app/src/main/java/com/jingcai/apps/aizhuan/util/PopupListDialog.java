@@ -4,13 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,40 +26,76 @@ import java.util.Map;
  */
 public class PopupListDialog {
     private Context mContext;
+    private Map<String, String> data;
+    private boolean cancelable = true;
+    private boolean wrapContent = true;
+    private Callback callback;
+
+
     private View mContentView;
     private Dialog mDialog;
     private LayoutInflater layoutInflater;
 
-    public PopupListDialog(Context context, Map<String, String> data) {
-        this(context, data, true);
+    public PopupListDialog(Context context) {
+        this.mContext = context;
     }
 
-    public PopupListDialog(Context context, Map<String, String> data, boolean cancelable) {
-        this(context, data, cancelable, true);
+    public PopupListDialog setData(Map<String, String> data) {
+        this.data = data;
+        return this;
     }
 
-    public PopupListDialog(Context context, Map<String, String> data, boolean cancelable, boolean wrapContent) {
-        mContext = context;
-        layoutInflater = LayoutInflater.from(context);
+    public PopupListDialog setCancelable(boolean cancelable) {
+        this.cancelable = cancelable;
+        return this;
+    }
+
+    public PopupListDialog setWrapContent(boolean wrapContent) {
+        this.wrapContent = wrapContent;
+        return this;
+    }
+
+    public PopupListDialog setCallback(Callback cb) {
+        this.callback = cb;
+        return this;
+    }
+
+    public PopupListDialog build() {
+        if (null == data) {
+            throw new RuntimeException("please call setData before build");
+        }
+        if (null == callback) {
+            throw new RuntimeException("please call setCallback before build");
+        }
+
+        layoutInflater = LayoutInflater.from(mContext);
         mContentView = layoutInflater.inflate(R.layout.help_jishi_pop_gender, null);
 
-        PopItemAdapter adapter = new PopItemAdapter(context, R.layout.help_jishi_pop_gender_item);
+        PopItemAdapter adapter = new PopItemAdapter(mContext, R.layout.help_jishi_pop_gender_item);
         adapter.addAll(convertToList(data));
         ListView listView = (ListView) mContentView.findViewById(R.id.lv_pop_list);
         listView.setAdapter(adapter);
+        ImageButton btn_cancel = (ImageButton) mContentView.findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
-        init(cancelable, wrapContent);
+        init();
+        return this;
     }
 
-    private List<PopItem> convertToList(Map<String, String> map){
+    private List<PopItem> convertToList(Map<String, String> map) {
         List<PopItem> list1 = new ArrayList<>();
-        for(Map.Entry<String, String> entry:map.entrySet()){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
             list1.add(new PopItem(entry.getKey(), entry.getValue()));
         }
         return list1;
     }
 
-    private void init(boolean cancelable, boolean wrapContent) {
+    private void init() {
         mDialog = new Dialog(mContext, R.style.transparentFrameWindowStyle);
 //        mDialog.setContentView(mContentView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         mDialog.setContentView(mContentView);
@@ -122,18 +158,27 @@ public class PopupListDialog {
 
             nameText.setText(user.getVal());
             nameText.setTag(user.getKey());
-
+            nameText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView tv = (TextView) v;
+                    callback.select((String) tv.getTag(), tv.getText().toString());
+                    dismiss();
+                }
+            });
             return view;
         }
     }
 
-    class PopItem{
+    class PopItem {
         private String key;
         private String val;
-        PopItem(String k, String v){
+
+        PopItem(String k, String v) {
             this.key = k;
             this.val = v;
         }
+
         public String getKey() {
             return key;
         }
@@ -149,5 +194,9 @@ public class PopupListDialog {
         public void setVal(String val) {
             this.val = val;
         }
+    }
+
+    public interface Callback {
+        void select(String key, String val);
     }
 }

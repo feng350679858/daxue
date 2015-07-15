@@ -13,6 +13,9 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.util.PopupListDialog;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by lejing on 15/7/14.
  */
@@ -46,7 +49,24 @@ public class JishiHelpDeployActivity extends BaseActivity {
         tv_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupListDialog popupDialog = new PopupListDialog(JishiHelpDeployActivity.this);
+                Map<String, String> map = new LinkedHashMap<String, String>();
+                map.put("10", "10分钟");
+                map.put("30", "30分钟");
+                map.put("60", "1小时");
+                map.put("180", "3小时");
+                map.put("360", "6小时");
+                map.put("720", "12小时");
+                map.put("1440", "24小时");
+                map.put("-1", "自定义");
+                PopupListDialog popupDialog = new PopupListDialog(JishiHelpDeployActivity.this)
+                        .setData(map)
+                        .setCallback(new PopupListDialog.Callback() {
+                            @Override
+                            public void select(String key, String val) {
+                                showToast(val);
+                            }
+                        })
+                        .build();
                 popupDialog.show();
             }
         });
