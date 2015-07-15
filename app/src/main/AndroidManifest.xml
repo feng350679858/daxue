@@ -74,8 +74,9 @@
         <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
         <!-- Message -->
-        <activity android:name=".activity.message.MessageCommentActivity"   />
-        <activity android:name=".activity.message.MessageCommendActivity"   />
+        <activity android:name=".activity.message.MessageCommentActivity"/>
+        <activity android:name=".activity.message.MessageCommendActivity"/>
+        <activity android:name=".activity.message.MessageMerchantActivity"/>
 
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
