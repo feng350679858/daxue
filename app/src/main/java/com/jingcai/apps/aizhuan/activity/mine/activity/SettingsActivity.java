@@ -1,40 +1,52 @@
 package com.jingcai.apps.aizhuan.activity.mine.activity;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.activity.mine.fragment.MineIndexActivity;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.advice.advice01.Advice01Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu05.Stu05Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu05.Stu05Response;
 import com.jingcai.apps.aizhuan.service.business.sys.sys05.Sys05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.PopupDialog;
 
 /**
- * Created by Administrator on 2015/7/14.
+ * Created by xiangqili on 2015/7/14.
  */
 public class SettingsActivity extends Activity {
+    private MineIndexActivity mineIndexActivity;
+
+    private View mFragmentLayout;
+    private AzService azService;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mine_settings);
+        setContentView(R.layout.mine_index);
 
-        initHeader();
-
+       initHeader();
         initView();
     }
+
     public void initHeader(){
         ((TextView)findViewById(R.id.tv_content)).setText("设置");
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.GONE);
@@ -43,14 +55,13 @@ public class SettingsActivity extends Activity {
 
     public void initView()
     {
-
         ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 //返回主界面
                 finish();
             }
-            });
+        });
         initVisiableSwitch();  //校友可见开关
         initVersionUpdate();  //版本更新
         initSuggestion();  //我有话说
@@ -61,6 +72,7 @@ public class SettingsActivity extends Activity {
 
         initShareConfig();
     }
+
     private UmengShareUtil umengShareUtil;
 
     private void initShareConfig() {
@@ -342,4 +354,4 @@ public class SettingsActivity extends Activity {
     public void onDestroy() {
         super.onDestroy();
     }
-}
+            }
