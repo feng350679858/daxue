@@ -73,7 +73,19 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        initHeader();
         initView();
+    }
+
+    private void initHeader() {
+        ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_content);
+        //需要用到再findViewById，不要需则不调用，提高效率
+//        ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
+//        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
+
+        tvTitle.setText("校园");
+        btnBack.setVisibility(View.INVISIBLE);
     }
 
     private void initView() {

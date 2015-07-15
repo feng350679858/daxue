@@ -13,6 +13,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
+import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.TestMessageBean;
 
@@ -33,7 +34,6 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         mBaseView = inflater.inflate(R.layout.index_message_fragment,container,false);
         initView();
         return mBaseView;
-
     }
 
     private void initView() {
@@ -62,6 +62,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
                     intent = new Intent(baseActivity, MessageCommendActivity.class);
                     break;
                 case MessageListAdapter.ITEM_POSITION_MERCHANT:
+                    intent = new Intent(baseActivity, MessageMerchantActivity.class);
                     break;
             }
         }else{//消息对话

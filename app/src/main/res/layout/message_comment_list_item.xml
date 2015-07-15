@@ -91,7 +91,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/content_background"
             android:gravity="center_vertical"
-            android:layout="@layout/stub_message_comment_list_item"
+            android:layout="@layout/stub_message_comment_list_item_no_reply"
             android:orientation="horizontal"
             android:padding="10dp"/>
 
