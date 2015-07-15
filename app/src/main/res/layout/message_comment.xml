@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/content_background">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/include_header" />
 
     <ListView
         android:id="@+id/lv_comments"
