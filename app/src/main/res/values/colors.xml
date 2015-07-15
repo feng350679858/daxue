@@ -19,5 +19,6 @@
     <color name="content_background">#f3f5f7</color>
     <!-- 用于图片边缘border -->
     <color name="circle_image_border">#dddddd</color>
+    <color name="red">#e33839</color>
 
 </resources>
