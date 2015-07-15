@@ -2,23 +2,26 @@ package com.jingcai.apps.aizhuan.activity.index.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexCampusFragment extends Fragment implements View.OnClickListener{
+public class IndexCampusFragment extends BaseFragment implements View.OnClickListener{
     private View mBaseView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_campus_fragment,container,false);
+        changeHeader();
         initView();
         return mBaseView;
 
@@ -32,6 +35,22 @@ public class IndexCampusFragment extends Fragment implements View.OnClickListene
 //            parent.removeView(mBaseView);
 //        }
 //        return mBaseView;
+    }
+    private void changeHeader() {
+        TextView tvTitle = (TextView) baseActivity.findViewById(R.id.tv_content);
+        //需要用到再findViewById，不要需则不调用，提高效率
+//        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
+        ImageView ivFunc = (ImageView) baseActivity.findViewById(R.id.iv_func);
+        ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
+        ivFunc.setVisibility(View.VISIBLE);
+        tvTitle.setText("校园");
+
+        ivFunc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 上下线
+            }
+        });
     }
 
     private void initView() {
