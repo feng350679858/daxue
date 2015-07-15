@@ -66,6 +66,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- help -->
+        <activity android:name=".activity.help.JishiHelpDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
+
+        <!-- sys -->
         <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
         <!-- Message -->
@@ -75,8 +80,10 @@
         <activity android:name=".activity.message.MessageNotificationActivity"   />
         <activity android:name=".activity.message.NotificationDetailActivity"   />
 
+        <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
 
+        <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
 
