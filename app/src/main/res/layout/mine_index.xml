@@ -16,12 +16,25 @@
         android:orientation="horizontal"
         android:background="@color/content_background"
         >
-        <ImageView
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/ic_launcher"
             />
+            <circleimageview
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon__hollow_disabled"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="20dip"
+                />
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,46 +53,45 @@
                    android:textColor="#000000"
                    android:textSize="28sp"
                    />
-               <ImageView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_gravity="center"
-                   />
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:src="@drawable/icon_index_tab_mine_question"
+                       />
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:src="@drawable/icon_index_tab_mine_question"
+                       />
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:src="@drawable/icon_index_tab_mine_question"
+                       />
+
                <View
                    android:layout_width="0dp"
                    android:layout_height="0dp"
                    android:layout_weight="1" />
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="LV"
-                   android:textColor="#000000"
-                   android:textSize="20sp"
-                   android:layout_gravity="center"/>
+
            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="经验值：1925[52.00%]"
+                android:textColor="@color/important_dark"
+                android:textSize="12sp"/>
              <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="26sp"
                 style="?android:attr/progressBarStyleHorizontal"
                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                   />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -113,14 +125,21 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_question"
                     android:drawablePadding="10dp"
                     />
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
+                    android:text="10"
+                    android:textSize="18sp"
                     android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/icon_right_triangle"
+                    android:drawableEnd="@drawable/icon_right_triangle"
+                    android:drawablePadding="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     />
+
             </RelativeLayout>
         </LinearLayout>
 
@@ -152,14 +171,21 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_help"
                     android:drawablePadding="10dp"
                     />
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
+                    android:text="10"
+                    android:textSize="18sp"
                     android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/icon_right_triangle"
+                    android:drawableEnd="@drawable/icon_right_triangle"
+                    android:drawablePadding="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     />
+
             </RelativeLayout>
         </LinearLayout>
         <View
@@ -212,6 +238,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/ll_mine_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"

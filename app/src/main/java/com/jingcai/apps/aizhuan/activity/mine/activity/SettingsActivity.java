@@ -212,13 +212,13 @@ public class SettingsActivity extends BaseActivity {
     }
 
     /**
-     * ���л�˵
+     * 我有话说
      */
     private void initSuggestion() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_suggestion).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, SuggestionActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, MineSuggestionActivity.class);
                 startActivity(intent);
             }
         });
