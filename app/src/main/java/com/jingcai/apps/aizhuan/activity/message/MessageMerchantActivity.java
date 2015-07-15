@@ -45,7 +45,7 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_merchant);
-//        messageHandler = new MessageHandler(this);
+        messageHandler = new MessageHandler(this);
 
         initHeader();
         initViews();
