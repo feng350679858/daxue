@@ -7,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
+import com.jingcai.apps.aizhuan.activity.message.MessageNotificationActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.TestMessageBean;
 
@@ -33,7 +36,26 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_message_fragment,container,false);
         initView();
+        changeHeader();
         return mBaseView;
+    }
+
+    private void changeHeader() {
+        TextView tvTitle = (TextView) baseActivity.findViewById(R.id.tv_content);
+        //需要用到再findViewById，不要需则不调用，提高效率
+//        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
+        ImageView ivFunc = (ImageView) baseActivity.findViewById(R.id.iv_func);
+        ivFunc.setImageResource(R.drawable.icon_index_message_bird);
+        ivFunc.setVisibility(View.VISIBLE);
+        ivFunc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity, MessageNotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvTitle.setText("消息");
     }
 
     private void initView() {
