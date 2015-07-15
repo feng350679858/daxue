@@ -6,4 +6,5 @@
     android:gravity="center"
     android:padding="15dp"
     android:text="30分钟"
+    android:background="@drawable/list_item_bg"
     android:textSize="16sp" />

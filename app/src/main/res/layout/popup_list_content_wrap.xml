@@ -11,7 +11,7 @@
     <ListView
         android:id="@+id/lv_pop_list"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         android:divider="@color/divider_color"
         android:dividerHeight="1dp">
 
@@ -21,7 +21,7 @@
         android:id="@+id/btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
+        android:background="@drawable/list_item_bg"
         android:padding="15dp"
         android:src="@drawable/icon_cancel"/>
 </LinearLayout>

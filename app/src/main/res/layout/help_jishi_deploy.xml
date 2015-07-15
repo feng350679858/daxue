@@ -5,7 +5,7 @@
     android:background="@color/content_background"
     android:orientation="vertical">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/include_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -257,9 +257,8 @@
                         android:background="@drawable/help_jishi_content_bg"
                         android:gravity="center"
                         android:hint="不低于20金"
-                        android:inputType="numberSigned"
+                        android:numeric="integer"
                         android:maxLength="5"
-                        android:singleLine="true"
                         android:textSize="14sp" />
                 </LinearLayout>
 
