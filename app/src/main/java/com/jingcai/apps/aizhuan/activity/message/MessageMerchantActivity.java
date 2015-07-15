@@ -152,13 +152,13 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
         //phone
         ((TextView)contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(mCurrentSelectedItem.merchant.getPhone());
         //2 button
-        contentView.findViewById(R.id.btn_contact_merchant_dialog_cancel).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        contentView.findViewById(R.id.btn_contact_merchant_dialog_confirm).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL);

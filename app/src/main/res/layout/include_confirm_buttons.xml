@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <Button
-        android:id="@+id/btn_contact_merchant_dialog_cancel"
+        android:id="@+id/btn_confirm_false"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
@@ -18,7 +18,7 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/btn_contact_merchant_dialog_confirm"
+        android:id="@+id/btn_confirm_true"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
