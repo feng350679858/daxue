@@ -2,6 +2,7 @@ package com.jingcai.apps.aizhuan.activity.mine.activity;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
@@ -32,11 +34,12 @@ import com.jingcai.apps.aizhuan.util.PopupDialog;
 /**
  * Created by xiangqili on 2015/7/14.
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends BaseActivity {
     private MineIndexActivity mineIndexActivity;
 
     private View mFragmentLayout;
     private AzService azService;
+    private ProgressDialog progressDialog =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class SettingsActivity extends Activity {
     }
 
     public void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("ÉèÖÃ");
+        ((TextView)findViewById(R.id.tv_content)).setText("ï¿½ï¿½ï¿½ï¿½");
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.GONE);
 
     }
@@ -58,16 +61,16 @@ public class SettingsActivity extends Activity {
         ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //·µ»ØÖ÷½çÃæ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 finish();
             }
         });
-        initVisiableSwitch();  //Ð£ÓÑ¿É¼û¿ª¹Ø
-        initVersionUpdate();  //°æ±¾¸üÐÂ
-        initSuggestion();  //ÎÒÓÐ»°Ëµ
-        initModifyPsw();  //ÐÞ¸ÄÃÜÂë
-        initAboutUs();  //¹ØÓÚÎÒÃÇ
-        initLogout();  //ÍË³ö
+        initVisiableSwitch();
+        initVersionUpdate();
+        initSuggestion();
+        initModifyPsw();
+        initAboutUs();
+        initLogout();
         initInvite();
 
         initShareConfig();
@@ -77,11 +80,11 @@ public class SettingsActivity extends Activity {
 
     private void initShareConfig() {
         umengShareUtil = new UmengShareUtil(getActivity());
-        umengShareUtil.setShareContent("°®×¬ÍòËê", "¼æÖ°±Ø±¸ÉñÆ÷£¬ÄãÄÑµÀ»¹Ã»ÓÃ£¿", "http://www.izhuan365.com");
+        umengShareUtil.setShareContent("ï¿½ï¿½×¬ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½Ö°ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ï¿½Ã»ï¿½Ã£ï¿½", "http://www.izhuan365.com");
     }
 
     /**
-     * ÅóÓÑÑûÇë
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initInvite() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_invite).setOnClickListener(new View.OnClickListener() {
@@ -93,33 +96,33 @@ public class SettingsActivity extends Activity {
 //                popupDialog.setAction(R.id.ll_other_share_qq, new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //QQºÃÓÑ
+//                        //QQï¿½ï¿½ï¿½ï¿½
 //
 //                    }
 //                }).setAction(R.id.ll_other_share_weixin,new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //Î¢ÐÅºÃÓÑ
+//                        //Î¢ï¿½Åºï¿½ï¿½ï¿½
 //                    }
 //                }).setAction(R.id.ll_other_share_friend,new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //ÅóÓÑÈ¦
+//                        //ï¿½ï¿½ï¿½ï¿½È¦
 //                    }
 //                }).setAction(R.id.ll_other_share_weibo,new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //Î¢²©
+//                        //Î¢ï¿½ï¿½
 //                    }
 //                }).setAction(R.id.ll_other_share_qzone,new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //QQ¿Õ¼ä
+//                        //QQï¿½Õ¼ï¿½
 //                    }
 //                }).setAction(R.id.btn_other_share_cancle,new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        //È¡Ïû
+//                        //È¡ï¿½ï¿½
 //                        popupDialog.dismiss();
 //                    }
 //                }).show();
@@ -128,14 +131,14 @@ public class SettingsActivity extends Activity {
     }
 
     /**
-     * ÍÆ³öµÇÂ¼
+     * ï¿½Æ³ï¿½ï¿½ï¿½Â¼
      */
     private void initLogout() {
         mFragmentLayout.findViewById(R.id.btn_sys_setting_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final PopupDialog dialog = new PopupDialog(getActivity(), R.layout.sys_comfirm_logout_dialog);
+                final PopupDialog dialog = new PopupDialog(SettingsActivity.this, R.layout.sys_comfirm_logout_dialog);
                 View contentView = dialog.getContentView();
                 dialog.show();
                 contentView.findViewById(R.id.btn_sys_logout_confirm).setOnClickListener(new View.OnClickListener() {
@@ -183,58 +186,58 @@ public class SettingsActivity extends Activity {
     }
 
     /**
-     * ¹ØÓÚÎÒÃÇ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initAboutUs() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_about_us).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AboutUsActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, AboutUsActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     /**
-     * ÐÞ¸ÄÃÜÂë
+     * ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initModifyPsw() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ModifyPswActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, ModifyPswActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     /**
-     * ÎÒÓÐ»°Ëµ
+     * ï¿½ï¿½ï¿½Ð»ï¿½Ëµ
      */
     private void initSuggestion() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_suggestion).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SuggestionActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, SuggestionActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     /**
-     * °æ±¾¸üÐÂ
+     * ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½
      */
     private void initVersionUpdate() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new VersionUtil(getActivity()).autoUpdateApp(true);
+                new VersionUtil(SettingsActivity.this).autoUpdateApp(true);
             }
         });
     }
 
     /**
-     * Ð£ÓÑ¿É¼û¿ª¹Ø
+     * Ð£ï¿½Ñ¿É¼ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initVisiableSwitch() {
         SlideButton slideButton = (SlideButton)mFragmentLayout.findViewById(R.id.switch_setting_isvisiable);
@@ -317,30 +320,30 @@ public class SettingsActivity extends Activity {
             switch (msg.what) {
                 case 0: {
                     boolean isVisiable = (boolean) msg.obj;
-                    Preferences.setIsVisiable(baseActivity, isVisiable);
-                    StringBuffer sb = new StringBuffer("Ð£ÓÑ");
-                    sb.append(isVisiable ? "ÄÜ" : "²»ÄÜ");
-                    sb.append("¿´¼ûÄãµÄ±¨ÃûÇé¿ö");
+                    Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
+                    StringBuffer sb = new StringBuffer("Ð£ï¿½ï¿½");
+                    sb.append(isVisiable ? "ï¿½ï¿½" : "ï¿½ï¿½ï¿½ï¿½");
+                    sb.append("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                     showToast(sb.toString());
                     break;
                 }
                 case 1: {
-                    showToast("ÉèÖÃÊ§°Ü:" + msg.obj);
+                    showToast("ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½:" + msg.obj);
                     break;
                 }
                 case 2: {
-//                  ±¾µØ²Ù×÷ÍË³ö²Ù×÷
-                    Preferences.loginFail(getActivity());
-                    new JpushUtil(baseActivity).logout();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+//                  ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½
+                    Preferences.loginFail(SettingsActivity.this);
+                    new JpushUtil(SettingsActivity.this).logout();
+                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
-                    getActivity().finish();
+                    SettingsActivity.this.finish();
                     break;
                 }
                 case 3: {
-                    showToast("ÍË³öÊ§°Ü:" + msg.obj);
+                    showToast("ï¿½Ë³ï¿½Ê§ï¿½ï¿½:" + msg.obj);
                     break;
                 }
                 default: {
@@ -350,6 +353,11 @@ public class SettingsActivity extends Activity {
         }
     }
 
+    public void closeProcessDialog(){
+        if(null != progressDialog) {
+            progressDialog.dismiss();
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

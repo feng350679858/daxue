@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/header" />
+    <include layout="@layout/include_header" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/main_yellow"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -16,139 +16,248 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="近一周收入（金币）"
-            android:textColor="#ffffff" />
+            android:textColor="@color/important_dark"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
             <TextView
                 android:id="@+id/tv_gold_index_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="0"
-                android:textColor="#ffffff"
-                android:textSize="70sp" />
+                android:text="3,600"
+                android:textColor="@color/important_dark"
+                android:textSize="60sp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/icon_gold_index_coin" />
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/main_yellow"
         android:orientation="vertical"
         android:padding="10dp"
-        android:paddingBottom="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="余额（金币）"
-                android:textColor="@color/font_assistant" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_gold_index_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:text="0"
-                    android:textColor="@color/red_normal"
-                    android:textSize="40dp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_gold_withdraw_money"
-                    android:gravity="bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:text="提现 >"
-                    android:textColor="@color/red_normal"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-        </LinearLayout>
-
+        android:paddingBottom="10dp"
+        >
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/font_grey" />
+            android:background="@color/normal_grey" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="冻结中："
-                android:textColor="@color/font_assistant"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/tv_gold_index_freeze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/font_assistant"
-                android:textSize="15dp" />
-        </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总金额(金币)"
+                        android:textColor="@color/normal_grey"
+                        android:textSize="14dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12,234"
+                        android:textColor="@color/important_dark"
+                        android:textSize="18dp"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="冻结中(金币)"
+                        android:textColor="@color/normal_grey"
+                        android:textSize="14dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12,234"
+                        android:textColor="@color/important_dark"
+                        android:textSize="18dp"/>
+                </LinearLayout>
+            </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginBottom="40dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="近一周收入折线图（每百金币）"
-            android:textColor="@color/font_assistant"
-            android:textSize="14sp" />
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/gold_index_line_chart"
+        android:layout_marginTop="10dp"
+        android:background="@color/content_background"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="收入记录"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+
+                    android:drawablePadding="10dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right_triangle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="支出记录"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+
+                    android:drawablePadding="10dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right_triangle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+
+            android:background="@color/@color/divider_color" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="管理提现账号"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+
+                    android:drawablePadding="10dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right_triangle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+
+            android:background="@color/divider_color" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="修改提现密码"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+
+                    android:drawablePadding="10dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_right_triangle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
