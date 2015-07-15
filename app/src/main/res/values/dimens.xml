@@ -19,6 +19,8 @@
     <dimen name="header_height">40dp</dimen>
     <!-- 首页底部的Tab的高度 -->
     <dimen name="bottom_tab_height">50dp</dimen>
+    <!-- list项中logo和文字的margin 大号 -->
+    <dimen name="list_item_logo_text_margin_large">20dp</dimen>
     <!-- list项中logo和文字的margin -->
-    <dimen name="list_item_logo_text_margin">20dp</dimen>
+    <dimen name="list_item_logo_text_margin_small">10dp</dimen>
 </resources>
