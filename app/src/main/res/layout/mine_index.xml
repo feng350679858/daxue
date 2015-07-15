@@ -16,24 +16,23 @@
         android:orientation="horizontal"
         android:background="@color/content_background"
         >
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_launcher"
-            />
-            <circleimageview
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_gravity="center"
-                android:background="@drawable/icon__hollow_disabled"
-                android:layout_marginLeft="20dip"
-                android:layout_marginTop="20dip"
+            android:src="@drawable/ic_launcher"
+            />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="47dip"
+                android:layout_marginLeft="47dip"
+                android:src="@drawable/icon__hollow_disabled"
                 />
-        </FrameLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,10 +170,10 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_help"
                     android:drawablePadding="10dp"
                     />
-                <TextView
+                       <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10"
+                    android:text=""
                     android:textSize="18sp"
                     android:layout_centerVertical="true"
                     android:textColor="#000000"

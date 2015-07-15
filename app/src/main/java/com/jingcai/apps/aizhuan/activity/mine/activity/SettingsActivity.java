@@ -40,6 +40,7 @@ public class SettingsActivity extends BaseActivity {
     private View mFragmentLayout;
     private AzService azService;
     private ProgressDialog progressDialog =null;
+    private MessageHandler messageHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class SettingsActivity extends BaseActivity {
         ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //����������
+
                 finish();
             }
         });
@@ -79,7 +80,7 @@ public class SettingsActivity extends BaseActivity {
     private UmengShareUtil umengShareUtil;
 
     private void initShareConfig() {
-        umengShareUtil = new UmengShareUtil(getActivity());
+        umengShareUtil = new UmengShareUtil(SettingsActivity.this);
         umengShareUtil.setShareContent("��׬����", "��ְ�ر����������ѵ���û�ã�", "http://www.izhuan365.com");
     }
 
@@ -332,7 +333,7 @@ public class SettingsActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
-//                  ���ز����˳�����
+//
                     Preferences.loginFail(SettingsActivity.this);
                     new JpushUtil(SettingsActivity.this).logout();
                     Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
