@@ -17,5 +17,7 @@
     <color name="main_yellow">#f9d632</color>
     <!-- 用于内容区域底色 -->
     <color name="content_background">#f3f5f7</color>
+    <!-- 用于图片边缘border -->
+    <color name="circle_image_border">#dddddd</color>
 
 </resources>

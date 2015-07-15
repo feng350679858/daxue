@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/content_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_contact_merchant_list_item_logo"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:src="@drawable/ic_launcher"
+        app:border_color="@color/circle_image_border"
+        app:border_width="1dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_contact_merchant_list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="美团外卖*派单"
+            style="@style/title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_contact_merchant_list_item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="3月27日 3月28日 3月28日 "
+                style="@style/sub_title"
+                android:maxWidth="150dp"
+                android:ellipsize="end"
+                 />
+
+            <TextView
+                android:id="@+id/tv_contact_merchant_list_item_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="70dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginLeft="10dp"
+                android:text="工作人员"
+                style="@style/sub_title" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_contact_merchant_list_item_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_message_merchant_telephone" />
+
+</LinearLayout>

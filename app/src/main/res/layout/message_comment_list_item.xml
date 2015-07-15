@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="@dimen/list_item_padding">
 
     <ImageView
         android:id="@+id/iv_logo"
@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/list_item_logo_text_margin_small"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -28,8 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="夏一"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                style="@style/title" />
 
             <TextView
                 android:id="@+id/tv_time"
@@ -38,7 +37,7 @@
                 android:layout_below="@id/tv_name"
                 android:layout_marginTop="5dp"
                 android:text="一个月前"
-                android:textSize="12sp" />
+                style="@style/time"/>
 
             <TextView
                 android:id="@+id/tv_reply"
@@ -68,8 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="回复琳珊：我不管，我最美！我不管，我最美我不管，我最美！我不管，我最美！"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/content" />
 
             <!-- 替代布局 有回复的布局 -->
             <ViewStub
@@ -91,7 +89,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/content_background"
             android:gravity="center_vertical"
-            android:layout="@layout/stub_message_comment_list_item"
+            android:layout="@layout/stub_message_comment_list_item_no_reply"
             android:orientation="horizontal"
             android:padding="10dp"/>
 

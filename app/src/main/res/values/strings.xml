@@ -5,4 +5,5 @@
     <string name="index_tab_message">消息</string>
     <string name="index_tab_money">爱赚</string>
     <string name="index_tab_mine">我的</string>
+    <string name="empty_merchant_list_tip">报名兼职之后，才会有商家哦！</string>
 </resources>
