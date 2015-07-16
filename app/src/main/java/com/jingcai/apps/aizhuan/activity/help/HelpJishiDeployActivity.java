@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -38,7 +37,7 @@ import java.util.Map;
 /**
  * Created by lejing on 15/7/14.
  */
-public class JishiHelpDeployActivity extends BaseActivity {
+public class HelpJishiDeployActivity extends BaseActivity {
     private final static String TAG = "JishiHelpDeployActivity";
     private MessageHandler messageHandler;
     private PopupWin groupWin;
@@ -102,8 +101,8 @@ public class JishiHelpDeployActivity extends BaseActivity {
                     map.put("0", "男");
                     map.put("1", "女");
                     map.put("", "不限");
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    genderWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    genderWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setData(map, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
@@ -121,15 +120,15 @@ public class JishiHelpDeployActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null == groupWin) {
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    View contentView = LayoutInflater.from(JishiHelpDeployActivity.this).inflate(R.layout.help_jishi_deploy_group_pop, null);
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(HelpJishiDeployActivity.this).inflate(R.layout.help_jishi_deploy_group_pop, null);
 
-                    groupWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    groupWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setParentView(parentView)
                             .setContentView(contentView)
                             .build();
 
-                    groupAdapter = new GroupAdapter(JishiHelpDeployActivity.this);
+                    groupAdapter = new GroupAdapter(HelpJishiDeployActivity.this);
                     groupListView = (XListView) contentView.findViewById(R.id.xlv_list);
                     groupListView.setAdapter(groupAdapter);
 
@@ -199,8 +198,8 @@ public class JishiHelpDeployActivity extends BaseActivity {
                     map.put("720", "12小时");
                     map.put("1440", "24小时");
                     map.put("-1", "自定义");
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    end_timeWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    end_timeWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setData(map, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
