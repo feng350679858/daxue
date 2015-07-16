@@ -17,18 +17,18 @@ import com.jingcai.apps.aizhuan.R;
  * 弹出指定布局的dialog,布局的gravity确定其显示的位置
  * Created by Json Ding on 2015/5/6.
  */
-public class PopupDialog {
+public class PopupDialog  {
     private Context mContext;
     private View mContentView;
     private Dialog mDialog;
 
-    public PopupDialog(Context context, @LayoutRes int layoutId){
+    public PopupDialog(Context context,@LayoutRes int layoutId){
         this(context, layoutId, true);
     }
-    public PopupDialog(Context context, @LayoutRes int layoutId, boolean cancelable){
+    public PopupDialog(Context context,@LayoutRes int layoutId, boolean cancelable){
         this(context, layoutId, cancelable, true);
     }
-    public PopupDialog(Context context, @LayoutRes int layoutId, boolean cancelable, boolean wrapContent){
+    public PopupDialog(Context context,@LayoutRes int layoutId, boolean cancelable, boolean wrapContent){
         mContext = context;
         mContentView = LayoutInflater.from(context).inflate(layoutId, null);
         init(cancelable, wrapContent);

@@ -1,39 +1,47 @@
 package com.jingcai.apps.aizhuan.activity.partjob;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Message;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.mine.LocationListAdapter;
+import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
+import com.jingcai.apps.aizhuan.adapter.partjob.PartjobSearchAdapter;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.persistence.Preferences;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob09.Partjob09Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob09.Partjob09Response;
+import com.jingcai.apps.aizhuan.util.AzException;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.StringUtil;
+import com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer;
+import com.markmao.pulltorefresh.widget.XListView;
 
-public class PartjobSearchActivity extends Activity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partjob_search);
-    }
+/**
+ * Created by CFY on 2015/4/29.
+ */
+public class PartjobSearchActivity extends BaseActivity {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_partjob_search, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

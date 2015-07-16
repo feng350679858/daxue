@@ -35,7 +35,7 @@ public class PartjobDetailMapActivity extends BaseActivity {
     }
 
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("工作地点");
+        ((TextView)findViewById(R.id.tv_content)).setText("宸ヤ綔鍦扮偣");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +69,7 @@ public class PartjobDetailMapActivity extends BaseActivity {
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if (keyCode == KeyEvent.KEYCODE_BACK) {
 //            if (wv_partjob_detail.canGoBack()) {
-//                wv_partjob_detail.goBack();//返回上一页面
+//                wv_partjob_detail.goBack();//杩斿洖涓婁竴椤甸潰
 //                return true;
 //            } else {
 //                finish();

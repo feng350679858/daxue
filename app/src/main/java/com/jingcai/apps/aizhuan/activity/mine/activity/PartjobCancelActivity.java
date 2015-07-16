@@ -50,9 +50,9 @@ public class PartjobCancelActivity extends BaseActivity{
         messageHandler = new MessageHandler(this);
         azService = new AzService(PartjobCancelActivity.this);
         if(UserSubject.isLogin()){
-            initHeader();//³õÊ¼»¯Í·²¿
-            initView();  //³õÊ¼»¯¿Ø¼ş
-            initData();  //Ìî³äÊı¾İ
+            initHeader();//åˆå§‹åŒ–å¤´éƒ¨
+            initView();  //åˆå§‹åŒ–æ§ä»¶
+            initData();  //å¡«å……æ•°æ®
         }else{
             startActivityForLogin();
         }
@@ -60,15 +60,15 @@ public class PartjobCancelActivity extends BaseActivity{
 
 
     /**
-     * ³õÊ¼»¯Í·²¿
+     * åˆå§‹åŒ–å¤´éƒ¨
      */
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("È¡Ïû±¨Ãû");
+        ((TextView)findViewById(R.id.tv_content)).setText("å–æ¶ˆæŠ¥å");
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
         ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
     }
     /**
-     * ³õÊ¼»¯¿Ø¼ş
+     * åˆå§‹åŒ–æ§ä»¶
      */
     private void initView() {
         mTxtMention = (TextView) findViewById(R.id.tv_mine_partjob_cancel_mention);
@@ -78,7 +78,7 @@ public class PartjobCancelActivity extends BaseActivity{
         mBtnComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //È¡Ïû±¨Ãû
+                //å–æ¶ˆæŠ¥å
                 Partjob06Request req = new Partjob06Request();
                 Partjob06Request.Joininfo joininfo = req.new Joininfo();
                 joininfo.setId(getIntent().getStringExtra("jobid"));
@@ -107,7 +107,7 @@ public class PartjobCancelActivity extends BaseActivity{
         mBtnContactMerchant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ÁªÏµÉÌ¼Ò
+                //è”ç³»å•†å®¶
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + getIntent().getStringExtra("phone")));
                 startActivity(intent);
@@ -118,10 +118,10 @@ public class PartjobCancelActivity extends BaseActivity{
 
 
     /**
-     * ³õÊ¼»¯Êı¾İ
+     * åˆå§‹åŒ–æ•°æ®
      */
     private void initData() {
-        showProgressDialog("Êı¾İ¶ÁÈ¡ÖĞ...");
+        showProgressDialog("æ•°æ®è¯»å–ä¸­...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -161,20 +161,20 @@ public class PartjobCancelActivity extends BaseActivity{
             closeProcessDialog();
             switch (msg.what){
                 case 0:{
-                    //¸ù¾İ½ØÖ¹ÈÕÆÚ¡¢Ê£ÓàÈ¨ÏŞÌî³äÌáÊ¾ĞÅÏ¢
+                    //æ ¹æ®æˆªæ­¢æ—¥æœŸã€å‰©ä½™æƒé™å¡«å……æç¤ºä¿¡æ¯
                     fillMention((Partjob08Response.Partjob04Body.Student)msg.obj);
                     break;
                 }
                 case 1:{
-                    showToast("Êı¾İ¶ÁÈ¡Ê§°Ü£º" + msg.obj);
+                    showToast("æ•°æ®è¯»å–å¤±è´¥ï¼š" + msg.obj);
                     break;
                 }
                 case 2:{
-                    showToast("Ìá½»Ê§°Ü£º" + msg.obj);
+                    showToast("æäº¤å¤±è´¥ï¼š" + msg.obj);
                     break;
                 }
                 case 3:{
-                    showToast("È¡Ïû±¨Ãû³É¹¦");
+                    showToast("å–æ¶ˆæŠ¥åæˆåŠŸ");
                     finish();
                     break;
                 }
@@ -186,19 +186,19 @@ public class PartjobCancelActivity extends BaseActivity{
     }
 
     /**
-     * Ìî³äÌáÊ¾ĞÅÏ¢
+     * å¡«å……æç¤ºä¿¡æ¯
      * @param student
      */
     private void fillMention(Partjob08Response.Partjob04Body.Student student) {
         Date endDate = DateUtil.parseDate(getIntent().getStringExtra("endtime"),"yyyy-MM-dd HH:mm:ss");
         boolean noTimeLeft = endDate.getTime() < System.currentTimeMillis();
         if(noTimeLeft){
-            //¹ıÁË½ØÖ¹ÈÕÆÚ
+            //è¿‡äº†æˆªæ­¢æ—¥æœŸ
             mTxtMention.setText(R.string.mine_partjob_cancel_unable);
         }else{
-            //»¹Ã»¹ı½ØÖÁÈÕÆÚ
+            //è¿˜æ²¡è¿‡æˆªè‡³æ—¥æœŸ
             try {
-                //Ê£ÓàµÄ´ÎÊı
+                //å‰©ä½™çš„æ¬¡æ•°
                 Integer leftCount = Integer.parseInt(student.getLeftcount());
                 if(leftCount > 0){
                     mTxtMention.setText(
@@ -209,7 +209,7 @@ public class PartjobCancelActivity extends BaseActivity{
                     mTxtMention.setText(R.string.mine_partjob_cancel_no_chance);
                 }
             } catch (Exception e) {
-                showToast("»ñÈ¡Ê£Óà¿ÉÈ¡Ïû´ÎÊıÒì³£");
+                showToast("è·å–å‰©ä½™å¯å–æ¶ˆæ¬¡æ•°å¼‚å¸¸");
             }
         }
     }

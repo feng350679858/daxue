@@ -5,24 +5,30 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:padding="15dp"
-        android:background="#e33839"
+        android:background="@color/main_yellow"
         android:layout_gravity="center_vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-
+        <ImageButton
+            android:id="@+id/partjob_search_back"
+            android:layout_width="@dimen/header_height"
+            android:layout_height="@dimen/header_height"
+            android:layout_alignParentLeft="true"
+            android:background="@color/main_yellow"
+            android:src="@drawable/icon_left_arrow" />
 
         <EditText
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/partjob_search_back"
             android:layout_toLeftOf="@+id/tv_cancel"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/font_important"
+            android:textColorHint="@color/font_assistant"
             android:textSize="16sp"
             android:drawablePadding="5dp"
             android:background="@drawable/icon_index_pj_search_content"
-            android:hint="输入你想要的兼职"
+            android:hint="派单兼职等你来"
             android:id="@+id/index_pj_search_content"
             android:layout_width="match_parent"
             android:drawableLeft="@drawable/icon_index_pj_search"
@@ -41,175 +47,9 @@
             android:padding="7dp"
             android:text="取消"
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/font_important"
             android:layout_gravity="right|center_vertical" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_index_pj_search_history"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:padding="15dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/font_assistant"
-                android:text="搜索历史"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@drawable/icon_index_pj_search_history" />
-
-            <Button
-                android:id="@+id/btn_index_pj_search_history_delete"
-                android:layout_alignParentRight="true"
-                android:layout_width="13dp"
-                android:layout_height="16dp"
-                android:background="@drawable/icon_index_pj_search_del" />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_color" />
-
-        <ListView
-            android:divider="@null"
-            android:id="@+id/index_pj_search_history_list_lv"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"></ListView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_index_pj_seachr_result"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <include layout="@layout/index_partjob_list"></include>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/re_index_pj_seachr_no_result"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#3D3D3D"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:maxLines="1"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/index_pj_list_sex"
-                    android:textSize="16sp"
-                    android:drawableRight="@drawable/btn_triangle_down"
-                    android:text="性别不限"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="@color/divider_color" />
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/index_pj_list_type"
-                    android:drawableRight="@drawable/btn_triangle_down"
-                    android:textSize="16sp"
-                    android:text="类别不限"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="@color/divider_color" />
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:maxLines="1"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:gravity="right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/index_pj_list_address"
-                    android:drawableRight="@drawable/btn_triangle_down"
-                    android:textSize="16sp"
-                    android:text="西湖区"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_index_pj_search_no_job" />
-
-            <TextView
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="阿哦，快搜搜其他的兼职吧!"
-                android:textColor="@color/font_assistant" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    <include layout="@layout/index_partjob_list"></include>
 </LinearLayout>

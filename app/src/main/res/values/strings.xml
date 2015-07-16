@@ -28,4 +28,6 @@
     <string name="title_activity_partjob_detail_map">PartjobDetailMapActivity</string>
     <string name="partjob_detail_popup_tip">您即将报名＂XXX"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。</string>
     <string name="title_activity_partjob_search">PartjobSearchActivity</string>
+    <string name="empty_merchant_list_tip">报名兼职之后，才会有商家哦！</string>
+    <string name="empty_notification_list_tip">还没有收到任何消息呢！</string>
 </resources>

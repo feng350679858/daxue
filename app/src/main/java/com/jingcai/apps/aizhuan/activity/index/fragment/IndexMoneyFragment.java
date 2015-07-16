@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -50,7 +48,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Json Ding on 2015/7/10.
+ * Created by cfy on 2015/4/17.
  */
 public class IndexMoneyFragment extends BaseFragment {
     private static final String TAG = IndexMoneyFragment.class.getName();
@@ -61,13 +59,15 @@ public class IndexMoneyFragment extends BaseFragment {
     private AzService azService;
     private MessageHandler messageHandler;
     private PartjobSearchAdapter searchAdapter;
+    private TextView tv_address;
     private View mainView;
+    private ViewPager viewPager;
+    private ViewGroup viewGroup;
     private AutoMarqueeTextView am_text;
     private ImageView[] pageViews, imageDots;
     private LinearLayout linearLayout_label, linearlout_left, linearlout_right;
-    private TextView tv_address;
+    private final int REQUEST_CODE_ADDRESS = 11;//åˆ‡æ¢åŸå¸‚
     private int pixelOf1dp;
-    private final int REQUEST_CODE_ADDRESS = 11;//ÇĞ»»³ÇÊĞ
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,20 +88,40 @@ public class IndexMoneyFragment extends BaseFragment {
 
             initData();
         }
-        //»º´æµÄrootViewĞèÒªÅĞ¶ÏÊÇ·ñÒÑ¾­±»¼Ó¹ıparent£¬ Èç¹ûÓĞparentĞèÒª´ÓparentÉ¾³ı£¬Òª²»È»»á·¢ÉúÕâ¸örootviewÒÑ¾­ÓĞparentµÄ´íÎó¡£
+        //ç¼“å­˜çš„rootViewéœ€è¦åˆ¤æ–­æ˜¯å¦å·²ç»è¢«åŠ è¿‡parentï¼Œ å¦‚æœæœ‰parentéœ€è¦ä»parentåˆ é™¤ï¼Œè¦ä¸ç„¶ä¼šå‘ç”Ÿè¿™ä¸ªrootviewå·²ç»æœ‰parentçš„é”™è¯¯ã€‚
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (parent != null) {
             parent.removeView(mainView);
         }
         return mainView;
     }
-
+    public  void onResume(){
+        super.onResume();
+        initHeader();
+    }
     private void initHeader(){
-        //½«activityÖĞµÄheader.xmlÒş²Ø
-        (getActivity().findViewById(R.id.layout_header)).setVisibility(View.GONE);
+        ((ImageView)getActivity().findViewById(R.id.ib_back)).setVisibility(View.INVISIBLE);
+        ((TextView)getActivity().findViewById(R.id.tv_content)).setText("çˆ±èµš");
+        ((TextView)getActivity().findViewById(R.id.tv_content)).setVisibility(View.VISIBLE);
+        ((ImageView)getActivity().findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
+        ((ImageView)getActivity().findViewById(R.id.iv_func)).setImageDrawable(getResources().getDrawable(R.drawable.search));
+        ((ImageView)getActivity().findViewById(R.id.iv_func)).setVisibility(View.VISIBLE);
+        ((TextView)getActivity().findViewById(R.id.tv_func)).setVisibility(View.INVISIBLE);
+        tv_address=(TextView)getActivity().findViewById(R.id.tv_back);
+        tv_address.setVisibility(View.VISIBLE);
+        String currentAreacode = null, currentAreaname = null;
+        if(StringUtil.isNotEmpty(GlobalConstant.getGis().getAreacode())){
+            currentAreacode = GlobalConstant.getGis().getAreacode();
+            currentAreaname = GlobalConstant.getGis().getAreaname();
+        }else{
+            currentAreacode = GlobalConstant.AREA_CODE_HANGZHOU;
+            currentAreaname = GlobalConstant.AREA_NAME_HANGZHOU;
+        }
+        tv_address.setText(currentAreaname);
+        tv_address.setTag(currentAreacode);
 
         searchAdapter = new PartjobSearchAdapter(baseActivity);
-        tv_address=(TextView)mainView.findViewById(R.id.tv_address);
+        searchAdapter.initAreaCode(currentAreacode);
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,27 +129,45 @@ public class IndexMoneyFragment extends BaseFragment {
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
-        ((TextView)mainView.findViewById(R.id.tv_search)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)getActivity().findViewById(R.id.iv_func)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), PartjobSearchActivity.class);
+                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
                 startActivity(intent);
             }
         });
+    }
+    private void initView() {
+
+
+        viewPager = (ViewPager) mainView.findViewById(R.id.img_advert);
+        viewGroup = (ViewGroup) mainView.findViewById(R.id.viewGroup);
+
+        am_text = (AutoMarqueeTextView)mainView.findViewById(R.id.am_text);
+
+        linearLayout_label = (LinearLayout) mainView.findViewById(R.id.linearLayout_label);
+        linearlout_left = (LinearLayout) mainView.findViewById(R.id.linearlout_left);
+        linearlout_right = (LinearLayout) mainView.findViewById(R.id.linearlout_right);
+
+
+        viewPager.setAdapter(new ViewPagerAdapter());
+        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
+
+
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_ADDRESS: {
                 if(Activity.RESULT_OK == resultCode) {
-                    // ·µ»Ø³ÇÊĞ±àÂë
+                    // è¿”å›åŸå¸‚ç¼–ç 
                     String code = data.getStringExtra("code");
                     String name = data.getStringExtra("name");
                     Log.i(TAG, "code=" + code + " name=" + name);
                     tv_address.setTag(code);
                     tv_address.setText(name);
-                    // Ë¢ĞÂÇøÓòÊı¾İ
+                    // åˆ·æ–°åŒºåŸŸæ•°æ®
                     searchAdapter.initAreaCode(code);
-                    // ¼ìË÷
+                    // æ£€ç´¢
                     initData();
                 }
             }
@@ -139,18 +177,33 @@ public class IndexMoneyFragment extends BaseFragment {
             }
         }
     }
-    private void initView() {
-
-        am_text = (AutoMarqueeTextView)mainView.findViewById(R.id.am_text);
-
-        linearLayout_label = (LinearLayout) mainView.findViewById(R.id.linearLayout_label);
-        linearlout_left = (LinearLayout) mainView.findViewById(R.id.linearlout_left);
-        linearlout_right = (LinearLayout) mainView.findViewById(R.id.linearlout_right);
-
-    }
-
     private void initData() {
-        //ÇëÇóÊÀ½çÏûÏ¢ÁĞ±í
+        //è¯·æ±‚å¹¿å‘Šä½ä¿¡æ¯
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Base01Request req = new Base01Request();
+                Base01Request.Banner banner = req.new Banner();
+                banner.setPlatform(GlobalConstant.TERMINAL_TYPE_ANDROID);
+                req.setBanner(banner);
+                azService.doTrans(req, Base01Response.class, new AzService.Callback<Base01Response>() {
+                    @Override
+                    public void success(Base01Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(1, resp.getBody().getBanner_list());
+                        } else {
+                            messageHandler.postMessage(2, resp.getResultMessage());
+                        }
+                    }
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
+
+        //è¯·æ±‚ä¸–ç•Œæ¶ˆæ¯åˆ—è¡¨
         azExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -189,7 +242,7 @@ public class IndexMoneyFragment extends BaseFragment {
             }
         });
 
-        //ÇëÇó±êÇ©ÁĞ±íĞÅÏ¢
+        //è¯·æ±‚æ ‡ç­¾åˆ—è¡¨ä¿¡æ¯
         azExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -214,7 +267,7 @@ public class IndexMoneyFragment extends BaseFragment {
             }
         });
 
-        //ÇëÇóÍÆ¼öÎ»ĞÅÏ¢
+        //è¯·æ±‚æ¨èä½ä¿¡æ¯
         azExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -259,6 +312,19 @@ public class IndexMoneyFragment extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 1: {
+                    List<Base01Response.Body.Banner> list = (List<Base01Response.Body.Banner>) msg.obj;
+                    setAdverts(list);
+                    break;
+                }
+                case 2: {
+                    if (null != msg.obj) {
+                        showToast("è·å–bannerä¿¡æ¯å‡ºé”™:" + msg.obj);
+                    } else {
+                        showToast("è·å–bannerä¿¡æ¯å‡ºé”™");
+                    }
+                    break;
+                }
                 case 3: {
                     List<Busi01Response.Body.Label> list = (List<Busi01Response.Body.Label>) msg.obj;
                     setLabel(list);
@@ -266,9 +332,9 @@ public class IndexMoneyFragment extends BaseFragment {
                 }
                 case 4: {
                     if (null != msg.obj) {
-                        showToast("»ñÈ¡±êÇ©ĞÅÏ¢³ö´í:" + msg.obj);
+                        showToast("è·å–æ ‡ç­¾ä¿¡æ¯å‡ºé”™:" + msg.obj);
                     } else {
-                        showToast("»ñÈ¡±êÇ©ĞÅÏ¢³ö´í");
+                        showToast("è·å–æ ‡ç­¾ä¿¡æ¯å‡ºé”™");
                     }
                     break;
                 }
@@ -279,9 +345,9 @@ public class IndexMoneyFragment extends BaseFragment {
                 }
                 case 6: {
                     if (null != msg.obj) {
-                        showToast("»ñÈ¡ÍÆ¼öÎ»ĞÅÏ¢³ö´í:" + msg.obj);
+                        showToast("è·å–æ¨èä½ä¿¡æ¯å‡ºé”™:" + msg.obj);
                     } else {
-                        showToast("»ñÈ¡ÍÆ¼öÎ»ĞÅÏ¢³ö´í");
+                        showToast("è·å–æ¨èä½ä¿¡æ¯å‡ºé”™");
                     }
                     break;
                 }
@@ -292,11 +358,15 @@ public class IndexMoneyFragment extends BaseFragment {
                 }
                 case 8: {
                     if (null != msg.obj) {
-                        showToast("»ñÈ¡ÍÆ¼öÎ»ĞÅÏ¢³ö´í:" + msg.obj);
+                        showToast("è·å–æ¨èä½ä¿¡æ¯å‡ºé”™:" + msg.obj);
                     } else {
-                        showToast("»ñÈ¡ÍÆ¼öÎ»ĞÅÏ¢³ö´í");
+                        showToast("è·å–æ¨èä½ä¿¡æ¯å‡ºé”™");
                     }
                     break;
+                }
+                case 9: {
+                    // åˆ‡æ¢å½“å‰æ˜¾ç¤ºçš„å›¾ç‰‡
+                    viewPager.setCurrentItem((int) msg.obj);
                 }
                 default: {
                     super.handleMessage(msg);
@@ -403,13 +473,88 @@ public class IndexMoneyFragment extends BaseFragment {
         }
     }
 
+    /**
+     * æŒ‡å¼•é¡µé¢Adapter
+     */
+    class ViewPagerAdapter extends PagerAdapter {
+        @Override
+        public int getCount() {
+            return null == pageViews ? 0 : pageViews.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup arg0, int arg1, Object arg2) {
+            arg0.removeView(pageViews[arg1]);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup arg0, int arg1) {
+            View view = pageViews[arg1];
+            arg0.addView(view);
+            Base01Response.Body.Banner banner = (Base01Response.Body.Banner) view.getTag();
+
+            final String linkUrl = banner.getRedirecturl();
+            final String title = banner.getTitle();
+            pageViews[arg1].setOnClickListener(new View.OnClickListener() {
+                public void onClick(final View arg0) {
+                    if (StringUtil.isEmpty(linkUrl)) return;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title);
+                    bundle.putString("url", linkUrl);
+
+                    Intent intent = new Intent(arg0.getContext(), BannerDetailActivity.class);
+                    intent.putExtras(bundle);
+                    arg0.getContext().startActivity(intent);
+                }
+            });
+            return view;
+        }
+
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
+    }
 
 
+    /**
+     * æŒ‡å¼•é¡µé¢æ”¹ç›‘å¬å™¨
+     */
+    class GuidePageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+            for (int i = 0; i < imageDots.length; i++) {
+                imageDots[arg0].setBackgroundResource(R.drawable.page_indicator_focused);
+                if (arg0 != i) {
+                    imageDots[i].setBackgroundResource(R.drawable.page_indicator);
+                }
+            }
+        }
+    }
 
     @Override
     public void onStart() {
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        // µ±ActivityÏÔÊ¾³öÀ´ºó£¬Ã¿3ÃëÖÓÇĞ»»Ò»´ÎÍ¼Æ¬ÏÔÊ¾
+        // å½“Activityæ˜¾ç¤ºå‡ºæ¥åï¼Œæ¯3ç§’é’Ÿåˆ‡æ¢ä¸€æ¬¡å›¾ç‰‡æ˜¾ç¤º
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             private int currentItem = 0;
 
@@ -423,9 +568,42 @@ public class IndexMoneyFragment extends BaseFragment {
 
     @Override
     public void onStop() {
-        // µ±Activity²»¿É¼ûµÄÊ±ºòÍ£Ö¹ÇĞ»»
+        // å½“Activityä¸å¯è§çš„æ—¶å€™åœæ­¢åˆ‡æ¢
         scheduledExecutorService.shutdown();
         super.onStop();
+    }
+
+
+    public void setAdverts(List<Base01Response.Body.Banner> adverts) {
+        {
+            pageViews = new ImageView[adverts.size()];
+            for (int i = 0; i < adverts.size(); i++) {
+                Base01Response.Body.Banner banner = adverts.get(i);
+                ImageView imageView = new ImageView(getActivity());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setTag(banner);
+
+                pageViews[i] = imageView;
+
+                //æ·»åŠ ä¸‹è½½ä»»åŠ¡
+                //new DownloadTask().execute(adverts.get(i).getImgUrl(), imageView);
+                bitmapUtil.getImage(imageView, banner.getImgurl());
+            }
+        }
+        {
+            imageDots = new ImageView[adverts.size()];
+            for (int i = 0; i < adverts.size(); i++) {
+                ImageView imageView = new ImageView(getActivity());
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(20, 20));
+                imageView.setPadding(20, 0, 20, 0);
+                imageView.setBackgroundResource(i == 0 ? R.drawable.page_indicator_focused : R.drawable.page_indicator);//é»˜è®¤é€‰ä¸­ç¬¬ä¸€å¼ å›¾ç‰‡
+                viewGroup.addView(imageView);
+                imageDots[i] = imageView;
+//			group.getChildAt(i)
+            }
+        }
+        viewPager.setAdapter(new ViewPagerAdapter());
+        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
     }
 
     @Override

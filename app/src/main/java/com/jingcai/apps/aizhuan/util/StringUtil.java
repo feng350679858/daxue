@@ -116,7 +116,7 @@ public class StringUtil {
      * @return boolean
      */
     public static boolean isNumber(String str){
-        return str.matches("$\\d+^");
+        return str.matches("^\\d+$");
     }
 
     /**

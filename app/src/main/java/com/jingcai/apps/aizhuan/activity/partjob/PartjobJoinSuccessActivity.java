@@ -46,13 +46,13 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
     }
 
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("报名成功");
+        ((TextView)findViewById(R.id.tv_content)).setText("鎶ュ悕鎴愬姛");
         findViewById(R.id.ib_back).setVisibility(View.GONE);
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
         ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
         TextView tv_info=(TextView)findViewById(R.id.tv_func);
         tv_info.setVisibility(View.VISIBLE);
-        tv_info.setText("完成");
+        tv_info.setText("瀹屾垚");
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,7 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
         findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                umengShareUtil.setShareContent("兼职分享", msg, url, logopath);
+                umengShareUtil.setShareContent("鍏艰亴鍒嗕韩", msg, url, logopath);
                 umengShareUtil.openShare();
             }
         });

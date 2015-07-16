@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00f0f0"
-    android:gravity="center">
-    <TextView
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button_start_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:text="1"
-        />
+        android:text="开始计数" />
+
+    <Button
+        android:id="@+id/button_show_unread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示未读" />
+
+    <Button
+        android:id="@+id/button_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重置计数" />
 
 </LinearLayout>

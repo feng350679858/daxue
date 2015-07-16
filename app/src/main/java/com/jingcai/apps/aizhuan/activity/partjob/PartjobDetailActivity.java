@@ -54,13 +54,13 @@ public class PartjobDetailActivity extends BaseActivity {
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
     /**
-     * ½ÓÊÜµ½µÄÊı¾İ
+     * æ¥å—åˆ°çš„æ•°æ®
      */
     private Partjob02Response.Partjob02Body.Parttimejob mParttimejob;
     private String joinnum,workernum,gisx,gisy;
     /**
      *
-     * ¿Ø¼ş
+     * æ§ä»¶
      */
     private ImageView partjob_content_top,partjob_content_logo,partjob_content_location;
     private TextView partjob_content_title,partjob_content_salary,partjob_content_salaryunit,partjob_content_address;
@@ -83,11 +83,11 @@ public class PartjobDetailActivity extends BaseActivity {
         messageHandler = new MessageHandler(this);
         bitmapUtil = new BitmapUtil(this);
         initHeader();
-        initView(); //³õÊ¼»¯¿Ø¼ş
-        initData();  //Ìî³äÊı¾İ
+        initView(); //åˆå§‹åŒ–æ§ä»¶
+        initData();  //å¡«å……æ•°æ®
     }
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("¼æÖ°ÏêÇé");
+        ((TextView)findViewById(R.id.tv_content)).setText("å…¼èŒè¯¦æƒ…");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,16 +96,16 @@ public class PartjobDetailActivity extends BaseActivity {
         });
         TextView tv_info = (TextView)findViewById(R.id.tv_func);
         tv_info.setVisibility(View.VISIBLE);
-        tv_info.setText("·ÖÏí");
+        tv_info.setText("åˆ†äº«");
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
-               String msg = "ÎÒ·¢ÏÖÁËÒ»¸ö¼æÖ°£º"+partjob_content_title.getText().toString()+
-                       ",¾ÓÈ»"+partjob_content_salary.getText().toString()+
-                       partjob_content_salaryunit.getText().toString()+
-                       "µÄ¹¤×Ê,µØµã¾ÍÔÚ£º"+partjob_content_address.getText().toString()+
-                       "¡£ÏÖÔÚ»¹ÓĞ"+num+"¸öÃû¶î£¬»¹²»¿ìÀ´¿´¿´£º";
+                int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
+                String msg = "æˆ‘å‘ç°äº†ä¸€ä¸ªå…¼èŒï¼š"+partjob_content_title.getText().toString()+
+                        ",å±…ç„¶"+partjob_content_salary.getText().toString()+
+                        partjob_content_salaryunit.getText().toString()+
+                        "çš„å·¥èµ„,åœ°ç‚¹å°±åœ¨ï¼š"+partjob_content_address.getText().toString()+
+                        "ã€‚ç°åœ¨è¿˜æœ‰"+num+"ä¸ªåé¢ï¼Œè¿˜ä¸å¿«æ¥çœ‹çœ‹ï¼š";
 
                 postShareMessage(msg);
             }
@@ -140,7 +140,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_remarks=(TextView)findViewById(R.id.partjob_content_remarks);
     }
     private void initData(){
-        showProgressDialog("Êı¾İ¼ÓÔØÖĞ...");
+        showProgressDialog("æ•°æ®åŠ è½½ä¸­...");
         new AzExecutor().execute(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -187,11 +187,11 @@ public class PartjobDetailActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("»ñÈ¡±¨ÃûÏêÇé³ö´í£º" + msg.obj);
+                    showToast("è·å–æŠ¥åè¯¦æƒ…å‡ºé”™ï¼š" + msg.obj);
                     break;
                 }
                 case 3: {
-//                    showToast("»ñÈ¡ÓÃ»§ĞÅÏ¢Ê§°Ü");
+//                    showToast("è·å–ç”¨æˆ·ä¿¡æ¯å¤±è´¥");
 //                    setResult(RESULT_CANCELED, null);
 //                    finish();
                     break;
@@ -204,11 +204,11 @@ public class PartjobDetailActivity extends BaseActivity {
     }
 
     /**
-     * Ìî³äÊı¾İ
+     * å¡«å……æ•°æ®
      */
     private void fillDataInView() {
         /*
-         * ¼æÖ°ÏêÇé
+         * å…¼èŒè¯¦æƒ…
          */
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
@@ -216,7 +216,7 @@ public class PartjobDetailActivity extends BaseActivity {
         PartjobListAdapter.setSettlelength(partjob_content_settlelength, mParttimejob.getSettlelength());
         joinnum=mParttimejob.getJoinnum();
         workernum=mParttimejob.getWorkernum();
-        SpannableStringBuilder builder = new SpannableStringBuilder(mParttimejob.getJoinnum()+"/"+mParttimejob.getWorkernum()+"ÈË");
+        SpannableStringBuilder builder = new SpannableStringBuilder(mParttimejob.getJoinnum()+"/"+mParttimejob.getWorkernum()+"äºº");
         ForegroundColorSpan redSpan = new ForegroundColorSpan(R.color.red_normal);
         builder.setSpan(redSpan, 0, mParttimejob.getJoinnum().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         partjob_content_peoplenum.setText(builder);
@@ -226,26 +226,26 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_address.setText(mParttimejob.getAddress());
         partjob_content_workcontent.setText(mParttimejob.getWorkcontent());
         if("0".equals(mParttimejob.getHeightupperlimit())&& "0".equals(mParttimejob.getHeightlowerlimit()))
-            partjob_content_heightlimit.setText("1.Éí¸ß£º²»ÏŞ");
+            partjob_content_heightlimit.setText("1.èº«é«˜ï¼šä¸é™");
         else
-            partjob_content_heightlimit.setText("1.Éí¸ß£º"+mParttimejob.getHeightlowerlimit()+"~"+mParttimejob.getHeightupperlimit());
-        partjob_content_healthlimit.setText("2.ÊÇ·ñĞèÒª½¡¿µÖ¤£º"+mParttimejob.getHealthlimit());
-        partjob_content_genderlimit.setText("3.ĞÔ±ğ£º"+mParttimejob.getGenderlimit());
+            partjob_content_heightlimit.setText("1.èº«é«˜ï¼š"+mParttimejob.getHeightlowerlimit()+"~"+mParttimejob.getHeightupperlimit());
+        partjob_content_healthlimit.setText("2.æ˜¯å¦éœ€è¦å¥åº·è¯ï¼š"+mParttimejob.getHealthlimit());
+        partjob_content_genderlimit.setText("3.æ€§åˆ«ï¼š"+mParttimejob.getGenderlimit());
         partjob_content_remarks.setText(mParttimejob.getRemarks());
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time=format.format(c1.getTime());
         if(time.compareTo(mParttimejob.getEndtime())>0){
-            partjob_isjoin.setText("ÒÑ½ØÖ¹");
+            partjob_isjoin.setText("å·²æˆªæ­¢");
             partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
         }
         else if("1".equals(mParttimejob.getIsjoin())){
-            partjob_isjoin.setText("ÒÑ±¨Ãû");
+            partjob_isjoin.setText("å·²æŠ¥å");
             partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
         }
         else{
-            partjob_isjoin.setText("ÎÒÒª±¨Ãû");
+            partjob_isjoin.setText("æˆ‘è¦æŠ¥å");
             partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_pressed));
         }
         gisx=mParttimejob.getGisx();
@@ -258,7 +258,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 else if("1".equals(UserSubject.getLevel()))
                     fullfillProfile();
                 else if(!UserSubject.getGender().equals(mParttimejob.getGenderlimit())) {
-                    Toast toast = Toast.makeText(PartjobDetailActivity.this, "¶Ô²»Æğ£¬ÄúËù±¨µÄ¼æÖ°ĞÔ±ğ²»·û", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(PartjobDetailActivity.this, "å¯¹ä¸èµ·ï¼Œæ‚¨æ‰€æŠ¥çš„å…¼èŒæ€§åˆ«ä¸ç¬¦", Toast.LENGTH_LONG);
                     toast.show();
                 }
                 else{
@@ -269,7 +269,7 @@ public class PartjobDetailActivity extends BaseActivity {
                     PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
                     PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), "0", mParttimejob.getWorkdays());
                     ((TextView)contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
-                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("Äú¼´½«±¨Ãû"+mParttimejob.getTitle()+"¼æÖ°¡£7ÌìÄÚ£¬Äú½öÓĞÒ»´ÎÈ¡Ïû±¨ÃûµÄÈ¨ÏŞ£¬ÇëÈ·±£ÄãÄÜ°´Ê±Ç°Íù²¢¼°Ê±ÁªÏµÉÌ¼Ò¡£");
+                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("æ‚¨å³å°†æŠ¥å"+mParttimejob.getTitle()+"å…¼èŒã€‚7å¤©å†…ï¼Œæ‚¨ä»…æœ‰ä¸€æ¬¡å–æ¶ˆæŠ¥åçš„æƒé™ï¼Œè¯·ç¡®ä¿ä½ èƒ½æŒ‰æ—¶å‰å¾€å¹¶åŠæ—¶è”ç³»å•†å®¶ã€‚");
                     contentView.findViewById(R.id.partjob_detail_popup_cancel).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -280,10 +280,10 @@ public class PartjobDetailActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
-                            String msg = "ÇóÍ¬ĞĞºÃÓÑ£¡ÎÒ¸Õ²ÅÔÚ¼æÖ°ÍÃ±¨ÃûÁËÒ»¸ö"+partjob_content_title.getText().toString()+
-                                    ",Ğ½×Ê¿ÉÊÇ"+partjob_content_salary.getText().toString()+
+                            String msg = "æ±‚åŒè¡Œå¥½å‹ï¼æˆ‘åˆšæ‰åœ¨å…¼èŒå…”æŠ¥åäº†ä¸€ä¸ª"+partjob_content_title.getText().toString()+
+                                    ",è–ªèµ„å¯æ˜¯"+partjob_content_salary.getText().toString()+
                                     partjob_content_salaryunit.getText().toString()+
-                                    "£¡ÓĞÃ»ÓĞÒ»ÆğµÄ£¬»¹ÓĞ"+num+"¸öÃû¶î£¬£¬¿ìµã»÷£º";
+                                    "ï¼æœ‰æ²¡æœ‰ä¸€èµ·çš„ï¼Œè¿˜æœ‰"+num+"ä¸ªåé¢ï¼Œï¼Œå¿«ç‚¹å‡»ï¼š";
                             joinSuccess(msg,mParttimejob.getPhone());
                         }
                     });
@@ -310,17 +310,17 @@ public class PartjobDetailActivity extends BaseActivity {
     }
 
     /**
-     * ·ÖÏí
+     * åˆ†äº«
      * @param msg
      */
     public void postShareMessage(String msg) {
         Log.d("==msg", msg);
 
-        umengShareUtil.setShareContent("¼æÖ°·ÖÏí", msg + getShareUrl(), getShareUrl(), logopath);
+        umengShareUtil.setShareContent("å…¼èŒåˆ†äº«", msg + getShareUrl(), getShareUrl(), logopath);
         umengShareUtil.openShare();
     }
     /**
-     * ÏÔÊ¾µØÍ¼
+     * æ˜¾ç¤ºåœ°å›¾
      * @param gisx
      * @param gisy
      */
@@ -333,49 +333,49 @@ public class PartjobDetailActivity extends BaseActivity {
         startActivity(intent);
     }
 
-        /**
-         * ±¨Ãû³É¹¦»Øµ÷·½·¨
-         * @param msg
-         * @param tel
-         */
-        public void joinSuccess(String msg, String tel) {
-            showToast("±¨Ãû³É¹¦");
-            Log.d("==", msg);
-            Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("partjobid", partjobid);
-            bundle.putString("msg", msg);
-            bundle.putString("tel", tel);
-            bundle.putString("url", getShareUrl());
-            bundle.putString("logopath", logopath);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
-        }
+    /**
+     * æŠ¥åæˆåŠŸå›è°ƒæ–¹æ³•
+     * @param msg
+     * @param tel
+     */
+    public void joinSuccess(String msg, String tel) {
+        showToast("æŠ¥åæˆåŠŸ");
+        Log.d("==", msg);
+        Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("partjobid", partjobid);
+        bundle.putString("msg", msg);
+        bundle.putString("tel", tel);
+        bundle.putString("url", getShareUrl());
+        bundle.putString("logopath", logopath);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
+    }
 
-        /**
-         * ÇëÇóÖØĞÂµÇÂ¼
-         */
-        public void requestLogin() {
-            Log.d("==", "requestLogin");
-            startActivityForLogin();
-        }
+    /**
+     * è¯·æ±‚é‡æ–°ç™»å½•
+     */
+    public void requestLogin() {
+        Log.d("==", "requestLogin");
+        startActivityForLogin();
+    }
 
-        /**
-         * ÍêÉÆ×ÊÁÏ
-         */
-        public void fullfillProfile(){
-         //   Intent intent = new Intent(PartjobDetailActivity.this, ProfileImproveActivity.class);
-          //  startActivity(intent);
-        }
-        /**
-         * ´òµç»°
-         */
-        public void callTel(String tel){
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:" + tel));
-            startActivity(intent);
-        }
+    /**
+     * å®Œå–„èµ„æ–™
+     */
+    public void fullfillProfile(){
+        //   Intent intent = new Intent(PartjobDetailActivity.this, ProfileImproveActivity.class);
+        //  startActivity(intent);
+    }
+    /**
+     * æ‰“ç”µè¯
+     */
+    public void callTel(String tel){
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + tel));
+        startActivity(intent);
+    }
 
 
     @Override

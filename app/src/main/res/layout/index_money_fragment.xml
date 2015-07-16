@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/content_background"
     android:orientation="vertical">
-
-    <include layout="@layout/index_partjob_header"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,26 +12,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/img_advert"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/white" />
+            <LinearLayout
+                android:id="@+id/viewGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/img_advert"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"/>
+            <com.jingcai.apps.aizhuan.view.AutoMarqueeTextView
+                android:id="@+id/am_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_advert"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/icon_voice"
+                android:drawablePadding="5dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text=""
+                android:textAlignment="center"
+                android:textSize="16sp" />
             <LinearLayout
                 android:id="@+id/linearLayout_jingxuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/am_text"
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="优质精选"
+                    android:textColor="@color/font_important"
+                    android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="优质精选"
+                        android:layout_alignParentRight="true"
+                        android:text="更多"
+                        android:background="@color/white"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:drawableRight="@drawable/triangle_right"
+                        android:drawablePadding="5dp"/>
+                </RelativeLayout>
                 <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scrollbarAlwaysDrawHorizontalTrack="false"
-                    android:scrollbars="none">
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollbars="none">
                     <LinearLayout
                         android:id="@+id/linearLayout_label"
                         android:layout_width="wrap_content"
@@ -42,51 +91,45 @@
                         android:padding="5dp"/>
                 </HorizontalScrollView>
             </LinearLayout>
-            <LinearLayout android:id="@+id/tv_tongcheng"
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@id/linearLayout_jingxuan">
+                >
+                <RelativeLayout
+                    android:id="@+id/tv_tongcheng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_below="@+id/linearLayout_jingxuan">
-            <TextView
+            android:gravity="center_vertical">
+                    <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linearLayout_jingxuan"
+
                 android:padding="5dp"
                 android:text="同城短期"
                 android:textColor="@color/font_important"
                 android:textSize="16sp" />
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="@color/content_background" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_alignParentRight="true"
+                android:text="更多"
+                android:textColor="@color/font_important"
+                android:textSize="16sp"
+                android:drawableRight="@drawable/triangle_right"
+                android:drawablePadding="5dp"/>
+        </RelativeLayout>
 
-    <com.jingcai.apps.aizhuan.view.AutoMarqueeTextView
-        android:id="@+id/am_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:drawableLeft="@drawable/icon_voice"
-        android:drawablePadding="5dp"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text=""
-        android:textAlignment="center"
-        android:textSize="16sp" />
-</LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_tongcheng"
                 android:orientation="horizontal"
                 android:padding="5dp">
-
                 <LinearLayout
                     android:id="@+id/linearlout_left"
                     android:layout_width="match_parent"
@@ -103,6 +146,7 @@
                     android:orientation="vertical"
                     android:padding="5dp"/>
             </LinearLayout>
+        </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

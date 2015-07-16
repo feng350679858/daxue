@@ -27,13 +27,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/list_item_logo_text_margin">
+                android:layout_marginLeft="@dimen/list_item_logo_text_margin_large">
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/important_dark"
-                    android:textSize="18sp"
+                    style="@style/title"
                     android:text="林三"/>
                 <ImageView
                     android:id="@+id/iv_level"
@@ -48,7 +47,7 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/assist_grey"
+                    style="@style/time"
                     android:text="12:12"/>
                 </LinearLayout>
             <LinearLayout
@@ -57,13 +56,12 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/list_item_logo_text_margin">
+                android:layout_marginLeft="@dimen/list_item_logo_text_margin_large">
                 <TextView
                     android:id="@+id/tv_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/assist_grey"
-                    android:textSize="14sp"
+                    style="@style/sub_title"
                     android:maxWidth="250sp"
                     android:ellipsize="end"
                     android:singleLine="true"

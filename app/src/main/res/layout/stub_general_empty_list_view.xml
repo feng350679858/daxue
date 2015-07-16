@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_empty_text"
+            android:drawableTop="@drawable/empty_list_message_merchant"
+            android:drawablePadding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="123123"
+            android:gravity="center_horizontal"
+            android:textColor="@color/assist_grey"
+            android:textSize="16sp" />
+
+</LinearLayout>

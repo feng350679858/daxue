@@ -26,4 +26,8 @@
     <color name="content_background">#f3f5f7</color>
     <!--partjob-->
     <color name="partjob_search_bg_color">#3D3D3D</color>
+    <!-- 用于图片边缘border -->
+    <color name="circle_image_border">#dddddd</color>
+
+>>>>>>> master
 </resources>

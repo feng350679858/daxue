@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button_start_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始计数" />
+
+    <Button
+        android:id="@+id/button_show_unread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示未读" />
+
+    <Button
+        android:id="@+id/button_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重置计数" />
+
+    <Button
+        android:id="@+id/button_jishi_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="及时求助" />
+
+    <Button
+        android:id="@+id/button_wenda_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="问答求助" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="aaaaaaaa" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="bbbbbbbb"
+        android:numeric="signed"
+        android:gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/et_pay_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/help_jishi_content_bg"
+        android:gravity="center"
+        android:hint="不低于20金"
+        android:numeric="integer"
+        android:maxLength="5"
+        android:textSize="14sp" />
+</LinearLayout>

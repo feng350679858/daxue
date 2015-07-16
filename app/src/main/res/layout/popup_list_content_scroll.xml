@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:divider="@drawable/fieldset_divider"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+
+    <ListView
+        android:id="@+id/lv_pop_list"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:divider="@color/divider_color"
+        android:dividerHeight="1dp">
+
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_item_bg"
+        android:padding="15dp"
+        android:src="@drawable/icon_cancel"/>
+</LinearLayout>

@@ -18,7 +18,6 @@
 
     <!-- 发送短信 -->
     <uses-permission android:name="android.permission.SEND_SMS" />
-
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位 -->
@@ -87,10 +86,11 @@
             android:name=".activity.partjob.PartjobJoinSuccessActivity"
             android:label="@string/title_activity_partjob_join_success" >
         </activity>
+        <activity
+            android:name=".activity.partjob.LocationCityActivity"
+            android:label="@string/title_activity_partjob_join_success" >
+        </activity>
 
-        <meta-data
-            android:name="SECRET_KEY"
-            android:value="123" />
 
         <activity
             android:name=".activity.partjob.PartjobDetailActivity"
@@ -104,6 +104,24 @@
             android:name=".activity.partjob.PartjobSearchActivity"
             android:label="@string/title_activity_partjob_search" >
         </activity>
+        <!-- help -->
+        <activity android:name=".activity.help.JishiHelpDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
+
+        <!-- sys -->
+        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
+
+        <!-- Message -->
+        <activity android:name=".activity.message.MessageCommentActivity"   />
+        <activity android:name=".activity.message.MessageCommendActivity"   />
+        <activity android:name=".activity.message.MessageMerchantActivity"   />
+        <activity android:name=".activity.message.MessageNotificationActivity"   />
+        <activity android:name=".activity.message.NotificationDetailActivity"   />
+
+        <!-- service -->
+        <service android:name=".service.local.UnreadMsgService"/>
+
+        <!-- meta-data -->
+        <meta-data android:name="SECRET_KEY" android:value="123" />
     </application>
 
 </manifest>

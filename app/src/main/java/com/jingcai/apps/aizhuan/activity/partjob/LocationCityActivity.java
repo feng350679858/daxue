@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ private void initHeader(){
     ((TextView) findViewById(R.id.tv_content)).setText("切换城市");
     findViewById(R.id.iv_func).setVisibility(View.INVISIBLE);
     findViewById(R.id.iv_bird_badge).setVisibility(View.INVISIBLE);
+    ((ImageView)findViewById(R.id.ib_back)).setImageDrawable(getResources().getDrawable(R.drawable.icon_cancel2));
     findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
