@@ -81,13 +81,13 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private void initView() {
         et_content = (EditText) findViewById(R.id.et_content);
         et_secret = (EditText) findViewById(R.id.et_secret);
-        tv_gender = (TextView) findViewById(R.id.et_gender);
-        tv_group = (TextView) findViewById(R.id.et_group);
+        tv_gender = (TextView) findViewById(R.id.tv_gender);
+        tv_group = (TextView) findViewById(R.id.tv_group);
         iv_friend_clear = findViewById(R.id.iv_friend_clear);
         layout_friend_selected = findViewById(R.id.layout_friend_selected);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
-        tv_end_time = (TextView) findViewById(R.id.et_end_time);
+        tv_end_time = (TextView) findViewById(R.id.tv_end_time);
 
         et_pay_money.addTextChangedListener(new GoldWatcher(et_pay_money));
 
@@ -128,8 +128,15 @@ public class HelpJishiDeployActivity extends BaseActivity {
                             .setContentView(contentView)
                             .build();
 
+                    groupWin.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            groupWin.dismiss();
+                        }
+                    });
+
                     groupAdapter = new GroupAdapter(HelpJishiDeployActivity.this);
-                    groupListView = (XListView) contentView.findViewById(R.id.xlv_list);
+                    groupListView = (XListView) groupWin.findViewById(R.id.xlv_list);
                     groupListView.setAdapter(groupAdapter);
 
                     groupListView.setPullRefreshEnable(true);

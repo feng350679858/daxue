@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.help.HelpJishiDeployActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDeployActivity;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 
 /**
@@ -66,7 +67,8 @@ public class IndexReleaseFragment extends Fragment implements View.OnClickListen
                 break;
             }
             case R.id.button_wenda_help: {
-
+                Intent intent = new Intent(this.getActivity(), HelpWendaDeployActivity.class);
+                startActivity(intent);
                 break;
             }
         }

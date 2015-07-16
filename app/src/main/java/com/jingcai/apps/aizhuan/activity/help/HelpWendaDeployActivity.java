@@ -6,6 +6,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +46,17 @@ public class HelpWendaDeployActivity extends BaseActivity {
     private Button btn_wenda_help;
     private EditText et_content;
 
+    // 定义字符串数组作为提示的文本
+    String[] books = new String[] {"Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
+            "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
+            "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan",
+            "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
+            "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+            "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory",
+            "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+            //只写了一部分
+            "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"  };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +83,13 @@ public class HelpWendaDeployActivity extends BaseActivity {
 
 
     private void initView() {
-        et_content = (EditText) findViewById(R.id.et_content);
+        // 创建一个ArrayAdapter封装数组
+        ArrayAdapter<String> av = new ArrayAdapter<String>(this,
+                R.layout.popup_list_item2, books);
+        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
+        auto.setAdapter(av);
+
+//        et_content = (EditText) findViewById(R.id.et_content);
 
         btn_wenda_help = (Button) findViewById(R.id.btn_wenda_help);
 
@@ -122,7 +141,7 @@ public class HelpWendaDeployActivity extends BaseActivity {
                     break;
                 }
                 case 3: {
-                    showToast("发布即时帮助成功！");
+                    showToast("发布求问成功！");
                     finish();
                     break;
                 }

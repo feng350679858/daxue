@@ -28,13 +28,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_help_jishi_content" />
+                    android:src="@drawable/icon_help_wenda_topic" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="求助内容"
+                    android:text="话题"
                     android:textSize="14sp" />
 
                 <View
@@ -46,20 +46,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="剩余70字"
+                    android:text="剩余15字"
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_content"
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView1"
                 android:layout_width="match_parent"
-                android:layout_height="84dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_jishi_content_bg"
-                android:gravity="top"
-                android:singleLine="false"
-                android:text="打发打发打发阿发生的发顺丰爱对方答复adfadfa短发发到短发短发的飞代发地方\nad阿道打扫房间啊"
-                android:textSize="14sp" />
+                android:completionHint="请选择你的话题"
+                android:completionThreshold="1"
+                android:dropDownHorizontalOffset="-10dp"
+                android:dropDownWidth="match_parent"
+                android:gravity="center_vertical"
+                android:hint="输入你的话题"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textSize="14sp">
+
+                <requestFocus />
+            </AutoCompleteTextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="隐私部分"
+                    android:text="问题"
                     android:textSize="14sp" />
 
                 <View
@@ -89,104 +97,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="剩余70字"
+                    android:text="剩余512字"
                     android:textSize="12sp" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_secret"
                 android:layout_width="match_parent"
-                android:layout_height="84dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_jishi_content_bg"
                 android:gravity="top"
-                android:hint="只有帮助你的人才能看到的消息"
+                android:hint="请描述你的问题"
                 android:singleLine="false"
                 android:textSize="14sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_help_jishi_gender" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="性别要求"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/et_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/help_jishi_content_bg2"
-                        android:drawableRight="@drawable/help_jishi_arrow1_down"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="不限"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_help_jishi_group" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="所在圈子"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/et_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/help_jishi_content_bg2"
-                        android:drawableRight="@drawable/help_jishi_arrow1_down"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="浙江大学"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
-                </LinearLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -198,185 +123,45 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_help_jishi_friend" />
+                    android:src="@drawable/icon_help_jishi_group" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="指定老友"
+                    android:text="所在圈子"
                     android:textSize="14sp" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_friend_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/icon_cancel2" />
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/help_jishi_content_bg2"
-                android:clickable="true">
-
-                <TextView
-                    android:id="@+id/tv_friend"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dp"
-                    android:drawableRight="@drawable/help_jishi_arrow1_down"
-                    android:gravity="center"
-                    android:hint="可指定在线的并帮助过你的朋友再次帮助你"
-                    android:singleLine="true"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/layout_friend_selected"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/icon_cancel2" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="夏邑"
-                            android:textSize="16sp"
-                            android:textColor="@color/important_dark" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="浙江理工大学-经贸学院"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/help_jishi_arrow1_down" />
-                </LinearLayout>
-
-            </FrameLayout>
-            <!--
             <TextView
-                android:id="@+id/et_friend"
+                android:id="@+id/tv_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_jishi_content_bg2"
                 android:drawableRight="@drawable/help_jishi_arrow1_down"
                 android:gravity="center"
-                android:hint="可指定在线的并帮助过你的朋友再次帮助你"
                 android:singleLine="true"
-                android:textSize="14sp" />-->
+                android:text="浙江大学"
+                android:textColor="@color/important_dark"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <CheckBox
+                    android:id="@+id/cb_hidden_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_help_jishi_thank_money" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="酬谢金额"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/et_pay_money"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/help_jishi_content_bg"
-                        android:gravity="center"
-                        android:hint="不低于20金"
-                        android:maxLength="5"
-                        android:numeric="integer"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_help_jishi_end_time" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="截止时间"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/et_end_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/help_jishi_content_bg2"
-                        android:drawableRight="@drawable/help_jishi_arrow1_down"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="30分钟"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
-                </LinearLayout>
+                    android:button="@null"
+                    android:drawableLeft="@drawable/help_wenda_hidden"
+                    android:drawablePadding="10dp"
+                    android:text="匿名发布"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
