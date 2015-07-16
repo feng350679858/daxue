@@ -110,6 +110,10 @@ public class SwipeLayout extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        int actionMasked = ev.getActionMasked();
+//        if(actionMasked == MotionEvent.ACTION_DOWN){
+//            return false;
+//        }
         if(viewDragHelper.shouldInterceptTouchEvent(ev)) {
             return true;
         }

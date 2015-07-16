@@ -1,10 +1,14 @@
 package com.jingcai.apps.aizhuan.util;
 
 import android.app.Application;
+import android.util.Log;
 
+import com.easemob.chat.EMChat;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 
 public class ApplicationEx extends Application {
+    private static final String TAG = "ApplicationEx";
 //	public static Database database;
 
 //	public LocationClient mLocationClient;
@@ -19,7 +23,20 @@ public class ApplicationEx extends Application {
 		AppUtil.loadProperties(this);//加载配置文件
         Preferences.loadSettings(this);
 
-		//=============定位
+        try {
+            //环信im
+            EMChat.getInstance().init(this);
+            /**
+             * debugMode == true 时为打开，sdk 会在log里输入调试信息
+             * @param debugMode
+             * 在做代码混淆的时候需要设置成false
+             */
+            EMChat.getInstance().setDebugMode(GlobalConstant.debugFlag);
+        } catch (Exception e) {
+            Log.e(TAG,"Init EMChat failed,Please check.");
+        }
+
+        //=============定位
 //		mLocationClient = new LocationClient(this.getApplicationContext());
 //
 //		mLocationClient.setLocOption(getLocationOption());

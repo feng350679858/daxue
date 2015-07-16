@@ -7,4 +7,16 @@
     <string name="index_tab_mine">我的</string>
     <string name="empty_merchant_list_tip">报名兼职之后，才会有商家哦！</string>
     <string name="empty_notification_list_tip">还没有收到任何消息呢！</string>
+
+    <!-- 聊天模块字符串资源 -->
+    <string name="bnt_send_msg_text">发送</string>
+    <string name="btn_text_press_to_talk">按住 说话</string>
+    <string name="text_ack_msg">已读</string>
+    <string name="text_delivered_msg">送达</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="attach_picture">图片</string>
+    <string name="attach_location">位置</string>
+    <string name="sd_card_does_not_exist">未挂载SD卡</string>
+    <string name="send_fail">发送失败</string>
+    <string name="connect_failuer_toast">网络接连失败</string>
 </resources>

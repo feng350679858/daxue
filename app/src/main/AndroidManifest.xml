@@ -74,10 +74,12 @@
         <activity android:name=".activity.message.MessageMerchantActivity"   />
         <activity android:name=".activity.message.MessageNotificationActivity"   />
         <activity android:name=".activity.message.NotificationDetailActivity"   />
+        <activity android:name=".activity.message.MessageChatActivity"   />
 
         <service android:name=".service.local.UnreadMsgService"/>
 
         <meta-data android:name="SECRET_KEY" android:value="123" />
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="lee513579#izhuanc2ctest" />
     </application>
 
 </manifest>

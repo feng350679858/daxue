@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
+import com.jingcai.apps.aizhuan.activity.message.MessageChatActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
@@ -88,7 +89,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
                     break;
             }
         }else{//消息对话
-
+            intent = new Intent(baseActivity, MessageChatActivity.class);
         }
         if(null != intent){
             startActivity(intent);

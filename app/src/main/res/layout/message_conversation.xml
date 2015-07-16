@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:src="@drawable/icon_message_conversation_keyboard" />
+            android:src="@drawable/chatting_setmode_text_btn_selector" />
 
         <LinearLayout
             android:id="@+id/ll_input_type_text"
@@ -73,7 +73,7 @@
                 android:background="@color/assist_grey" />
         </LinearLayout>
 
-        <com.jingcai.aizhuan.huanxin.widget.AudioRecordButton
+        <com.jingcai.apps.aizhuan.view.AudioRecordButton
             android:id="@+id/btn_record"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:id="@+id/btn_send_msg"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/green_btn_bg_selector"
+            android:background="@drawable/yellow_btn_bg_selector"
             android:gravity="center"
             android:padding="7dp"
             android:text="@string/bnt_send_msg_text"
@@ -103,7 +103,7 @@
 
         <ImageButton
             android:id="@+id/btn_func_picker"
-            android:layout_width="35dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7.5dp"
             android:layout_marginRight="7.5dp"
