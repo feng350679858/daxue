@@ -30,6 +30,8 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys05.Sys05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.view.OnToggleStateChangeListener;
+import com.jingcai.apps.aizhuan.view.SlideButton;
 
 /**
  * Created by xiangqili on 2015/7/14.
@@ -187,7 +189,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     /**
-     * ��������
+     * 关于我们
      */
     private void initAboutUs() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_about_us).setOnClickListener(new View.OnClickListener() {
@@ -200,7 +202,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     /**
-     * �޸�����
+     * 充值支付密码
      */
     private void initModifyPsw() {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {

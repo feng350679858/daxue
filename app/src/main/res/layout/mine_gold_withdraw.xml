@@ -29,6 +29,7 @@
                 android:drawablePadding="10dp"
                 />
             <TextView
+                android:id="@+id/tv_mine_gold_rest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="350金"
@@ -45,32 +46,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="#ffffff"
         android:layout_marginTop="10dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="提现数量（元）"
             android:textColor="@color/important_dark"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
         <EditText
-            android:id="@+id/et_gold_withdraw_count"
+            android:id="@+id/et_mine_gold_withdraw_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:textColorHint="@color/normal_grey"
-            android:textColor="@color/font_grey"
+            android:textColor="@color/normal_grey"
             android:textSize="16sp"
             android:layout_weight="1"
             android:maxLength="7"
             android:background="@null"
             android:numeric="integer"
             android:hint="最少提现300金"
+            />
+        <TextView
+            android:id="@+id/tv_mine_account_withdraw_balance_not_enough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="余额不足"
+            android:textColor="@color/badge_color"
+            android:textSize="16sp"
+            android:visibility="gone"
             />
     </LinearLayout>
     <LinearLayout
@@ -84,28 +94,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:src="@drawable/icon_tip"
+            android:src="@drawable/icon__hollow_disabled"
             />
         <TextView
             android:id="@+id/tv_gold_withdraw_limit_time_count"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提议每天至多提现三次"/>
+            android:text="提议每天至多提现三次"
+            android:layout_gravity="center"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,41 +131,36 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_mine_gold_withdraw_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0元"
                 android:textSize="18sp"/>
         </LinearLayout>
-        <LinearLayout
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+
+            android:background="@color/divider_color" />
+        <ListView
+            android:id="@+id/lv_mine_account_choice_list"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="到账金额"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
+            android:cacheColorHint="#000000"
+            android:divider="@null"/>
     <Button
-        android:id="@+id/btn_gold_withdraw_submit"
+        android:id="@+id/btn_mine_gold_withdraw_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:enabled="false"
-        android:background="@drawable/btn_red_selector"
+        android:background="@drawable/btn_yellow_boarded_bg_normal"
         android:text="确认充值"
         android:textSize="20sp"
-        android:textColor="@color/main_yellow"/>
+        android:textColor="@color/important_dark"/>
 
+</LinearLayout>
 </LinearLayout>
