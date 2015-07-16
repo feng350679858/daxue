@@ -43,21 +43,23 @@ public class IndexCampusFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         messageHandler = new MessageHandler(baseActivity);
 
-        mBaseView = inflater.inflate(R.layout.index_campus_fragment, container, false);
-        changeHeader();
-        initView();
-
-        initGroupData();
-        return mBaseView;
-//        if (null == mainView) {
-//            mBaseView = inflater.inflate(R.layout.index_campus_fragment, null);
-//            //initView();
-//        }
-//        ViewGroup parent = (ViewGroup) mainView.getParent();
-//        if (parent != null) {
-//            parent.removeView(mBaseView);
-//        }
+//        mBaseView = inflater.inflate(R.layout.index_campus_fragment, container, false);
+//        changeHeader();
+//        initView();
+//        initGroupData();
 //        return mBaseView;
+
+        if (null == mBaseView) {
+            mBaseView = inflater.inflate(R.layout.index_campus_fragment, null);
+            changeHeader();
+            initView();
+            initGroupData();
+        }
+        ViewGroup parent = (ViewGroup) mBaseView.getParent();
+        if (parent != null) {
+            parent.removeView(mBaseView);
+        }
+        return mBaseView;
     }
 
     private void changeHeader() {
