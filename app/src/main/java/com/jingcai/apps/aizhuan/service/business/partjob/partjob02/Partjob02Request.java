@@ -32,7 +32,7 @@ public class Partjob02Request extends BaseRequest {
     }
 
     public class Recommend{
-       private String id="C";
+       private String id;
 
        public String getId() {
            return id;

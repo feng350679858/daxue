@@ -1,4 +1,4 @@
-﻿﻿<resources>
+﻿<resources>
     <dimen name="index_tab_icon_text_margin">2dp</dimen>
 
     <!-- badge的文字大小 -->
@@ -19,4 +19,7 @@
     <dimen name="header_height">40dp</dimen>
     <dimen name="bottom_tab_height">50dp</dimen>
     <dimen name="list_item_logo_text_margin">20dp</dimen>
+    <dimen name="index_partjob_list_handle_bottom">24dp</dimen>
+    <dimen name="index_partjob_list_handle_MARGIN_TOP">-24dp</dimen>
+    <dimen name="margin_1dp">1dp</dimen>
 </resources>

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.mine.activity.ProfileImproveActivity;
+//import com.jingcai.apps.aizhuan.activity.mine.activity.ProfileImproveActivity;
 import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -38,7 +38,10 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -147,6 +150,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 parttimejob.setId(partjobid);
                 parttimejob.setStudentid(UserSubject.getStudentid());
                 req.setParttimejob(parttimejob);
+                final Partjob02Request.Recommend recommend = req.new Recommend();
                 azService.doTrans(req, Partjob02Response.class, new AzService.Callback<Partjob02Response>() {
                     @Override
                     public void success(Partjob02Response response) {
@@ -228,7 +232,15 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_healthlimit.setText("2.是否需要健康证："+mParttimejob.getHealthlimit());
         partjob_content_genderlimit.setText("3.性别："+mParttimejob.getGenderlimit());
         partjob_content_remarks.setText(mParttimejob.getRemarks());
-        if("1".equals(mParttimejob.getIsjoin())){
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(new Date());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time=format.format(c1.getTime());
+        if(time.compareTo(mParttimejob.getEndtime())>0){
+            partjob_isjoin.setText("已截止");
+            partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
+        }
+        else if("1".equals(mParttimejob.getIsjoin())){
             partjob_isjoin.setText("已报名");
             partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
         }
@@ -253,10 +265,11 @@ public class PartjobDetailActivity extends BaseActivity {
                     final PopupDialog dialog = new PopupDialog(PartjobDetailActivity.this, R.layout.partjob_detail_popupdialog);
                     View contentView = dialog.getContentView();
                     ((ImageView)contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
-                    PartjobListAdapter.setSalary((TextView)contentView.findViewById(R.id.partjob_detail_popup_salary),(TextView)contentView.findViewById(R.id.partjob_content_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+                    PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_content_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
                     PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
                     PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), "0", mParttimejob.getWorkdays());
                     ((TextView)contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
+                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名"+mParttimejob.getTitle()+"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
                     contentView.findViewById(R.id.partjob_detail_popup_cancel).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -352,8 +365,8 @@ public class PartjobDetailActivity extends BaseActivity {
          * 完善资料
          */
         public void fullfillProfile(){
-            Intent intent = new Intent(PartjobDetailActivity.this, ProfileImproveActivity.class);
-            startActivity(intent);
+         //   Intent intent = new Intent(PartjobDetailActivity.this, ProfileImproveActivity.class);
+          //  startActivity(intent);
         }
         /**
          * 打电话

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_index_partjob_normal_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_yellow">
+
+        <LinearLayout
+            android:id="@+id/btn_menu"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_title"
+                android:gravity="center_vertical"
+                android:text="杭州"
+                android:textColor="@color/important_dark"
+
+                android:textSize="18sp" />
+           </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="兼职"
+                android:gravity="center_vertical"
+                android:textColor="@color/important_dark"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="搜索"
+            android:textColor="@color/important_dark"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</FrameLayout>

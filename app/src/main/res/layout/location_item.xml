@@ -36,5 +36,5 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/divider" />
+        android:background="@color/divider_color" />
 </LinearLayout>

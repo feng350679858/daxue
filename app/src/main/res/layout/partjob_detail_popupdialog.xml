@@ -114,6 +114,7 @@
             android:textColor="@color/font_red"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/partjob_detail_popup_tip"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
@@ -135,8 +136,7 @@
         android:textColor="@color/font_important"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_margin="10dp
-        "
+        android:layout_margin="10dp"
         android:textSize="18sp"/>
     <LinearLayout
         android:layout_width="match_parent"
