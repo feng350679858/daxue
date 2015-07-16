@@ -56,8 +56,6 @@ public class CampusAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.index_campus_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.iv_banner = (ImageView) convertView.findViewById(R.id.iv_banner);
-            viewHolder.layout_help = convertView.findViewById(R.id.layout_help);
             viewHolder.layout_help_content = convertView.findViewById(R.id.layout_help_content);
             viewHolder.layout_help_jishi = convertView.findViewById(R.id.layout_help_jishi);
             viewHolder.layout_help_wenda = convertView.findViewById(R.id.layout_help_wenda);
@@ -68,22 +66,10 @@ public class CampusAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (0 == position) {
-            viewHolder.iv_banner.setVisibility(View.VISIBLE);
-            viewHolder.layout_help.setVisibility(View.GONE);
-            viewHolder.iv_banner.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext, HelpWenddaDetailActivity.class));
-                }
-            });
-            return convertView;
-        }
+
         Base04Response.Body.Region region = regionList.get(position);
         viewHolder.region = region;//将对象存入viewHolder
 
-        viewHolder.iv_banner.setVisibility(View.GONE);
-        viewHolder.layout_help.setVisibility(View.VISIBLE);
         if (0 == position % 2) {
             viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
             viewHolder.layout_help_wenda.setVisibility(View.GONE);
@@ -116,8 +102,6 @@ public class CampusAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public Base04Response.Body.Region region;
-        public ImageView iv_banner;
-        public View layout_help;
         public View layout_help_content;
         public View layout_help_jishi;
         public View layout_help_wenda;

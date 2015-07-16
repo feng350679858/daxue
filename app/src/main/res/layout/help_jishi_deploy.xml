@@ -233,7 +233,7 @@
                     android:layout_height="38dp"
                     android:drawableRight="@drawable/help_jishi_arrow1_down"
                     android:gravity="center"
-                    android:hint="可指定在线的并帮助过你的朋友再次帮助你"
+                    android:hint="指定在线老友帮助你"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:visibility="gone" />

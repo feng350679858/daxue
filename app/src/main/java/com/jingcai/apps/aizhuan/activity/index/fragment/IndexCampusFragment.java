@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.index.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.help.HelpWenddaDetailActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -41,8 +43,8 @@ public class IndexCampusFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        messageHandler = new MessageHandler(baseActivity);
 
+//        messageHandler = new MessageHandler(baseActivity);
 //        mBaseView = inflater.inflate(R.layout.index_campus_fragment, container, false);
 //        changeHeader();
 //        initView();
@@ -50,6 +52,7 @@ public class IndexCampusFragment extends BaseFragment {
 //        return mBaseView;
 
         if (null == mBaseView) {
+            messageHandler = new MessageHandler(baseActivity);
             mBaseView = inflater.inflate(R.layout.index_campus_fragment, null);
             changeHeader();
             initView();
@@ -78,10 +81,15 @@ public class IndexCampusFragment extends BaseFragment {
     }
 
     private void initView() {
-        campusAdapter = new CampusAdapter(baseActivity);
-        groupListView = (XListView) mBaseView.findViewById(R.id.xlv_list);
-        groupListView.setAdapter(campusAdapter);
+        mBaseView.findViewById(R.id.iv_banner).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaDetailActivity.class));
+            }
+        });
 
+        groupListView = (XListView) mBaseView.findViewById(R.id.xlv_list);
+        groupListView.setAdapter(campusAdapter = new CampusAdapter(baseActivity));
         groupListView.setPullRefreshEnable(true);
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
