@@ -2,8 +2,8 @@ package com.jingcai.apps.aizhuan.service.business.base.base03;
 
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
-public class Base03Response extends BaseResponse<Base03Response.Base02Body> {
-    public class Base02Body {
+public class Base03Response extends BaseResponse<Base03Response.Base03Body> {
+    public class Base03Body {
         private Loading loading;
 
         public Loading getLoading() {
