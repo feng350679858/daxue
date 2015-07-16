@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity">
 
-    <include layout="@layout/header"/>
+    <include layout="@layout/include_header"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

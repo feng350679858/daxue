@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/content_background">
 
-    <include layout="@layout/header"></include>
+    <include layout="@layout/include_header"></include>
 
     <TextView
         android:layout_margin="10dp"

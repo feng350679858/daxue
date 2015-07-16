@@ -98,10 +98,7 @@ public class IndexMoneyFragment extends BaseFragment {
 
     private void initHeader(){
         //½«activityÖÐµÄheader.xmlÒþ²Ø
-        (getActivity().findViewById(R.id.ib_back)).setVisibility(View.GONE);
-        (getActivity().findViewById(R.id.tv_content)).setVisibility(View.GONE);
-        (getActivity().findViewById(R.id.iv_bird_badge)).setVisibility(View.GONE);
-        (getActivity().findViewById(R.id.iv_func)).setVisibility(View.GONE);
+        (getActivity().findViewById(R.id.layout_header)).setVisibility(View.GONE);
 
         searchAdapter = new PartjobSearchAdapter(baseActivity);
         tv_address=(TextView)mainView.findViewById(R.id.tv_address);
