@@ -54,7 +54,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("����");
+        ((TextView)findViewById(R.id.tv_content)).setText("设置");
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.GONE);
 
     }
@@ -83,7 +83,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void initShareConfig() {
         umengShareUtil = new UmengShareUtil(SettingsActivity.this);
-        umengShareUtil.setShareContent("��׬����", "��ְ�ر����������ѵ���û�ã�", "http://www.izhuan365.com");
+        umengShareUtil.setShareContent("爱赚万岁", "兼职必备神器，你难道还没用？", "http://www.izhuan365.com");
     }
 
     /**
