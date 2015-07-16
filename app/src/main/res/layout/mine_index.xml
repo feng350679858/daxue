@@ -96,6 +96,104 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/content_background"
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="我的信用"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:drawablePadding="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.7分"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/icon_right_triangle"
+                    android:drawableEnd="@drawable/icon_right_triangle"
+                    android:drawablePadding="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/content_background"
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="学生认证"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:drawablePadding="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已认证"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:background=""
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:background="@color/content_background"
