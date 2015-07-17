@@ -27,7 +27,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
-//    compile 'com.android.support:appcompat-v7:22'
+    //   compile 'com.android.support:appcompat-v7:22'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.mcxiaoke.volley:library:1.0.15+'
     compile 'com.google.code.gson:gson:2.3.1'
@@ -36,4 +36,5 @@ dependencies {
     compile 'org.bouncycastle:bcprov-ext-jdk15:1.46'
     compile project(':pulltorefresh')
     compile project(':umenglib')
+    compile 'com.android.support:support-v4:22.2.0'
 }

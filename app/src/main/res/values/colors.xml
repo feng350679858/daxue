@@ -1,6 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffffff</color>
+    <color name="red_normal">#e33839</color>
+    <color name="light_dark">#222222</color>
+    <!-- font color -->
+    <color name="font_important">#222222</color>
+    <color name="font_assistant">#999999</color>
+    <color name="font_red">#e33839</color>
+    <color name="font_normal">#666666</color>
     <!-- 重要级文字信息，内页 -->
     <color name="important_dark">#222222</color>
     <!-- 用于普通级段落信息 -->
@@ -19,6 +26,8 @@
     <color name="darker_yellow">#F3C801</color>
     <!-- 用于内容区域底色 -->
     <color name="content_background">#f3f5f7</color>
+    <!--partjob-->
+    <color name="partjob_search_bg_color">#3D3D3D</color>
     <!-- 用于图片边缘border -->
     <color name="circle_image_border">#dddddd</color>
     <!-- 红色  -->
@@ -26,4 +35,5 @@
     <!-- 带有透明度的红色 -->
     <color name="trans_red">#777d0703</color>
 
+>>>>>>> master
 </resources>

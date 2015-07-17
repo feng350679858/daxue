@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/index_index_recommend_bg"
+    android:padding="10dp">
+
+    <View
+        android:id="@+id/v_select_pre"
+        android:layout_width="2dp"
+        android:layout_height="15dp"
+        android:layout_centerVertical="true"
+        android:background="@color/red_normal" />
+
+    <TextView
+        android:id="@+id/v_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/v_select_pre"
+        android:text="类别不限"
+        android:textColor="@color/font_red"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/v_select_suff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_selector_right" />
+</RelativeLayout>

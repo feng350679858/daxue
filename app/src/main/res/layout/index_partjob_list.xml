@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_gender_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_gender_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="性别不限"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_gender_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/help_jishi_arrow1_down" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="13dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:id="@+id/layout_worktype_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_worktype_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="类别不限"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_worktype_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/help_jishi_arrow1_down" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="13dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:id="@+id/layout_area_limit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_area_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:maxLines="1"
+                android:text="区域不限"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_area_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/help_jishi_arrow1_down" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="13dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:id="@+id/layout_search_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_search_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/font_important"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_search_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/help_jishi_arrow1_down" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical">
+
+            <com.markmao.pulltorefresh.widget.XListView
+                android:id="@+id/index_pj_list_lv2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:scrollbars="none"
+                android:cacheColorHint="#00000000" />
+
+            <include layout="@layout/empty_content"/>
+        </LinearLayout>
+
+        <com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer
+            xmlns:my="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            my:content="@+id/content"
+            my:direction="topToBottom"
+            my:handle="@+id/handle"
+            my:topOffset="@dimen/index_partjob_list_handle_MARGIN_TOP">
+
+            <include
+                android:id="@id/content"
+                layout="@layout/index_partjob_list_content" />
+
+            <ImageView
+                android:id="@id/handle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/index_partjob_list_handle_bottom"
+                android:background="@color/white"
+                android:scaleType="centerInside"
+                android:src="@drawable/index_partjob_list_handle_bottom" />
+        </com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer>
+    </FrameLayout>
+</LinearLayout>

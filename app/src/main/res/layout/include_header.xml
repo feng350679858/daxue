@@ -13,7 +13,17 @@
         android:layout_alignParentLeft="true"
         android:background="@color/main_yellow"
         android:src="@drawable/icon_left_arrow" />
-
+    <TextView
+        android:id="@+id/tv_back"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        android:textColor="@color/important_dark"
+        android:padding="5dp"
+        android:text="地点"
+        android:drawableRight="@drawable/help_jishi_arrow1_down"/>
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
