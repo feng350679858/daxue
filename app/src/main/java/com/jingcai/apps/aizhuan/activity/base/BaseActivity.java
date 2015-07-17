@@ -111,8 +111,8 @@ public class BaseActivity extends Activity {
      */
     protected void startActivityForLogin() {
         //TODO 需要跳转到新的登录页面
-//        Intent intent = new Intent(this, LoginActivity.class);
-//        startActivityForResult(intent, REQUEST_CODE_LOGIN);
+ //       Intent intent = new Intent(this, LoginActivity.class);
+  //     startActivityForResult(intent, REQUEST_CODE_LOGIN);
     }
 
     /**

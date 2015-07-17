@@ -14,6 +14,7 @@
             android:layout_width="@dimen/header_height"
             android:layout_height="@dimen/header_height"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:background="@color/main_yellow"
             android:src="@drawable/icon_left_arrow" />
 

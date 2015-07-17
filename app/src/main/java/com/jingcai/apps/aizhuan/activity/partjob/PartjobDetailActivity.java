@@ -138,6 +138,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_healthlimit=(TextView)findViewById(R.id.partjob_content_healthlimit);
         partjob_content_genderlimit=(TextView)findViewById(R.id.partjob_content_genderlimit);
         partjob_content_remarks=(TextView)findViewById(R.id.partjob_content_remarks);
+        partjob_isjoin=(Button)findViewById(R.id.partjob_isjoin);
     }
     private void initData(){
         showProgressDialog("数据加载中...");
@@ -151,6 +152,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 parttimejob.setStudentid(UserSubject.getStudentid());
                 req.setParttimejob(parttimejob);
                 final Partjob02Request.Recommend recommend = req.new Recommend();
+                req.setRecommend(recommend);
                 azService.doTrans(req, Partjob02Response.class, new AzService.Callback<Partjob02Response>() {
                     @Override
                     public void success(Partjob02Response response) {
@@ -212,14 +214,16 @@ public class PartjobDetailActivity extends BaseActivity {
          */
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
-        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, "￥"+mParttimejob.getSalary(), mParttimejob.getSalaryunit());
         PartjobListAdapter.setSettlelength(partjob_content_settlelength, mParttimejob.getSettlelength());
         joinnum=mParttimejob.getJoinnum();
         workernum=mParttimejob.getWorkernum();
+
         SpannableStringBuilder builder = new SpannableStringBuilder(mParttimejob.getJoinnum()+"/"+mParttimejob.getWorkernum()+"人");
         ForegroundColorSpan redSpan = new ForegroundColorSpan(R.color.red_normal);
-        builder.setSpan(redSpan, 0, mParttimejob.getJoinnum().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(redSpan, 0, mParttimejob.getJoinnum().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         partjob_content_peoplenum.setText(builder);
+
         PartjobListAdapter.setWorkdays(partjob_content_workdays, "0", mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
         partjob_content_endtime.setText(mParttimejob.getEndtime());
@@ -238,38 +242,38 @@ public class PartjobDetailActivity extends BaseActivity {
         String time=format.format(c1.getTime());
         if(time.compareTo(mParttimejob.getEndtime())>0){
             partjob_isjoin.setText("已截止");
-            partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
+            partjob_isjoin.setBackgroundResource(R.drawable.btn_red_disabled);
         }
         else if("1".equals(mParttimejob.getIsjoin())){
             partjob_isjoin.setText("已报名");
-            partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_disabled));
+            partjob_isjoin.setBackgroundResource(R.drawable.btn_red_disabled);
         }
         else{
             partjob_isjoin.setText("我要报名");
-            partjob_isjoin.setBackground(getResources().getDrawable(R.drawable.btn_red_pressed));
+            partjob_isjoin.setBackgroundResource(R.drawable.btn_yellow_boarded_bg_normal);
         }
         gisx=mParttimejob.getGisx();
         gisy=mParttimejob.getGisy();
         partjob_isjoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UserSubject.isLogin())
-                    requestLogin();
-                else if("1".equals(UserSubject.getLevel()))
-                    fullfillProfile();
-                else if(!UserSubject.getGender().equals(mParttimejob.getGenderlimit())) {
-                    Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else{
+   //             if(!UserSubject.isLogin())
+    //                requestLogin();
+    //            else if("1".equals(UserSubject.getLevel()))
+     //               fullfillProfile();
+     //           else if(!UserSubject.getGender().equals(mParttimejob.getGenderlimit())) {
+      //              Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
+       //             toast.show();
+       //         }
+        //        else{
                     final PopupDialog dialog = new PopupDialog(PartjobDetailActivity.this, R.layout.partjob_detail_popupdialog);
                     View contentView = dialog.getContentView();
                     ((ImageView)contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
-                    PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_content_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+                   // PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_content_salaryunit), "￥"+mParttimejob.getSalary(), mParttimejob.getSalaryunit());
                     PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
                     PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), "0", mParttimejob.getWorkdays());
                     ((TextView)contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
-                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名"+mParttimejob.getTitle()+"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
+                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名\""+mParttimejob.getTitle()+"\"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
                     contentView.findViewById(R.id.partjob_detail_popup_cancel).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -288,7 +292,7 @@ public class PartjobDetailActivity extends BaseActivity {
                         }
                     });
                     dialog.show();
-                }
+    //            }
 
             }
         });
