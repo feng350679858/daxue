@@ -36,6 +36,8 @@ public class ApplicationEx extends Application {
             Log.e(TAG,"Init EMChat failed,Please check.");
         }
 
+
+
         //=============定位
 //		mLocationClient = new LocationClient(this.getApplicationContext());
 //

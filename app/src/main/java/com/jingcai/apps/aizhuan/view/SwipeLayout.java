@@ -123,7 +123,7 @@ public class SwipeLayout extends LinearLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         viewDragHelper.processTouchEvent(event);
-        return true;
+        return false;
     }
 
     @Override

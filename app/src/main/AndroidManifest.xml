@@ -53,7 +53,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!--since 1.6.0 -->
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:name=".util.ApplicationEx"
         android:allowBackup="true"
@@ -74,7 +74,7 @@
         <activity android:name=".activity.message.MessageMerchantActivity"   />
         <activity android:name=".activity.message.MessageNotificationActivity"   />
         <activity android:name=".activity.message.NotificationDetailActivity"   />
-        <activity android:name=".activity.message.MessageChatActivity"   />
+        <activity android:name=".activity.message.MessageConversationActivity"   />
 
         <service android:name=".service.local.UnreadMsgService"/>
 

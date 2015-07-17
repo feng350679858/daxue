@@ -81,8 +81,8 @@ public class AudioDialog {
 
     }
 
-    public void dismissDialog(){
-        if(null != mDialog && mDialog.isShowing()){
+    public void dismissDialog() {
+        if (null != mDialog && mDialog.isShowing()) {
             mDialog.dismiss();
             mDialog = null;
         }
