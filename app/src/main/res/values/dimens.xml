@@ -23,4 +23,6 @@
     <dimen name="list_item_logo_text_margin_large">20dp</dimen>
     <!-- list项中logo和文字的margin -->
     <dimen name="list_item_logo_text_margin_small">10dp</dimen>
+    <!-- list项中logo和文字的margin -->
+    <dimen name="dp_10">10dp</dimen>
 </resources>

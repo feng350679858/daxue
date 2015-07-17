@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.help.HelpWenddaAnswerActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWenddaDetailActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
@@ -84,7 +85,8 @@ public class IndexCampusFragment extends BaseFragment {
         mBaseView.findViewById(R.id.iv_banner).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaDetailActivity.class));
+//                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaDetailActivity.class));
+                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaAnswerActivity.class));
             }
         });
 

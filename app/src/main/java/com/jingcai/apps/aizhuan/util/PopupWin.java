@@ -28,6 +28,8 @@ public class PopupWin {
     private View mParentView;
     private View mContentView;
     private PopupWindow popupWindow;
+    private int mWidth, mHeight;
+    private int mAnimstyle;
 
     private PopupWin(View view1, View view2) {
         this.mParentView = view1;
@@ -41,6 +43,9 @@ public class PopupWin {
         private View contentView;
         private Map<String, String> data;
         private Callback callback;
+        private int width = WindowManager.LayoutParams.MATCH_PARENT;
+        private int height = WindowManager.LayoutParams.WRAP_CONTENT;
+        private int animstyle = R.style.main_menu_animstyle;
 
         private Builder(Context context) {
             this.context = context;
@@ -58,6 +63,20 @@ public class PopupWin {
 
         public Builder setContentView(View view) {
             this.contentView = view;
+            return this;
+        }
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setAnimstyle(int animstyle) {
+            this.animstyle = animstyle;
             return this;
         }
 
@@ -88,6 +107,9 @@ public class PopupWin {
             }
 
             final PopupWin win = new PopupWin(parentView, contentView);
+            win.mWidth = width;
+            win.mHeight = height;
+            win.mAnimstyle = animstyle;
 
             if (null != mContentView) {
                 PopItemAdapter adapter = new PopItemAdapter(context, win, R.layout.popup_list_item);
@@ -170,25 +192,39 @@ public class PopupWin {
     }
 
     private void build() {
-        popupWindow = new PopupWindow(mContentView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        //final View decorView = this.getWindow().getDecorView();
+        popupWindow = new PopupWindow(mContentView, mWidth, mHeight);
 
         popupWindow.setFocusable(true);
-        popupWindow.setAnimationStyle(R.style.main_menu_animstyle);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x80000000));
+        if(0 != mAnimstyle) {
+            popupWindow.setAnimationStyle(mAnimstyle);
+        }
+//        popupWindow.setBackgroundDrawable(new ColorDrawable(0x80000000));//半透明
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                ObjectAnimator.ofFloat(mParentView, "alpha", 0.5f, 1.0f).setDuration(500).start();
-            }
-        });
+        if(null != mParentView) {
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    ObjectAnimator.ofFloat(mParentView, "alpha", 0.5f, 1.0f).setDuration(500).start();
+                }
+            });
+        }
     }
 
     public void show() {
+        show(Gravity.BOTTOM, 0, 0);
+    }
+
+    public void show(int gravity, int x, int y) {
+        show(mParentView, gravity, x, y);
+    }
+
+    public void show(View parent, int gravity, int x, int y) {
         check();
-        popupWindow.showAtLocation(mParentView, Gravity.BOTTOM, 0, 0);
-        ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
+        popupWindow.showAtLocation(parent, gravity, x, y);
+        if(null != mParentView) {
+            ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
+        }
     }
 
     public void dismiss() {
