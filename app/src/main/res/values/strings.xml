@@ -7,4 +7,11 @@
     <string name="index_tab_mine">我的</string>
     <string name="empty_merchant_list_tip">报名兼职之后，才会有商家哦！</string>
     <string name="empty_notification_list_tip">还没有收到任何消息呢！</string>
+
+    <!-- 提示信息 -->
+    <string name="message_title">提示</string>
+    <string name="OK_text">确定</string>
+    <string name="cancel_text">取消</string>
+    <string name="updapp">检测到新版本，是否要更新？</string>
+    <string name="updapp_force">检测到新版本，请更新！</string>
 </resources>

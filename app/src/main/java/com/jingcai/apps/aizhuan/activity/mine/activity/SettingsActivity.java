@@ -19,6 +19,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.activity.mine.fragment.MineIndexActivity;
+import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -30,6 +31,8 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys05.Sys05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.util.UmengShareUtil;
+import com.jingcai.apps.aizhuan.util.VersionUtil;
 import com.jingcai.apps.aizhuan.view.OnToggleStateChangeListener;
 import com.jingcai.apps.aizhuan.view.SlideButton;
 
@@ -195,8 +198,8 @@ public class SettingsActivity extends BaseActivity {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_about_us).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, AboutUsActivity.class);
-                startActivity(intent);
+               // Intent intent = new Intent(SettingsActivity.this, AboutUsActivity.class);
+             //   startActivity(intent);
             }
         });
     }
@@ -208,8 +211,8 @@ public class SettingsActivity extends BaseActivity {
         mFragmentLayout.findViewById(R.id.tv_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, ModifyPswActivity.class);
-                startActivity(intent);
+              //  Intent intent = new Intent(SettingsActivity.this, ModifyPswActivity.class);
+               // startActivity(intent);
             }
         });
     }
