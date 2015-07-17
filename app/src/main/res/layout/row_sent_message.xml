@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toRightOf="@id/tv_chatcontent"
-            android:layout_below="@id/iv_userhead"/>
+            android:layout_below="@id/iv_userhead"/>
+
         -->
 
         <ImageView
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_marginRight="5dp"
             android:clickable="true"
             android:src="@drawable/msg_state_failed_resend"
             android:visibility="gone" />
