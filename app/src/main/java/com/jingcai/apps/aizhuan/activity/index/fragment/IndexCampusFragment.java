@@ -8,15 +8,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.help.HelpWenddaAnswerActivity;
-import com.jingcai.apps.aizhuan.activity.help.HelpWenddaDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -85,8 +83,8 @@ public class IndexCampusFragment extends BaseFragment {
         mBaseView.findViewById(R.id.iv_banner).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaDetailActivity.class));
-                baseActivity.startActivity(new Intent(baseActivity, HelpWenddaAnswerActivity.class));
+                baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
+//                baseActivity.startActivity(new Intent(baseActivity, HelpWendaAnswerActivity.class));
             }
         });
 

@@ -42,6 +42,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private MessageHandler messageHandler;
     private PopupWin groupWin;
     private PopupWin end_timeWin;
+    private EditText et_end_time;;
     private PopupWin selfdeftimeWin;
     private PopupWin genderWin;
     private XListView groupListView;
@@ -251,7 +252,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         if(null == selfdeftimeWin) {
             View parentView = this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(this).inflate(R.layout.help_jishi_deploy_endtime_pop, null);
-            final EditText et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
+            et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
             et_end_time.addTextChangedListener(new GoldWatcher(et_end_time));
 
             selfdeftimeWin = PopupWin.Builder.create(this)
@@ -278,6 +279,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
             });
         }
         selfdeftimeWin.show();
+        showInputMethodDialog(et_end_time);
     }
 
     private void onLoad() {
