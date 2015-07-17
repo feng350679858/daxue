@@ -1,89 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--消息列表里对话列表项布局-->
+<?xml version="1.0" encoding="utf-8"?><!--消息列表里对话列表项布局-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/list_item_bg"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.jingcai.apps.aizhuan.view.SwipeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/list_item_padding"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_index_message_list_item_comment" />
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:background="@drawable/list_item_bg"
+            android:padding="@dimen/list_item_padding">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/list_item_logo_text_margin_large">
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                android:src="@drawable/icon_index_message_list_item_comment" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/title"
-                    android:text="林三"/>
-                <ImageView
-                    android:id="@+id/iv_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/time"
-                    android:text="12:12"/>
+                    android:layout_marginLeft="@dimen/list_item_logo_text_margin_large"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        style="@style/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="林三" />
+
+                    <ImageView
+                        android:id="@+id/iv_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        style="@style/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12:12" />
                 </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="@dimen/list_item_logo_text_margin_large">
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/sub_title"
-                    android:maxWidth="250sp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="我就是一个小萨比！我就是一个小萨比！我就是一个小萨比！"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/tv_badge"
-                    android:visibility="visible"
-                    android:text="11"
-                    style="@style/style_num_badge"/>
+                    android:layout_marginLeft="@dimen/list_item_logo_text_margin_large"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        style="@style/sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxWidth="250sp"
+                        android:singleLine="true"
+                        android:text="我就是一个小萨比！我就是一个小萨比！我就是一个小萨比！" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_badge"
+                        style="@style/style_num_badge"
+                        android:text="11"
+                        android:visibility="visible" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_account_list_unbind"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </com.jingcai.apps.aizhuan.view.SwipeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:background="@color/divider_color"
-        android:layout_marginLeft="@dimen/list_item_padding"/>
-
+        android:layout_marginLeft="@dimen/list_item_padding"
+        android:background="@color/divider_color" />
 
 
 </LinearLayout>

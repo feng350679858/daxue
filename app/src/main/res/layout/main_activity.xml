@@ -3,13 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/include_header"/>
-
     <LinearLayout
         android:id="@+id/ll_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/header_height"
         android:layout_marginBottom="@dimen/bottom_tab_height"
         android:orientation="vertical" />
 

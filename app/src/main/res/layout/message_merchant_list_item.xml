@@ -9,12 +9,12 @@
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_contact_merchant_list_item_logo"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_launcher"
-        app:border_color="@color/circle_image_border"
-        app:border_width="1dp" />
+    android:id="@+id/iv_contact_merchant_list_item_logo"
+    android:layout_width="65dp"
+    android:layout_height="65dp"
+    android:src="@drawable/ic_launcher"
+    app:border_color="@color/circle_image_border"
+    app:border_width="1dp" />
 
     <LinearLayout
         android:layout_width="0dp"
