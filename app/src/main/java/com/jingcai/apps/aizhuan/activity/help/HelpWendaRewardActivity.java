@@ -22,7 +22,7 @@ public class HelpWendaRewardActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         messageHandler = new MessageHandler(this);
-        setContentView(R.layout.help_wenda_answer);
+        setContentView(R.layout.help_wenda_reward);
 
         initHeader();
 
@@ -31,7 +31,7 @@ public class HelpWendaRewardActivity extends BaseActivity {
 
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
-        tvTitle.setText("求问detail");
+        tvTitle.setText("打赏");
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
