@@ -65,9 +65,9 @@ public class IndexCampusFragment extends BaseFragment {
     }
 
     private void changeHeader() {
-        TextView tvTitle = (TextView) baseActivity.findViewById(R.id.tv_content);
+        TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         tvTitle.setText("校园");
-        final ImageView ivFunc = (ImageView) baseActivity.findViewById(R.id.iv_func);
+        final ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
         ivFunc.setVisibility(View.VISIBLE);
         ivFunc.setOnClickListener(new View.OnClickListener() {
