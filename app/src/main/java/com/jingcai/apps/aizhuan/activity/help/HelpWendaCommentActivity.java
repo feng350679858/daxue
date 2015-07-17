@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -30,29 +29,28 @@ import java.util.List;
 /**
  * Created by lejing on 15/7/16.
  */
-public class HelpWenddaDetailActivity extends BaseActivity {
+public class HelpWendaCommentActivity extends BaseActivity {
+    private static final String TAG = "HelpWendaComment";
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_help, tv_my_help, tv_comment, tv_like;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         messageHandler = new MessageHandler(this);
-        setContentView(R.layout.help_wenda_detail);
+        setContentView(R.layout.help_wenda_comment);
 
         initHeader();
 
         initView();
-
         initGroupData();
     }
 
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
-        tvTitle.setText("求问detail");
+        tvTitle.setText("评论");
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -64,21 +62,6 @@ public class HelpWenddaDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_like = (TextView)findViewById(R.id.tv_like);
-        tv_comment = (TextView)findViewById(R.id.tv_comment);
-        tv_help = (TextView)findViewById(R.id.tv_help);
-        tv_my_help = (TextView)findViewById(R.id.tv_my_help);
-
-        tv_help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HelpWenddaDetailActivity.this, HelpWenddaAnswerActivity.class));
-            }
-        });
-
-
-
-
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
@@ -132,22 +115,6 @@ public class HelpWenddaDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-                case 1: {
-                    try {
-                        showToast("获取商家失败:" + msg.obj);
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
-//                case 2:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -164,7 +131,7 @@ public class HelpWenddaDetailActivity extends BaseActivity {
                 public void run() {
                     if (GlobalConstant.debugFlag) {
                         List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
+                        for (int i = 0; i < 10 && mCurrentStart < 15; i++) {
                             Base04Response.Body.Region region = new Base04Response.Body.Region();
                             region.setRegionid("" + (i + mCurrentStart));
                             region.setRegionname("浙江大学" + (i + mCurrentStart));
@@ -172,7 +139,7 @@ public class HelpWenddaDetailActivity extends BaseActivity {
                         }
                         messageHandler.postMessage(0, regionList);
                     } else {
-                        final AzService azService = new AzService(HelpWenddaDetailActivity.this);
+                        final AzService azService = new AzService(HelpWendaCommentActivity.this);
                         final Base04Request req = new Base04Request();
                         final Base04Request.Region region = req.new Region();
                         region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId

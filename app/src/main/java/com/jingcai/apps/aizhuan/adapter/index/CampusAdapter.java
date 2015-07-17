@@ -1,16 +1,13 @@
 package com.jingcai.apps.aizhuan.adapter.index;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.activity.help.HelpWenddaDetailActivity;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 

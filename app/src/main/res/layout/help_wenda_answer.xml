@@ -92,13 +92,11 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/field_divider" />
 
-        <EditText
+        <TextView
+            android:id="@+id/et_help_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:background="@null"
-            android:editable="false"
-            android:gravity="top"
             android:lineSpacingMultiplier="1.2"
             android:padding="5dp"
             android:text="就我知道张文朝和李狗蛋的关系！哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈!!!!"
