@@ -34,4 +34,6 @@
     <dimen name="margin_chat_activity">5dp</dimen>
     <dimen name="size_avatar">50dp</dimen>
 
+    <!-- 其他，当用计算像素时使用 -->
+    <dimen name="dp_10">10dp</dimen>
 </resources>

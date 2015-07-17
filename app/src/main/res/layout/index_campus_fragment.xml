@@ -2,24 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/content_background"
     android:orientation="vertical">
-    <include layout="@layout/include_header"/>
-    <Button
-        android:id="@+id/button_start_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="开始计数" />
 
-    <Button
-        android:id="@+id/button_show_unread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="显示未读" />
-
-    <Button
-        android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="重置计数" />
-
+    <com.markmao.pulltorefresh.widget.XListView xmlns:xlv="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+        android:id="@+id/xlv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/divider_color"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="5dp"
+        xlv:extraHeader="@layout/index_campus_fragment_header" />
 </LinearLayout>

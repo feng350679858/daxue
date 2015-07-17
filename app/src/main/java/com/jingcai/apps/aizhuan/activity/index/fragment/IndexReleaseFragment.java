@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.activity.help.JishiHelpDeployActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDeployActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDeployActivity;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 
 /**
@@ -61,12 +62,13 @@ public class IndexReleaseFragment extends Fragment implements View.OnClickListen
                 break;
             }
             case R.id.button_jishi_help: {
-                Intent intent = new Intent(this.getActivity(), JishiHelpDeployActivity.class);
+                Intent intent = new Intent(this.getActivity(), HelpJishiDeployActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.button_wenda_help: {
-
+                Intent intent = new Intent(this.getActivity(), HelpWendaDeployActivity.class);
+                startActivity(intent);
                 break;
             }
         }
