@@ -68,7 +68,7 @@ public class IndexMoneyFragment extends BaseFragment {
     private LinearLayout linearLayout_label, linearlout_left, linearlout_right;
     private final int REQUEST_CODE_ADDRESS = 11;//切换城市
     private int pixelOf1dp;
-
+    String currentAreacode = null, currentAreaname = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -97,7 +97,7 @@ public class IndexMoneyFragment extends BaseFragment {
     }
     public  void onResume(){
         super.onResume();
-        initHeader();
+      //  initHeader();
     }
     private void initHeader(){
         ((ImageView)getActivity().findViewById(R.id.ib_back)).setVisibility(View.INVISIBLE);
@@ -109,7 +109,7 @@ public class IndexMoneyFragment extends BaseFragment {
         ((TextView)getActivity().findViewById(R.id.tv_func)).setVisibility(View.INVISIBLE);
         tv_address=(TextView)getActivity().findViewById(R.id.tv_back);
         tv_address.setVisibility(View.VISIBLE);
-        String currentAreacode = null, currentAreaname = null;
+
         if(StringUtil.isNotEmpty(GlobalConstant.getGis().getAreacode())){
             currentAreacode = GlobalConstant.getGis().getAreacode();
             currentAreaname = GlobalConstant.getGis().getAreaname();
@@ -126,6 +126,7 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LocationCityActivity.class);
+                intent.putExtra("address",currentAreacode);
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
@@ -133,6 +134,7 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                intent.putExtra("address",currentAreacode);
                 startActivity(intent);
             }
         });

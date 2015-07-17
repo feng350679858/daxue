@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/partjob_detail_popup_time"/>
+                    android:src="@drawable/icon_index_pj_search_history"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

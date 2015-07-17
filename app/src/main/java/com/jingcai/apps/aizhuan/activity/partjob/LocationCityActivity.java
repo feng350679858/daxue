@@ -38,13 +38,12 @@ public class LocationCityActivity extends BaseActivity {
     private TextView tv_index_partjob_change_city;
     private ListView mListCity;
     private LocationListAdapter mListAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index_partjob_change_city);
         messageHandler = new MessageHandler(this);
-    initHeader();
+        initHeader();
         initView();  //初始化控件
 
         initData();
@@ -66,7 +65,6 @@ private void initHeader(){
      * 初始化控件
      */
     private void initView() {
-
 
 
         //设置已定位的位置
