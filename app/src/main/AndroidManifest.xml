@@ -79,7 +79,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.mine.PartjobCancelActivity"
+            android:name=".activity.mine.activity.PartjobCancelActivity"
             android:label="@string/title_activity_partjob_cancel" >
         </activity>
         <activity
