@@ -59,8 +59,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <!-- since 1.6.0 -->
+    <!--since 1.6.0 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:name=".util.ApplicationEx"
         android:allowBackup="true"
@@ -116,12 +116,14 @@
         <activity android:name=".activity.message.MessageMerchantActivity"   />
         <activity android:name=".activity.message.MessageNotificationActivity"   />
         <activity android:name=".activity.message.NotificationDetailActivity"   />
+        <activity android:name=".activity.message.MessageConversationActivity"   />
 
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
 
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="lee513579#izhuanc2ctest" />
     </application>
 
 </manifest>

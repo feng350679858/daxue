@@ -21,7 +21,7 @@ public class IndexCampusFragment extends BaseFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_campus_fragment,container,false);
-        changeHeader();
+        initHeader();
         initView();
         return mBaseView;
 
@@ -36,11 +36,12 @@ public class IndexCampusFragment extends BaseFragment implements View.OnClickLis
 //        }
 //        return mBaseView;
     }
-    private void changeHeader() {
-        TextView tvTitle = (TextView) baseActivity.findViewById(R.id.tv_content);
+
+    private void initHeader() {
+        TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         //需要用到再findViewById，不要需则不调用，提高效率
 //        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
-        ImageView ivFunc = (ImageView) baseActivity.findViewById(R.id.iv_func);
+        ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
         ivFunc.setVisibility(View.VISIBLE);
         tvTitle.setText("校园");

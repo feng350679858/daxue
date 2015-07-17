@@ -22,12 +22,18 @@
     <color name="item_selected_color">#D7D7D7</color>
     <!-- 本APP主色  -->
     <color name="main_yellow">#f9d632</color>
+    <!-- 稍暗的红色 -->
+    <color name="darker_yellow">#F3C801</color>
     <!-- 用于内容区域底色 -->
     <color name="content_background">#f3f5f7</color>
     <!--partjob-->
     <color name="partjob_search_bg_color">#3D3D3D</color>
     <!-- 用于图片边缘border -->
     <color name="circle_image_border">#dddddd</color>
+    <!-- 红色  -->
+    <color name="red">#e33839</color>
+    <!-- 带有透明度的红色 -->
+    <color name="trans_red">#777d0703</color>
 
 >>>>>>> master
 </resources>
