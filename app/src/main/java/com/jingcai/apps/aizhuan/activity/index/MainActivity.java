@@ -78,7 +78,7 @@ public class MainActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        loginOnEMChatServer("dingmm","111111");
+        //loginOnEMChatServer("dingmm","111111");
     }
 
     private void loginOnEMChatServer(String username, String pwd) {
