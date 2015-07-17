@@ -94,9 +94,8 @@ public class PartjobDetailActivity extends BaseActivity {
                 finish();
             }
         });
-        TextView tv_info = (TextView)findViewById(R.id.tv_func);
-        tv_info.setVisibility(View.VISIBLE);
-        tv_info.setText("分享");
+        ImageView tv_info = (ImageView)findViewById(R.id.iv_func);
+        tv_info.setImageDrawable(getResources().getDrawable(R.drawable.share));
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,11 +228,21 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_endtime.setText(mParttimejob.getEndtime());
         partjob_content_address.setText(mParttimejob.getAddress());
         partjob_content_workcontent.setText(mParttimejob.getWorkcontent());
-        if("0".equals(mParttimejob.getHeightupperlimit())&& "0".equals(mParttimejob.getHeightlowerlimit()))
-            partjob_content_heightlimit.setText("1.身高：不限");
+        if("0".equals(mParttimejob.getHeightupperlimit()))
+            if("0".equals(mParttimejob.getHeightlowerlimit()))
+                partjob_content_heightlimit.setText("1.身高不限");
+            else
+                partjob_content_heightlimit.setText("1.身高"+mParttimejob.getHeightlowerlimit()+"以上");
         else
-            partjob_content_heightlimit.setText("1.身高："+mParttimejob.getHeightlowerlimit()+"~"+mParttimejob.getHeightupperlimit());
-        partjob_content_healthlimit.setText("2.是否需要健康证："+mParttimejob.getHealthlimit());
+            if("0".equals(mParttimejob.getHeightlowerlimit()))
+                partjob_content_heightlimit.setText("1.身高"+mParttimejob.getHeightupperlimit()+"以下");
+            else
+                partjob_content_heightlimit.setText("1.身高"+mParttimejob.getHeightlowerlimit()+"与"+mParttimejob.getHeightupperlimit()+"之间");
+        if("0".equals(mParttimejob.getHealthlimit()))
+            partjob_content_healthlimit.setText("2.不需要健康证");
+        else
+            partjob_content_healthlimit.setText("2.需要健康证");
+        if("1".equals(mParttimejob.getHealthlimit()))
         partjob_content_genderlimit.setText("3.性别："+mParttimejob.getGenderlimit());
         partjob_content_remarks.setText(mParttimejob.getRemarks());
         Calendar c1 = Calendar.getInstance();
