@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <EditText
+        android:id="@+id/et_help_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/cb_anonymous"
+        android:layout_below="@+id/layout_header"
+        android:background="@null"
+        android:gravity="top"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="10dp"
+        android:text="就我知道张文朝和李狗蛋的关系！哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈!!!!"
+        android:textSize="16sp" />
+
+    <CheckBox
+        android:id="@+id/cb_anonymous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:button="@null"
+        android:drawableLeft="@drawable/help_wenda_hidden"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:text="匿名发布"
+        android:textSize="16sp" />
+</RelativeLayout>

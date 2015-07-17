@@ -136,7 +136,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/et_gender"
+                        android:id="@+id/tv_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -174,7 +174,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/et_group"
+                        android:id="@+id/tv_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -217,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/icon_cancel2" />
+                    android:src="@drawable/icon_remove1" />
             </LinearLayout>
 
             <FrameLayout
@@ -233,7 +233,7 @@
                     android:layout_height="38dp"
                     android:drawableRight="@drawable/help_jishi_arrow1_down"
                     android:gravity="center"
-                    android:hint="可指定在线的并帮助过你的朋友再次帮助你"
+                    android:hint="指定在线老友帮助你"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:visibility="gone" />
@@ -365,7 +365,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/et_end_time"
+                        android:id="@+id/tv_end_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
