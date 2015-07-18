@@ -29,7 +29,7 @@
                 android:drawablePadding="10dp"
                 />
             <TextView
-                android:id="@+id/tv_mine_gold_rest"
+                android:id="@+id/tv_mine_gold_topup_rest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="350金"
@@ -60,7 +60,7 @@
             android:textColor="@color/important_dark"
             android:textSize="16sp"/>
         <EditText
-            android:id="@+id/et_mine_gold_withdraw_count"
+            android:id="@+id/et_mine_gold_topup_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
@@ -131,7 +131,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
-                android:id="@+id/tv_mine_gold_withdraw_money"
+                android:id="@+id/tv_mine_gold_topup_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0元"
@@ -143,14 +143,14 @@
 
             android:background="@color/divider_color" />
         <ListView
-            android:id="@+id/lv_mine_account_choice_list"
+            android:id="@+id/lv_mine_account_topup_choice_list"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:cacheColorHint="#000000"
             android:divider="@null"/>
         <Button
-            android:id="@+id/btn_mine_gold_withdraw_submit"
+            android:id="@+id/btn_mine_gold_topup_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

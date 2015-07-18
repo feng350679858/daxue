@@ -120,7 +120,14 @@ public class MineAccountActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
-
+        findViewById(R.id.btn_mine_gold_account_topup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // initshenfen();
+                Intent intent = new Intent(MineAccountActivity.this, MineGoldTopupActivity.class);
+                startActivity(intent);
+            }
+        });
         View.OnClickListener accountStreamListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
