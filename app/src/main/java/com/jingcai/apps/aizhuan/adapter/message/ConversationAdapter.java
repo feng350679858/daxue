@@ -2,7 +2,9 @@ package com.jingcai.apps.aizhuan.adapter.message;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Spannable;
 import android.text.TextUtils;
@@ -28,6 +30,7 @@ import com.easemob.util.DateUtils;
 import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.common.ShowBigImage;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.ConversationImageCache;
@@ -428,43 +431,43 @@ public class ConversationAdapter extends BaseAdapter {
         }
     }
 
-    private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath, String remoteDir,
+    private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath,final String remoteDir,
                                   final EMMessage message) {
         Bitmap bitmap = ConversationImageCache.getInstance().get(thumbernailPath);
         if (bitmap != null) {
             iv.setImageBitmap(bitmap);
             iv.setClickable(true);
-//            iv.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    EMLog.d(TAG, "image view on click");
-//                    Intent intent = new Intent(activity, ShowBigImage.class);
-//                    File file = new File(localFullSizePath);
-//                    if (file.exists()) {
-//                        Uri uri = Uri.fromFile(file);
-//                        intent.putExtra("uri", uri);
-//                        EMLog.d(TAG, "here need to check why download everytime");
-//                    } else {
-//                        // The local full size pic does not exist yet.
-//                        // ShowBigImage needs to download it from the server
-//                        // first
-//                        // intent.putExtra("", message.get);
-//                        ImageMessageBody body = (ImageMessageBody) message.getBody();
-//                        intent.putExtra("secret", body.getSecret());
-//                        intent.putExtra("remotepath", remote);
-//                    }
-//                    if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
-//                            && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
-//                        try {
-//                            EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-//                            message.isAcked = true;
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    activity.startActivity(intent);
-//                }
-//            });
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EMLog.d(TAG, "image view on click");
+                    Intent intent = new Intent( mContext, ShowBigImage.class);
+                    File file = new File(localFullSizePath);
+                    if (file.exists()) {
+                        Uri uri = Uri.fromFile(file);
+                        intent.putExtra("uri", uri);
+                        EMLog.d(TAG, "here need to check why download everytime");
+                    } else {
+                        // The local full size pic does not exist yet.
+                        // ShowBigImage needs to download it from the server
+                        // first
+                        // intent.putExtra("", message.get);
+                        ImageMessageBody body = (ImageMessageBody) message.getBody();
+                        intent.putExtra("secret", body.getSecret());
+                        intent.putExtra("remotepath", remoteDir);
+                    }
+                    if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
+                            && message.getChatType() != EMMessage.ChatType.GroupChat && message.getChatType() != EMMessage.ChatType.ChatRoom) {
+                        try {
+                            EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
+                            message.isAcked = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mContext.startActivity(intent);
+                }
+            });
             return true;
         } else {
             new LoadImageTask().execute(thumbernailPath, localFullSizePath, remoteDir, message.getChatType(), iv, ((Activity) mContext), message);
@@ -745,38 +748,38 @@ public class ConversationAdapter extends BaseAdapter {
                 ConversationImageCache.getInstance().put(thumbnailPath, image);
                 iv.setClickable(true);
                 iv.setTag(thumbnailPath);
-//			iv.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					if (thumbnailPath != null) {
-//
-//						Intent intent = new Intent(activity, ShowBigImage.class);
-//						File file = new File(localFullSizePath);
-//						if (file.exists()) {
-//							Uri uri = Uri.fromFile(file);
-//							intent.putExtra("uri", uri);
-//						} else {
-//							// The local full size pic does not exist yet.
-//							// ShowBigImage needs to download it from the server
-//							// first
-//							intent.putExtra("remotepath", remotePath);
-//						}
-//						if (message.getChatType() != ChatType.Chat) {
-//							// delete the image from server after download
-//						}
-//						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
-//							message.isAcked = true;
-//							try {
-//								// 看了大图后发个已读回执给对方
-//								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}
-//						activity.startActivity(intent);
-//					}
-//				}
-//			});
+			iv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (thumbnailPath != null) {
+
+						Intent intent = new Intent(activity, ShowBigImage.class);
+						File file = new File(localFullSizePath);
+						if (file.exists()) {
+							Uri uri = Uri.fromFile(file);
+							intent.putExtra("uri", uri);
+						} else {
+							// The local full size pic does not exist yet.
+							// ShowBigImage needs to download it from the server
+							// first
+							intent.putExtra("remotepath", remotePath);
+						}
+						if (message.getChatType() != EMMessage.ChatType.Chat) {
+							// delete the image from server after download
+						}
+						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != EMMessage.ChatType.GroupChat && message.getChatType() != EMMessage.ChatType.ChatRoom) {
+							message.isAcked = true;
+							try {
+								// 看了大图后发个已读回执给对方
+								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						activity.startActivity(intent);
+					}
+				}
+			});
             } else {
                 if (message.status == EMMessage.Status.FAIL) {
                     if (AppUtil.isNetWorkConnected(activity)) {
