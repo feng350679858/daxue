@@ -78,32 +78,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.mine.activity.PartjobCancelActivity"
-            android:label="@string/title_activity_partjob_cancel" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobJoinSuccessActivity"
-            android:label="@string/title_activity_partjob_join_success" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.LocationCityActivity"
-            android:label="@string/title_activity_partjob_join_success" >
-        </activity>
+        <activity android:name=".activity.mine.activity.PartjobCancelActivity" android:label="@string/title_activity_partjob_cancel" />
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" android:label="@string/title_activity_partjob_join_success" />
+        <activity android:name=".activity.partjob.LocationCityActivity" android:label="@string/title_activity_partjob_join_success"/>
+        <activity android:name=".activity.partjob.PartjobDetailActivity" android:label="@string/title_activity_partjob_detail" />
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity" android:label="@string/title_activity_partjob_detail_map" />
+        <activity android:name=".activity.partjob.PartjobSearchActivity" android:label="@string/title_activity_partjob_search" />
 
-
-        <activity
-            android:name=".activity.partjob.PartjobDetailActivity"
-            android:label="@string/title_activity_partjob_detail" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobDetailMapActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobSearchActivity"
-            android:label="@string/title_activity_partjob_search" >
-        </activity>
         <!-- help -->
         <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
@@ -124,6 +105,8 @@
         <activity android:name=".activity.message.NotificationDetailActivity"   />
         <activity android:name=".activity.message.MessageConversationActivity"   />
 
+        <!-- common -->
+        <activity android:name=".activity.common.ShowBigImage"/>
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
 
