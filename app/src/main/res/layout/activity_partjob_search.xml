@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/main_yellow"
+        android:layout_gravity="center_vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/partjob_search_back"
+            android:layout_width="@dimen/header_height"
+            android:layout_height="@dimen/header_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/main_yellow"
+            android:src="@drawable/icon_left_arrow" />
+
+        <EditText
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/partjob_search_back"
+            android:layout_toLeftOf="@+id/tv_cancel"
+            android:textColor="@color/font_important"
+            android:textColorHint="@color/font_assistant"
+            android:textSize="16sp"
+            android:drawablePadding="5dp"
+            android:background="@drawable/icon_index_pj_search_content"
+            android:hint="派单兼职等你来"
+            android:id="@+id/index_pj_search_content"
+            android:layout_width="match_parent"
+            android:drawableLeft="@drawable/icon_index_pj_search"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:inputType="text"/>
+
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:text="取消"
+            android:textSize="18sp"
+            android:textColor="@color/font_important"
+            android:layout_gravity="right|center_vertical" />
+    </RelativeLayout>
+
+    <include layout="@layout/index_partjob_list"></include>
+</LinearLayout>

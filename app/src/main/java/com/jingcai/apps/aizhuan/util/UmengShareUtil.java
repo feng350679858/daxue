@@ -23,7 +23,7 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 /**
- * Created by Administrator on 2015/7/17.
+ * Created by lejing on 15/5/11.
  */
 public class UmengShareUtil {
     public static final String DESCRIPTOR = "com.umeng.share";
@@ -41,48 +41,48 @@ public class UmengShareUtil {
     }
 
     private void initPlatform() {
-        // Ìí¼ÓQQ¡¢QZoneÆ½Ì¨
+        // æ·»åŠ QQã€QZoneå¹³å°
         addQQQZonePlatform();
-        // Ìí¼ÓÎ¢ĞÅ¡¢Î¢ĞÅÅóÓÑÈ¦Æ½Ì¨
+        // æ·»åŠ å¾®ä¿¡ã€å¾®ä¿¡æœ‹å‹åœˆå¹³å°
         addWXPlatform();
-        // Ìí¼Ó¶ÌĞÅ
+        // æ·»åŠ çŸ­ä¿¡
         addSMS();
-        // Ìí¼ÓEmailÆ½Ì¨
+        // æ·»åŠ Emailå¹³å°
         addEmail();
     }
 
     /**
-     * Ìí¼Ó¶ÌĞÅÆ½Ì¨</br>
+     * æ·»åŠ çŸ­ä¿¡å¹³å°</br>
      */
     private void addSMS() {
-        // Ìí¼Ó¶ÌĞÅ
+        // æ·»åŠ çŸ­ä¿¡
         SmsHandler smsHandler = new SmsHandler();
         smsHandler.addToSocialSDK();
     }
 
     /**
-     * Ìí¼ÓEmailÆ½Ì¨</br>
+     * æ·»åŠ Emailå¹³å°</br>
      */
     private void addEmail() {
-        // Ìí¼Óemail
+        // æ·»åŠ email
         EmailHandler emailHandler = new EmailHandler();
         emailHandler.addToSocialSDK();
     }
 
     /**
      * @return
-     * @¹¦ÄÜÃèÊö : Ìí¼ÓÎ¢ĞÅÆ½Ì¨·ÖÏí
+     * @åŠŸèƒ½æè¿° : æ·»åŠ å¾®ä¿¡å¹³å°åˆ†äº«
      */
     private void addWXPlatform() {
-        // ×¢Òâ£ºÔÚÎ¢ĞÅÊÚÈ¨µÄÊ±ºò£¬±ØĞë´«µİappSecret
-        // wx967daebe835fbeacÊÇÄãÔÚÎ¢ĞÅ¿ª·¢Æ½Ì¨×¢²áÓ¦ÓÃµÄAppID, ÕâÀïĞèÒªÌæ»»³ÉÄã×¢²áµÄAppID
+        // æ³¨æ„ï¼šåœ¨å¾®ä¿¡æˆæƒçš„æ—¶å€™ï¼Œå¿…é¡»ä¼ é€’appSecret
+        // wx967daebe835fbeacæ˜¯ä½ åœ¨å¾®ä¿¡å¼€å‘å¹³å°æ³¨å†Œåº”ç”¨çš„AppID, è¿™é‡Œéœ€è¦æ›¿æ¢æˆä½ æ³¨å†Œçš„AppID
         String appId = "wxc4b8ccbf51c73699";
         String appSecret = "3ad9669cac48abd6ae8f3e75b0b147e6";
-        // Ìí¼ÓÎ¢ĞÅÆ½Ì¨
+        // æ·»åŠ å¾®ä¿¡å¹³å°
         UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
         wxHandler.addToSocialSDK();
 
-        // Ö§³ÖÎ¢ĞÅÅóÓÑÈ¦
+        // æ”¯æŒå¾®ä¿¡æœ‹å‹åœˆ
         UMWXHandler wxCircleHandler = new UMWXHandler(activity, appId, appSecret);
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
@@ -90,20 +90,20 @@ public class UmengShareUtil {
 
     /**
      * @return
-     * @¹¦ÄÜÃèÊö : Ìí¼ÓQQÆ½Ì¨Ö§³Ö QQ·ÖÏíµÄÄÚÈİ£¬ °üº¬ËÄÖÖÀàĞÍ£¬ ¼´µ¥´¿µÄÎÄ×Ö¡¢Í¼Æ¬¡¢ÒôÀÖ¡¢ÊÓÆµ. ²ÎÊıËµÃ÷ : title, summary,
-     * image urlÖĞ±ØĞëÖÁÉÙÉèÖÃÒ»¸ö, targetUrl±ØĞëÉèÖÃ,ÍøÒ³µØÖ·±ØĞëÒÔ"http://"¿ªÍ· . title :
-     * Òª·ÖÏí±êÌâ summary : Òª·ÖÏíµÄÎÄ×Ö¸ÅÊö image url : Í¼Æ¬µØÖ· [ÒÔÉÏÈı¸ö²ÎÊıÖÁÉÙÌîĞ´Ò»¸ö] targetUrl
-     * : ÓÃ»§µã»÷¸Ã·ÖÏíÊ±Ìø×ªµ½µÄÄ¿±êµØÖ· [±ØÌî] ( Èô²»ÌîĞ´ÔòÄ¬ÈÏÉèÖÃÎªÓÑÃËÖ÷Ò³ )
+     * @åŠŸèƒ½æè¿° : æ·»åŠ QQå¹³å°æ”¯æŒ QQåˆ†äº«çš„å†…å®¹ï¼Œ åŒ…å«å››ç§ç±»å‹ï¼Œ å³å•çº¯çš„æ–‡å­—ã€å›¾ç‰‡ã€éŸ³ä¹ã€è§†é¢‘. å‚æ•°è¯´æ˜ : title, summary,
+     * image urlä¸­å¿…é¡»è‡³å°‘è®¾ç½®ä¸€ä¸ª, targetUrlå¿…é¡»è®¾ç½®,ç½‘é¡µåœ°å€å¿…é¡»ä»¥"http://"å¼€å¤´ . title :
+     * è¦åˆ†äº«æ ‡é¢˜ summary : è¦åˆ†äº«çš„æ–‡å­—æ¦‚è¿° image url : å›¾ç‰‡åœ°å€ [ä»¥ä¸Šä¸‰ä¸ªå‚æ•°è‡³å°‘å¡«å†™ä¸€ä¸ª] targetUrl
+     * : ç”¨æˆ·ç‚¹å‡»è¯¥åˆ†äº«æ—¶è·³è½¬åˆ°çš„ç›®æ ‡åœ°å€ [å¿…å¡«] ( è‹¥ä¸å¡«å†™åˆ™é»˜è®¤è®¾ç½®ä¸ºå‹ç›Ÿä¸»é¡µ )
      */
     private void addQQQZonePlatform() {
         String appId = "1104549789";
         String appKey = "z8XOsQfLVVvuGh61";
-        // Ìí¼ÓQQÖ§³Ö, ²¢ÇÒÉèÖÃQQ·ÖÏíÄÚÈİµÄtarget url
+        // æ·»åŠ QQæ”¯æŒ, å¹¶ä¸”è®¾ç½®QQåˆ†äº«å†…å®¹çš„target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity, appId, appKey);
         qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
         qqSsoHandler.addToSocialSDK();
 
-        // Ìí¼ÓQZoneÆ½Ì¨
+        // æ·»åŠ QZoneå¹³å°
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(activity, appId, appKey);
         qZoneSsoHandler.setTargetUrl("http://www.umeng.com/social");
         qZoneSsoHandler.addToSocialSDK();
@@ -111,14 +111,14 @@ public class UmengShareUtil {
 
 
     /**
-     * ¸ù¾İ²»Í¬µÄÆ½Ì¨ÉèÖÃ²»Í¬µÄ·ÖÏíÄÚÈİ</br>
+     * æ ¹æ®ä¸åŒçš„å¹³å°è®¾ç½®ä¸åŒçš„åˆ†äº«å†…å®¹</br>
      */
     public void setShareContent(String title, String msg, String targetUrl) {
         setShareContent(title, msg, targetUrl, 0);
     }
 
     /**
-     * ¸ù¾İ²»Í¬µÄÆ½Ì¨ÉèÖÃ²»Í¬µÄ·ÖÏíÄÚÈİ</br>
+     * æ ¹æ®ä¸åŒçš„å¹³å°è®¾ç½®ä¸åŒçš„åˆ†äº«å†…å®¹</br>
      */
     public void setShareContent(String title, String msg, String targetUrl, int logoDrawableId) {
         UMImage localImage = null;
@@ -140,26 +140,26 @@ public class UmengShareUtil {
     }
 
     public void setShareContent(String title, String msg, String targetUrl, UMImage localImage) {
-//        // ÊÓÆµ·ÖÏí
+//        // è§†é¢‘åˆ†äº«
 //        UMVideo video = new UMVideo("http://v.youku.com/v_show/id_XNTc0ODM4OTM2.html");
 //        //vedio.setThumb("http://www.umeng.com/images/pic/home/social/img-1.png");
-//        video.setTitle("ÓÑÃËÉç»á»¯×é¼şÊÓÆµ");
+//        video.setTitle("å‹ç›Ÿç¤¾ä¼šåŒ–ç»„ä»¶è§†é¢‘");
 //        video.setThumb(urlImage);
 
 //        UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
 //        uMusic.setAuthor("umeng");
-//        uMusic.setTitle("Ììô¥Ö®Òô");
+//        uMusic.setTitle("å¤©ç±ä¹‹éŸ³");
 ////        uMusic.setThumb(urlImage);
 //        uMusic.setThumb("http://www.umeng.com/images/pic/social/chart_1.png");
 
         if(null == localImage){
-            localImage = new UMImage(activity, R.drawable.ic_launcher);
+            localImage = new UMImage(activity, R.drawable.ic_launcher2);
         }
 
         mController.setShareContent(msg);
 
         /**
-         * Î¢ĞÅºÃÓÑ
+         * å¾®ä¿¡å¥½å‹
          */
         WeiXinShareContent weixinContent = new WeiXinShareContent();
         weixinContent.setTitle(title);
@@ -170,7 +170,7 @@ public class UmengShareUtil {
 
 
         /**
-         * Î¢ĞÅÅóÓÑÈ¦
+         * å¾®ä¿¡æœ‹å‹åœˆ
          */
         CircleShareContent circleMedia = new CircleShareContent();
 //        circleMedia.setTitle(title);
@@ -187,7 +187,7 @@ public class UmengShareUtil {
 
 
         /**
-         * QQºÃÓÑ
+         * QQå¥½å‹
          */
         QQShareContent qqShareContent = new QQShareContent();
         qqShareContent.setTitle(title);
@@ -199,11 +199,11 @@ public class UmengShareUtil {
 
         UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
         uMusic.setAuthor("umeng");
-        uMusic.setTitle("Ììô¥Ö®Òô");
+        uMusic.setTitle("å¤©ç±ä¹‹éŸ³");
 //        uMusic.setThumb(urlImage);
         uMusic.setThumb("http://www.umeng.com/images/pic/social/chart_1.png");
         /**
-         * QQ¿Õ¼ä
+         * QQç©ºé—´
          */
         QZoneShareContent qzone = new QZoneShareContent();
         qzone.setTitle(title);
@@ -213,7 +213,7 @@ public class UmengShareUtil {
         mController.setShareMedia(qzone);
 
         /**
-         * ÓÊ¼ş
+         * é‚®ä»¶
          */
         MailShareContent mail = new MailShareContent(localImage);
         mail.setTitle(title);
@@ -222,7 +222,7 @@ public class UmengShareUtil {
         mController.setShareMedia(mail);
 
         /**
-         * ¶ÌĞÅ
+         * çŸ­ä¿¡
          */
         SmsShareContent sms = new SmsShareContent();
         sms.setShareContent(msg);
@@ -231,7 +231,7 @@ public class UmengShareUtil {
 
 
         /**
-         * Î¢²©
+         * å¾®åš
          */
         SinaShareContent sinaContent = new SinaShareContent();
         sinaContent.setTitle(title);

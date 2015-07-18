@@ -15,8 +15,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
     }
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
 }
+
