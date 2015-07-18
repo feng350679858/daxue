@@ -42,4 +42,5 @@
     <string name="sd_card_does_not_exist">未挂载SD卡</string>
     <string name="send_fail">发送失败</string>
     <string name="connect_failuer_toast">网络接连失败</string>
+    <string name="Download_the_pictures_new">图片加载中...</string>
 </resources>
