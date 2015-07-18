@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ public class MineAccountActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_index);
+        azService = new AzService(this);
+        messageHandler = new MessageHandler(this);
         initHeader();
         initView();
     }
@@ -61,22 +64,27 @@ public class MineAccountActivity extends BaseActivity {
 
     @Override
     public void onResume() {
-        initData();
+        //initData();
         super.onResume();
     }
     private void initView() {
+        ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
+                finish();
+            }
+        });
 
-        initComponent();
+       // initComponent();
 
+       // initEvents();
         initEvents();
-
 
     }
 
     private void initshenfen()
     {
-
                 Game09Request rep = new Game09Request();
                 Game09Request.Student student = rep.new Student();
                 student.setStudentid(UserSubject.getStudentid());
@@ -155,7 +163,7 @@ public class MineAccountActivity extends BaseActivity {
     }
 
     /**
-     * ³õÊ¼»¯Óà¶îÊý¾Ý
+     * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private void initBalanceData() {
         new AzExecutor().execute(new Runnable() {
@@ -176,7 +184,6 @@ public class MineAccountActivity extends BaseActivity {
                             messageHandler.postMessage(0, resp.getBody().getWallet_list());
                         }
                     }
-
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -185,7 +192,7 @@ public class MineAccountActivity extends BaseActivity {
             }
         });
     }
-    class MessageHandler extends BaseHandler {
+   class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
         }
@@ -199,7 +206,7 @@ public class MineAccountActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("ÕË»§Óà¶î»ñÈ¡Ê§°Ü£º"+msg.obj);
+                    showToast("ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ê§ï¿½Ü£ï¿½"+msg.obj);
                     break;
                 }
                 case 2: {
@@ -207,7 +214,7 @@ public class MineAccountActivity extends BaseActivity {
                     break;
                 }
                 case 3:{
-                    showToast("ÕË»§ÊÕÈë»ñÈ¡Ê§°Ü£º"+msg.obj);
+                    showToast("ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ê§ï¿½Ü£ï¿½"+msg.obj);
                     break;
                 }
                 default:
@@ -220,8 +227,8 @@ public class MineAccountActivity extends BaseActivity {
 
 
     /**
-     * Ìî³äÓà¶î
-     * @param wallets Óà¶îÁÐ±í
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param  ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
      */
     private void fillBalance(ArrayList<Account01Response.Account01Body.Wallet> wallets) {
         for(int i = 0 ; i < wallets.size(); i++){
@@ -234,7 +241,7 @@ public class MineAccountActivity extends BaseActivity {
     }
 
     /**
-     * ³õÊ¼»¯ÊÕÈëÊý¾Ý
+     *
      */
     private void initIncomeData() {
 

@@ -29,9 +29,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_choose_account_add"
+                android:drawableLeft="@drawable/ic_launcher"
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/icon_choose_account_add"
+                android:drawableStart="@drawable/ic_launcher"
                 android:gravity="center_horizontal"
                 android:text="当前无可用账户 立即绑定"
                 android:textColor="@color/font_normal"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:hint="当前可用金币22,134金币"
             android:layout_marginLeft="30dp"
-            android:textColorHint="@color/font_grey"
+            android:textColorHint="@color/normal_grey"
             android:textColor="@color/font_red"
             android:textSize="16sp"
             android:layout_weight="1"
@@ -112,7 +112,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_tip"
+            android:src="@drawable/ic_launcher"
             />
         <TextView
             android:layout_width="wrap_content"

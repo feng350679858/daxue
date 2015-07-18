@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/font_assistant"
-        android:text="@string/sys_logout_tip"
+        android:text="asdfasdfasd"
         android:background="@color/white"/>
     <View
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/sys_setting_field_bg"
         android:text="取消"
-        android:textColor="@color/ornament"
+        android:textColor="@color/important_dark"
         android:textSize="18sp"/>
 
 </LinearLayout>

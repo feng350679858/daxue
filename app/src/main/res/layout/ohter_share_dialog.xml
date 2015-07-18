@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:background="@color/dialog_bg_white_tran"
+    android:background="@color/divider_color"
     >
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/divider" />
+            android:background="@color/divider_color" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/divider" />
+            android:background="@color/divider_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,7 +60,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_share_QQ" />
+                    android:src="@drawable/icon_share_qq" />
 
                 <TextView
                     android:layout_marginTop="10dp"

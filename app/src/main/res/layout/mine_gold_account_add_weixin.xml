@@ -46,7 +46,7 @@
             android:layout_height="1sp"
             android:background="@color/white"
             android:paddingLeft="10dp"
-            android:src="@color/divider" />
+            android:src="@color/divider_color" />
 
 
         <LinearLayout
@@ -87,7 +87,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_tip"
+            android:src="@drawable/ic_launcher"
             />
         <TextView
             android:layout_width="wrap_content"

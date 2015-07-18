@@ -50,7 +50,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
     }
 
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("Ñ§ÉúÈÏÖ¤");
+        ((TextView)findViewById(R.id.tv_content)).setText("æˆ‘çš„Ö¤");
 
     }
 
@@ -76,7 +76,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                             startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
                         } else {
-                            showToast("Î´ÕÒµ½SD¿¨");
+                            showToast("Î´ï¿½Òµï¿½SDï¿½ï¿½");
                         }
                         dialog.dismiss();
                     }
@@ -84,7 +84,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//ÏàÆ¬ÀàÐÍ
+                        intent.setType("image/*");//ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½
                         startActivityForResult(intent, IMAGE_REQUEST_CODE);
                         dialog.dismiss();
                     }
@@ -110,7 +110,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                             startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
                         } else {
-                            showToast("Î´ÕÒµ½SD¿¨");
+                            showToast("Î´ï¿½Òµï¿½SDï¿½ï¿½");
                         }
                         dialog.dismiss();
                     }
@@ -118,7 +118,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//ÏàÆ¬ÀàÐÍ
+                        intent.setType("image/*");//ï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½
                         startActivityForResult(intent, IMAGE_REQUEST_CODE);
                         dialog.dismiss();
                     }
@@ -168,19 +168,19 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("»ñÈ¡Ê§°Ü:" + msg.obj);
+                    showToast("ï¿½ï¿½È¡Ê§ï¿½ï¿½:" + msg.obj);
                     break;
                 }
                 case 2: {
                     if (null != msg.obj) {
-                        //½«½ØÈ¡µÄÕÕÆ¬ ´æÈëimageViewÖÐ
+                        //ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Æ¬ ï¿½ï¿½ï¿½ï¿½imageViewï¿½ï¿½
                         Bitmap bitmap1 = (Bitmap) msg.obj;
                         mphotoFront.setImageBitmap(bitmap1);
 
                         uploadLogo(bitmap1);
 
                     } else {
-                        showToast("Í¼Æ¬»ñÈ¡Ê§°Ü");
+                        showToast("Í¼Æ¬ï¿½ï¿½È¡Ê§ï¿½ï¿½");
                     }
                     break;
                 }
@@ -192,11 +192,11 @@ public class MineStudentCertificationActivity extends BaseActivity {
     }
 
     private void uploadLogo(Bitmap bitmap) {
-        //½«Í¼Æ¬ÉÏ´«µ½·þÎñÆ÷
+        //ï¿½ï¿½Í¼Æ¬ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
             @Override
             public void success(String logopath) {
-                showToast("ÉÏ´«Í·Ïñ³É¹¦");
+                showToast("ï¿½Ï´ï¿½Í·ï¿½ï¿½É¹ï¿½");
               //  mStudent.setLogopath(logopath);
             }
 
@@ -210,23 +210,23 @@ public class MineStudentCertificationActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            // ´ÓÏà²á»ñÈ¡Í·Ïñ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Í·ï¿½ï¿½
             case IMAGE_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     resizeImage(data.getData());
                 }
                 break;
-            // ÕÕÏà»úÏÖÅÄ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             case CAMERA_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     if (AppUtil.isSdcardExisting()) {
                         resizeImage(AppUtil.getImageUri());
                     } else {
-                        showToast("Î´ÕÒµ½´æ´¢¿¨£¬ÎÞ·¨´æ´¢ÕÕÆ¬");
+                        showToast("Î´ï¿½Òµï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½æ´¢ï¿½ï¿½Æ¬");
                     }
                 }
                 break;
-            // Í¼Æ¬½ØÈ¡
+            // Í¼Æ¬ï¿½ï¿½È¡
             case RESIZE_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     Bitmap bitmap = null;
@@ -243,7 +243,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
     }
 
     /**
-     * ²Ã¼ôÍ¼Æ¬·½·¨ÊµÏÖ
+     * ï¿½Ã¼ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
      *
      * @param uri
      */

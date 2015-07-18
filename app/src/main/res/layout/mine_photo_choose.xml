@@ -73,7 +73,7 @@
             android:layout_height="1dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/divider" />
+            android:background="@color/divider_color" />
     </LinearLayout>
     <ImageButton
         android:id="@+id/btn_pick_photo_cancel"

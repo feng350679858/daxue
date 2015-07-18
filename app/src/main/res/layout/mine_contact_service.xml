@@ -23,9 +23,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/mine_contact_service_item_block"
+                android:drawableLeft="@drawable/ic_launcher"
                 android:drawablePadding="4dp"
-                android:drawableStart="@drawable/mine_contact_service_item_block"
+                android:drawableStart="@drawable/ic_launcher"
                 android:text="QQ客服"
                 android:textColor="@color/font_important"
                 android:textSize="18sp" />
@@ -41,14 +41,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/mine_contact_service_qq" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="@string/mine_contact_service_qq"
+                    android:text="@drawable/ic_launcher"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -88,9 +88,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/mine_contact_service_item_block"
+                android:drawableLeft="@drawable/ic_launcher"
                 android:drawablePadding="4dp"
-                android:drawableStart="@drawable/mine_contact_service_item_block"
+                android:drawableStart="@drawable/ic_launcher"
                 android:text="电话客服"
                 android:textColor="@color/font_important"
                 android:textSize="18sp" />
@@ -106,14 +106,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/mine_contact_service_tel" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="@string/mine_contact_service_tel"
+                    android:text="asdfsdafsdf"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -153,9 +153,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/mine_contact_service_item_block"
+                android:drawableLeft="@drawable/ic_launcher"
                 android:drawablePadding="4dp"
-                android:drawableStart="@drawable/mine_contact_service_item_block"
+                android:drawableStart="@drawable/ic_launcher"
                 android:text="微信客服"
                 android:textColor="@color/font_important"
                 android:textSize="18sp" />
@@ -171,14 +171,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/mine_contact_service_wechat" />
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="@string/mine_contact_service_wechat"
+                    android:text="temnple"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -199,4 +199,5 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_arrow_right" />
         </LinearLayout>
+</LinearLayout>
 </LinearLayout>

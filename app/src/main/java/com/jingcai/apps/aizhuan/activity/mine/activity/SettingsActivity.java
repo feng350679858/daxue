@@ -18,6 +18,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.mine.fragment.MineIndexActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
@@ -40,9 +41,7 @@ import com.jingcai.apps.aizhuan.view.SlideButton;
  * Created by xiangqili on 2015/7/14.
  */
 public class SettingsActivity extends BaseActivity {
-    private MineIndexActivity mineIndexActivity;
 
-    private View mFragmentLayout;
     private AzService azService;
     private ProgressDialog progressDialog =null;
     private MessageHandler messageHandler;
@@ -50,24 +49,24 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mine_index);
-
-       initHeader();
+        setContentView(R.layout.mine_settings);
+        azService = new AzService(this);
+        messageHandler = new MessageHandler(this);
+        initHeader();
         initView();
     }
 
-    public void initHeader(){
+    private void initHeader(){
         ((TextView)findViewById(R.id.tv_content)).setText("设置");
         ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.GONE);
 
     }
 
-    public void initView()
+    private void initView()
     {
         ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });
@@ -82,18 +81,16 @@ public class SettingsActivity extends BaseActivity {
         initShareConfig();
     }
 
-    private UmengShareUtil umengShareUtil;
+   private UmengShareUtil umengShareUtil;
 
     private void initShareConfig() {
         umengShareUtil = new UmengShareUtil(SettingsActivity.this);
         umengShareUtil.setShareContent("爱赚万岁", "兼职必备神器，你难道还没用？", "http://www.izhuan365.com");
     }
 
-    /**
-     * ��������
-     */
+
     private void initInvite() {
-        mFragmentLayout.findViewById(R.id.tv_sys_setting_invite).setOnClickListener(new View.OnClickListener() {
+              findViewById(R.id.tv_sys_setting_invite).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 umengShareUtil.openShare();
@@ -136,11 +133,8 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * �Ƴ���¼
-     */
     private void initLogout() {
-        mFragmentLayout.findViewById(R.id.btn_sys_setting_logout).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_sys_setting_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -191,11 +185,9 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 关于我们
-     */
+
     private void initAboutUs() {
-        mFragmentLayout.findViewById(R.id.tv_sys_setting_about_us).setOnClickListener(new View.OnClickListener() {
+       findViewById(R.id.tv_sys_setting_about_us).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // Intent intent = new Intent(SettingsActivity.this, AboutUsActivity.class);
@@ -204,11 +196,9 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 充值支付密码
-     */
+
     private void initModifyPsw() {
-        mFragmentLayout.findViewById(R.id.tv_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {
+      findViewById(R.id.tv_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  Intent intent = new Intent(SettingsActivity.this, ModifyPswActivity.class);
@@ -217,11 +207,9 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 我有话说
-     */
+
     private void initSuggestion() {
-        mFragmentLayout.findViewById(R.id.tv_sys_setting_suggestion).setOnClickListener(new View.OnClickListener() {
+       findViewById(R.id.tv_sys_setting_suggestion).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingsActivity.this, MineSuggestionActivity.class);
@@ -230,11 +218,9 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * �汾����
-     */
+
     private void initVersionUpdate() {
-        mFragmentLayout.findViewById(R.id.tv_sys_setting_update).setOnClickListener(new View.OnClickListener() {
+       findViewById(R.id.tv_sys_setting_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new VersionUtil(SettingsActivity.this).autoUpdateApp(true);
@@ -242,11 +228,9 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
-    /**
-     * У�ѿɼ�����
-     */
+
     private void initVisiableSwitch() {
-        SlideButton slideButton = (SlideButton)mFragmentLayout.findViewById(R.id.switch_setting_isvisiable);
+        SlideButton slideButton = (SlideButton)findViewById(R.id.switch_setting_isvisiable);
         slideButton.setToggleState("1".equals(UserSubject.getIsvisiable()));
         slideButton.setOnToggleStateChangeListener(new OnToggleStateChangeListener() {
             @Override
@@ -315,11 +299,11 @@ public class SettingsActivity extends BaseActivity {
 //        });
     }
 
-    class MessageHandler extends BaseHandler {
+   class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
         }
-
+      // closeProcessDialog();
         @Override
         public void handleMessage(Message msg) {
             closeProcessDialog();
@@ -327,14 +311,14 @@ public class SettingsActivity extends BaseActivity {
                 case 0: {
                     boolean isVisiable = (boolean) msg.obj;
                     Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
-                    StringBuffer sb = new StringBuffer("У��");
-                    sb.append(isVisiable ? "��" : "����");
-                    sb.append("������ı������");
+                    StringBuffer sb = new StringBuffer("sdfsfds");
+                    sb.append(isVisiable ? "sdfs" : "sdfs");
+                    sb.append("dfsdfsd");
                     showToast(sb.toString());
                     break;
                 }
                 case 1: {
-                    showToast("����ʧ��:" + msg.obj);
+                    showToast("sdfsdfsd:" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -349,7 +333,7 @@ public class SettingsActivity extends BaseActivity {
                     break;
                 }
                 case 3: {
-                    showToast("�˳�ʧ��:" + msg.obj);
+                    showToast("xczxczx" + msg.obj);
                     break;
                 }
                 default: {
@@ -364,8 +348,5 @@ public class SettingsActivity extends BaseActivity {
             progressDialog.dismiss();
         }
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-            }
+
+}

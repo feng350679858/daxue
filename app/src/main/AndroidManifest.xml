@@ -127,6 +127,33 @@
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>
 
+        <!-- mine -->
+        <activity
+            android:name=".activity.mine.activity.MineAccountActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineStudentCertificationActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.SettingsActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineGoldTopupActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+        <activity android:name=".activity.mine.activity.MineSuggestionActivity"/>
+        <activity
+            android:name=".activity.mine.activity.MineGoldWithdrawActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineResetPasswordActivity"
+            android:label="@string/title_activity_partjob_detail_map" >
+        </activity>
+
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
         <meta-data android:name="EASEMOB_APPKEY"  android:value="lee513579#izhuanc2ctest" />

@@ -7,9 +7,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/icon_tip"
+        android:drawableLeft="@drawable/ic_launcher"
         android:drawablePadding="5dp"
-        android:drawableStart="@drawable/icon_tip"
+        android:drawableStart="@drawable/ic_launcher"
         android:padding="10dp"
         android:text="请填写支付宝所绑定号码，手机号登录支付宝查看收款。"
         android:textSize="12sp"
@@ -57,7 +57,7 @@
             android:layout_height="1sp"
             android:background="@color/white"
             android:paddingLeft="10dp"
-            android:src="@color/divider" />
+            android:src="@drawable/ic_launcher" />
 
 
         <LinearLayout
@@ -98,7 +98,7 @@
             android:id="@+id/cb_account_add_alipay_terms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/CustomCheckboxTheme"
+            style="@style/style_badge"
             android:checked="true"
             />
         <TextView
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="金融服务"
-            android:textColor="@color/ornament"/>
+            android:textColor="@color/important_dark"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
