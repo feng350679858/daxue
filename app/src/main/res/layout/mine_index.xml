@@ -153,7 +153,7 @@
         >
 
         <LinearLayout
-
+            android:id="@+id/ll_mine_student_certification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -291,6 +291,7 @@
 
             android:background="@color/divider_color" />
         <LinearLayout
+            android:id="@+id/ll_mine_partjob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -378,6 +379,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/ll_mine_contact_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"

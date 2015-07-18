@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.activity.MineContactService;
+import com.jingcai.apps.aizhuan.activity.mine.activity.MineStudentCertificationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
@@ -66,5 +68,23 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        mainView.findViewById(R.id.ll_mine_contact_service).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineContactService.class);
+                startActivity(intent);
+            }
+        });
+        mainView.findViewById(R.id.ll_mine_student_certification).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineStudentCertificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+
 }
