@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/include_header" />
+    <LinearLayout
+        android:id="@+id/ll_mine_student_certification_photo_inside"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请上传学生证内页"
+            android:textColor="@color/important_dark"
+            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/iv_mine_student_certification_inside"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher"
+          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请上传学生证封面"
+            android:textColor="@color/important_dark"
+            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/iv_mine_student_certification_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:hint="提交审核"/>
+    </LinearLayout>
+</LinearLayout>

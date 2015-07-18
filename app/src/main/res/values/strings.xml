@@ -43,4 +43,12 @@
     <string name="send_fail">发送失败</string>
     <string name="connect_failuer_toast">网络接连失败</string>
     <string name="Download_the_pictures_new">图片加载中...</string>
+
+    <!-- 提示信息 -->
+    <string name="message_title">提示</string>
+    <string name="OK_text">确定</string>
+    <string name="cancel_text">取消</string>
+    <string name="updapp">检测到新版本，是否要更新？</string>
+    <string name="updapp_force">检测到新版本，请更新！</string>
+  
 </resources>

@@ -1,8 +1,7 @@
-package com.jingcai.apps.aizhuan.activity.index.fragment;
+package com.jingcai.apps.aizhuan.activity.mine.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,11 @@ import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
-/**
- * Created by Json Ding on 2015/7/10.
- */
-public class IndexMineFragment extends BaseFragment {
 
+/**
+ * Created by xiangqili on 2015/7/14.
+ */
+public class MineIndexActivity extends BaseFragment{
     private View lastPerformItem;
     private View mainView;
     private AzService azService;
@@ -32,7 +31,11 @@ public class IndexMineFragment extends BaseFragment {
             azService = new AzService(baseActivity);
             initHeader();
 
-            initView();
+            initViewSettings();
+
+            initViewhelp();
+
+            initViewAccount();
         }
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (parent != null) {
@@ -45,11 +48,13 @@ public class IndexMineFragment extends BaseFragment {
         ((TextView)mainView.findViewById(R.id.tv_content)).setText("我的");
         ((ImageView)mainView.findViewById(R.id.ib_back)).setImageDrawable(getResources
                 ().getDrawable(R.drawable.icon_index_tab_mine_twodimensioncode));
-        ImageView ivFunc = (ImageView) mainView.findViewById(R.id.iv_func);
-        ivFunc.setVisibility(View.VISIBLE);
-        ivFunc.setImageDrawable(getResources
+        ((ImageView)mainView.findViewById(R.id.iv_func)).setVisibility(View.VISIBLE);
+        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageDrawable(getResources
                 ().getDrawable(R.drawable.icon_index_tab_mine_settings));
-        ivFunc.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initViewSettings(){
+        ((ImageView)mainView.findViewById(R.id.iv_func)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity,SettingsActivity.class);
@@ -58,7 +63,9 @@ public class IndexMineFragment extends BaseFragment {
         });
     }
 
-    private void initView(){
+    private void initViewhelp(){}
+
+    private void initViewAccount(){
         mainView.findViewById(R.id.ll_mine_account).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -67,4 +74,8 @@ public class IndexMineFragment extends BaseFragment {
             }
         });
     }
+
+
+
+
 }
