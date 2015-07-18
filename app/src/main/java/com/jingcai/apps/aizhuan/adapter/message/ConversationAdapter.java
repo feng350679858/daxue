@@ -217,9 +217,6 @@ public class ConversationAdapter extends BaseAdapter {
             case TXT: // 文本
                   handleTextMessage(message, holder, position);
                 break;
-            case LOCATION: // 位置
-//                handleLocationMessage(message, holder, position, convertView);
-                break;
             case VOICE: // 语音
                 handleVoiceMessage(message, holder, position, convertView);
             default:

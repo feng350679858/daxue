@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <EditText
+        android:id="@+id/et_help_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header"
+        android:background="@null"
+        android:gravity="top"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="10dp"
+        android:text="就我知道张文朝和李狗蛋的关系！！！"
+        android:textSize="16sp" />
+</RelativeLayout>
