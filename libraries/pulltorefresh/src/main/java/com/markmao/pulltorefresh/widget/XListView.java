@@ -2,9 +2,12 @@ package com.markmao.pulltorefresh.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -21,6 +24,8 @@ import android.widget.TextView;
 
 import com.markmao.pulltorefresh.R;
 
+import java.util.ArrayList;
+
 /**
  * XListView, it's based on <a href="https://github.com/Maxwin-z/XListView-Android">XListView(Maxwin)</a>
  *
@@ -28,7 +33,7 @@ import com.markmao.pulltorefresh.R;
  * @date 2013-10-08
  */
 public class XListView extends ListView implements OnScrollListener {
-//    private static final String TAG = "XListView";
+    private static final String TAG = "XListView";
 
     private final static int SCROLL_BACK_HEADER = 0;
     private final static int SCROLL_BACK_FOOTER = 1;
@@ -74,21 +79,20 @@ public class XListView extends ListView implements OnScrollListener {
     private int mTotalItemCount;
 
     public XListView(Context context) {
-        super(context);
-        initWithContext(context);
+        this(context, null);
     }
 
     public XListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initWithContext(context);
+        this(context, attrs, 0);
     }
 
     public XListView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initWithContext(context);
+        this(context, attrs, defStyle, 0);
     }
 
-    private void initWithContext(Context context) {
+    public XListView(Context context, AttributeSet attrs, int defStyle, int defStyleRes) {
+        super(context, attrs, defStyle);
+
         mScroller = new Scroller(context, new DecelerateInterpolator());
         super.setOnScrollListener(this);
 
@@ -97,6 +101,16 @@ public class XListView extends ListView implements OnScrollListener {
         mHeaderContent = (RelativeLayout) mHeader.findViewById(R.id.header_content);
         mHeaderTime = (TextView) mHeader.findViewById(R.id.header_hint_time);
         addHeaderView(mHeader);
+
+        TypedArray a = context.obtainStyledAttributes( attrs, R.styleable.XListView, defStyle, defStyleRes);
+        int extraHeaderViewId = a.getResourceId(R.styleable.XListView_extraHeader, 0);
+        if(0 != extraHeaderViewId) {
+            View extraHeaderView = LayoutInflater.from(context).inflate(extraHeaderViewId, this, false);
+            if(null != extraHeaderView) {
+                addHeaderView(extraHeaderView);
+            }
+        }
+        a.recycle();
 
         // init footer view
         mFooterView = new XFooterView(context);

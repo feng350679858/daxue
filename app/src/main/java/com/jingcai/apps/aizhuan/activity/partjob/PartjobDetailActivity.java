@@ -9,14 +9,18 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +56,7 @@ public class PartjobDetailActivity extends BaseActivity {
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
+    private LinearLayout linearLayout_label;
     /**
      * 接受到的数据
      */
@@ -137,6 +142,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_healthlimit=(TextView)findViewById(R.id.partjob_content_healthlimit);
         partjob_content_genderlimit=(TextView)findViewById(R.id.partjob_content_genderlimit);
         partjob_content_remarks=(TextView)findViewById(R.id.partjob_content_remarks);
+        linearLayout_label=(LinearLayout)findViewById(R.id.linearLayout_label);
         partjob_isjoin=(Button)findViewById(R.id.partjob_isjoin);
     }
     private void initData(){
@@ -211,6 +217,26 @@ public class PartjobDetailActivity extends BaseActivity {
         /*
          * 兼职详情
          */
+        switch (mParttimejob.getWorktype()){
+            case "0": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
+                break;
+            case "1": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
+                break;
+            case "2": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
+                break;
+            case "3": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
+                break;
+            case "4": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
+                break;
+            case "5": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
+                break;
+            case "6": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
+                break;
+            case "7": partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
+                break;
+            default:
+        }
+
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
         PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, "￥" + mParttimejob.getSalary(), mParttimejob.getSalaryunit());
@@ -238,12 +264,28 @@ public class PartjobDetailActivity extends BaseActivity {
         else
             partjob_content_healthlimit.setText("2.需要健康证");
         if("0".equals(mParttimejob.getGenderlimit()))
-            partjob_content_genderlimit.setText("3.性别男");
+            partjob_content_genderlimit.setText("3.男性");
         else if("1".equals(mParttimejob.getGenderlimit()))
-            partjob_content_genderlimit.setText("3.性别女");
+            partjob_content_genderlimit.setText("3.女性");
         else
             partjob_content_genderlimit.setText("3.性别不限");
         partjob_content_remarks.setText(mParttimejob.getRemarks());
+        if(null!=mParttimejob.getSchoolmate_list()) {
+            for (Partjob02Response.Partjob02Body.Parttimejob.Schoolmate schoolmate : mParttimejob.getSchoolmate_list()) {
+                ImageView imageView = new ImageView(this);
+                LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(35, 35);
+                layout.setMargins(10, 0, 0, 0);
+                imageView.setLayoutParams(layout);
+                bitmapUtil.getImage(imageView, schoolmate.getLogopath(), R.drawable.logo_merchant_default);
+                linearLayout_label.addView(imageView);
+            }
+        }
+        else{
+            TextView tv=(TextView)findViewById(R.id.schoolmate);
+            tv.setText("暂无校友");
+            tv.setVisibility(View.VISIBLE);
+            linearLayout_label.setVisibility(View.GONE);
+        }
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -27,6 +27,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="120dp"
@@ -53,7 +54,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:text="工资单位"
-                            android:textSize="14sp" />
+                            android:textColor="@color/normal_grey"
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/partjob_detail_popup_settlelength"
@@ -75,7 +77,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableLeft="@drawable/partjob_pop_time"
-                            android:textSize="12sp" />
+                            android:drawablePadding="5dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/normal_grey"/>
 
 
 
@@ -85,15 +89,19 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:drawableLeft="@drawable/partjob_pop_address"
+                            android:drawablePadding="5dp"
+                            android:textColor="@color/normal_grey"
                             android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/partjob_detail_popup_logo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
+                android:background="#22ffffff"
+                android:padding="3dp"
                 android:src="@drawable/mine_profile_default_head_img" />
         </RelativeLayout>
 
@@ -118,6 +126,7 @@
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/partjob_detail_popup_tip"
                 android:text="温馨提示"
+                android:drawablePadding="5dp"
                 android:textColor="@color/font_red"
                 android:textSize="14sp" />
 
@@ -126,13 +135,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
 
                 android:layout_marginTop="10dp"
                 android:text="@string/partjob_detail_popup_tip"
-                android:textColor="@color/font_assistant"
-                android:textSize="12sp" />
+                android:textColor="@color/assist_grey"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -147,7 +156,7 @@
 
                 android:gravity="center"
                 android:text="你确定要报名吗？"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

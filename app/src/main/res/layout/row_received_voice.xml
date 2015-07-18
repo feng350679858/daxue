@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tv_length"
-            android:src="@drawable/voice_unread" />
+            android:src="@drawable/reg_circle_bg" />
 
         <ProgressBar
             android:id="@+id/pb_sending"

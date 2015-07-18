@@ -55,7 +55,7 @@ public class AudioDialog {
             mIvLevel.setVisibility(View.GONE);
             mTvText.setVisibility(View.VISIBLE);
             mTvText.setBackgroundColor(mContext.getResources().getColor(R.color.trans_red));
-            mIvIcon.setImageResource(R.drawable.cancel);
+            mIvIcon.setImageResource(R.drawable.recored_dialog_cancel);
             mTvText.setText("松开手指，取消发送");
         }
     }

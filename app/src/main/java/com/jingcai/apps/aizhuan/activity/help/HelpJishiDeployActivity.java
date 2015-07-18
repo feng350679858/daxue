@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -38,11 +37,12 @@ import java.util.Map;
 /**
  * Created by lejing on 15/7/14.
  */
-public class JishiHelpDeployActivity extends BaseActivity {
+public class HelpJishiDeployActivity extends BaseActivity {
     private final static String TAG = "JishiHelpDeployActivity";
     private MessageHandler messageHandler;
     private PopupWin groupWin;
     private PopupWin end_timeWin;
+    private EditText et_end_time;;
     private PopupWin selfdeftimeWin;
     private PopupWin genderWin;
     private XListView groupListView;
@@ -82,13 +82,13 @@ public class JishiHelpDeployActivity extends BaseActivity {
     private void initView() {
         et_content = (EditText) findViewById(R.id.et_content);
         et_secret = (EditText) findViewById(R.id.et_secret);
-        tv_gender = (TextView) findViewById(R.id.et_gender);
-        tv_group = (TextView) findViewById(R.id.et_group);
+        tv_gender = (TextView) findViewById(R.id.tv_gender);
+        tv_group = (TextView) findViewById(R.id.tv_group);
         iv_friend_clear = findViewById(R.id.iv_friend_clear);
         layout_friend_selected = findViewById(R.id.layout_friend_selected);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
-        tv_end_time = (TextView) findViewById(R.id.et_end_time);
+        tv_end_time = (TextView) findViewById(R.id.tv_end_time);
 
         et_pay_money.addTextChangedListener(new GoldWatcher(et_pay_money));
 
@@ -102,8 +102,8 @@ public class JishiHelpDeployActivity extends BaseActivity {
                     map.put("0", "男");
                     map.put("1", "女");
                     map.put("", "不限");
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    genderWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    genderWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setData(map, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
@@ -121,16 +121,23 @@ public class JishiHelpDeployActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null == groupWin) {
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    View contentView = LayoutInflater.from(JishiHelpDeployActivity.this).inflate(R.layout.help_jishi_deploy_group_pop, null);
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(HelpJishiDeployActivity.this).inflate(R.layout.help_jishi_deploy_group_pop, null);
 
-                    groupWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    groupWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setParentView(parentView)
                             .setContentView(contentView)
                             .build();
 
-                    groupAdapter = new GroupAdapter(JishiHelpDeployActivity.this);
-                    groupListView = (XListView) contentView.findViewById(R.id.xlv_list);
+                    groupWin.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            groupWin.dismiss();
+                        }
+                    });
+
+                    groupAdapter = new GroupAdapter(HelpJishiDeployActivity.this);
+                    groupListView = (XListView) groupWin.findViewById(R.id.xlv_list);
                     groupListView.setAdapter(groupAdapter);
 
                     groupListView.setPullRefreshEnable(true);
@@ -199,8 +206,8 @@ public class JishiHelpDeployActivity extends BaseActivity {
                     map.put("720", "12小时");
                     map.put("1440", "24小时");
                     map.put("-1", "自定义");
-                    View parentView = JishiHelpDeployActivity.this.getWindow().getDecorView();
-                    end_timeWin = PopupWin.Builder.create(JishiHelpDeployActivity.this)
+                    View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
+                    end_timeWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setData(map, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
@@ -245,7 +252,7 @@ public class JishiHelpDeployActivity extends BaseActivity {
         if(null == selfdeftimeWin) {
             View parentView = this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(this).inflate(R.layout.help_jishi_deploy_endtime_pop, null);
-            final EditText et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
+            et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
             et_end_time.addTextChangedListener(new GoldWatcher(et_end_time));
 
             selfdeftimeWin = PopupWin.Builder.create(this)
@@ -272,6 +279,7 @@ public class JishiHelpDeployActivity extends BaseActivity {
             });
         }
         selfdeftimeWin.show();
+        showInputMethodDialog(et_end_time);
     }
 
     private void onLoad() {

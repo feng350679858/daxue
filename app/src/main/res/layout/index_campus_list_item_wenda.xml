@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_help_wenda"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginTop="5dp"
+    android:divider="@drawable/fieldset_divider"
+    android:orientation="horizontal"
+    android:showDividers="middle">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/help_item_like"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="12"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/help_item_wenda_comment"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="256"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/help_item_wenda_help"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="撰写"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_my_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/help_item_wenda_mine"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="MY答案"
+            android:visibility="gone"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+    </FrameLayout>
+</LinearLayout>

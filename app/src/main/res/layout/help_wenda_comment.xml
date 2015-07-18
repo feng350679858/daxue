@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <com.markmao.pulltorefresh.widget.XListView
+        android:id="@+id/xlv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_below="@+id/layout_header"
+        android:divider="@color/divider_color"
+        android:dividerHeight="5dp"
+        android:headerDividersEnabled="false" />
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/hollow_grey_text_bg_selector"
+                android:hint="这是一个输入框"
+                android:padding="10dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_wenda_comment"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/btn_yellow_boarded_bg_selector"
+                android:text="发布"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
