@@ -134,8 +134,31 @@
         <activity android:name=".activity.message.NotificationDetailActivity" />
         <activity android:name=".activity.message.MessageConversationActivity" />
 
+        <!-- common -->
+        <activity android:name=".activity.common.ShowBigImage"/>
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService" />
+
+        <!-- mine -->
+        <activity
+            android:name=".activity.mine.activity.MineAccountActivity">
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineStudentCertificationActivity" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.SettingsActivity" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineGoldTopupActivity" >
+        </activity>
+        <activity android:name=".activity.mine.activity.MineSuggestionActivity"/>
+        <activity
+            android:name=".activity.mine.activity.MineGoldWithdrawActivity">
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MineResetPasswordActivity">
+        </activity>
 
         <!-- meta-data -->
         <meta-data
@@ -146,12 +169,10 @@
             android:value="lee513579#izhuanc2ctest" />
 
         <activity
-            android:name=".activity.mine.activity.MyPartjobListActivity"
-            android:label="@string/title_activity_my_partjob_list" >
+            android:name=".activity.mine.activity.MyPartjobListActivity" >
         </activity>
         <activity
-            android:name=".activity.mine.activity.MyPartjobDetailActivity"
-            android:label="@string/title_activity_my_partjob_detail" >
+            android:name=".activity.mine.activity.MyPartjobDetailActivity" >
         </activity>
     </application>
 

@@ -5,84 +5,70 @@
     android:background="@color/content_background"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/index_partjob_title"
+        layout="@layout/include_header" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <RelativeLayout
-
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/index_partjob_title"
-                layout="@layout/include_header" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/img_advert"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/white" />
 
-            <RelativeLayout
-                android:id="@+id/index_banner"
+            <LinearLayout
+                android:id="@+id/viewGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" />
+
+            <com.jingcai.apps.aizhuan.view.AutoMarqueeTextView
+                android:id="@+id/am_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_below="@+id/index_partjob_title">
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/img_advert"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:background="@color/white" />
-
-                <LinearLayout
-                    android:id="@+id/viewGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/img_advert"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/white"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal" />
-
-                <com.jingcai.apps.aizhuan.view.AutoMarqueeTextView
-                    android:id="@+id/am_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/img_advert"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:drawableLeft="@drawable/icon_voice"
-                    android:drawablePadding="5dp"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textSize="16sp" />
-            </RelativeLayout>
+                android:drawableLeft="@drawable/icon_voice"
+                android:drawablePadding="5dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text=""
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_jingxuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/index_banner"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/am_text"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="优质精选"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/font_important"
                         android:textSize="16sp" />
 
@@ -90,9 +76,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:background="@color/white"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/triangle_right"
+                        android:drawableRight="@drawable/icon_right_triangle"
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/font_important"
@@ -101,7 +88,7 @@
 
                 <HorizontalScrollView
                     android:id="@+id/horizontalScrollView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbarAlwaysDrawHorizontalTrack="false"
                     android:scrollbars="none">
@@ -115,13 +102,14 @@
                 </HorizontalScrollView>
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linearLayout_jingxuan"
                 android:layout_marginTop="10dp"
+                android:orientation="vertical"
                 android:background="@color/white">
-                >
+
 
                 <RelativeLayout
                     android:id="@+id/tv_tongcheng"
@@ -130,21 +118,20 @@
                     android:gravity="center_vertical">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:padding="5dp"
+                        android:layout_centerVertical="true"
                         android:text="同城短期"
                         android:textColor="@color/font_important"
                         android:textSize="16sp" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/triangle_right"
+                        android:drawableRight="@drawable/icon_right_triangle"
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/font_important"
@@ -174,7 +161,7 @@
                         android:orientation="vertical"
                         android:padding="5dp" />
                 </LinearLayout>
-            </RelativeLayout>
-        </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

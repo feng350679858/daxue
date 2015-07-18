@@ -18,8 +18,11 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,6 +43,7 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.message.ConversationAdapter;
 import com.jingcai.apps.aizhuan.adapter.message.EmotionPagerAdapter;
 import com.jingcai.apps.aizhuan.util.AppUtil;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.view.AudioRecordButton;
@@ -378,9 +382,26 @@ public class MessageConversationActivity extends BaseActivity{
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         //需要用到再findViewById，不要需则不调用，提高效率
 //        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
-        ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
+        final ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
         ivFunc.setVisibility(View.VISIBLE);
         ivFunc.setImageResource(R.drawable.icon_message_conversation_3_point);
+        ivFunc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int dp10_px = MessageConversationActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
+                Log.d(TAG, "---------" + dp10_px);
+                View contentView = LayoutInflater.from(MessageConversationActivity.this).inflate(R.layout.popup_message_conversation_func, null);
+                PopupWin groupWin = PopupWin.Builder.create(MessageConversationActivity.this)
+                        .setWidth(dp10_px * 17)
+                        .setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
+                        .setAnimstyle(0)//取消动画
+                        .setParentView(ivFunc)
+                        .setContentView(contentView)
+                        .build();
+                groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
+            }
+        });
+
         tvTitle.setText("七爷");
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
