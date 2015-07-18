@@ -149,6 +149,10 @@
             android:name=".activity.mine.activity.MyPartjobListActivity"
             android:label="@string/title_activity_my_partjob_list" >
         </activity>
+        <activity
+            android:name=".activity.mine.activity.MyPartjobDetailActivity"
+            android:label="@string/title_activity_my_partjob_detail" >
+        </activity>
     </application>
 
 </manifest>

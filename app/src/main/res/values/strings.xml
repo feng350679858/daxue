@@ -43,4 +43,5 @@
     <string name="send_fail">发送失败</string>
     <string name="connect_failuer_toast">网络接连失败</string>
     <string name="title_activity_my_partjob_list">MyPartjobListActivity</string>
+    <string name="title_activity_my_partjob_detail">MyPartjobDetailActivity</string>
 </resources>
