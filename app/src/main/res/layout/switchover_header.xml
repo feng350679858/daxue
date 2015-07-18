@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"  android:layout_height="@dimen/header_height"
+    android:background="@color/main_yellow"
+    android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/ib_back"
+        android:layout_width="@dimen/header_height"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/main_yellow"
+        android:src="@drawable/icon_left_arrow" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+        <Button
+            android:id="@+id/btn_switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的帮助"/>
+        <Button
+            android:id="@+id/btn_switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的提问"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_assist_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        style="@style/content"
+        android:layout_toRightOf="@id/tv_content"
+        android:layout_alignBottom="@id/tv_content"
+        android:text="(1)"/>
+
+    <TextView
+        android:id="@+id/tv_func"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textSize="16sp"
+        android:textColor="@color/important_dark"
+        android:padding="5dp"
+        android:text="更多"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp">
+
+        <ImageView
+            android:id="@+id/iv_func"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_index_message_bird" />
+
+        <ImageView
+            android:id="@+id/iv_bird_badge"
+            style="@style/style_badge"
+            android:layout_alignEnd="@id/iv_func"
+            android:layout_alignRight="@id/iv_func" />
+    </RelativeLayout>
+
+</RelativeLayout>
