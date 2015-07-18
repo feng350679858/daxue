@@ -49,7 +49,6 @@ import java.util.List;
  */
 public class PartjobDetailActivity extends BaseActivity {
     private String partjobid, logopath;
-    private WebView wv_partjob_detail;
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
@@ -57,17 +56,18 @@ public class PartjobDetailActivity extends BaseActivity {
      * 接受到的数据
      */
     private Partjob02Response.Partjob02Body.Parttimejob mParttimejob;
-    private String joinnum,workernum,gisx,gisy;
+    private String gisx,gisy;
     /**
      *
      * 控件
      */
-    private ImageView partjob_content_top,partjob_content_logo,partjob_content_location;
+    private ImageView partjob_content_top,partjob_content_logo;
     private TextView partjob_content_title,partjob_content_salary,partjob_content_salaryunit,partjob_content_address;
-    private TextView partjob_content_settlelength,partjob_content_peoplenum,partjob_content_workdays;
+    private TextView partjob_content_settlelength,partjob_content_joinnum,partjob_content_workernum,partjob_content_workdays;
     private TextView partjob_content_worktime,partjob_content_endtime,partjob_content_workcontent;
     private TextView partjob_content_heightlimit,partjob_content_healthlimit,partjob_content_genderlimit,partjob_content_remarks;
     private Button partjob_isjoin;
+    private String workernum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +95,12 @@ public class PartjobDetailActivity extends BaseActivity {
             }
         });
         ImageView tv_info = (ImageView)findViewById(R.id.iv_func);
+        tv_info.setVisibility(View.VISIBLE);
         tv_info.setImageDrawable(getResources().getDrawable(R.drawable.share));
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
+                int num=Integer.parseInt(workernum)-Integer.parseInt(partjob_content_joinnum.getText().toString());
                 String msg = "我发现了一个兼职："+partjob_content_title.getText().toString()+
                         ",居然"+partjob_content_salary.getText().toString()+
                         partjob_content_salaryunit.getText().toString()+
@@ -110,25 +111,24 @@ public class PartjobDetailActivity extends BaseActivity {
             }
         });
 
-        ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
         ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
     }
     private void initView(){
         partjob_content_top=(ImageView)findViewById(R.id.partjob_content_top);
         partjob_content_logo=(ImageView)findViewById(R.id.partjob_content_logo);
-        partjob_content_location=(ImageView)findViewById(R.id.partjob_content_location);
-        partjob_content_location.setOnClickListener(new View.OnClickListener() {
+        partjob_content_address=(TextView)findViewById(R.id.partjob_content_address);
+        partjob_content_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMap(gisx,gisy);
             }
         });
-        partjob_content_address=(TextView)findViewById(R.id.partjob_content_address);
         partjob_content_title=(TextView)findViewById(R.id.partjob_content_title);
         partjob_content_salary=(TextView)findViewById(R.id.partjob_content_salary);
         partjob_content_salaryunit=(TextView)findViewById(R.id.partjob_content_salaryunit);
         partjob_content_settlelength=(TextView)findViewById(R.id.partjob_content_settlelength);
-        partjob_content_peoplenum=(TextView)findViewById(R.id.partjob_content_peoplenum);
+        partjob_content_joinnum=(TextView)findViewById(R.id.partjob_content_joinnum);
+        partjob_content_workernum=(TextView)findViewById(R.id.partjob_content_workernum);
         partjob_content_workdays=(TextView)findViewById(R.id.partjob_content_workdays);
         partjob_content_worktime=(TextView)findViewById(R.id.partjob_content_worktime);
         partjob_content_endtime=(TextView)findViewById(R.id.partjob_content_endtime);
@@ -213,16 +213,11 @@ public class PartjobDetailActivity extends BaseActivity {
          */
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
-        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, "￥"+mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, "￥" + mParttimejob.getSalary(), mParttimejob.getSalaryunit());
         PartjobListAdapter.setSettlelength(partjob_content_settlelength, mParttimejob.getSettlelength());
-        joinnum=mParttimejob.getJoinnum();
+        partjob_content_joinnum.setText(mParttimejob.getJoinnum());
         workernum=mParttimejob.getWorkernum();
-
-        SpannableStringBuilder builder = new SpannableStringBuilder(mParttimejob.getJoinnum()+"/"+mParttimejob.getWorkernum()+"人");
-        ForegroundColorSpan redSpan = new ForegroundColorSpan(R.color.red_normal);
-        builder.setSpan(redSpan, 0, mParttimejob.getJoinnum().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-        partjob_content_peoplenum.setText(builder);
-
+        partjob_content_workernum.setText("/"+mParttimejob.getWorkernum()+"人");
         PartjobListAdapter.setWorkdays(partjob_content_workdays, "0", mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
         partjob_content_endtime.setText(mParttimejob.getEndtime());
@@ -242,8 +237,12 @@ public class PartjobDetailActivity extends BaseActivity {
             partjob_content_healthlimit.setText("2.不需要健康证");
         else
             partjob_content_healthlimit.setText("2.需要健康证");
-        if("1".equals(mParttimejob.getHealthlimit()))
-        partjob_content_genderlimit.setText("3.性别："+mParttimejob.getGenderlimit());
+        if("0".equals(mParttimejob.getGenderlimit()))
+            partjob_content_genderlimit.setText("3.性别男");
+        else if("1".equals(mParttimejob.getGenderlimit()))
+            partjob_content_genderlimit.setText("3.性别女");
+        else
+            partjob_content_genderlimit.setText("3.性别不限");
         partjob_content_remarks.setText(mParttimejob.getRemarks());
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date());
@@ -278,21 +277,23 @@ public class PartjobDetailActivity extends BaseActivity {
                     final PopupDialog dialog = new PopupDialog(PartjobDetailActivity.this, R.layout.partjob_detail_popupdialog);
                     View contentView = dialog.getContentView();
                     ((ImageView)contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
-                   // PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_content_salaryunit), "￥"+mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+                    PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_detail_popup_salaryunit), "￥" + mParttimejob.getSalary(), mParttimejob.getSalaryunit());
                     PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
-                    PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), "0", mParttimejob.getWorkdays());
-                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
+                    ((TextView)contentView.findViewById(R.id.partjob_detail_popup_workdays)).setText(mParttimejob.getWorktime());
+                    ((TextView) contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
                     ((TextView)contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名\""+mParttimejob.getTitle()+"\"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
-                    contentView.findViewById(R.id.partjob_detail_popup_cancel).setOnClickListener(new View.OnClickListener() {
+                    ((Button)contentView.findViewById(R.id.btn_confirm_false)).setText("取消");
+                    contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                         }
                     });
-                    contentView.findViewById(R.id.partjob_detail_popup_confirm).setOnClickListener(new View.OnClickListener() {
+                    ((Button)contentView.findViewById(R.id.btn_confirm_true)).setText("确认");
+                    contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int num=Integer.parseInt(workernum)-Integer.parseInt(joinnum);
+                            int num=Integer.parseInt(workernum)-Integer.parseInt(partjob_content_joinnum.getText().toString());
                             String msg = "求同行好友！我刚才在兼职兔报名了一个"+partjob_content_title.getText().toString()+
                                     ",薪资可是"+partjob_content_salary.getText().toString()+
                                     partjob_content_salaryunit.getText().toString()+
@@ -391,8 +392,4 @@ public class PartjobDetailActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void afterLoginSuccess() {
-        wv_partjob_detail.loadUrl(getUrl());
-    }
 }
