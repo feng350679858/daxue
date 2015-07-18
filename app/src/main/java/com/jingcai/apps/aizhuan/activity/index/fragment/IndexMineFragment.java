@@ -13,6 +13,8 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.activity.MineContactService;
+import com.jingcai.apps.aizhuan.activity.mine.activity.MineHelp;
+import com.jingcai.apps.aizhuan.activity.mine.activity.MinePersonalDataActivity;
 import com.jingcai.apps.aizhuan.activity.mine.activity.MineStudentCertificationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -82,7 +84,21 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineHelp.class);
+                startActivity(intent);
+            }
+        });
 
+        mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

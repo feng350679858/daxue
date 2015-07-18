@@ -136,7 +136,11 @@
             android:name=".activity.mine.activity.MineResetPasswordActivity"
             android:label="@string/title_activity_partjob_detail_map" >
         </activity>
-
+        <activity android:name=".activity.mine.activity.MineContactService"/>
+        <activity android:name=".activity.mine.activity.MineHelp"/>
+        <activity android:name=".activity.mine.activity.MineGoldIncomeActivity"/>
+        <activity android:name=".activity.mine.activity.MineGoldExpenseActivity"/>
+        <activity android:name=".activity.mine.activity.MinePersonalDataActivity"/>
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
         <meta-data android:name="EASEMOB_APPKEY"  android:value="lee513579#izhuanc2ctest" />

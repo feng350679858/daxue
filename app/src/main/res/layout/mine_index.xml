@@ -6,6 +6,7 @@
     >
     <include layout="@layout/include_header" />
     <LinearLayout
+        android:id="@+id/ll_mine_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -246,6 +247,7 @@
 
             android:background="@color/divider_color" />
         <LinearLayout
+            android:id="@+id/ll_mine_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"

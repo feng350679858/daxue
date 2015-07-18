@@ -76,6 +76,22 @@ public class MineAccountActivity extends BaseActivity {
             }
         });
 
+
+        findViewById(R.id.ll_gold_account_expense).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineAccountActivity.this, MineGoldExpenseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.ll_mine_gold_account_income).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineAccountActivity.this,MineGoldIncomeActivity.class);
+                startActivity(intent);
+            }
+        });
        // initComponent();
 
        // initEvents();
