@@ -392,7 +392,7 @@ public class IndexMoneyFragment extends BaseFragment {
             TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             TextView tv_text = (TextView) convertView.findViewById(R.id.tv_text);
 
-            tv_name.setText(label.getName());
+            tv_name.setText(label.getName()+"：");
             tv_text.setText(label.getText());
             bitmapUtil.getImage(iv_logo, label.getImgurl(), R.drawable.logo_merchant_default);
 

@@ -2,7 +2,9 @@ package com.jingcai.apps.aizhuan.adapter.message;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Spannable;
 import android.text.TextUtils;
@@ -28,6 +30,7 @@ import com.easemob.util.DateUtils;
 import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.common.ShowBigImage;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.ConversationImageCache;
@@ -212,13 +215,13 @@ public class ConversationAdapter extends BaseAdapter {
         switch (message.getType()) {
             // 根据消息type显示item
             case IMAGE: // 图片
-                handleImageMessage(message, holder, position, convertView);
+                handleImageMessage(message, holder, position);
                 break;
             case TXT: // 文本
                   handleTextMessage(message, holder, position);
                 break;
             case VOICE: // 语音
-                handleVoiceMessage(message, holder, position, convertView);
+                handleVoiceMessage(message, holder);
             default:
                 // not supported
         }
@@ -275,9 +278,8 @@ public class ConversationAdapter extends BaseAdapter {
      * @param message
      * @param holder
      * @param position
-     * @param convertView
      */
-    private void handleImageMessage(final EMMessage message, final ViewHolder holder, final int position, View convertView) {
+    private void handleImageMessage(final EMMessage message, final ViewHolder holder, final int position) {
         holder.pb.setTag(position);
         holder.iv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -334,6 +336,15 @@ public class ConversationAdapter extends BaseAdapter {
                 holder.pb.setVisibility(View.GONE);
                 holder.tv.setVisibility(View.GONE);
                 holder.staus_iv.setVisibility(View.VISIBLE);
+                holder.staus_iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.staus_iv.setVisibility(View.INVISIBLE);
+                        holder.pb.setVisibility(View.VISIBLE);
+                        handleImageMessage(message,holder,position);
+                    }
+                });
+
                 break;
             case INPROGRESS:
                 holder.staus_iv.setVisibility(View.GONE);
@@ -406,6 +417,14 @@ public class ConversationAdapter extends BaseAdapter {
                             holder.tv.setVisibility(View.GONE);
                             // message.setSendingStatus(Message.SENDING_STATUS_FAIL);
                             holder.staus_iv.setVisibility(View.VISIBLE);
+                            holder.staus_iv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    holder.staus_iv.setVisibility(View.GONE);
+                                    holder.pb.setVisibility(View.VISIBLE);
+                                    sendPictureMessage(message,holder);
+                                }
+                            });
                             Toast.makeText(mContext,
                                     mContext.getString(R.string.send_fail) + mContext.getString(R.string.connect_failuer_toast), Toast.LENGTH_SHORT).show();
                         }
@@ -428,43 +447,43 @@ public class ConversationAdapter extends BaseAdapter {
         }
     }
 
-    private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath, String remoteDir,
+    private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath,final String remoteDir,
                                   final EMMessage message) {
         Bitmap bitmap = ConversationImageCache.getInstance().get(thumbernailPath);
         if (bitmap != null) {
             iv.setImageBitmap(bitmap);
             iv.setClickable(true);
-//            iv.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    EMLog.d(TAG, "image view on click");
-//                    Intent intent = new Intent(activity, ShowBigImage.class);
-//                    File file = new File(localFullSizePath);
-//                    if (file.exists()) {
-//                        Uri uri = Uri.fromFile(file);
-//                        intent.putExtra("uri", uri);
-//                        EMLog.d(TAG, "here need to check why download everytime");
-//                    } else {
-//                        // The local full size pic does not exist yet.
-//                        // ShowBigImage needs to download it from the server
-//                        // first
-//                        // intent.putExtra("", message.get);
-//                        ImageMessageBody body = (ImageMessageBody) message.getBody();
-//                        intent.putExtra("secret", body.getSecret());
-//                        intent.putExtra("remotepath", remote);
-//                    }
-//                    if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
-//                            && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
-//                        try {
-//                            EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-//                            message.isAcked = true;
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    activity.startActivity(intent);
-//                }
-//            });
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EMLog.d(TAG, "image view on click");
+                    Intent intent = new Intent( mContext, ShowBigImage.class);
+                    File file = new File(localFullSizePath);
+                    if (file.exists()) {
+                        Uri uri = Uri.fromFile(file);
+                        intent.putExtra("uri", uri);
+                        EMLog.d(TAG, "here need to check why download everytime");
+                    } else {
+                        // The local full size pic does not exist yet.
+                        // ShowBigImage needs to download it from the server
+                        // first
+                        // intent.putExtra("", message.get);
+                        ImageMessageBody body = (ImageMessageBody) message.getBody();
+                        intent.putExtra("secret", body.getSecret());
+                        intent.putExtra("remotepath", remoteDir);
+                    }
+                    if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked
+                            && message.getChatType() != EMMessage.ChatType.GroupChat && message.getChatType() != EMMessage.ChatType.ChatRoom) {
+                        try {
+                            EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
+                            message.isAcked = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mContext.startActivity(intent);
+                }
+            });
             return true;
         } else {
             new LoadImageTask().execute(thumbernailPath, localFullSizePath, remoteDir, message.getChatType(), iv, ((Activity) mContext), message);
@@ -526,10 +545,8 @@ public class ConversationAdapter extends BaseAdapter {
          *
          * @param message
          * @param holder
-         * @param position
-         * @param convertView
          */
-    private void handleVoiceMessage(final EMMessage message, final ViewHolder holder, final int position, View convertView) {
+    private void handleVoiceMessage(final EMMessage message, final ViewHolder holder) {
         VoiceMessageBody voiceBody = (VoiceMessageBody) message.getBody();
         holder.tv.setText(voiceBody.getLength() + "\"");
         holder.iv.setOnClickListener(new VoicePlayClickListener(message, holder.iv, holder.iv_read_status, this, ((Activity) mContext)));
@@ -595,6 +612,13 @@ public class ConversationAdapter extends BaseAdapter {
             case FAIL:
                 holder.pb.setVisibility(View.GONE);
                 holder.staus_iv.setVisibility(View.VISIBLE);
+                holder.staus_iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.staus_iv.setVisibility(View.GONE);
+                        handleVoiceMessage(message, holder);
+                    }
+                });
                 break;
             case INPROGRESS:
                 holder.pb.setVisibility(View.VISIBLE);
@@ -612,7 +636,7 @@ public class ConversationAdapter extends BaseAdapter {
      * @param holder
      * @param position
      */
-    private void handleTextMessage(EMMessage message, ViewHolder holder, final int position) {
+    private void handleTextMessage(final EMMessage message, final ViewHolder holder, final int position) {
         TextMessageBody txtBody = (TextMessageBody) message.getBody();
         Spannable span = SmileUtils.getSmiledText(mContext, txtBody.getMessage());
         // 设置内容
@@ -637,6 +661,13 @@ public class ConversationAdapter extends BaseAdapter {
                 case FAIL: // 发送失败
                     holder.pb.setVisibility(View.GONE);
                     holder.staus_iv.setVisibility(View.VISIBLE);
+                    holder.staus_iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            holder.staus_iv.setVisibility(View.GONE);
+                            handleTextMessage(message,holder,position);
+                        }
+                    });
                     break;
                 case INPROGRESS: // 发送中
                     holder.pb.setVisibility(View.VISIBLE);
@@ -745,38 +776,38 @@ public class ConversationAdapter extends BaseAdapter {
                 ConversationImageCache.getInstance().put(thumbnailPath, image);
                 iv.setClickable(true);
                 iv.setTag(thumbnailPath);
-//			iv.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					if (thumbnailPath != null) {
-//
-//						Intent intent = new Intent(activity, ShowBigImage.class);
-//						File file = new File(localFullSizePath);
-//						if (file.exists()) {
-//							Uri uri = Uri.fromFile(file);
-//							intent.putExtra("uri", uri);
-//						} else {
-//							// The local full size pic does not exist yet.
-//							// ShowBigImage needs to download it from the server
-//							// first
-//							intent.putExtra("remotepath", remotePath);
-//						}
-//						if (message.getChatType() != ChatType.Chat) {
-//							// delete the image from server after download
-//						}
-//						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
-//							message.isAcked = true;
-//							try {
-//								// 看了大图后发个已读回执给对方
-//								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}
-//						activity.startActivity(intent);
-//					}
-//				}
-//			});
+			iv.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (thumbnailPath != null) {
+
+						Intent intent = new Intent(activity, ShowBigImage.class);
+						File file = new File(localFullSizePath);
+						if (file.exists()) {
+							Uri uri = Uri.fromFile(file);
+							intent.putExtra("uri", uri);
+						} else {
+							// The local full size pic does not exist yet.
+							// ShowBigImage needs to download it from the server
+							// first
+							intent.putExtra("remotepath", remotePath);
+						}
+						if (message.getChatType() != EMMessage.ChatType.Chat) {
+							// delete the image from server after download
+						}
+						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != EMMessage.ChatType.GroupChat && message.getChatType() != EMMessage.ChatType.ChatRoom) {
+							message.isAcked = true;
+							try {
+								// 看了大图后发个已读回执给对方
+								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						activity.startActivity(intent);
+					}
+				}
+			});
             } else {
                 if (message.status == EMMessage.Status.FAIL) {
                     if (AppUtil.isNetWorkConnected(activity)) {

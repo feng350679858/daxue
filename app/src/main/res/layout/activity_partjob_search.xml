@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/content_background">
 
     <RelativeLayout
         android:background="@color/main_yellow"
@@ -18,7 +19,7 @@
             android:background="@color/main_yellow"
             android:src="@drawable/icon_left_arrow" />
 
-        <EditText
+        <com.jingcai.apps.aizhuan.view.ClearableEditText
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:layout_marginRight="10dp"

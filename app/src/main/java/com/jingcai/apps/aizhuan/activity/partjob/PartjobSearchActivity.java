@@ -33,6 +33,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob09.Partjob09Resp
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.StringUtil;
+import com.jingcai.apps.aizhuan.view.ClearableEditText;
 import com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer;
 import com.markmao.pulltorefresh.widget.XListView;
 
@@ -70,7 +71,7 @@ public class PartjobSearchActivity extends BaseActivity {
 
 
     }
-    private EditText mTxtSearchKey;
+    private ClearableEditText mTxtSearchKey;
     private void initHeader(){
         ((ImageButton)findViewById(R.id.partjob_search_back)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,9 @@ public class PartjobSearchActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mTxtSearchKey.setText("");
+                if (mDrawer.isOpened()) {
+                    mDrawer.animateClose();
+                }
                 doReSearch();
             }
         });
@@ -89,7 +93,7 @@ public class PartjobSearchActivity extends BaseActivity {
     private void initView() {
 
         //将搜索关键字输入editText中
-        mTxtSearchKey = (EditText)findViewById(R.id.index_pj_search_content);
+        mTxtSearchKey = (ClearableEditText)findViewById(R.id.index_pj_search_content);
         mTxtSearchKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
