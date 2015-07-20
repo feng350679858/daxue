@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jingcai.apps.aizhuan" >
+    package="com.jingcai.apps.aizhuan">
 
     <!-- 添加WiFi以及访问网络的权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -67,30 +67,27 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.index.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.mine.activity.PartjobCancelActivity" >
-        </activity>
-        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" >
-        </activity>
-        <activity android:name=".activity.partjob.LocationCityActivity" >
-        </activity>
-        <activity android:name=".activity.partjob.PartjobDetailActivity" >
-        </activity>
-        <activity android:name=".activity.partjob.PartjobDetailMapActivity" >
-        </activity>
-        <activity android:name=".activity.partjob.PartjobSearchActivity" >
-        </activity>
+        <!--index-->
+        <activity android:name=".activity.index.IndexPartjobListByLabelActivity"></activity>
+        <activity android:name=".activity.index.BannerDetailActivity"></activity>
+        <!--partjob-->
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"></activity>
+        <activity android:name=".activity.partjob.LocationCityActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobDetailActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobSearchActivity"></activity>
         <!-- help -->
         <activity
             android:name=".activity.help.HelpJishiDeployActivity"
@@ -135,31 +132,21 @@
         <activity android:name=".activity.message.MessageConversationActivity" />
 
         <!-- common -->
-        <activity android:name=".activity.common.ShowBigImage"/>
+        <activity android:name=".activity.common.ShowBigImage" />
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
-        <activity
-            android:name=".activity.mine.activity.MineAccountActivity">
-        </activity>
-        <activity
-            android:name=".activity.mine.activity.MineStudentCertificationActivity" >
-        </activity>
-        <activity
-            android:name=".activity.mine.activity.SettingsActivity" >
-        </activity>
-        <activity
-            android:name=".activity.mine.activity.MineGoldTopupActivity" >
-        </activity>
-        <activity android:name=".activity.mine.activity.MineSuggestionActivity"/>
-        <activity
-            android:name=".activity.mine.activity.MineGoldWithdrawActivity">
-        </activity>
-        <activity
-            android:name=".activity.mine.activity.MineResetPasswordActivity">
-        </activity>
-
+        <activity android:name=".activity.mine.PartjobCancelActivity"></activity>
+        <activity android:name=".activity.mine.MineAccountActivity"></activity>
+        <activity android:name=".activity.mine.MineStudentCertificationActivity"></activity>
+        <activity android:name=".activity.mine.SettingsActivity"></activity>
+        <activity android:name=".activity.mine.MineGoldTopupActivity"></activity>
+        <activity android:name=".activity.mine.MineSuggestionActivity" />
+        <activity android:name=".activity.mine.MineGoldWithdrawActivity"></activity>
+        <activity android:name=".activity.mine.MineResetPasswordActivity"></activity>
+        <activity android:name=".activity.mine.MyPartjobListActivity"></activity>
+        <activity android:name=".activity.mine.MyPartjobDetailActivity"></activity>
         <!-- meta-data -->
         <meta-data
             android:name="SECRET_KEY"
@@ -168,12 +155,7 @@
             android:name="EASEMOB_APPKEY"
             android:value="lee513579#izhuanc2ctest" />
 
-        <activity
-            android:name=".activity.mine.activity.MyPartjobListActivity" >
-        </activity>
-        <activity
-            android:name=".activity.mine.activity.MyPartjobDetailActivity" >
-        </activity>
+
     </application>
 
 </manifest>

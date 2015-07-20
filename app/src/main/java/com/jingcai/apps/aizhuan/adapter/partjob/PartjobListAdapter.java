@@ -59,7 +59,7 @@ public class PartjobListAdapter extends BaseAdapter{
             viewHolder.tv_salary = (TextView)convertView.findViewById(R.id.pj_list_item_salary);
             viewHolder.tv_salary_unit = (TextView)convertView.findViewById(R.id.pj_list_item_salaryunit);
             viewHolder.tv_workdays = (TextView)convertView.findViewById(R.id.pj_list_item_workdays);
-            viewHolder.iv_settlelength = (ImageView)convertView.findViewById(R.id.pj_list_item_wage_settlelength);
+            viewHolder.iv_settlelength = (TextView)convertView.findViewById(R.id.pj_list_item_wage_settlelength);
             viewHolder.iv_label = (ImageView)convertView.findViewById(R.id.pj_list_item_label);
             viewHolder.tv_distance_icon = convertView.findViewById(R.id.tv_distance_icon);
             viewHolder.tv_distance = (TextView) convertView.findViewById(R.id.tv_distance);
@@ -218,7 +218,7 @@ public class PartjobListAdapter extends BaseAdapter{
         protected TextView tv_salary;
         protected TextView tv_salary_unit;
         protected TextView tv_workdays;
-        protected ImageView iv_settlelength;
+        protected TextView iv_settlelength;
         protected ImageView iv_label;
         protected View tv_distance_icon;
         protected TextView tv_distance;

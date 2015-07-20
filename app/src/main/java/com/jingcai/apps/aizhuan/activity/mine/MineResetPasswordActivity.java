@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +24,7 @@ public class MineResetPasswordActivity extends BaseActivity{
 
     private void initHeader()
     {
-        ((TextView)findViewById(R.id.tv_content)).setText("ĞŞ¸ÄÖ§¸¶ÃÜÂë");
+        ((TextView)findViewById(R.id.tv_content)).setText("ä¿®æ”¹æ”¯ä»˜å¯†ç ");
 
     }
 

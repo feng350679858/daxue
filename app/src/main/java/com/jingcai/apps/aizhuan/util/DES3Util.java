@@ -21,7 +21,7 @@ public class DES3Util {
             synchronized(DES3Util.class){
                 if(null == instance){
                     //Security.addProvider(new com.sun.crypto.provider.SunJCE());
-                    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());//Ìí¼ÓPKCS7PaddingÖ§³Ö
+                    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());//æ·»åŠ PKCS7Paddingæ”¯æŒ
                     instance = new DES3Util();
                 }
             }
@@ -30,8 +30,8 @@ public class DES3Util {
     }
 
     /**
-     * »ñÈ¡ÃÜÔ¿
-     * @param keyString  ×Ö·û´®key
+     * è·å–å¯†é’¥
+     * @param keyString  å­—ç¬¦ä¸²key
      * @return
      */
     private Key getKey(String keyString) {
@@ -40,8 +40,8 @@ public class DES3Util {
     }
 
     /**
-     * »ñÈ¡ÃÜÔ¿
-     * @param keyByte  ×Ö½ÚÊı×ékey
+     * è·å–å¯†é’¥
+     * @param keyByte  å­—èŠ‚æ•°ç»„key
      * @return
      */
     private Key getKey(byte [] keyByte) {
@@ -50,10 +50,10 @@ public class DES3Util {
     }
 
     /**
-     * 3DES¼ÓÃÜ
-     * @param sourceString  ¼ÓÃÜÇ°µÄÔ­×Ö·û´®
-     * @param keyString     3des¼ÓÃÜµÄkey
-     * @return String       ¼ÓÃÜÖ®ºóµÄ16½øÖÆÃÜÎÄ
+     * 3DESåŠ å¯†
+     * @param sourceString  åŠ å¯†å‰çš„åŸå­—ç¬¦ä¸²
+     * @param keyString     3desåŠ å¯†çš„key
+     * @return String       åŠ å¯†ä¹‹åçš„16è¿›åˆ¶å¯†æ–‡
      * @throws Exception
      */
     public String encrypt(String sourceString,String keyString) throws Exception {
@@ -64,10 +64,10 @@ public class DES3Util {
     }
 
     /**
-     * 3DES¼ÓÃÜ
-     * @param sourceByte  ¼ÓÃÜÇ°µÄÔ­×Ö·û´®×Ö½ÚÊı×é
-     * @param keyByte     3des¼ÓÃÜµÄkey×Ö½ÚÊı×é
-     * @return byte       ¼ÓÃÜÖ®ºóµÄÃÜÎÄ×Ö½ÚÊı×é
+     * 3DESåŠ å¯†
+     * @param sourceByte  åŠ å¯†å‰çš„åŸå­—ç¬¦ä¸²å­—èŠ‚æ•°ç»„
+     * @param keyByte     3desåŠ å¯†çš„keyå­—èŠ‚æ•°ç»„
+     * @return byte       åŠ å¯†ä¹‹åçš„å¯†æ–‡å­—èŠ‚æ•°ç»„
      * @throws Exception
      */
     public byte[] encrypt(byte[] sourceByte, byte[] keyByte) throws Exception {
@@ -78,10 +78,10 @@ public class DES3Util {
     }
 
     /**
-     * 3DES½âÃÜ
-     * @param sourceByte Ğè½âÃÜµÄ×Ö½ÚÊı×é
-     * @param keyByte    ½âÃÜµÄÃÜÔ¿×Ö½ÚÊı×é
-     * @return byte      ½âÃÜºóµÄ×Ö½ÚÊı×é
+     * 3DESè§£å¯†
+     * @param sourceByte éœ€è§£å¯†çš„å­—èŠ‚æ•°ç»„
+     * @param keyByte    è§£å¯†çš„å¯†é’¥å­—èŠ‚æ•°ç»„
+     * @return byte      è§£å¯†åçš„å­—èŠ‚æ•°ç»„
      * @throws Exception
      */
     public byte[] decrypt(byte[] sourceByte,byte[] keyByte) throws Exception {
@@ -92,10 +92,10 @@ public class DES3Util {
     }
 
     /**
-     * 3DES½âÃÜ
-     * @param sourceString 	Ğè½âÃÜµÄÃÜÎÄ×Ö·û´®
-     * @param keyString    	½âÃÜµÄÃÜÔ¿
-     * @return byte      	½âÃÜºóµÄ×Ö·û´®
+     * 3DESè§£å¯†
+     * @param sourceString 	éœ€è§£å¯†çš„å¯†æ–‡å­—ç¬¦ä¸²
+     * @param keyString    	è§£å¯†çš„å¯†é’¥
+     * @return byte      	è§£å¯†åçš„å­—ç¬¦ä¸²
      */
     public String decrypt(String sourceString,String keyString) throws Exception {
         return new String(decrypt(fromHexString(sourceString),keyString.getBytes()));
@@ -114,7 +114,7 @@ public class DES3Util {
 
 
     /**
-     * ×Ö½ÚÊı×é×ª16½øÖÆÊı×é
+     * å­—èŠ‚æ•°ç»„è½¬16è¿›åˆ¶æ•°ç»„
      * @param digestByte
      * @return
      */
@@ -131,7 +131,7 @@ public class DES3Util {
 
     /**
      *
-     * ×Ö½ÚÊı×é×ª16½øÖÆ×Ö·û´®
+     * å­—èŠ‚æ•°ç»„è½¬16è¿›åˆ¶å­—ç¬¦ä¸²
      * @param digestByte
      * @return
      */
@@ -170,10 +170,10 @@ public class DES3Util {
      String key = "4irksuwl459ektueot943OFE";
      String string = "lianliantest";
      String miwenString = pk7.encrypt(string, key);
-     System.out.println("¼ÓÃÜÖ®ºóÃÜÎÄ:" + miwenString);
+     System.out.println("åŠ å¯†ä¹‹åå¯†æ–‡:" + miwenString);
 
      String mingwenString = pk7.decrypt(miwenString, key);
-     System.out.println("½âÃÜÖ®ºóÃ÷ÎÄ:" + mingwenString);
+     System.out.println("è§£å¯†ä¹‹åæ˜æ–‡:" + mingwenString);
      }
      */
 }

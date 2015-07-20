@@ -58,7 +58,6 @@ public class IndexMoneyFragment extends BaseFragment {
     private AzExecutor azExecutor;
     private AzService azService;
     private MessageHandler messageHandler;
-    private PartjobSearchAdapter searchAdapter;
     private TextView tv_address;
     private View mainView;
     private ViewPager viewPager;
@@ -120,13 +119,11 @@ public class IndexMoneyFragment extends BaseFragment {
         tv_address.setText(currentAreaname);
         tv_address.setTag(currentAreacode);
 
-        searchAdapter = new PartjobSearchAdapter(baseActivity);
-        searchAdapter.initAreaCode(currentAreacode);
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LocationCityActivity.class);
-                intent.putExtra("address",currentAreacode);
+                intent.putExtra("address",tv_address.getTag().toString());
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
@@ -134,7 +131,7 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                intent.putExtra("address",currentAreacode);
+                intent.putExtra("address",tv_address.getTag().toString());
                 startActivity(intent);
             }
         });
@@ -167,8 +164,6 @@ public class IndexMoneyFragment extends BaseFragment {
                     Log.i(TAG, "code=" + code + " name=" + name);
                     tv_address.setTag(code);
                     tv_address.setText(name);
-                    // 刷新区域数据
-                    searchAdapter.initAreaCode(code);
                     // 检索
                     initData();
                 }
@@ -386,6 +381,7 @@ public class IndexMoneyFragment extends BaseFragment {
         am_text.setText(buff.toString());
     }
     private void setLabel(List<Busi01Response.Body.Label> list) {
+        linearLayout_label.removeAllViews();
         for (Busi01Response.Body.Label label : list) {
             View convertView = layoutInflator.inflate(R.layout.index_index_label_item, linearLayout_label, false);
             ImageView iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
@@ -419,6 +415,8 @@ public class IndexMoneyFragment extends BaseFragment {
     private volatile int leftHeight = 0, rightHeight = 0;
     private void setRecommand(List<Busi02Response.Body.Recommend> list) {
         leftHeight = rightHeight = 0;
+        linearlout_left.removeAllViews();
+        linearlout_right.removeAllViews();
         int displayWidth = linearlout_right.getWidth();
         for (Busi02Response.Body.Recommend recommend : list) {
 //        for (int i = 0; i < list.size(); i++) {
@@ -577,6 +575,7 @@ public class IndexMoneyFragment extends BaseFragment {
 
 
     public void setAdverts(List<Base01Response.Body.Banner> adverts) {
+        viewGroup.removeAllViews();
         {
             pageViews = new ImageView[adverts.size()];
             for (int i = 0; i < adverts.size(); i++) {
