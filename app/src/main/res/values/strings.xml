@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">大了个学</string>
     <string name="app_name_zh">大了个学</string>
     <string name="index_tab_campus">校园</string>
@@ -6,15 +6,12 @@
     <string name="index_tab_money">爱赚</string>
     <string name="index_tab_mine">我的</string>
     <!-- 取消报名 -->
-    <string name="title_activity_partjob_cancel">PartjobCancelActivity</string>
     <string name="mine_partjob_cancel_tip">建议先与商家取得联系</string>
     <string name="mine_partjob_cancel_unable">为保证兼职的顺利进行，您无法取消已截至报名或已开始工作的兼职。若您有特殊情况不能前往兼职，请与商家联系。</string>
     <string name="mine_partjob_cancel_no_chance">本周还有0次取消报名的操作权限，若您确有特殊情况不能前往兼职，请先联系商家。</string>
     <string name="mine_partjob_cancel_have_chance">本周还有%s次取消报名的操作权限，我们将以短信形式提醒商家您已取消本次报名。请您谨慎考虑！</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_partjob_join_success">PartjobJoinSuccessActivity</string>
-    <string name="title_activity_partjob_detail">PartjobDetailActivity</string>
     <!--报名详情 => 工作信息 => 工作报酬 =>结算方式  -->
     <string name="mine_partjob_list_salary_unit_per_hour">元/小时</string>
     <string name="mine_partjob_list_salary_unit_per_day">元/天</string>
@@ -25,9 +22,7 @@
     <string name="mine_partjob_detail_settle_length_half_month">半月结</string>
     <string name="mine_partjob_detail_settle_length_month">月结</string>
     <string name="mine_partjob_detail_settle_length_finish">完工结</string>
-    <string name="title_activity_partjob_detail_map">PartjobDetailMapActivity</string>
     <string name="partjob_detail_popup_tip">您即将报名＂XXX"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。</string>
-    <string name="title_activity_partjob_search">PartjobSearchActivity</string>
     <string name="empty_merchant_list_tip">报名兼职之后，才会有商家哦！</string>
     <string name="empty_notification_list_tip">还没有收到任何消息呢！</string>
 
@@ -50,5 +45,4 @@
     <string name="cancel_text">取消</string>
     <string name="updapp">检测到新版本，是否要更新？</string>
     <string name="updapp_force">检测到新版本，请更新！</string>
-  
 </resources>
