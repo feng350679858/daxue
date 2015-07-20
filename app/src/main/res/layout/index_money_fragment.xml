@@ -8,7 +8,6 @@
     <include
         android:id="@+id/index_partjob_title"
         layout="@layout/include_header" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -126,7 +125,6 @@
                         android:text="同城短期"
                         android:textColor="@color/font_important"
                         android:textSize="16sp" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

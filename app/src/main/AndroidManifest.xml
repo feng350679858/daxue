@@ -59,8 +59,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--since 1.6.0 -->
+    <!-- since 1.6.0 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:name=".util.ApplicationEx"
         android:allowBackup="true"
@@ -78,63 +79,85 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.mine.activity.PartjobCancelActivity" android:label="@string/title_activity_partjob_cancel" />
-        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" android:label="@string/title_activity_partjob_join_success" />
-        <activity android:name=".activity.partjob.LocationCityActivity" android:label="@string/title_activity_partjob_join_success"/>
-        <activity android:name=".activity.partjob.PartjobDetailActivity" android:label="@string/title_activity_partjob_detail" />
-        <activity android:name=".activity.partjob.PartjobDetailMapActivity" android:label="@string/title_activity_partjob_detail_map" />
-        <activity android:name=".activity.partjob.PartjobSearchActivity" android:label="@string/title_activity_partjob_search" />
-
+        <activity android:name=".activity.mine.activity.PartjobCancelActivity" >
+        </activity>
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" >
+        </activity>
+        <activity android:name=".activity.partjob.LocationCityActivity" >
+        </activity>
+        <activity android:name=".activity.partjob.PartjobDetailActivity" >
+        </activity>
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity" >
+        </activity>
+        <activity android:name=".activity.partjob.PartjobSearchActivity" >
+        </activity>
         <!-- help -->
-        <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaAnswerActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.help.HelpJishiDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaAnswerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaRewardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- sys -->
-        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.sys.ErrorActivity"
+            android:screenOrientation="portrait" />
 
         <!-- Message -->
-        <activity android:name=".activity.message.MessageCommentActivity"   />
-        <activity android:name=".activity.message.MessageCommendActivity"   />
-        <activity android:name=".activity.message.MessageMerchantActivity"   />
-        <activity android:name=".activity.message.MessageNotificationActivity"   />
-        <activity android:name=".activity.message.NotificationDetailActivity"   />
-        <activity android:name=".activity.message.MessageConversationActivity"   />
+        <activity android:name=".activity.message.MessageCommentActivity" />
+        <activity android:name=".activity.message.MessageCommendActivity" />
+        <activity android:name=".activity.message.MessageMerchantActivity" />
+        <activity android:name=".activity.message.MessageNotificationActivity" />
+        <activity android:name=".activity.message.NotificationDetailActivity" />
+        <activity android:name=".activity.message.MessageConversationActivity" />
 
         <!-- common -->
         <activity android:name=".activity.common.ShowBigImage"/>
         <!-- service -->
-        <service android:name=".service.local.UnreadMsgService"/>
+        <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
         <activity
-            android:name=".activity.mine.activity.MineAccountActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.MineAccountActivity">
         </activity>
         <activity
-            android:name=".activity.mine.activity.MineStudentCertificationActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.MineStudentCertificationActivity" >
         </activity>
         <activity
-            android:name=".activity.mine.activity.SettingsActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.SettingsActivity" >
         </activity>
         <activity
-            android:name=".activity.mine.activity.MineGoldTopupActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.MineGoldTopupActivity" >
         </activity>
         <activity android:name=".activity.mine.activity.MineSuggestionActivity"/>
         <activity
-            android:name=".activity.mine.activity.MineGoldWithdrawActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.MineGoldWithdrawActivity">
         </activity>
         <activity
-            android:name=".activity.mine.activity.MineResetPasswordActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
+            android:name=".activity.mine.activity.MineResetPasswordActivity">
         </activity>
         <activity android:name=".activity.mine.activity.MineContactService"/>
         <activity android:name=".activity.mine.activity.MineHelp"/>
@@ -142,8 +165,19 @@
         <activity android:name=".activity.mine.activity.MineGoldExpenseActivity"/>
         <activity android:name=".activity.mine.activity.MinePersonalDataActivity"/>
         <!-- meta-data -->
-        <meta-data android:name="SECRET_KEY" android:value="123" />
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="lee513579#izhuanc2ctest" />
+        <meta-data
+            android:name="SECRET_KEY"
+            android:value="123" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="lee513579#izhuanc2ctest" />
+
+        <activity
+            android:name=".activity.mine.activity.MyPartjobListActivity" >
+        </activity>
+        <activity
+            android:name=".activity.mine.activity.MyPartjobDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

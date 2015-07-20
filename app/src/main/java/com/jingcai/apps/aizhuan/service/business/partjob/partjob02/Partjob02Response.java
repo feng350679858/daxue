@@ -2,6 +2,8 @@ package com.jingcai.apps.aizhuan.service.business.partjob.partjob02;
 
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
+import java.util.ArrayList;
+
 /**
  * Created by chenchao on 2015/7/14.
  */
@@ -43,9 +45,9 @@ public class Partjob02Response extends BaseResponse<Partjob02Response.Partjob02B
             private String gisx;
             private String gisy;
             private String ismutifyaddr;
-            private Schoolmate_list schoolmate_list;
+            private ArrayList<Schoolmate> schoolmate_list;
 
-            public class Schoolmate_list{
+            public class Schoolmate{
                 private String logopath;
                 private String name;
                 private String gender;
@@ -107,6 +109,14 @@ public class Partjob02Response extends BaseResponse<Partjob02Response.Partjob02B
 
             public void setHeightlowerlimit(String heightlowerlimit) {
                 this.heightlowerlimit = heightlowerlimit;
+            }
+
+            public ArrayList<Schoolmate> getSchoolmate_list() {
+                return schoolmate_list;
+            }
+
+            public void setSchoolmate_list(ArrayList<Schoolmate> schoolmate_list) {
+                this.schoolmate_list = schoolmate_list;
             }
 
             public String getGenderlimit() {
@@ -173,13 +183,6 @@ public class Partjob02Response extends BaseResponse<Partjob02Response.Partjob02B
                 this.status = status;
             }
 
-            public Schoolmate_list getSchoolmate_list() {
-                return schoolmate_list;
-            }
-
-            public void setSchoolmate_list(Schoolmate_list schoolmate_list) {
-                this.schoolmate_list = schoolmate_list;
-            }
 
             public String getId() {
                 return id;
