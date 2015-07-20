@@ -170,7 +170,12 @@
                 android:divider="@color/divider_color"
                 android:dividerHeight="@dimen/divider_height"
                 android:scrollbars="none"
-                android:cacheColorHint="#00000000" />
+                android:cacheColorHint="#00000000"
+                android:divider="@drawable/field_divider"
+                android:dividerHeight="@dimen/divider_height"
+
+                />
+
 
             <include layout="@layout/empty_content"/>
         </LinearLayout>
