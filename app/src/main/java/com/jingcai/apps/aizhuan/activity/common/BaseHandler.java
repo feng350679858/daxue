@@ -7,14 +7,13 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Request;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.AzExecutor;import java.lang.Object;import java.lang.Override;import java.lang.Runnable;import java.lang.String;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 public class BaseHandler extends Handler {
     private final String TAG = "==" + BaseHandler.class.getName();
@@ -64,7 +63,7 @@ public class BaseHandler extends Handler {
                     relogin();//重新尝试登录系统
                 } else {
                     showToast("请重新登录");
-                    Preferences.loginFail(context);
+                    UserSubject.loginFail();
                 }
                 break;
             }
@@ -100,7 +99,7 @@ public class BaseHandler extends Handler {
                             //服务端登录成功
                             BaseHandler.this.postMessage(1004);
                         } else {
-                            UserSubject.setLoginFlag(false);
+                            UserSubject.loginFail();
                             //登录失败
                             BaseHandler.this.postMessage(1002);
                         }

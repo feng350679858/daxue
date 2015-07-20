@@ -6,12 +6,13 @@ import android.util.Log;
 import com.easemob.chat.EMChat;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
 public class ApplicationEx extends Application {
     private static final String TAG = "ApplicationEx";
 //	public static Database database;
-
 //	public LocationClient mLocationClient;
+
 	@Override
 	public void onCreate() {
 
@@ -21,8 +22,9 @@ public class ApplicationEx extends Application {
 		VolleyQueueUtil.getInstance().init(getApplicationContext());
 
 		AppUtil.loadProperties(this);//加载配置文件
-        Preferences.loadSettings(this);
 
+        Preferences.initClass(this);
+		UserSubject.init(Preferences.getInstance());
         try {
             //环信im
             EMChat.getInstance().init(this);

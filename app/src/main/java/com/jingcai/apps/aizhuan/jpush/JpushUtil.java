@@ -14,7 +14,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
 /**
- * Created by Administrator on 2015/7/17.
+ * Created by lejingw on 2014/12/23.
  */
 public class JpushUtil {
     private final String TAG = "JpushUtil";
@@ -71,11 +71,11 @@ public class JpushUtil {
     }
 
     public void init() {
-        JPushInterface.init(ctx); // ³õÊ¼»¯ JPush
+        JPushInterface.init(ctx); // åˆå§‹åŒ– JPush
         if (GlobalConstant.debugFlag) {
-            JPushInterface.setDebugMode(true); // ÉèÖÃ¿ªÆôÈÕÖ¾,·¢²¼Ê±Çë¹Ø±ÕÈÕÖ¾
+            JPushInterface.setDebugMode(true); // è®¾ç½®å¼€å¯æ—¥å¿—,å‘å¸ƒæ—¶è¯·å…³é—­æ—¥å¿—
         }
-        //ÍíÉÏ10£º30µãµ½µÚ¶şÌìÔçÉÏ8£º30µãÎª¾²ÒôÊ±¶Î
+        //æ™šä¸Š10ï¼š30ç‚¹åˆ°ç¬¬äºŒå¤©æ—©ä¸Š8ï¼š30ç‚¹ä¸ºé™éŸ³æ—¶æ®µ
         JPushInterface.setSilenceTime(ctx, 22, 30, 8, 30);
     }
 
@@ -87,7 +87,7 @@ public class JpushUtil {
     }
 
     public void logout() {
-        //ÍË³öµÇÂ¼ºó£¬Í£Ö¹ÍÆËÍ
+        //é€€å‡ºç™»å½•åï¼Œåœæ­¢æ¨é€
         if (!JPushInterface.isPushStopped(ctx)) {
             JPushInterface.stopPush(ctx);
         }
