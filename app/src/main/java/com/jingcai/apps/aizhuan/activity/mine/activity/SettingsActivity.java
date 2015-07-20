@@ -308,37 +308,37 @@ public class SettingsActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-                case 0: {
-                    boolean isVisiable = (boolean) msg.obj;
-                    Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
-                    StringBuffer sb = new StringBuffer("sdfsfds");
-                    sb.append(isVisiable ? "sdfs" : "sdfs");
-                    sb.append("dfsdfsd");
-                    showToast(sb.toString());
-                    break;
-                }
-                case 1: {
-                    showToast("sdfsdfsd:" + msg.obj);
-                    break;
-                }
-                case 2: {
+//                case 0: {
+//                    boolean isVisiable = (boolean) msg.obj;
+//                    Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
+//                    StringBuffer sb = new StringBuffer("sdfsfds");
+//                    sb.append(isVisiable ? "sdfs" : "sdfs");
+//                    sb.append("dfsdfsd");
+//                    showToast(sb.toString());
+//                    break;
+//                }
+//                case 1: {
+//                    showToast("sdfsdfsd:" + msg.obj);
+//                    break;
+//                }
+//                case 2: {
+////
+//                    Preferences.loginFail(SettingsActivity.this);
+//                    new JpushUtil(SettingsActivity.this).logout();
+//                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
 //
-                    Preferences.loginFail(SettingsActivity.this);
-                    new JpushUtil(SettingsActivity.this).logout();
-                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                    SettingsActivity.this.finish();
-                    break;
-                }
-                case 3: {
-                    showToast("xczxczx" + msg.obj);
-                    break;
-                }
-                default: {
-                    super.handleMessage(msg);
-                }
+//                    SettingsActivity.this.finish();
+//                    break;
+//                }
+//                case 3: {
+//                    showToast("xczxczx" + msg.obj);
+//                    break;
+//                }
+//                default: {
+//                    super.handleMessage(msg);
+//                }
             }
         }
     }
