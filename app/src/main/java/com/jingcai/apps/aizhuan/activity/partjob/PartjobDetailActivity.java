@@ -5,24 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -35,18 +24,19 @@ import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob02.Partjob02Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob02.Partjob02Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
+import com.tencent.open.utils.Global;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by chenchao on 15/7/14.
@@ -197,10 +187,18 @@ public class PartjobDetailActivity extends BaseActivity {
                     showToast("获取报名详情出错：" + msg.obj);
                     break;
                 }
+                case 2: {
+                    showToast("报名出错：" + msg.obj);
+                    break;
+                }
                 case 3: {
 //                    showToast("获取用户信息失败");
 //                    setResult(RESULT_CANCELED, null);
 //                    finish();
+                    break;
+                }
+                case 4: {
+                    showToast("报名成功");
                     break;
                 }
                 default: {
@@ -307,9 +305,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_isjoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-   //             if(!UserSubject.isLogin())
-    //                requestLogin();
-    //            else if("1".equals(UserSubject.getLevel()))
+    //            if("1".equals(UserSubject.getLevel()))
      //               fullfillProfile();
      //           else if(!UserSubject.getGender().equals(mParttimejob.getGenderlimit())) {
       //              Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
@@ -395,6 +391,37 @@ public class PartjobDetailActivity extends BaseActivity {
      * @param tel
      */
     public void joinSuccess(String msg, String tel) {
+        //报名
+        new AzExecutor().execute(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final AzService azService = new AzService(PartjobDetailActivity.this);
+                Partjob05Request req = new Partjob05Request();
+                final Partjob05Request.Joininfo joininfo= req.new Joininfo();
+                joininfo.setStudentid(UserSubject.getStudentid());
+                joininfo.setGisy(GlobalConstant.gis.getGisy());
+                joininfo.setGisx(GlobalConstant.gis.getGisx());
+                joininfo.setJoinchannel("2");
+                joininfo.setJobid(partjobid);
+                req.setJoininfo(joininfo);
+                azService.doTrans(req, Partjob05Response.class, new AzService.Callback<Partjob05Response>() {
+                    @Override
+                    public void success(Partjob05Response response) {
+                        ResponseResult result = response.getResult();
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(2, result.getMessage());
+                        } else {
+                            messageHandler.postMessage(4);
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        }));
         showToast("报名成功");
         Log.d("==", msg);
         Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
@@ -407,14 +434,6 @@ public class PartjobDetailActivity extends BaseActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     * 请求重新登录
-     */
-    public void requestLogin() {
-        Log.d("==", "requestLogin");
-        startActivityForLogin();
     }
 
     /**

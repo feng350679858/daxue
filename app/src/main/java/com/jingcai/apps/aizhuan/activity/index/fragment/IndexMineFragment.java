@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
 import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
@@ -59,6 +60,13 @@ public class IndexMineFragment extends BaseFragment {
     }
 
     private void initView(){
+        mainView.findViewById(R.id.my_partjob).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MyPartjobListActivity.class);
+                startActivity(intent);
+            }
+        });
         mainView.findViewById(R.id.ll_mine_account).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
