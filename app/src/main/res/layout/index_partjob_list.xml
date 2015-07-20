@@ -167,6 +167,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
+                android:divider="@color/divider_color"
+                android:dividerHeight="@dimen/divider_height"
                 android:scrollbars="none"
                 android:cacheColorHint="#00000000"
                 android:divider="@drawable/field_divider"
@@ -200,5 +202,9 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/index_partjob_list_handle_bottom" />
         </com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_color" />
     </FrameLayout>
 </LinearLayout>

@@ -35,14 +35,14 @@ public class PartjobSearchAdapter extends BaseAdapter {
     private String[][] worktypeLimit = {{"", "0", "1", "2", "3", "4", "5", "6", "7", "8"},
             {"类别不限", "工作人员", "派单", "促销", "服务员", "话务员", "调查问卷", "礼仪模特", "销售", "家教"}};
     private List<School03Response.Body.Areainfo> list = null;
-    private ColorStateList font_normal, font_red;
+    private ColorStateList font_normal, darker_yellow;
     public PartjobSearchAdapter(Context context){
         this.context = context;
         this.messageHandler = new MessageHandler(context);
         this.mInflater = LayoutInflater.from(context);
 
         font_normal = context.getResources().getColorStateList(R.color.normal_grey);
-        font_red = context.getResources().getColorStateList(R.color.font_red);
+        darker_yellow = context.getResources().getColorStateList(R.color.darker_yellow);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PartjobSearchAdapter extends BaseAdapter {
         //选中
         if(getKey(position).equals(callback.getSelectedKey(wayFlag))){
             //TODO 设置v_item_text 字体颜色 红色
-            viewHolder.v_item_text.setTextColor(font_red);
+            viewHolder.v_item_text.setTextColor(darker_yellow);
             viewHolder.v_select_pre.setVisibility(View.VISIBLE);
             viewHolder.v_select_suff.setVisibility(View.VISIBLE);
         }else{
@@ -100,7 +100,7 @@ public class PartjobSearchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 ViewHolder holder = (ViewHolder) v.getTag();
-                holder.v_item_text.setTextColor(font_red);
+                holder.v_item_text.setTextColor(darker_yellow);
                 holder.v_select_pre.setVisibility(View.VISIBLE);
                 holder.v_select_suff.setVisibility(View.VISIBLE);
                 if(null != callback){
