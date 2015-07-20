@@ -1,13 +1,25 @@
+/**
+ * 环境：oracle10g，oracle11g中加密包为DBMS_CRYPTO的3DES加密测试
+ * ORACLE加密模式为：ECB+3DES+PKCs5
+ * JAVA加密模式为：DESede/ECB/PKCS7Padding
+ * 如果需要在其他语言或者环境下使用请重新测试
+ * 本类的密钥可以为任意的长度，被加密的字符串也可以为任意的长度
+ * ORACLE中密钥必须为24位，并且不能含有&字符，被加密的字符串可以为任意的长度
+ *
+ * 所以约定加密的密钥长度必须为24位
+ * 被加密的字符串可以为任意长度
+ */
 package com.jingcai.apps.aizhuan.util;
-
-import java.security.Key;
-import java.security.Security;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
+import java.security.Security;
 
 /**
- * Created by Administrator on 2015/7/17.
+ * @author：Administrator
+ * @since：2012-8-29 下午04:28:45
+ * @version:
  */
 public class DES3Util {
     private final static String DES3_KEY = "514345744E41596C4E41496C";

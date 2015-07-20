@@ -67,61 +67,37 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+
+        <!-- sys -->
         <activity
-            android:name=".activity.index.MainActivity"
+            android:name=".activity.sys.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--index-->
         <activity android:name=".activity.index.IndexPartjobListByLabelActivity"></activity>
         <activity android:name=".activity.index.BannerDetailActivity"></activity>
-        <!--partjob-->
-        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"></activity>
-        <activity android:name=".activity.partjob.LocationCityActivity"></activity>
-        <activity android:name=".activity.partjob.PartjobDetailActivity"></activity>
-        <activity android:name=".activity.partjob.PartjobDetailMapActivity"></activity>
-        <activity android:name=".activity.partjob.PartjobSearchActivity"></activity>
-        <!-- help -->
-        <activity
-            android:name=".activity.help.HelpJishiDeployActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaDeployActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaAnswerActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaCommentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaEditActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.help.HelpWendaRewardActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.sys.IntroActivity"/>
+        <activity android:name=".activity.sys.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.sys.RegistActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.index.MainActivity" android:screenOrientation="portrait"/>
 
-        <!-- sys -->
-        <activity
-            android:name=".activity.sys.ErrorActivity"
-            android:screenOrientation="portrait" />
+
+        <!-- help -->
+        <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaAnswerActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
@@ -131,10 +107,21 @@
         <activity android:name=".activity.message.NotificationDetailActivity" />
         <activity android:name=".activity.message.MessageConversationActivity" />
 
+
+        <!-- partjob -->
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"></activity>
+        <activity android:name=".activity.partjob.LocationCityActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobDetailActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity"></activity>
+        <activity android:name=".activity.partjob.PartjobSearchActivity"></activity>
+
         <!-- common -->
-        <activity android:name=".activity.common.ShowBigImage" />
+        <activity android:name=".activity.common.ShowBigImage"/>
+
+
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService" />
+
 
         <!-- mine -->
         <activity android:name=".activity.mine.PartjobCancelActivity"></activity>
@@ -148,14 +135,8 @@
         <activity android:name=".activity.mine.MyPartjobListActivity"></activity>
         <activity android:name=".activity.mine.MyPartjobDetailActivity"></activity>
         <!-- meta-data -->
-        <meta-data
-            android:name="SECRET_KEY"
-            android:value="123" />
-        <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="lee513579#izhuanc2ctest" />
-
-
+        <meta-data android:name="SECRET_KEY" android:value="123" />
+        <meta-data android:name="EASEMOB_APPKEY" android:value="lee513579#izhuanc2ctest" />
     </application>
 
 </manifest>

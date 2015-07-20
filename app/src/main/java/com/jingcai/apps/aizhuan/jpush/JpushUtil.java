@@ -14,7 +14,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
 /**
- * Created by Administrator on 2015/7/17.
+ * Created by lejingw on 2014/12/23.
  */
 public class JpushUtil {
     private final String TAG = "JpushUtil";
