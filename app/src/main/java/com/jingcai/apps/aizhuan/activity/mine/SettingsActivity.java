@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 
 import android.app.Activity;
@@ -95,22 +95,21 @@ public class SettingsActivity extends BaseActivity {
             public void onClick(View v) {
                 umengShareUtil.openShare();
 
-//                final PopupDialog popupDialog = new PopupDialog(getActivity(), R.layout.other_share_dialog);
-//                popupDialog.setAction(R.id.ll_other_share_qq, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //QQ����
+  //              final PopupDialog popupDialog = new PopupDialog(getActivity(), R.layout.other_share_dialog);
+ //             popupDialog.setAction(R.id.ll_other_share_qq, new View.OnClickListener() {
+ //                   @Override
+  //                  public void onClick(View v) {
+ //                      //QQ����
 //
-//                    }
-//                }).setAction(R.id.ll_other_share_weixin,new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //΢�ź���
-//                    }
-//                }).setAction(R.id.ll_other_share_friend,new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //����Ȧ
+  //                  }}).
+  //                    setAction(R.id.ll_other_share_weixin,new View.OnClickListener() {
+  //                  @Override
+//                   public void onClick(View v) {
+ //                       //΢�ź���
+ //                   }
+ //               }).setAction(R.id.ll_other_share_friend,new View.OnClickListener() {
+ //                   @Override
+ //                  public void onClick(View v) {//����Ȧ
 //                    }
 //                }).setAction(R.id.ll_other_share_weibo,new View.OnClickListener() {
 //                    @Override
@@ -126,9 +125,9 @@ public class SettingsActivity extends BaseActivity {
 //                    @Override
 //                    public void onClick(View v) {
 //                        //ȡ��
-//                        popupDialog.dismiss();
-//                    }
-//                }).show();
+//                       popupDialog.dismiss();
+//                  }
+ //               }).show();
             }
         });
     }
@@ -310,20 +309,17 @@ public class SettingsActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     boolean isVisiable = (boolean) msg.obj;
-                    Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
-                    StringBuffer sb = new StringBuffer("sdfsfds");
-                    sb.append(isVisiable ? "sdfs" : "sdfs");
-                    sb.append("dfsdfsd");
+                    StringBuffer sb = new StringBuffer("校友");
+                    sb.append(isVisiable ? "能" : "不能");
+                    sb.append("看见你的报名情况");
                     showToast(sb.toString());
                     break;
                 }
                 case 1: {
-                    showToast("sdfsdfsd:" + msg.obj);
+                    showToast("设置失败:" + msg.obj);
                     break;
                 }
                 case 2: {
-//
-                    Preferences.loginFail(SettingsActivity.this);
                     new JpushUtil(SettingsActivity.this).logout();
                     Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

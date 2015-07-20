@@ -1,8 +1,9 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.upload.AzUploadService;
 import com.jingcai.apps.aizhuan.util.AppUtil;
@@ -33,16 +35,22 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by Administrator on 2015/7/16.
  */
 public class MineStudentCertificationActivity extends BaseActivity {
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int RESIZE_REQUEST_CODE = 2;
+    private static final int REQUEST_CODE_IMAGE             = 0;
+    private static final int REQUEST_CODE_CAMERA            = 1;//相机
+    private static final int REQUEST_CODE_RESIZE            = 2;//截图
+  //  private static final int IMAGE_REQUEST_CODE = 0;
+ //   private static final int RESIZE_REQUEST_CODE = 2;
     private MessageHandler messageHandler;
     private ImageView mphotoFront;
     private ImageView mphotoBack;
+    private AzService azService;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_student_certification);
+
+        messageHandler = new MessageHandler(this);
+        azService = new AzService();
 
         initHeader();
 
@@ -50,7 +58,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
     }
 
     private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("我的֤");
+        ((TextView)findViewById(R.id.tv_content)).setText("学生认证֤");
 
     }
 
@@ -74,9 +82,11 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
                             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
                             cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                            startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
+                           // dialog.dismiss();
                         } else {
                             showToast("δ�ҵ�SD��");
+                           // dialog.dismiss();
                         }
                         dialog.dismiss();
                     }
@@ -84,8 +94,8 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//��Ƭ����
-                        startActivityForResult(intent, IMAGE_REQUEST_CODE);
+                        intent.setType("image/*");//相片类型
+                        startActivityForResult(intent, REQUEST_CODE_IMAGE);
                         dialog.dismiss();
                     }
                 }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
@@ -108,18 +118,20 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
                             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
                             cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                            startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
+                            dialog.dismiss();
                         } else {
                             showToast("δ�ҵ�SD��");
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
+                      //  dialog.dismiss();
                     }
                 }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//��Ƭ����
-                        startActivityForResult(intent, IMAGE_REQUEST_CODE);
+                        intent.setType("image/*");//相片类型
+                        startActivityForResult(intent, REQUEST_CODE_IMAGE);
                         dialog.dismiss();
                     }
                 }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
@@ -130,10 +142,8 @@ public class MineStudentCertificationActivity extends BaseActivity {
                 }).show();
 
             }
-        });
-        //initCamer();
+    });
     }
-
     /*private void initCamer(){
         View dialogView = LayoutInflater.from(MineStudentCertificationActivity.this).inflate(R.layout.mine_photo_choose, null);
         final PopupWindow popupWindow = new PopupWindow(dialogView, WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
@@ -168,19 +178,18 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("��ȡʧ��:" + msg.obj);
+                    showToast("获取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
                     if (null != msg.obj) {
-                        //����ȡ����Ƭ ����imageView��
+                        //将截取的照片 存入imageView中
                         Bitmap bitmap1 = (Bitmap) msg.obj;
                         mphotoFront.setImageBitmap(bitmap1);
-
                         uploadLogo(bitmap1);
 
                     } else {
-                        showToast("ͼƬ��ȡʧ��");
+                        showToast("图片获取失败");
                     }
                     break;
                 }
@@ -196,7 +205,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
         new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
             @Override
             public void success(String logopath) {
-                showToast("�ϴ�ͷ��ɹ�");
+                showToast("上传头像成功");
               //  mStudent.setLogopath(logopath);
             }
 
@@ -209,25 +218,28 @@ public class MineStudentCertificationActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+       // super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            // ������ȡͷ��
-            case IMAGE_REQUEST_CODE:
+
+            case REQUEST_CODE_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     resizeImage(data.getData());
                 }
                 break;
-            // ���������
-            case CAMERA_REQUEST_CODE:
+            // 照相机现拍
+            case REQUEST_CODE_CAMERA:
+                //showToast("OK");
                 if (resultCode == Activity.RESULT_OK) {
                     if (AppUtil.isSdcardExisting()) {
                         resizeImage(AppUtil.getImageUri());
                     } else {
-                        showToast("δ�ҵ��洢�����޷��洢��Ƭ");
+                        showToast("未找到存储卡，无法存储照片");
                     }
                 }
+                showToast("OKOK");
                 break;
-            // ͼƬ��ȡ
-            case RESIZE_REQUEST_CODE:
+            // 图片截取
+            case REQUEST_CODE_RESIZE:
                 if (resultCode == Activity.RESULT_OK) {
                     Bitmap bitmap = null;
                     if (null != data.getExtras()) {
@@ -242,8 +254,9 @@ public class MineStudentCertificationActivity extends BaseActivity {
         }
     }
 
+
     /**
-     * �ü�ͼƬ����ʵ��
+     * 裁剪图片方法实现
      *
      * @param uri
      */
@@ -259,6 +272,6 @@ public class MineStudentCertificationActivity extends BaseActivity {
 //        intent.putExtra("outputFormat", "JPEG");
 //        intent.putExtra("noFaceDetection", true);
 //        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, RESIZE_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_CODE_RESIZE);
     }
 }

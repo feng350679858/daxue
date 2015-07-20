@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -36,27 +36,25 @@ public class MineSuggestionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_suggestion);
         messageHandler = new MessageHandler(this);
-        ((TextView)findViewById(R.id.tv_content)).setText("我有话说");
+        ((TextView)findViewById(R.id.tv_content)).setText("鎴戞湁璇濊");
         ((TextView)findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.tv_content)).setText("提交");
+        ((TextView)findViewById(R.id.tv_content)).setText("鎻愪氦");
        // findViewById(R.id.tv_info).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
+                //锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
                 finish();
             }
         });
         if(UserSubject.isLogin()){
-            initView();  //初始化控件
+            initView();  //锟斤拷始锟斤拷锟截硷拷
         }else{
             startActivityForLogin();
         }
     }
 
-    /**
-     * 初始化控件
-     */
+
     private void initView() {
         mTxtContent = (EditText) findViewById(R.id.et_other_suggestion_content);
         mBtnSubmit = (Button) findViewById(R.id.btn_other_suggestion_submit);
@@ -69,9 +67,9 @@ public class MineSuggestionActivity extends BaseActivity {
                         final AzService azService = new AzService(MineSuggestionActivity.this);
                         Advice03Request req = new Advice03Request();
                         Advice03Request.Suggestion suggestion = req.new Suggestion();
-                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //安卓端
+                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //锟斤拷卓锟斤拷
                         suggestion.setContent(mTxtContent.getText().toString());
-                        suggestion.setType("2"); //建议
+                        suggestion.setType("2"); //锟斤拷锟斤拷
                         suggestion.setStudentid(UserSubject.getStudentid());
                         req.setSuggestion(suggestion);
                         azService.doTrans(req, Advice03Response.class,new AzService.Callback<Advice03Response>() {
@@ -107,12 +105,12 @@ public class MineSuggestionActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what){
                 case 0:{
-                    showToast("感谢您提出的建议！");
+                    showToast("鎰熻阿");
                     finish();
                     break;
                 }
                 case 1:{
-                    showToast("抱歉，建议提交失败："+ msg.obj);
+                    showToast("锟斤拷歉锟斤拷锟斤拷锟斤拷锟结交失锟杰ｏ拷"+ msg.obj);
                     break;
                 }
 

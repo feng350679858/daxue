@@ -29,7 +29,8 @@ public class AppUtil {
         } catch (Exception e) {
             Log.e("-------", "找不到配置文件.", e);
         }
-        boolean debugFlag = GlobalConstant.debugFlag = "true".equalsIgnoreCase(props.getProperty("debugFlag"));
+        GlobalConstant.debugFlag = "true".equalsIgnoreCase(props.getProperty("debugFlag"));
+
         GlobalConstant.azserverUrl = props.getProperty("azserver_url", "");
         GlobalConstant.imageUrl = props.getProperty("image_url", "");
         GlobalConstant.h5Url = props.getProperty("h5_url", "");
