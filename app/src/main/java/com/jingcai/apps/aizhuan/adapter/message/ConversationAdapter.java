@@ -370,6 +370,14 @@ public class ConversationAdapter extends BaseAdapter {
                                     holder.pb.setVisibility(View.GONE);
                                     holder.tv.setVisibility(View.GONE);
                                     holder.staus_iv.setVisibility(View.VISIBLE);
+                                    holder.staus_iv.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Toast.makeText(mContext,
+                                                    mContext.getString(R.string.send_fail) + mContext.getString(R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
                                     Toast.makeText(mContext,
                                             mContext.getString(R.string.send_fail) + mContext.getString(R.string.connect_failuer_toast), Toast.LENGTH_SHORT)
                                             .show();
