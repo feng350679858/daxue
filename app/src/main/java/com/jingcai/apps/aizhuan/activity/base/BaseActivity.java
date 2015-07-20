@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
 
@@ -22,23 +23,24 @@ import java.util.TimerTask;
  */
 public class BaseActivity extends Activity {
     private static final String TAG = "BaseActivity";
-    private final int REQUEST_CODE_LOGIN = 101;
-    protected static int screen_height, screen_width;
-    protected static float density;
+    protected static final int REQUEST_CODE_LOGIN = 11;
+    protected float density;
+    protected int screen_height, screen_width;
     protected Looper looper = null;
+
     private ProgressDialog progressDialog = null;
     protected final InnerLock actionLock = new InnerLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
-        screen_width = point.x;
-        screen_height = point.y;
-        density = getApplicationContext().getResources().getDisplayMetrics().density;
-
+        {
+            density = getApplicationContext().getResources().getDisplayMetrics().density;
+            Point point = new Point();
+            getWindowManager().getDefaultDisplay().getSize(point);
+            screen_width = point.x;
+            screen_height = point.y;
+        }
         looper = Looper.myLooper();
     }
 
@@ -88,6 +90,7 @@ public class BaseActivity extends Activity {
 
     /**
      * 检查是否登录
+     *
      * @return true 已登录
      */
     protected boolean checkLogin() {
@@ -96,6 +99,7 @@ public class BaseActivity extends Activity {
 
     /**
      * 检查是否登录，如果未登录，则跳转到登录页面
+     *
      * @return true 已登录
      */
     protected boolean checkAndPerformLogin() {
@@ -110,9 +114,8 @@ public class BaseActivity extends Activity {
      * 跳转到登录页面
      */
     protected void startActivityForLogin() {
-        //TODO 需要跳转到新的登录页面
- //       Intent intent = new Intent(this, LoginActivity.class);
-  //     startActivityForResult(intent, REQUEST_CODE_LOGIN);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_LOGIN);
     }
 
     /**

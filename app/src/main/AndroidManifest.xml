@@ -67,43 +67,25 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- sys -->
         <activity
-            android:name=".activity.index.MainActivity"
+            android:name=".activity.sys.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.mine.activity.PartjobCancelActivity"
-            android:label="@string/title_activity_partjob_cancel" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobJoinSuccessActivity"
-            android:label="@string/title_activity_partjob_join_success" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.LocationCityActivity"
-            android:label="@string/title_activity_partjob_join_success" >
-        </activity>
+        <activity android:name=".activity.sys.IntroActivity"/>
+        <activity android:name=".activity.sys.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.sys.RegistActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.index.MainActivity" android:screenOrientation="portrait"/>
 
 
-        <activity
-            android:name=".activity.partjob.PartjobDetailActivity"
-            android:label="@string/title_activity_partjob_detail" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobDetailMapActivity"
-            android:label="@string/title_activity_partjob_detail_map" >
-        </activity>
-        <activity
-            android:name=".activity.partjob.PartjobSearchActivity"
-            android:label="@string/title_activity_partjob_search" >
-        </activity>
         <!-- help -->
         <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
@@ -113,8 +95,6 @@
         <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
 
-        <!-- sys -->
-        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity"   />
@@ -123,6 +103,16 @@
         <activity android:name=".activity.message.MessageNotificationActivity"   />
         <activity android:name=".activity.message.NotificationDetailActivity"   />
         <activity android:name=".activity.message.MessageConversationActivity"   />
+
+
+        <!-- partjob -->
+        <activity android:name=".activity.mine.activity.PartjobCancelActivity"/>
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"/>
+        <activity android:name=".activity.partjob.LocationCityActivity"/>
+        <activity android:name=".activity.partjob.PartjobDetailActivity"/>
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity"/>
+        <activity android:name=".activity.partjob.PartjobSearchActivity"/>
+
 
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService"/>

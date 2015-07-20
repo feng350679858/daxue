@@ -2,16 +2,12 @@ package com.jingcai.apps.aizhuan.activity.partjob;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -24,11 +20,7 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
-import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
-import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;
 import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.adapter.partjob.PartjobSearchAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
@@ -104,7 +96,11 @@ public class PartjobSearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH/* && null!=event && event.getKeyCode()==KeyEvent.KEYCODE_ENTER*/) {
                     String mSearchKey = mTxtSearchKey.getText().toString();
                     if (StringUtil.isNotEmpty(mSearchKey)) {
-                        Preferences.addHistory(PartjobSearchActivity.this, mSearchKey);
+                        Preferences pref = Preferences.getInstance(Preferences.TYPE.partjob);
+                        int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
+                        pref.update(Preferences.Partjob.SEARCH_KEY_PREFIX + index, mSearchKey);
+                        pref.update(Preferences.Partjob.SEARCH_INDEX, ++index);
+
                         hideInputMethodDialog(PartjobSearchActivity.this);
                     }
                     if (mDrawer.isOpened()) {
