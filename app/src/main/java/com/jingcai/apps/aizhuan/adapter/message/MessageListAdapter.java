@@ -92,28 +92,47 @@ public class MessageListAdapter extends BaseAdapter {
         ViewHolderConversation holderCon = null;
         int itemViewType = getItemViewType(position);
 
-        if (convertView == null) switch (itemViewType) {
-            case VIEW_TYPE_CATEGORY:
-                convertView = mLayoutInflater.inflate(R.layout.index_message_list_catagory_item, null);
-                holderCat = new ViewHolderCategory();
-                holderCat.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
-                holderCat.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
-                holderCat.mTvTitle = (TextView) convertView.findViewById(R.id.tv_content);
-                convertView.setTag(holderCat);
-                break;
-            case VIEW_TYPE_CONVERSATION:
-                convertView = mLayoutInflater.inflate(R.layout.index_message_list_conversation_item, null);
-                holderCon = new ViewHolderConversation();
-                holderCon.mIvLevel = (ImageView) convertView.findViewById(R.id.iv_level);
-                holderCon.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
-                holderCon.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
-                holderCon.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
-                holderCon.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
-                holderCon.mTvTime = (TextView) convertView.findViewById(R.id.tv_time);
-                convertView.setTag(holderCon);
-                break;
-        }
-        else {  //convertView is not null
+        if (convertView == null) {
+            switch (itemViewType) {
+                case VIEW_TYPE_CATEGORY:
+                    convertView = mLayoutInflater.inflate(R.layout.index_message_list_catagory_item, null);
+                    holderCat = new ViewHolderCategory();
+                    holderCat.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
+                    holderCat.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
+                    holderCat.mTvTitle = (TextView) convertView.findViewById(R.id.tv_content);
+                    convertView.setTag(holderCat);
+                    break;
+                case VIEW_TYPE_CONVERSATION:
+                    convertView = mLayoutInflater.inflate(R.layout.index_message_list_conversation_item, null);
+                    holderCon = new ViewHolderConversation();
+                    holderCon.mIvLevel = (ImageView) convertView.findViewById(R.id.iv_level);
+                    holderCon.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
+                    holderCon.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
+                    holderCon.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
+                    holderCon.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
+                    holderCon.mTvTime = (TextView) convertView.findViewById(R.id.tv_time);
+                    convertView.setTag(holderCon);
+                    View viewById = convertView.findViewById(R.id.layout_line);
+                    if(null != viewById) {
+                        viewById.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d(TAG, "---------------click-----");
+                            }
+                        });
+                    }
+                    View btn_account_list_unbind = convertView.findViewById(R.id.btn_account_list_unbind);
+                    if(null != btn_account_list_unbind) {
+                        btn_account_list_unbind.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d(TAG, "---------------click2-----");
+                            }
+                        });
+                    }
+                    break;
+            }
+        } else {  //convertView is not null
             switch (itemViewType) {
                 case VIEW_TYPE_CATEGORY:
                     holderCat = (ViewHolderCategory) convertView.getTag();

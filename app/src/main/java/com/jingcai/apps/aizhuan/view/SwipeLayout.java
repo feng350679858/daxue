@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.view;
 
 import android.content.Context;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -8,17 +9,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-/**
- * Created by Bruce on 11/24/14.
- */
-public class SwipeLayout extends LinearLayout {
 
+public class SwipeLayout extends LinearLayout {
+    private final static String TAG = "SwipeLayout";
+    private final double AUTO_OPEN_SPEED_LIMIT = 800.0;
+    private enum STATE{RESET, MOVE, CANCEL, CLICk}
     private ViewDragHelper viewDragHelper;
     private View contentView;
     private View actionView;
     private int dragDistance;
-    private final double AUTO_OPEN_SPEED_LIMIT = 800.0;
     private int draggedX;
+    private STATE state = STATE.RESET;
+    private float mInitialMotionX, mInitialMotionY;
 
     public SwipeLayout(Context context) {
         this(context, null);
@@ -30,7 +32,7 @@ public class SwipeLayout extends LinearLayout {
 
     public SwipeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        viewDragHelper = ViewDragHelper.create(this, new DragHelperCallback());
+        viewDragHelper = ViewDragHelper.create(this, 1, new DragHelperCallback());
     }
 
     @Override
@@ -48,10 +50,10 @@ public class SwipeLayout extends LinearLayout {
     }
 
     private class DragHelperCallback extends ViewDragHelper.Callback {
-
         @Override
         public boolean tryCaptureView(View view, int i) {
-            return view == contentView || view == actionView;
+//            return view == contentView || view == actionView;
+            return view == contentView;
         }
 
         @Override
@@ -108,12 +110,14 @@ public class SwipeLayout extends LinearLayout {
         }
     }
 
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        int actionMasked = ev.getActionMasked();
-//        if(actionMasked == MotionEvent.ACTION_DOWN){
-//            return false;
-//        }
+        final int action = MotionEventCompat.getActionMasked(ev);
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            viewDragHelper.cancel();
+            return false;
+        }
         if(viewDragHelper.shouldInterceptTouchEvent(ev)) {
             return true;
         }
@@ -121,15 +125,53 @@ public class SwipeLayout extends LinearLayout {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        viewDragHelper.processTouchEvent(event);
-        return false;
+    public boolean onTouchEvent(MotionEvent ev) {
+        final int action = MotionEventCompat.getActionMasked(ev);
+        final float x = ev.getX();
+        final float y = ev.getY();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                mInitialMotionX = x;
+                mInitialMotionY = y;
+                state = STATE.RESET;
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                final float adx = Math.abs(x - mInitialMotionX);
+                final float ady = Math.abs(y - mInitialMotionY);
+                final int slop = viewDragHelper.getTouchSlop();
+
+                if (adx >= slop && ady < slop && STATE.RESET == state) {
+                    state = STATE.MOVE;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_CANCEL: {
+                if (STATE.RESET == state || STATE.MOVE == state) {
+                    state = STATE.CANCEL;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if (STATE.RESET == state) {
+                    state = STATE.CLICk;
+                }
+                break;
+            }
+        }
+        if (STATE.CLICk == state) {
+            viewDragHelper.cancel();
+            performClick();
+        }else {
+            viewDragHelper.processTouchEvent(ev);
+        }
+        return true;
     }
 
     @Override
     public void computeScroll() {
         super.computeScroll();
-        if(viewDragHelper.continueSettling(true)) {
+        if (viewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
