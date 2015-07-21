@@ -24,7 +24,7 @@ public class MineResetPasswordActivity extends BaseActivity{
 
     private void initHeader()
     {
-        ((TextView)findViewById(R.id.tv_content)).setText("ĞŞ¸ÄÖ§¸¶ÃÜÂë");
+        ((TextView)findViewById(R.id.tv_content)).setText("ä¿®æ”¹æ”¯ä»˜å¯†ç ");
 
     }
 

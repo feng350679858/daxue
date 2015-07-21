@@ -94,7 +94,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
 
 
     private void initData() {
-        showProgressDialog(" ˝æ›º”‘ÿ÷–...");
+        showProgressDialog("Êï∞ÊçÆÂä†ËΩΩ‰∏≠...");
         initBankData();
         initBalanceData();
     }
@@ -201,11 +201,11 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             public void onClick(View v) {
                 String inputCountStr = mInputCount.getText().toString();
                 if (mCurrentBank == null) {
-                    showToast("«Î—°‘Ò’Àªß");
+                    showToast("ËØ∑ÈÄâÊã©Ë¥¶Êà∑");
                     return;
                 }
                 if (StringUtil.isEmpty(inputCountStr) || ("0".equals(inputCountStr))) {
-                    showToast("«Î ‰»ÎΩ∂Ó");
+                    showToast("ËØ∑ËæìÂÖ•ÈáëÈ¢ù");
                     return;
                 }
                 View dialogView = LayoutInflater.from( MineGoldTopupActivity.this).inflate(R.layout.mine_gold_account_withdraw_pay_psw_dialog, null);
@@ -230,7 +230,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     }
                 });
                 dialogView.findViewById(R.id.et_account_withdraw_pay_psw).setFocusable(true);
-                ((TextView) dialogView.findViewById(R.id.tv_account_withdraw_title)).setText("«Î ‰»Î÷ß∏∂√‹¬Î");
+                ((TextView) dialogView.findViewById(R.id.tv_account_withdraw_title)).setText("ËØ∑ËæìÂÖ•ÊîØ‰ªòÂØÜÁ†Å");
                 popupWindow.setFocusable(true);
                 popupWindow.setAnimationStyle(R.style.main_menu_animstyle);
                 popupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL, 0, PixelUtil.px2dip( MineGoldTopupActivity.this, 200f));
@@ -286,7 +286,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
 
     private void initHeader()
     {
-        ((TextView)findViewById(R.id.tv_content)).setText("≥‰÷µ");
+        ((TextView)findViewById(R.id.tv_content)).setText("ÂÖÖÂÄº");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +299,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             if ("gold".equals(wallets.get(i).getCode())) {
                 mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
                 String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
-                ((TextView) findViewById(R.id.tv_mine_gold_rest)).setText(gold + "Ω");
+                ((TextView) findViewById(R.id.tv_mine_gold_rest)).setText(gold + "Èáë");
             }
         }
     }
@@ -317,7 +317,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 1: {
-                    showToast("ªÒ»°’Àªß ß∞‹£∫"+msg.obj);
+                    showToast("Ëé∑ÂèñË¥¶Êà∑Â§±Ë¥•Ôºö"+msg.obj);
                     break;
                 }
                 case 2:{
@@ -325,16 +325,16 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 3:{
-                    showToast("ªÒ»°”‡∂Ó ß∞‹£∫"+msg.obj);
+                    showToast("Ëé∑Âèñ‰ΩôÈ¢ùÂ§±Ë¥•Ôºö"+msg.obj);
                     break;
                 }
                 case 4:{
-                    showToast("«Î«Û“—Ã·Ωª£¨µ»¥˝…Û∫À£°");
+                    showToast("ËØ∑Ê±ÇÂ∑≤Êèê‰∫§ÔºåÁ≠âÂæÖÂÆ°Ê†∏ÔºÅ");
                     MineGoldTopupActivity.this.finish();
                     break;
                 }
                 case 5:{
-                    showToast("Ã·œ÷ ß∞‹£∫"+msg.obj);
+                    showToast("ÊèêÁé∞Â§±Ë¥•Ôºö"+msg.obj);
                     break;
                 }
                 default:

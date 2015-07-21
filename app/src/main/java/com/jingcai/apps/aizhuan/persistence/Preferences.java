@@ -132,6 +132,9 @@ public class Preferences {
     }
 
     public boolean update(String key, Object value) {
+        if(null == key || null == value){
+            return false;
+        }
         SharedPreferences.Editor editor = settings.edit();
         if (value instanceof String) {
             editor.putString(key, value.toString());
