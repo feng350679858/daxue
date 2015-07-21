@@ -10,7 +10,7 @@ public class Partjob24Request extends BaseRequest{
 
     @Override
     public String getTranscode() {
-        return BizConstant.BTZ_PARTTIME_JOB_24;
+        return BizConstant.BIZ_PARTTIME_JOB_24;
     }
     private Parttimejob parttimejob;
 

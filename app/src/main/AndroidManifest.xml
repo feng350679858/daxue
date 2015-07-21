@@ -109,7 +109,7 @@
 
 
         <!-- partjob -->
-        <activity android:name=".activity.mine.activity.PartjobCancelActivity"/>
+        <activity android:name=".activity.mine.PartjobCancelActivity"/>
         <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"/>
         <activity android:name=".activity.partjob.LocationCityActivity"/>
         <activity android:name=".activity.partjob.PartjobDetailActivity"/>
@@ -126,16 +126,21 @@
 
 
         <!-- mine -->
-        <activity android:name=".activity.mine.activity.MineAccountActivity"/>
-        <activity android:name=".activity.mine.activity.MineStudentCertificationActivity"/>
-        <activity android:name=".activity.mine.activity.SettingsActivity"/>
-        <activity android:name=".activity.mine.activity.MineGoldTopupActivity"/>
-        <activity android:name=".activity.mine.activity.MineSuggestionActivity"/>
-        <activity android:name=".activity.mine.activity.MineGoldWithdrawActivity"/>
-        <activity android:name=".activity.mine.activity.MineResetPasswordActivity"/>
-        <activity android:name=".activity.mine.activity.MyPartjobListActivity"/>
-        <activity android:name=".activity.mine.activity.MyPartjobDetailActivity"/>
-
+        <activity android:name=".activity.mine.MineAccountActivity"/>
+        <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
+        <activity android:name=".activity.mine.SettingsActivity"/>
+        <activity android:name=".activity.mine.MineGoldTopupActivity"/>
+        <activity android:name=".activity.mine.MineSuggestionActivity"/>
+        <activity android:name=".activity.mine.MineGoldWithdrawActivity"/>
+        <activity android:name=".activity.mine.MineResetPasswordActivity"/>
+        <activity android:name=".activity.mine.MineResetpaypswActivity"/>
+        <activity android:name=".activity.mine.MyPartjobListActivity"/>
+        <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
+        <activity android:name=".activity.mine.MineHelpActivity"/>
+        <activity android:name=".activity.mine.MineCreditActivity"/>
+        <activity android:name=".activity.mine.MinePersonalDataActivity"/>
+        <activity android:name=".activity.mine.MineGoldExpenseActivity"/>
+        <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
 
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />

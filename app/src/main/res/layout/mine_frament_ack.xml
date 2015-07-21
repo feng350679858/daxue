@@ -7,11 +7,13 @@
         android:layout_height="wrap_content"
         android:text="test2"
         android:textSize="50dp"/>
-    <ListView
-        android:id="@+id/lv_mine_account_choice_list"
+    <com.markmao.pulltorefresh.widget.XListView
+        xmlns:xlv="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+        android:id="@+id/xlv_ask_list"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="#000000"
-        android:divider="@null"/>
+        android:layout_height="match_parent"
+        android:divider="@color/divider_color"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="5dp"
+        xlv:extraHeader="@layout/index_campus_fragment_header" />
 </LinearLayout>

@@ -1,31 +1,28 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.partjob11;
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob27;
 
 import com.jingcai.apps.aizhuan.service.base.BaseRequest;
 import com.jingcai.apps.aizhuan.service.business.BizConstant;
 
 /**
- * Created by Administrator on 2015/7/18.
+ * Created by Administrator on 2015/7/21.
  */
-public class Partjob11Request extends BaseRequest {
-
+public class Partjob27Request extends BaseRequest {
     @Override
     public String getTranscode() {
-        return BizConstant.BIZ_PARTTIME_JOB_11;
+        return BizConstant.BIZ_PARTTIME_JOB_27;
     }
-    private Partjob11Request partjob11Request;
+    private Parttimejob parttimejob;
 
-    public Partjob11Request getPartjob11Request() {
-        return partjob11Request;
+    public Parttimejob getParttimejob() {
+        return parttimejob;
     }
 
-    public void setPartjob11Request(Partjob11Request partjob11Request) {
-        this.partjob11Request = partjob11Request;
+    public void setParttimejob(Parttimejob parttimejob) {
+        this.parttimejob = parttimejob;
     }
 
     public class Parttimejob{
         private String studentid;
-        private String gisx;
-        private String gisy;
         private String start;
         private String pagesize;
 
@@ -37,22 +34,6 @@ public class Partjob11Request extends BaseRequest {
             this.studentid = studentid;
         }
 
-        public String getGisx() {
-            return gisx;
-        }
-
-        public void setGisx(String gisx) {
-            this.gisx = gisx;
-        }
-
-        public String getGisy() {
-            return gisy;
-        }
-
-        public void setGisy(String gisy) {
-            this.gisy = gisy;
-        }
-
         public String getStart() {
             return start;
         }
@@ -60,7 +41,6 @@ public class Partjob11Request extends BaseRequest {
         public void setStart(String start) {
             this.start = start;
         }
-
 
         public String getPagesize() {
             return pagesize;
@@ -70,6 +50,4 @@ public class Partjob11Request extends BaseRequest {
             this.pagesize = pagesize;
         }
     }
-
-
 }

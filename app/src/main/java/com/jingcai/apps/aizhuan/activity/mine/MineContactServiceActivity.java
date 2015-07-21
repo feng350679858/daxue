@@ -12,7 +12,7 @@ import org.bouncycastle.jce.provider.symmetric.ARC4;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class MineContactService extends BaseActivity {
+public class MineContactServiceActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_contact_service);

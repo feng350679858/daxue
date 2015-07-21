@@ -38,6 +38,9 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_08 = "partjob08";//获取已取消次数
     String BIZ_PARTTIME_JOB_09 = "partjob09";//手机端兼职列表查询（包含特殊搜索）
     String BIZ_PARTTIME_JOB_10 = "partjob10";//兼职标签详情列表查询
+    String BIZ_PARTTIME_JOB_11 = "partjob11";
+    String BIZ_PARTTIME_JOB_24 = "partjob24";
+    String BIZ_PARTTIME_JOB_27 = "partjob27";
 
     /**
      * school

@@ -38,6 +38,8 @@ public class MineStudentCertificationActivity extends BaseActivity {
     private static final int REQUEST_CODE_IMAGE             = 0;
     private static final int REQUEST_CODE_CAMERA            = 1;//相机
     private static final int REQUEST_CODE_RESIZE            = 2;//截图
+   boolean PHOTO_INSIDE_OR_OUTSIDE = true;//判断学生证内侧
+
   //  private static final int IMAGE_REQUEST_CODE = 0;
  //   private static final int RESIZE_REQUEST_CODE = 2;
     private MessageHandler messageHandler;
@@ -74,6 +76,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
         findViewById(R.id.iv_mine_student_certification_inside).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PHOTO_INSIDE_OR_OUTSIDE = true;
                 final PopupDialog dialog = new PopupDialog(MineStudentCertificationActivity.this, R.layout.mine_photo_choose);
                 dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
                     @Override
@@ -110,6 +113,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
         findViewById(R.id.iv_mine_student_certification_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PHOTO_INSIDE_OR_OUTSIDE = false;
                 final PopupDialog dialog = new PopupDialog(MineStudentCertificationActivity.this, R.layout.mine_photo_choose);
                 dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
                     @Override
@@ -184,9 +188,16 @@ public class MineStudentCertificationActivity extends BaseActivity {
                 case 2: {
                     if (null != msg.obj) {
                         //将截取的照片 存入imageView中
-                        Bitmap bitmap1 = (Bitmap) msg.obj;
-                        mphotoFront.setImageBitmap(bitmap1);
-                        uploadLogo(bitmap1);
+                        if (PHOTO_INSIDE_OR_OUTSIDE == true) {
+                            Bitmap bitmap1 = (Bitmap) msg.obj;
+                            mphotoFront.setImageBitmap(bitmap1);
+                            uploadLogo(bitmap1);
+                        }
+                        if (PHOTO_INSIDE_OR_OUTSIDE == false) {
+                            Bitmap bitmap1 = (Bitmap) msg.obj;
+                            mphotoBack.setImageBitmap(bitmap1);
+                            uploadLogo(bitmap1);
+                        }
 
                     } else {
                         showToast("图片获取失败");
@@ -201,7 +212,6 @@ public class MineStudentCertificationActivity extends BaseActivity {
     }
 
     private void uploadLogo(Bitmap bitmap) {
-        //��ͼƬ�ϴ���������
         new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
             @Override
             public void success(String logopath) {
@@ -236,7 +246,6 @@ public class MineStudentCertificationActivity extends BaseActivity {
                         showToast("未找到存储卡，无法存储照片");
                     }
                 }
-                showToast("OKOK");
                 break;
             // 图片截取
             case REQUEST_CODE_RESIZE:

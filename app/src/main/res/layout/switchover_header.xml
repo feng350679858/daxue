@@ -26,7 +26,7 @@
             android:id="@+id/btn_switch2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的提问"/>
+            android:text="我的回答"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_assist_desc"

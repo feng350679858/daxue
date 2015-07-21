@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -36,7 +37,13 @@ public class MineResetPasswordActivity extends BaseActivity{
                finish();
             }
         });
-
+       findViewById(R.id.ll_mine_gold_account_remember_password).setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(MineResetPasswordActivity.this,MineResetpaypswActivity.class);
+               startActivity(intent);
+           }
+       });
 
     }
 }

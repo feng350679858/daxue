@@ -26,7 +26,7 @@ import java.io.PrintWriter;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class MineHelp extends BaseFragmentActivity {
+public class MineHelpActivity extends BaseFragmentActivity {
 
    MineHelpFrament mineHelpFrament=new MineHelpFrament();
     MineAskFragment mineAskFragment = new MineAskFragment();

@@ -53,33 +53,64 @@ public class HelpAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.mine_help_detail_header, null);
             viewHolder = new ViewHolder();
-            viewHolder.layout_help_content = convertView.findViewById(R.id.layout_mine_help_content);
+            viewHolder.layout_help_content = convertView.findViewById(R.id.ll_mine_help_content);
             //viewHolder.layout_help_jishi = convertView.findViewById(R.id.layout_help_jishi);
            // viewHolder.layout_help_wenda = convertView.findViewById(R.id.layout_help_wenda);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_mine_help_title_gold);
             viewHolder.tv_help_time = (TextView) convertView.findViewById(R.id.tv_mine_help_title_time);
             viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_mine_help_title_limit);
+            viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_mine_help_content);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Partjob24Response.Partjob24Body.Region region = regionList.get(position);
-        viewHolder.region = region;//Ω´∂‘œÛ¥Ê»ÎviewHolder
+        viewHolder.region = region;//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩviewHolder
 
-        if (0 == position % 2) {
+       // if (0 == position % 2) {
            // viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
          //   viewHolder.layout_help_wenda.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
-            viewHolder.tv_title.setText("≈‹Õ»");
-            viewHolder.tv_title.setText(region.getCoin());
-        } else {
+        //    viewHolder.tv_title.setText("ÔøΩÔøΩÔøΩÔøΩ");
+            viewHolder.tv_title.setText("Èáë");
+       // } else {
          //   viewHolder.layout_help_jishi.setVisibility(View.GONE);
        //     viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
          //   viewHolder.tv_gender_limit.setVisibility(View.GONE);
-            viewHolder.tv_title.setText(region.getCoin());
+         //   viewHolder.tv_title.setText(region.getCoin());
             viewHolder.tv_help_time.setText(region.getOptime());
-        }
+            viewHolder.tv_content.setText(region.getContent());
+
+            String s=region.getStatus();
+          if (s==null )
+          {
+              viewHolder.tv_gender_limit.setText("null");
+          }
+       else {
+              if (s.equals("1")) {
+                  viewHolder.tv_gender_limit.setText("Ê±ÇÂä©‰∏≠");
+              }
+              if (s.equals("2")) {
+                  viewHolder.tv_gender_limit.setText("Â∏ÆÂä©‰∏≠");
+              }
+              if (s.equals("3")) {
+                  viewHolder.tv_gender_limit.setText("ÂèñÊ∂à‰∏≠");
+              }
+              if (s.equals("4")) {
+                  viewHolder.tv_gender_limit.setText("Â∑≤ÂèñÊ∂à");
+              }
+              if (s.equals("5")) {
+                  viewHolder.tv_gender_limit.setText("Â∑≤Â∏ÆÂä©");
+              }
+              if (s.equals("6")) {
+                  viewHolder.tv_gender_limit.setText("Â∑≤ÁªìÁÆó");
+              }
+              if (s.equals("7")) {
+                  viewHolder.tv_gender_limit.setText("Â∑≤Ë∂ÖÊó∂");
+              }
+              //  }
+          }
 
         return convertView;
     }
@@ -107,5 +138,6 @@ public class HelpAdapter extends BaseAdapter {
         public TextView tv_title;
         public TextView tv_help_time;
         public TextView tv_gender_limit;
+        public TextView tv_content;
     }
 }

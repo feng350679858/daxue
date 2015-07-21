@@ -11,12 +11,13 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineContactService;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineHelp;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MinePersonalDataActivity;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineStudentCertificationActivity;
-import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineHelpActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineResetpaypswActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
+import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
 /**
@@ -73,7 +74,7 @@ public class IndexMineFragment extends BaseFragment {
         mainView.findViewById(R.id.ll_mine_contact_service).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineContactService.class);
+                Intent intent = new Intent(baseActivity,MineResetpaypswActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,7 +88,7 @@ public class IndexMineFragment extends BaseFragment {
         mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineHelp.class);
+                Intent intent = new Intent(baseActivity,MineHelpActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,7 +96,7 @@ public class IndexMineFragment extends BaseFragment {
         mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
+                Intent intent = new Intent(baseActivity,MineContactServiceActivity.class);
                 startActivity(intent);
             }
         });
