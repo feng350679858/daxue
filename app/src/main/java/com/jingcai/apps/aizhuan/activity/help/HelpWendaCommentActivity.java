@@ -1,9 +1,11 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
+    private EditText et_reploy_comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
     }
 
     private void initView() {
+        et_reploy_comment = (EditText)findViewById(R.id.et_reploy_comment);
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
@@ -81,6 +85,21 @@ public class HelpWendaCommentActivity extends BaseActivity {
             @Override
             public void onLoadMore() {
                 initGroupData();
+            }
+        });
+
+        commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
+            @Override
+            public void click(View view, HelpCommentAdapter.ViewHolder holder) {
+                boolean selected = holder.region.isSelected();
+                commentAdapter.clearSelected();
+                if(!selected) {
+                    holder.region.setSelected(!selected);
+                    et_reploy_comment.setHint("回复：" + holder.region.getRegionname());
+                }else{
+                    et_reploy_comment.setHint("评论");
+                }
+                commentAdapter.notifyDataSetChanged();
             }
         });
     }

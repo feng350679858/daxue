@@ -36,26 +36,26 @@ public class MineSuggestionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_suggestion);
         messageHandler = new MessageHandler(this);
-        ((TextView)findViewById(R.id.tv_content)).setText("ÎÒÓĞ»°Ëµ");
+        ((TextView)findViewById(R.id.tv_content)).setText("æˆ‘æœ‰è¯è¯´");
         ((TextView)findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.tv_content)).setText("Ìá½»");
+        ((TextView)findViewById(R.id.tv_content)).setText("æäº¤");
        // findViewById(R.id.tv_info).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //·µ»ØÖ÷½çÃæ
+                //è¿”å›ä¸»ç•Œé¢
                 finish();
             }
         });
         if(UserSubject.isLogin()){
-            initView();  //³õÊ¼»¯¿Ø¼ş
+            initView();  //åˆå§‹åŒ–æ§ä»¶
         }else{
             startActivityForLogin();
         }
     }
 
     /**
-     * ³õÊ¼»¯¿Ø¼ş
+     * åˆå§‹åŒ–æ§ä»¶
      */
     private void initView() {
         mTxtContent = (EditText) findViewById(R.id.et_other_suggestion_content);
@@ -69,9 +69,9 @@ public class MineSuggestionActivity extends BaseActivity {
                         final AzService azService = new AzService(MineSuggestionActivity.this);
                         Advice03Request req = new Advice03Request();
                         Advice03Request.Suggestion suggestion = req.new Suggestion();
-                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //°²×¿¶Ë
+                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //å®‰å“ç«¯
                         suggestion.setContent(mTxtContent.getText().toString());
-                        suggestion.setType("2"); //½¨Òé
+                        suggestion.setType("2"); //å»ºè®®
                         suggestion.setStudentid(UserSubject.getStudentid());
                         req.setSuggestion(suggestion);
                         azService.doTrans(req, Advice03Response.class,new AzService.Callback<Advice03Response>() {
@@ -107,12 +107,12 @@ public class MineSuggestionActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what){
                 case 0:{
-                    showToast("¸ĞĞ»ÄúÌá³öµÄ½¨Òé£¡");
+                    showToast("æ„Ÿè°¢æ‚¨æå‡ºçš„å»ºè®®ï¼");
                     finish();
                     break;
                 }
                 case 1:{
-                    showToast("±§Ç¸£¬½¨ÒéÌá½»Ê§°Ü£º"+ msg.obj);
+                    showToast("æŠ±æ­‰ï¼Œå»ºè®®æäº¤å¤±è´¥ï¼š"+ msg.obj);
                     break;
                 }
 

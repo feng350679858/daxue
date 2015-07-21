@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/content_background"
-    android:clickable="false"
+    android:clickable="true"
     android:padding="10dp">
 
     <ImageView
@@ -63,15 +63,16 @@
 
 
             <TextView
+                android:id="@+id/tv_comment_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:drawableLeft="@drawable/help_item_like"
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/tv_stu_name"
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="12"
-                android:enabled="false"
                 android:textColor="@color/normal_grey"
                 android:textSize="14sp" />
         </RelativeLayout>

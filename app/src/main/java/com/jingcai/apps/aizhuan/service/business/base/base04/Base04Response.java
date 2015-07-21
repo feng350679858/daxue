@@ -19,6 +19,7 @@ public class Base04Response extends BaseResponse<Base04Response.Body> {
         public static class Region {
             private String regionid;
             private String regionname;
+            private boolean selected;
 
             public String getRegionid() {
                 return regionid;
@@ -34,6 +35,14 @@ public class Base04Response extends BaseResponse<Base04Response.Body> {
 
             public void setRegionname(String regionname) {
                 this.regionname = regionname;
+            }
+
+            public boolean isSelected() {
+                return selected;
+            }
+
+            public void setSelected(boolean selected) {
+                this.selected = selected;
             }
         }
     }

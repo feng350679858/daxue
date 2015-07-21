@@ -71,15 +71,13 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     }
 
     private void initView() {
-        findViewById(R.id.tv_help).setVisibility(View.GONE);
-
         boolean flag = System.currentTimeMillis() % 2 == 0;
         if (flag) {
             (tv_reward = findViewById(R.id.tv_reward)).setVisibility(View.VISIBLE);
             (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.GONE);
 
             //打赏
-            tv_reward.setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.layout_reward).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class));
@@ -90,7 +88,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
             (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.VISIBLE);
 
             //重新编辑
-            tv_reedit.setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.layout_reward).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaEditActivity.class));
@@ -98,7 +96,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
             });
         }
 
-        findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.layout_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaCommentActivity.class));

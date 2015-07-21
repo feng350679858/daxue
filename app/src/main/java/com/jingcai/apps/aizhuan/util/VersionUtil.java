@@ -50,7 +50,7 @@ public class VersionUtil {
 
     private String apkUrl;
     private int totalSize;
-    private volatile Integer downloadingSize = 0;//ÏÂÔØÍê³ÉÉèÖÃÎª-1
+    private volatile Integer downloadingSize = 0;//ä¸‹è½½å®Œæˆè®¾ç½®ä¸º-1
     private DownLoadApkTask downLoadApkTaskTask;
 
     public VersionUtil(Activity activity) {
@@ -60,9 +60,9 @@ public class VersionUtil {
     }
 
     /**
-     * ¸üĞÂApp
+     * æ›´æ–°App
      *
-     * @param manualCheckFlag ÊÖ¹¤¼ì²é¸üĞÂ
+     * @param manualCheckFlag æ‰‹å·¥æ£€æŸ¥æ›´æ–°
      */
     public void autoUpdateApp(final boolean manualCheckFlag) {
         new AzExecutor().execute(new Runnable() {
@@ -83,20 +83,20 @@ public class VersionUtil {
             public void success(Base02Response resp) {
                 ResponseResult result = resp.getResult();
                 if (!"0".equals(result.getCode())) {
-                    messageHandler.postMessage(3);//»ñÈ¡°æ±¾ĞÅÏ¢³ö´í£¡
+                    messageHandler.postMessage(3);//è·å–ç‰ˆæœ¬ä¿¡æ¯å‡ºé”™ï¼
                     return;
                 }
                 Base02Response.Base02Body body = resp.getBody();
                 Base02Response.Base02Body.Version version = body.getVersion();
-                if (null == version || "-1".equals(version.getCode())) {//Î´ÕÒµ½×îĞÂ°æ±¾¼ÇÂ¼£¬ÌáÊ¾µ±Ç°×îĞÂ°æ±¾
+                if (null == version || "-1".equals(version.getCode())) {//æœªæ‰¾åˆ°æœ€æ–°ç‰ˆæœ¬è®°å½•ï¼Œæç¤ºå½“å‰æœ€æ–°ç‰ˆæœ¬
                     if (manualCheckFlag) {
                         messageHandler.postMessage(4);
                     }
                     return;
                 }
-                if (getVersionCode(activity) < Integer.parseInt(version.getCode())) {//ÓĞ¸üĞÂ
+                if (getVersionCode(activity) < Integer.parseInt(version.getCode())) {//æœ‰æ›´æ–°
                     messageHandler.postMessage(1, version);
-                } else if (manualCheckFlag) {//ÌáÊ¾µ±Ç°×îĞÂ°æ±¾
+                } else if (manualCheckFlag) {//æç¤ºå½“å‰æœ€æ–°ç‰ˆæœ¬
                     messageHandler.postMessage(4);
                 }
             }
@@ -168,11 +168,11 @@ public class VersionUtil {
                     totalSize = -1;
                     if (StringUtil.isNotEmpty(version.getPackagesize())) {
                         try {
-                            totalSize = 1024 * Integer.parseInt(version.getPackagesize());//µ¥Î»k to byte
+                            totalSize = 1024 * Integer.parseInt(version.getPackagesize());//å•ä½k to byte
                         } catch (Exception e) {
                         }
                     }
-                    //Ç¿ÖÆ¸üĞÂ
+                    //å¼ºåˆ¶æ›´æ–°
                     if ("1".equals(version.getForceupdate())) {
                         new AlertDialog.Builder(activity).setTitle(R.string.message_title).setMessage(R.string.updapp_force)
                                 .setPositiveButton(R.string.OK_text, new DialogInterface.OnClickListener() {
@@ -229,15 +229,15 @@ public class VersionUtil {
                     break;
                 }
                 case 3: {
-                    showStrToast("»ñÈ¡°æ±¾ĞÅÏ¢³ö´í£¡");
+                    showStrToast("è·å–ç‰ˆæœ¬ä¿¡æ¯å‡ºé”™ï¼");
                     break;
                 }
                 case 4: {
-                    showStrToast("µ±Ç°ÒÑ¾­ÊÇ×îĞÂ°æ±¾£¡");
+                    showStrToast("å½“å‰å·²ç»æ˜¯æœ€æ–°ç‰ˆæœ¬ï¼");
                     break;
                 }
 //				case 5: {
-//                    new AlertDialog.Builder(activity).setTitle("ÌáÊ¾").setMessage("ÄúµÄÊÖ»úÊ±¼äÓĞÎó£¬Çë¼ì²é£¡")
+//                    new AlertDialog.Builder(activity).setTitle("æç¤º").setMessage("æ‚¨çš„æ‰‹æœºæ—¶é—´æœ‰è¯¯ï¼Œè¯·æ£€æŸ¥ï¼")
 //                            .setPositiveButton(R.string.OK_text, new DialogInterface.OnClickListener() {
 //                                @Override
 //                                public void onClick(DialogInterface popupDialog, int which) {
@@ -245,7 +245,7 @@ public class VersionUtil {
 //                                    activity.finish();
 //                                    ActivityManager am = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
 //                                    am.restartPackage(activity.getPackageName());
-//                                    android.os.Process.killProcess(android.os.Process.myPid()); // ½áÊø½ø³Ì
+//                                    android.os.Process.killProcess(android.os.Process.myPid()); // ç»“æŸè¿›ç¨‹
 //                                }
 //                            }).show();
 //                    break;
@@ -345,7 +345,7 @@ public class VersionUtil {
         @Override
         protected void onPostExecute(Integer s) {
             try {
-                //È¡ÏûÏÂÔØ
+                //å–æ¶ˆä¸‹è½½
                 if(downloadingSize < 0) {
                     return;
                 }
