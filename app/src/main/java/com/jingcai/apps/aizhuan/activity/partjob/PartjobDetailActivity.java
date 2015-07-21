@@ -277,7 +277,7 @@ public class PartjobDetailActivity extends BaseActivity {
         else
             partjob_content_genderlimit.setText("3.性别不限");
         partjob_content_remarks.setText(mParttimejob.getRemarks());
-        if (null != mParttimejob.getSchoolmate_list()) {
+        if (null != mParttimejob.getSchoolmate_list() && 0!=mParttimejob.getSchoolmate_list().size()) {
             for (Partjob02Response.Partjob02Body.Parttimejob.Schoolmate schoolmate : mParttimejob.getSchoolmate_list()) {
                 ImageView imageView = new ImageView(this);
                 LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(35, 35);
