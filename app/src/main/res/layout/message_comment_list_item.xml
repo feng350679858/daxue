@@ -6,10 +6,10 @@
     android:orientation="horizontal"
     android:padding="@dimen/list_item_padding">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/avatar_diameter"
+        android:layout_height="@dimen/avatar_diameter"
         android:src="@drawable/icon_index_message_list_item_comment" />
 
     <LinearLayout
@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="夏一"
+                android:drawablePadding="3dp"
                 style="@style/title" />
 
             <TextView

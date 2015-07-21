@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import java.util.List;
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexMessageFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class IndexMessageFragment extends BaseFragment implements MessageListAdapter.OnMessageListClickListener {
     private static final String TAG = "IndexMessageFragment";
     private ListView mLvMessages;
     private MessageListAdapter mMessageListAdapter;
@@ -150,6 +149,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
 //        mLvMessages.setOnItemClickListener(this);
         mMessageListAdapter = new MessageListAdapter(baseActivity);
+        mMessageListAdapter.setOnMessageListClickListener(this);
 
         List<TestMessageBean> messages = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -161,8 +161,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //评论、赞、兼职商家
+    public void onItemClick(int position) {
         Intent intent = null;
         if (position < MessageListAdapter.CATEGORY_TYPE_COUNT) {
             switch (position) {
@@ -182,5 +181,10 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         if (null != intent) {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onDelete(int position) {
+        showToast("delete button :"+position+"click.");
     }
 }

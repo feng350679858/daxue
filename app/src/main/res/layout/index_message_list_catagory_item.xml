@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--消息里 评论、赞、兼职商家的item布局-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_line"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
