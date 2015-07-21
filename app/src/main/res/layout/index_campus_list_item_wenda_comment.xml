@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_help_wenda"
+    android:id="@+id/layout_help_jishi"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -30,6 +30,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -41,7 +42,7 @@
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/help_item_wenda_comment"
+            android:drawableLeft="@drawable/help_item_jishi_comment"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:text="256"
@@ -50,7 +51,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/layout_help"
+        android:id="@+id/layout_reward"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -58,26 +59,26 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_help"
+            android:id="@+id/tv_reward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/help_item_reward"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="打赏"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_reedit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawableLeft="@drawable/help_item_wenda_help"
             android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="撰写"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_my_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/help_item_wenda_mine"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="MY答案"
+            android:text="编辑"
             android:textColor="@color/normal_grey"
             android:textSize="14sp"
             android:visibility="gone" />

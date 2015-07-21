@@ -2,7 +2,6 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.app.Activity;
 
-
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -75,15 +74,15 @@ public class UmengShareUtil {
      * @功能描述 : 添加微信平台分享
      */
     private void addWXPlatform() {
-        // 注意：在微信授权的时候，必须传�?�appSecret
-        // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里�?要替换成你注册的AppID
+        // 注意：在微信授权的时候，必须传递appSecret
+        // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
         String appId = "wxc4b8ccbf51c73699";
         String appSecret = "3ad9669cac48abd6ae8f3e75b0b147e6";
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
         wxHandler.addToSocialSDK();
 
-        // 支持微信朋友�?
+        // 支持微信朋友圈
         UMWXHandler wxCircleHandler = new UMWXHandler(activity, appId, appSecret);
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
@@ -91,9 +90,9 @@ public class UmengShareUtil {
 
     /**
      * @return
-     * @功能描述 : 添加QQ平台支持 QQ分享的内容， 包含四种类型�? 即单纯的文字、图片�?�音乐�?�视�?. 参数说明 : title, summary,
-     * image url中必须至少设置一�?, targetUrl必须设置,网页地址必须�?"http://"�?�? . title :
-     * 要分享标�? summary : 要分享的文字概述 image url : 图片地址 [以上三个参数至少填写�?个] targetUrl
+     * @功能描述 : 添加QQ平台支持 QQ分享的内容， 包含四种类型， 即单纯的文字、图片、音乐、视频. 参数说明 : title, summary,
+     * image url中必须至少设置一个, targetUrl必须设置,网页地址必须以"http://"开头 . title :
+     * 要分享标题 summary : 要分享的文字概述 image url : 图片地址 [以上三个参数至少填写一个] targetUrl
      * : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
      */
     private void addQQQZonePlatform() {
@@ -144,7 +143,7 @@ public class UmengShareUtil {
 //        // 视频分享
 //        UMVideo video = new UMVideo("http://v.youku.com/v_show/id_XNTc0ODM4OTM2.html");
 //        //vedio.setThumb("http://www.umeng.com/images/pic/home/social/img-1.png");
-//        video.setTitle("友盟社会化组件视�?");
+//        video.setTitle("友盟社会化组件视频");
 //        video.setThumb(urlImage);
 
 //        UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
@@ -171,7 +170,7 @@ public class UmengShareUtil {
 
 
         /**
-         * 微信朋友�?
+         * 微信朋友圈
          */
         CircleShareContent circleMedia = new CircleShareContent();
 //        circleMedia.setTitle(title);

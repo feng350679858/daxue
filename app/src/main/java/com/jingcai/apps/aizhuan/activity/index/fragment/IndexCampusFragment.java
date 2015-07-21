@@ -8,13 +8,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaRewardActivity;
+import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -25,6 +29,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -67,6 +72,8 @@ public class IndexCampusFragment extends BaseFragment {
     private void changeHeader() {
         TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         tvTitle.setText("校园");
+        mBaseView.findViewById(R.id.ib_back).setVisibility(View.GONE);
+
         final ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
         ivFunc.setVisibility(View.VISIBLE);
@@ -74,7 +81,13 @@ public class IndexCampusFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //TODO 上下线
-                ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
+                if(!"1".equals(ivFunc.getTag())) {
+                    ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
+                    ivFunc.setTag("1");
+                }else{
+                    ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
+                    ivFunc.setTag("0");
+                }
             }
         });
     }
@@ -83,8 +96,18 @@ public class IndexCampusFragment extends BaseFragment {
         mBaseView.findViewById(R.id.iv_banner).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
-//                baseActivity.startActivity(new Intent(baseActivity, HelpWendaAnswerActivity.class));
+//                String title = "百度";
+//                String linkUrl = "http://baidu.com";
+//                if (StringUtil.isEmpty(linkUrl)) return;
+//                Bundle bundle = new Bundle();
+//                bundle.putString("title", title);
+//                bundle.putString("url", linkUrl);
+//
+//                Intent intent = new Intent(baseActivity, IndexBannerDetailActivity.class);
+//                intent.putExtras(bundle);
+//                baseActivity.startActivity(intent);
+
+                baseActivity.startActivity(new Intent(baseActivity, HelpWendaRewardActivity.class));
             }
         });
 
@@ -108,16 +131,6 @@ public class IndexCampusFragment extends BaseFragment {
                 initGroupData();
             }
         });
-
-//        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                CampusAdapter.ViewHolder holder = (CampusAdapter.ViewHolder) view.getTag();
-//                showToast(holder.region.getRegionname());
-////                tv_group.setText(holder.region.getRegionname());
-////                tv_group.setTag(holder.region.getRegionid());
-//            }
-//        });
 
     }
 

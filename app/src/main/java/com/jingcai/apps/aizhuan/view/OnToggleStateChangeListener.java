@@ -5,9 +5,9 @@ package com.jingcai.apps.aizhuan.view;
  */
 public interface OnToggleStateChangeListener {
         /**
-         * µ±¿ª¹Ø×´Ì¬¸Ä±ä»Øµ÷´Ë·½·¨
+         * å½“å¼€å…³çŠ¶æ€æ”¹å˜å›è°ƒæ­¤æ–¹æ³•
          *
-         * @param b µ±Ç°¿ª¹ØµÄ×îĞÂ×´Ì¬
+         * @param b å½“å‰å¼€å…³çš„æœ€æ–°çŠ¶æ€
          */
         void onToggleStateChange(final boolean b);
 }

@@ -15,7 +15,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 /**
  * Created by lejing on 15/5/7.
  */
-public class BannerDetailActivity extends BaseActivity {
+public class IndexBannerDetailActivity extends BaseActivity {
     private String title, url;
     private WebView wv_partjob_detail;
 
