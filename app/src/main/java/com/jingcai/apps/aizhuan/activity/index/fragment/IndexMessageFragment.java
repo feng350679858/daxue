@@ -148,7 +148,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
 
     private void initView() {
         mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
-        mLvMessages.setOnItemClickListener(this);
+//        mLvMessages.setOnItemClickListener(this);
         mMessageListAdapter = new MessageListAdapter(baseActivity);
 
         List<TestMessageBean> messages = new ArrayList<>();
