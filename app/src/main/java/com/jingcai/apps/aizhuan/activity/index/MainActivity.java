@@ -17,11 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
@@ -78,36 +74,6 @@ public class MainActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        //loginOnEMChatServer("dingmm","111111");
-    }
-
-    private void loginOnEMChatServer(String username, String pwd) {
-        EMChatManager.getInstance().login(username, pwd, new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        //以下两句代码确保在登录的情况下调用
-                        //加载所有群组
-                        EMGroupManager.getInstance().loadAllGroups();
-                        //加载所有的对话
-                        EMChatManager.getInstance().loadAllConversations();
-                        Log.d("main", "登陆聊天服务器成功！");
-                       Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d("main", "登陆聊天服务器失败！");
-            }
-        });
     }
 
     private void initView() {

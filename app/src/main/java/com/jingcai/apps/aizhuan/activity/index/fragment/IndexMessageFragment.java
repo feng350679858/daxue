@@ -157,6 +157,7 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         }
         mMessageListAdapter.setListData(messages);
         mLvMessages.setAdapter(mMessageListAdapter);
+
     }
 
     @Override

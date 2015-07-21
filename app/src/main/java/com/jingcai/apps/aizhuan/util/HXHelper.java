@@ -1,0 +1,138 @@
+package com.jingcai.apps.aizhuan.util;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroupManager;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+
+import java.util.Hashtable;
+
+/**
+ * 环信的工具类
+ * Created by Json Ding on 2015/7/20.
+ */
+public class HXHelper {
+
+    private static final String TAG = "HXHelper";
+
+    private static HXHelper hxHelper;
+
+    private final InnerLock innerLock;
+
+    private HXHelper() {
+        innerLock = new InnerLock();
+    }
+
+    public static HXHelper getInstance() {
+        if (hxHelper == null) {
+            synchronized (HXHelper.class) {
+                if (hxHelper == null) {
+                    hxHelper = new HXHelper();
+                }
+            }
+        }
+        return hxHelper;
+    }
+
+    /**
+     * 初始化
+     *
+     * @param context 上下文
+     */
+    public void init(Context context) {
+        try {
+            //环信im
+            EMChat.getInstance().init(context);
+            /**
+             * debugMode == true 时为打开，sdk 会在log里输入调试信息
+             * @param debugMode
+             * 在做代码混淆的时候需要设置成false
+             */
+            EMChat.getInstance().setDebugMode(GlobalConstant.debugFlag);
+        } catch (Exception e) {
+            Log.e(TAG, "Init EMChat failed,Please check.");
+        }
+    }
+
+    /**
+     * 登录到服务器中
+     * 用户名为当前用户的用户名
+     * 密码为也为用户名
+     *
+     * @param username 电话号码
+     */
+    public void loginOnEMChatServer(final String username) {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (StringUtil.isEmpty(username)) {
+                    return;
+                }
+                EMChatManager.getInstance().login(username, username, new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+
+                        //以下两句代码确保在登录的情况下调用
+                        //加载所有群组
+                        EMGroupManager.getInstance().loadAllGroups();
+                        //加载所有的对话
+                        EMChatManager.getInstance().loadAllConversations();
+                        Log.d(TAG, "登陆聊天服务器成功！username:" + username + " pwd:" + username);
+
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        Log.d(TAG, "登陆聊天服务器失败：" + message);
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    /**
+     * 将当前用户从EMServer登出(注销)
+     */
+    public void logout() {
+        EMChatManager.getInstance().logout(new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "登出聊天服务器成功！");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Log.d(TAG, "登出聊天服务器失败！");
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 获取所有的对话
+     *
+     * @return 所有对话(姓名, 对话对象)
+     */
+    public Hashtable<String, EMConversation> getAllConversations() {
+        EMChatManager manager = EMChatManager.getInstance();
+        Log.d(TAG, "获取所有对话成功，对话列表大小为:" + manager.getAllConversations().size());
+        return manager.getAllConversations();
+    }
+}

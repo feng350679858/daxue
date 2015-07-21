@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -99,8 +100,17 @@ public class MessageConversationActivity extends BaseActivity{
         initViews();
         showInputMethodDialog(mEtMessage);
         loadHistory();
+
+        registerReceiver();
     }
 
+    /**
+     * 注册接收新信息的接收器
+     */
+    private void registerReceiver() {
+        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+        registerReceiver(msgReceiver, intentFilter);
+    }
 
 
     private void loadHistory() {
