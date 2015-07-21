@@ -50,7 +50,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:enabled="false"
-                android:background="@drawable/btn_hollow_selector"
+                android:background="@drawable/btn_yellow_hollow_selector"
                 android:text="我意已决"
                 android:textColor="@color/font_assistant"
                 android:textSize="18sp" />

@@ -34,5 +34,10 @@
     <color name="red">#e33839</color>
     <!-- 带有透明度的红色 -->
     <color name="trans_red">#777d0703</color>
-
+    <!--兼职项-->
+    <color name="mine_partjob_item_status_joined">#3ea2ff</color>
+    <color name="mine_partjob_item_status_working">#3ea2ff</color>
+    <color name="mine_partjob_item_status_resting">#c889d8</color>
+    <color name="mine_partjob_item_status_cancel">#989898</color>
+    <color name="mine_partjob_item_status_finish">#F83240</color>
 </resources>

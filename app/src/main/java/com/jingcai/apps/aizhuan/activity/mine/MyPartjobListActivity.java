@@ -138,7 +138,7 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
         }
         String jobId = mCurrentSelectedItem.getPartjob().getId();
         if(StringUtil.isNotEmpty(jobId)){
-            Intent intent = new Intent(this, MyPartjobListActivity.class);
+            Intent intent = new Intent(this, MyPartjobDetailActivity.class);
             intent.putExtra("id", jobId);
             startActivity(intent);
         }
