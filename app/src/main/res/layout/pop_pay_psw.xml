@@ -1,218 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/content_background"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
+
         <ImageView
             android:id="@+id/iv_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_cancel2"
+            android:layout_centerVertical="true"
             android:padding="4dp"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/icon_cancel2" />
+
         <TextView
             android:id="@+id/tv_title"
+            style="@style/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="设置支付密码"
-            style="@style/title"/>
-        </RelativeLayout>
+            android:text="支付密码输入" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:divider="@drawable/field_divider"
-        android:showDividers="middle"
+        android:layout_marginTop="10dp"
         android:background="@drawable/img_border_gray"
-        >
+        android:divider="@drawable/field_divider"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
         <TextView
             android:id="@+id/tv_psw_length_1"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tv_psw_length_2"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tv_psw_length_3"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tv_psw_length_4"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tv_psw_length_5"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/tv_psw_length_6"
+            style="@style/pop_pay_psw_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/pop_pay_psw_text"/>
-        </LinearLayout>
+            android:layout_weight="1" />
+    </LinearLayout>
+
     <TextView
+        style="@style/sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="设置后，该密码即为该账号的支付密码"
-        style="@style/sub_title"/>
-    
+        android:text="设置后，该密码即为该账号的支付密码" />
+
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
         android:divider="@drawable/field_divider"
-        android:showDividers="middle"
-        android:background="@color/white">
+        android:orientation="vertical"
+        android:showDividers="middle">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:divider="@drawable/field_divider"
+            android:orientation="horizontal"
             android:showDividers="middle">
+
             <TextView
                 android:id="@+id/tv_num_1"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="1"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="1" />
+
             <TextView
                 android:id="@+id/tv_num_2"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="2" />
+
             <TextView
                 android:id="@+id/tv_num_3"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="3"
-                style="@style/pop_pay_pad_text"
-                />
-            </LinearLayout>
+                android:text="3" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:divider="@drawable/field_divider"
+            android:orientation="horizontal"
             android:showDividers="middle">
+
             <TextView
                 android:id="@+id/tv_num_4"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="4"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="4" />
+
             <TextView
                 android:id="@+id/tv_num_5"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="5"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="5" />
+
             <TextView
                 android:id="@+id/tv_num_6"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="6"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="6" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:divider="@drawable/field_divider"
+            android:orientation="horizontal"
             android:showDividers="middle">
+
             <TextView
                 android:id="@+id/tv_num_7"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="7"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="7" />
+
             <TextView
                 android:id="@+id/tv_num_8"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="8"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="8" />
+
             <TextView
                 android:id="@+id/tv_num_9"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="9"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="9" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:divider="@drawable/field_divider"
+            android:orientation="horizontal"
             android:showDividers="middle">
+
             <TextView
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#D5D8DB"
-                style="@style/pop_pay_pad_text"
-                />
+                android:background="#D5D8DB" />
+
             <TextView
                 android:id="@+id/tv_num_0"
+                style="@style/pop_pay_pad_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0"
-                style="@style/pop_pay_pad_text"
-                />
+                android:text="0" />
+
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:scaleType="center"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:src="@drawable/icon_pay_psw_pad_delete"
                 android:background="@drawable/list_item_bg"
-                />
+                android:clickable="true"
+                android:scaleType="center"
+                android:src="@drawable/icon_pay_psw_pad_delete" />
         </LinearLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

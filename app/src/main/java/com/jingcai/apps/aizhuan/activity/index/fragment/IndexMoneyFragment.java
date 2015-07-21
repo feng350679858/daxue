@@ -19,9 +19,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.index.BannerDetailActivity;
+import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexPartjobListByLabelActivity;
-import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobSearchActivity;
@@ -520,7 +519,7 @@ public class IndexMoneyFragment extends BaseFragment {
                     bundle.putString("title", title);
                     bundle.putString("url", linkUrl);
 
-                    Intent intent = new Intent(arg0.getContext(), BannerDetailActivity.class);
+                    Intent intent = new Intent(arg0.getContext(), IndexBannerDetailActivity.class);
                     intent.putExtras(bundle);
                     arg0.getContext().startActivity(intent);
                 }

@@ -1,21 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/content_background"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <include layout="@layout/include_header" />
 
-    <EditText
-        android:id="@+id/et_help_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_cancel2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="陈秋实"
+        android:textColor="@color/important_dark"
+        android:textSize="18sp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_header"
-        android:background="@null"
-        android:gravity="top"
-        android:lineSpacingMultiplier="1.2"
-        android:padding="10dp"
-        android:text="就我知道张文朝和李狗蛋的关系！！！"
-        android:textSize="16sp" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="浙江理工大学"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="人文学院"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="打赏金额(元)"
+            android:textColor="@color/important_dark"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="大不大方就看这一次了"
+            android:inputType="numberDecimal"
+            android:padding="5dp"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/normal_grey"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_reward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_yellow_boarded_bg_selector"
+        android:text="马上打赏"
+        android:textSize="18sp" />
+
+</LinearLayout>

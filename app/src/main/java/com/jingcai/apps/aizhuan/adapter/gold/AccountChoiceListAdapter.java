@@ -90,7 +90,7 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(),R.drawable.ic_launcher);
         viewHolder.tv_title.setText(bank.getName());
         String cardno = bank.getCardno();
-        cardno = StringUtil.hiddenPhone(cardno);  //???????
+        cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
         viewHolder.tv_code.setText(cardno);
 
         if(mCurrentBank != null && mCurrentBank.getName().equals(bank.getName())
