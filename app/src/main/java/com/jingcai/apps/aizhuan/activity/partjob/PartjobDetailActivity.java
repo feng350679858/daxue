@@ -60,6 +60,7 @@ public class PartjobDetailActivity extends BaseActivity {
     private TextView partjob_content_settlelength, partjob_content_joinnum, partjob_content_workernum, partjob_content_workdays;
     private TextView partjob_content_worktime, partjob_content_endtime, partjob_content_workcontent;
     private TextView partjob_content_heightlimit, partjob_content_healthlimit, partjob_content_genderlimit, partjob_content_remarks;
+    private TextView partjob_detail_schoolmate_num;
     private Button partjob_isjoin;
     private String workernum;
 
@@ -135,6 +136,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_remarks = (TextView) findViewById(R.id.partjob_content_remarks);
         linearLayout_label = (LinearLayout) findViewById(R.id.linearLayout_label);
         partjob_isjoin = (Button) findViewById(R.id.partjob_isjoin);
+        partjob_detail_schoolmate_num=(TextView)findViewById(R.id.partjob_detail_schoolmate_num);
     }
 
     private void initData() {
@@ -286,12 +288,15 @@ public class PartjobDetailActivity extends BaseActivity {
                 bitmapUtil.getImage(imageView, schoolmate.getLogopath(), R.drawable.logo_merchant_default);
                 linearLayout_label.addView(imageView);
             }
+            partjob_detail_schoolmate_num.setText("共"+mParttimejob.getSchoolmate_list().size()+"人");
         } else {
             TextView tv = (TextView) findViewById(R.id.schoolmate);
             tv.setText("暂无校友");
             tv.setVisibility(View.VISIBLE);
             linearLayout_label.setVisibility(View.GONE);
+            partjob_detail_schoolmate_num.setText("共0人");
         }
+
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

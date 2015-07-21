@@ -14,26 +14,18 @@
         android:scaleType="centerCrop"
         android:src="@drawable/mine_profile_bg" />
 
-    <TextView
-        android:id="@+id/tv_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="拥有伶俐的口才？想要一展身手？来吧~"
-        android:textColor="@color/font_normal"
-        android:textSize="14dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:background="@color/content_background" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="-15dp"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -43,9 +35,11 @@
             android:src="@drawable/logo_merchant_default" />
 
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/iv_logo"
             android:orientation="vertical">
 
             <TextView
@@ -53,17 +47,70 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="星巴克 * 服务员"
-                android:textColor="@color/font_normal"
-                android:textSize="12dp" />
+                android:textColor="@color/important_dark"
+                android:textSize="14dp" />
 
-            <TextView
-                android:id="@+id/tv_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="西湖区"
-                android:textColor="@color/font_normal"
-                android:textSize="12dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/salary_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="￥"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_red"
+                    android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/tv_salary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="110.0"
+                    android:gravity="center"
+                    android:layout_toRightOf="@+id/salary_sign"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_red"
+                    android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/tv_salary_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="/天"
+                    android:gravity="center"
+                    android:layout_toRightOf="@+id/tv_salary"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/assist_grey"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="西湖区"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/assist_grey"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="拥有伶俐的口才？想要一展身手？来吧~"
+        android:textColor="@color/normal_grey"
+        android:textSize="14dp" />
 </LinearLayout>

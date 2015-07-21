@@ -59,6 +59,7 @@ public class IndexMoneyFragment extends BaseFragment {
     private AzService azService;
     private MessageHandler messageHandler;
     private TextView tv_address;
+    private TextView city_more;
     private View mainView;
     private ViewPager viewPager;
     private ViewGroup viewGroup;
@@ -103,8 +104,8 @@ public class IndexMoneyFragment extends BaseFragment {
         ((TextView)mainView.findViewById(R.id.tv_content)).setText("爱赚");
         ((TextView)mainView.findViewById(R.id.tv_content)).setVisibility(View.VISIBLE);
         ((ImageView)mainView.findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
-        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageDrawable(getResources().getDrawable(R.drawable.search));
         ((ImageView)mainView.findViewById(R.id.iv_func)).setVisibility(View.VISIBLE);
+        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageResource(R.drawable.search);
         ((TextView)mainView.findViewById(R.id.tv_func)).setVisibility(View.INVISIBLE);
         tv_address=(TextView)mainView.findViewById(R.id.tv_back);
         tv_address.setVisibility(View.VISIBLE);
@@ -132,13 +133,23 @@ public class IndexMoneyFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
                 intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","visible");
                 startActivity(intent);
             }
         });
     }
     private void initView() {
 
-
+        city_more=(TextView)mainView.findViewById(R.id.partjob_city_more);
+        city_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","gone");
+                startActivity(intent);
+            }
+        });
         viewPager = (ViewPager) mainView.findViewById(R.id.img_advert);
         viewGroup = (ViewGroup) mainView.findViewById(R.id.viewGroup);
 
@@ -277,10 +288,10 @@ public class IndexMoneyFragment extends BaseFragment {
                 if(null != GlobalConstant.gis) {
                     partjob.setGisx(GlobalConstant.gis.getGisx());
                     partjob.setGisy(GlobalConstant.gis.getGisy());
-                    partjob.setAreacode(GlobalConstant.gis.getAreacode());
+                    partjob.setAreacode(tv_address.getTag().toString());
                     partjob.setAreacode2(GlobalConstant.gis.getAreacode2());
                     partjob.setProvincename(GlobalConstant.gis.getProvincename());
-                    partjob.setCityname(GlobalConstant.gis.getCityname());
+                    partjob.setCityname(tv_address.getText().toString());
                 }
                 req.setParttimejob(partjob);
                 azService.doTrans(req, Busi02Response.class, new AzService.Callback<Busi02Response>() {
@@ -355,9 +366,9 @@ public class IndexMoneyFragment extends BaseFragment {
                 }
                 case 8: {
                     if (null != msg.obj) {
-                        showToast("获取推荐位信息出错:" + msg.obj);
+                        showToast("获取广播信息出错:" + msg.obj);
                     } else {
-                        showToast("获取推荐位信息出错");
+                        showToast("获取广播信息出错");
                     }
                     break;
                 }
@@ -419,8 +430,6 @@ public class IndexMoneyFragment extends BaseFragment {
         linearlout_right.removeAllViews();
         int displayWidth = linearlout_right.getWidth();
         for (Busi02Response.Body.Recommend recommend : list) {
-//        for (int i = 0; i < list.size(); i++) {
-//            Busi02Response.Body.Recommend recommend = list.get(i);
             boolean leftFlag = leftHeight <= rightHeight;
             LinearLayout linearLayout = leftFlag ? linearlout_left : linearlout_right;
 
@@ -432,7 +441,6 @@ public class IndexMoneyFragment extends BaseFragment {
                 }catch (Exception e){
                 }
             }
-            //Log.d("==", "leftHeight=" + leftHeight + " -- rightHeight=" + rightHeight + " -- leftFlag=" + leftFlag + " -- height=" + height);
             if(leftFlag){
                 leftHeight += height;
             }else{

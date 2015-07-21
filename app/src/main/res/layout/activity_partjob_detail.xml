@@ -375,13 +375,23 @@
                         android:background="@color/main_yellow" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:text="已报校友"
                         android:textColor="@color/font_important"
                         android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/partjob_detail_schoolmate_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:textColor="@color/assist_grey"
+                        android:text="共X人"/>
 
                 </LinearLayout>
 

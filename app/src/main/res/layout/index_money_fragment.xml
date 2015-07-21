@@ -126,6 +126,7 @@
                         android:textColor="@color/font_important"
                         android:textSize="16sp" />
                     <TextView
+                        android:id="@+id/partjob_city_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
