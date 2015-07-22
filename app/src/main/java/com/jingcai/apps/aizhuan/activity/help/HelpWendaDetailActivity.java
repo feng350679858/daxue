@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -52,7 +53,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
 
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
-        tvTitle.setText("求问detail");
+        tvTitle.setText("求问详情");
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -69,15 +70,26 @@ public class HelpWendaDetailActivity extends BaseActivity {
         tv_help = (TextView)findViewById(R.id.tv_help);
         tv_my_help = (TextView)findViewById(R.id.tv_my_help);
 
-        tv_help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class));
-            }
-        });
-
-
-
+        boolean myHelpFlag = 0 == System.currentTimeMillis()%2;
+        if(myHelpFlag) {
+            tv_help.setVisibility(View.GONE);
+            tv_my_help.setVisibility(View.VISIBLE);//我的答案
+            findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class));
+                }
+            });
+        }else {
+            tv_my_help.setVisibility(View.GONE);
+            tv_help.setVisibility(View.VISIBLE);//撰写
+            findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaEditActivity.class));
+                }
+            });
+        }
 
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
@@ -98,6 +110,15 @@ public class HelpWendaDetailActivity extends BaseActivity {
             @Override
             public void onLoadMore() {
                 initGroupData();
+            }
+        });
+
+        //长按，显示复制
+        groupListView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("==", "------------onLongClick---------");
+                return true;
             }
         });
     }

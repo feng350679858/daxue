@@ -94,7 +94,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
 
 
     private void initData() {
-        showProgressDialog("数据加载中");
+        showProgressDialog("数据加载中...");
         initBankData();
         initBalanceData();
     }
@@ -201,11 +201,11 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             public void onClick(View v) {
                 String inputCountStr = mInputCount.getText().toString();
                 if (mCurrentBank == null) {
-                    showToast("��ѡ���˻�");
+                    showToast("请选择账户");
                     return;
                 }
                 if (StringUtil.isEmpty(inputCountStr) || ("0".equals(inputCountStr))) {
-                    showToast("��������");
+                    showToast("请输入金额");
                     return;
                 }
                 View dialogView = LayoutInflater.from( MineGoldTopupActivity.this).inflate(R.layout.mine_gold_account_withdraw_pay_psw_dialog, null);
@@ -286,7 +286,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
 
     private void initHeader()
     {
-        ((TextView)findViewById(R.id.tv_content)).setText("充值ֵ");
+        ((TextView)findViewById(R.id.tv_content)).setText("充值");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +299,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             if ("gold".equals(wallets.get(i).getCode())) {
                 mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
                 String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
-                ((TextView) findViewById(R.id.tv_mine_gold_rest)).setText(gold + "元");
+                ((TextView) findViewById(R.id.tv_mine_gold_rest)).setText(gold + "金");
             }
         }
     }

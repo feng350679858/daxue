@@ -43,18 +43,20 @@ public class MineSuggestionActivity extends BaseActivity {
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //����������
+                //返回主界面
                 finish();
             }
         });
         if(UserSubject.isLogin()){
-            initView();  //��ʼ���ؼ�
+            initView();  //初始化控件
         }else{
             startActivityForLogin();
         }
     }
 
-
+    /**
+     * 初始化控件
+     */
     private void initView() {
         mTxtContent = (EditText) findViewById(R.id.et_other_suggestion_content);
         mBtnSubmit = (Button) findViewById(R.id.btn_other_suggestion_submit);
@@ -67,9 +69,9 @@ public class MineSuggestionActivity extends BaseActivity {
                         final AzService azService = new AzService(MineSuggestionActivity.this);
                         Advice03Request req = new Advice03Request();
                         Advice03Request.Suggestion suggestion = req.new Suggestion();
-                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //��׿��
+                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //安卓端
                         suggestion.setContent(mTxtContent.getText().toString());
-                        suggestion.setType("2"); //����
+                        suggestion.setType("2"); //建议
                         suggestion.setStudentid(UserSubject.getStudentid());
                         req.setSuggestion(suggestion);
                         azService.doTrans(req, Advice03Response.class,new AzService.Callback<Advice03Response>() {
@@ -105,12 +107,12 @@ public class MineSuggestionActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what){
                 case 0:{
-                    showToast("感谢");
+                    showToast("感谢您提出的建议！");
                     finish();
                     break;
                 }
                 case 1:{
-                    showToast("��Ǹ�������ύʧ�ܣ�"+ msg.obj);
+                    showToast("抱歉，建议提交失败："+ msg.obj);
                     break;
                 }
 

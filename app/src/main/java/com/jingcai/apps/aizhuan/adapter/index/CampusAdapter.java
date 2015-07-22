@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.adapter.index;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
@@ -19,13 +22,13 @@ import java.util.List;
  */
 public class CampusAdapter extends BaseAdapter {
 
-    private Context mContext;
+    private Activity baseActivity;
     private List<Base04Response.Body.Region> regionList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public CampusAdapter(Context ctx) {
-        mContext = ctx;
+    public CampusAdapter(Activity ctx) {
+        baseActivity = ctx;
         regionList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
         bitmapUtil = new BitmapUtil(ctx);
@@ -59,6 +62,8 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.tv_help_college = (TextView) convertView.findViewById(R.id.tv_help_college);
             viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_gender_limit);
+            viewHolder.tv_help = (TextView) convertView.findViewById(R.id.tv_help);//撰写
+            viewHolder.tv_my_help = (TextView) convertView.findViewById(R.id.tv_my_help);//我的答案
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -75,9 +80,22 @@ public class CampusAdapter extends BaseAdapter {
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
             viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
+            viewHolder.tv_help.setVisibility(View.VISIBLE);
+            viewHolder.tv_my_help.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.GONE);
             viewHolder.tv_title.setText(region.getRegionname());
         }
+        final boolean jishiFlag = 0 == position % 2;
+        viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (jishiFlag) {
+                    baseActivity.startActivity(new Intent(baseActivity, HelpJishiDetailActivity.class));
+                } else {
+                    baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
+                }
+            }
+        });
 
         return convertView;
     }
@@ -105,5 +123,7 @@ public class CampusAdapter extends BaseAdapter {
         public TextView tv_title;
         public TextView tv_help_college;
         public TextView tv_gender_limit;
+        public TextView tv_help;
+        public TextView tv_my_help;
     }
 }

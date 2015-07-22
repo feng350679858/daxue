@@ -38,12 +38,13 @@
             android:padding="5dp">
 
             <EditText
+                android:id="@+id/et_reploy_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/hollow_grey_text_bg_selector"
-                android:hint="这是一个输入框"
+                android:hint="评论"
                 android:padding="10dp"
                 android:textSize="16sp" />
 

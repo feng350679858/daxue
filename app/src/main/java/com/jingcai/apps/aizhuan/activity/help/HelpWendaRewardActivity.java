@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.util.PayPwdWin;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 
 /**
  * Created by lejing on 15/7/16.
@@ -42,8 +44,24 @@ public class HelpWendaRewardActivity extends BaseActivity {
         });
     }
 
+    private PayPwdWin payPwdWin;
     private void initView() {
-
+        findViewById(R.id.btn_reward).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null == payPwdWin) {
+                    payPwdWin = new PayPwdWin(HelpWendaRewardActivity.this);
+                    payPwdWin.setCallback(new PayPwdWin.Callback() {
+                        @Override
+                        public void finishInput(String pwd) {
+                            showToast("密码输入完毕");
+                        }
+                    });
+                    payPwdWin.setTitle("支付密码输入");
+                }
+                payPwdWin.show();
+            }
+        });
     }
 
 
