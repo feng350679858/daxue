@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 
 public class UnreadMsgService extends Service {
     private final String TAG = UnreadMsgService.class.getSimpleName();
@@ -84,7 +85,7 @@ public class UnreadMsgService extends Service {
                         }
                     }else{
                         //获取远程数据
-                        boardCastCount("1", count ++);
+                        boardCastCount("1", HXHelper.getInstance().getAllUnreadMsgCount());
                         Thread.sleep(REQUEST_INTERVAL);
                     }
                 } catch (InterruptedException e) {
@@ -109,6 +110,16 @@ public class UnreadMsgService extends Service {
         }
     }
 
+    /**
+     * 开启消息未读监测
+     */
+    public void startMessageUnreadMonitor(){
+        synchronized (unreadMsgTask){
+            unreadMsgTask.waitFlag = false;
+            unreadMsgTask.notify();
+        }
+    }
+
     public void reset() {
         synchronized (unreadMsgTask){
             boardCastCount("1", unreadMsgTask.count = 0);
@@ -117,10 +128,23 @@ public class UnreadMsgService extends Service {
         }
     }
 
-    public void showUnread() {
-        boardCastCount("0", 1);
+    /**
+     * 显示一个小红点
+     * 类型：  0 - 校园
+     *
+     * @param type 类型
+     */
+    public void showUnread(String type) {
+        boardCastCount(type, 1);
     }
-    public void markAsRead() {
-        boardCastCount("0", 0);
+
+    /**
+     * 消失小红点
+     * 类型：  0 - 校园
+     *
+     * @param type 类型
+     */
+    public void markAsRead(String type) {
+        boardCastCount(type, 0);
     }
 }

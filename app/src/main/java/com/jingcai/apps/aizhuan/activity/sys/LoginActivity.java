@@ -22,6 +22,7 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DES3Util;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 /**
@@ -132,6 +133,8 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+
+
     private void getStudentInfo(AzService azService, final String studentid, final String encryptPassword) {
         Stu02Request req = new Stu02Request();
         final Stu02Request.Student stu = req.new Student();
@@ -170,7 +173,8 @@ public class LoginActivity extends BaseActivity {
                     showToast("登录成功");
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
                     UserSubject.loginSuccess(student);
-                    new JpushUtil(LoginActivity.this).login(UserSubject.getStudentid());
+                    new JpushUtil(LoginActivity.this).login(student.getStudentid());
+                    HXHelper.getInstance().loginOnEMChatServer(student.getStudentid());  //环信连接
                     setResult(RESULT_OK);
                     finish();
                     break;

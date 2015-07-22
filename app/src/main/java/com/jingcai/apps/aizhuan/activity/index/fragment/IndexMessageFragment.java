@@ -1,17 +1,18 @@
 package com.jingcai.apps.aizhuan.activity.index.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.easemob.chat.EMConversation;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
@@ -20,24 +21,22 @@ import com.jingcai.apps.aizhuan.activity.message.MessageConversationActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageNotificationActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
-import com.jingcai.apps.aizhuan.entity.TestMessageBean;
-import com.jingcai.apps.aizhuan.util.PayPwdWin;
-import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.entity.ConversationBean;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Json Ding on 2015/7/10.
  */
-public class IndexMessageFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class IndexMessageFragment extends BaseFragment implements MessageListAdapter.OnMessageListClickListener {
     private static final String TAG = "IndexMessageFragment";
     private ListView mLvMessages;
     private MessageListAdapter mMessageListAdapter;
-
-    private View mPopupPayPswContentView;
-    private StringBuilder mPayPsw;
-    private PayPwdWin payPwdWin;
+    private BroadcastReceiver mNewMessageReceiver;
 
     private View mBaseView;
 
@@ -45,36 +44,55 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_message_fragment, container, false);
-        initView();
         initHeader();
-        initPopupView();
+        initView();
+        initMessageReceiver();  //注册新消息广播接收
+
         return mBaseView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadConversations();  //加载历史消息
+    }
+
     /**
-     * 支付密码弹出框
+     * 新消息广播接收器
      */
-    private void initPopupView() {
-        payPwdWin = new PayPwdWin(getActivity());
-        payPwdWin.setTitle("设置支付密码");
-        payPwdWin.setCallback(new PayPwdWin.Callback() {
+    private void initMessageReceiver() {
+        mNewMessageReceiver = new BroadcastReceiver() {
             @Override
-            public void finishInput(String pwd) {
-                showToast("密码输入完毕");
+            public void onReceive(Context context, Intent intent) {
+                loadConversations();  //加载所有的会话
             }
-        });
+        };
+        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        baseActivity.unregisterReceiver(mNewMessageReceiver);  //注销广播
+    }
+
+    private void loadConversations() {
+        List<ConversationBean> beans = new ArrayList<>();
+        final Hashtable<String, EMConversation> allConversations = HXHelper.getInstance().getAllConversations();
+        Set<String> keySet = allConversations.keySet();
+        ConversationBean bean = null;
+        for(String s : keySet){
+            EMConversation con = allConversations.get(s);
+            bean = new ConversationBean(baseActivity,con);
+            beans.add(bean);
+        }
+        mMessageListAdapter.setListData(beans);
     }
 
     private void initHeader() {
         TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         tvTitle.setText("消息");
-        tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                payPwdWin.show();
-            }
-        });
-
+        mBaseView.findViewById(R.id.ib_back).setVisibility(View.INVISIBLE);
         ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_message_bird);
         ivFunc.setVisibility(View.VISIBLE);
@@ -91,18 +109,12 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
 //        mLvMessages.setOnItemClickListener(this);
         mMessageListAdapter = new MessageListAdapter(baseActivity);
-
-        List<TestMessageBean> messages = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            messages.add(new TestMessageBean("", "林" + i, "林三是" + i + "个哈哈哒", "昨天", String.valueOf(i)));
-        }
-        mMessageListAdapter.setListData(messages);
+        mMessageListAdapter.setOnMessageListClickListener(this);
         mLvMessages.setAdapter(mMessageListAdapter);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //评论、赞、兼职商家
+    public void onItemClick(int position,ConversationBean bean) {
         Intent intent = null;
         if (position < MessageListAdapter.CATEGORY_TYPE_COUNT) {
             switch (position) {
@@ -121,6 +133,14 @@ public class IndexMessageFragment extends BaseFragment implements AdapterView.On
         }
         if (null != intent) {
             startActivity(intent);
+            if(null != bean){
+                HXHelper.getInstance().resetUnreadMsgCountByUsername(bean.getStudentid()); //重置与该用户的未读消息数
+            }
         }
+    }
+
+    @Override
+    public void onDelete(int position) {
+        showToast("delete button :"+position+"click.");
     }
 }
