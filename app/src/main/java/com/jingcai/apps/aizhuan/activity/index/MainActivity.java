@@ -16,12 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
@@ -71,45 +66,15 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
     private ImageView iv_campus_badge;
-    private TextView tv_message_num_badge;
+    private ImageView iv_message_badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        //loginOnEMChatServer("dingmm","111111");
 
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-    }
-
-    private void loginOnEMChatServer(String username, String pwd) {
-        EMChatManager.getInstance().login(username, pwd, new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        //以下两句代码确保在登录的情况下调用
-                        //加载所有群组
-                        EMGroupManager.getInstance().loadAllGroups();
-                        //加载所有的对话
-                        EMChatManager.getInstance().loadAllConversations();
-                        Log.d("main", "登陆聊天服务器成功！");
-                        Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d("main", "登陆聊天服务器失败！");
-            }
-        });
     }
 
     private void initView() {
@@ -131,7 +96,7 @@ public class MainActivity extends BaseFragmentActivity {
         mIconViewArr[3] = (ImageView) findViewById(R.id.iv_mine);
 
         iv_campus_badge = (ImageView) findViewById(R.id.iv_campus_badge);
-        tv_message_num_badge = (TextView) findViewById(R.id.tv_message_num_badge);
+        iv_message_badge = (ImageView) findViewById(R.id.iv_message_badge);
 
         initService();
 
@@ -151,6 +116,7 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 unreadMsgService = ((UnreadMsgService.SimpleBinder) service).getService();
+                unreadMsgService.startCount();
             }
         };
 
@@ -159,17 +125,17 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onStart() {
-//        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-//        if (null != unreadMsgService) {
-//            unreadMsgService.startCount();
-//        }
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        if (null != unreadMsgService) {
+            unreadMsgService.startCount();
+        }
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-//        unreadMsgService.reset();
-//        unregisterReceiver(mReceiver);
+        unreadMsgService.reset();
+        unregisterReceiver(mReceiver);
         super.onStop();
     }
 
@@ -222,26 +188,22 @@ public class MainActivity extends BaseFragmentActivity {
                 iv_campus_badge.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
             } else if ("1".equals(type)) {
                 int count = intent.getIntExtra("count", 0);
-                if (count > 0) {
-                    tv_message_num_badge.setVisibility(View.VISIBLE);
-                    tv_message_num_badge.setText(String.valueOf(count));
-                } else {
-                    tv_message_num_badge.setVisibility(View.INVISIBLE);
-                }
+                iv_message_badge.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
             }
         }
     };
+
 
     public void startCount() {
         unreadMsgService.startCount();
     }
 
-    public void showUnread() {
-        unreadMsgService.showUnread();
+    public void showUnread(String type) {
+        unreadMsgService.showUnread(type);
     }
 
-    public void reset() {
-        unreadMsgService.markAsRead();
+    public void reset(String type) {
+        unreadMsgService.markAsRead(type);
         unreadMsgService.reset();
     }
 }

@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <!-- 操作外部存储设备文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -141,7 +142,6 @@
         <activity android:name=".activity.mine.activity.MineResetPasswordActivity"/>
         <activity android:name=".activity.mine.activity.MyPartjobListActivity"/>
         <activity android:name=".activity.mine.activity.MyPartjobDetailActivity"/>
-
 
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
