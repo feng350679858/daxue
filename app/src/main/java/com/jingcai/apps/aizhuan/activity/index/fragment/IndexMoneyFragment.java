@@ -290,7 +290,7 @@ public class IndexMoneyFragment extends BaseFragment {
                     partjob.setAreacode(tv_address.getTag().toString());
                     partjob.setAreacode2(GlobalConstant.gis.getAreacode2());
                     partjob.setProvincename(GlobalConstant.gis.getProvincename());
-                    partjob.setCityname(tv_address.getText().toString());
+                    partjob.setCityname(GlobalConstant.gis.getCityname());
                 }
                 req.setParttimejob(partjob);
                 azService.doTrans(req, Busi02Response.class, new AzService.Callback<Busi02Response>() {
@@ -415,6 +415,7 @@ public class IndexMoneyFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("labelid", labelid);
                     bundle.putString("labelname", labelname);
+                    intent.putExtra("address",tv_address.getTag().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
