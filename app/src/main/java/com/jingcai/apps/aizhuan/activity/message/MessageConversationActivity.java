@@ -43,6 +43,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.message.ConversationAdapter;
 import com.jingcai.apps.aizhuan.adapter.message.EmotionPagerAdapter;
+import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
@@ -90,18 +91,30 @@ public class MessageConversationActivity extends BaseActivity{
 
     public String playMsgId = "";  //当前播放语音的id
     private File mCameraFile;  //照相机返回的file
+    private ConversationBean mConversationBean;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_conversation);
+        getIntentData();
         initHeader();
         initViews();
         showInputMethodDialog(mEtMessage);
         loadHistory();
 
         registerReceiver();
+    }
+
+    /**
+     * 获取intent传入的数据
+     */
+    private void getIntentData() {
+        final Intent intent = getIntent();
+        if (intent != null) {
+            mConversationBean = (ConversationBean) intent.getSerializableExtra("conversationBean");
+        }
     }
 
     /**
