@@ -97,6 +97,12 @@
         <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpEvaluateActivity" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="aizhuan.activity.help.HelpEvaluateActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
 
         <!-- Message -->

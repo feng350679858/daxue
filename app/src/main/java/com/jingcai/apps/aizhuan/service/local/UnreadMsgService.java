@@ -6,11 +6,12 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.jingcai.apps.aizhuan.activity.help.HelpEvaluateActivity;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 
 public class UnreadMsgService extends Service {
     private final String TAG = UnreadMsgService.class.getSimpleName();
-    public static final int REQUEST_INTERVAL = 1 * 1000;
+    public static final int REQUEST_INTERVAL = 10 * 1000;
 
     public class SimpleBinder extends Binder {
         public UnreadMsgService getService() {
@@ -84,6 +85,9 @@ public class UnreadMsgService extends Service {
                         }
                     }else{
                         //获取远程数据
+                        Intent intent = new Intent("aizhuan.activity.help.HelpEvaluateActivity");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         boardCastCount("1", count ++);
                         Thread.sleep(REQUEST_INTERVAL);
                     }

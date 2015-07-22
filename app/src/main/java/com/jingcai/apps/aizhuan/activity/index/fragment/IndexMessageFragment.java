@@ -3,7 +3,6 @@ package com.jingcai.apps.aizhuan.activity.index.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,7 @@ import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageNotificationActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.TestMessageBean;
-import com.jingcai.apps.aizhuan.util.PayPwdWin;
-import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
 
 import java.util.ArrayList;
 import java.util.List;

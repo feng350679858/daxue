@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.help;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -10,8 +11,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.util.PayPwdWin;
-import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin;
+import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
 
 /**
  * Created by lejing on 15/7/16.
@@ -45,6 +46,8 @@ public class HelpWendaRewardActivity extends BaseActivity {
     }
 
     private PayPwdWin payPwdWin;
+    private PayInsufficientWin payInsufficientWin;
+
     private void initView() {
         findViewById(R.id.btn_reward).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,12 +57,16 @@ public class HelpWendaRewardActivity extends BaseActivity {
                     payPwdWin.setCallback(new PayPwdWin.Callback() {
                         @Override
                         public void finishInput(String pwd) {
-                            showToast("密码输入完毕");
+                            if (null == payInsufficientWin) {
+                                payInsufficientWin = new PayInsufficientWin(HelpWendaRewardActivity.this);
+                            }
+                            payInsufficientWin.show();
                         }
                     });
-                    payPwdWin.setTitle("支付密码输入");
+                    payPwdWin.setTitle("确认打赏");
                 }
-                payPwdWin.show();
+                payPwdWin.showPay("100.00");
+
             }
         });
     }
@@ -85,5 +92,20 @@ public class HelpWendaRewardActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (null != payPwdWin && payPwdWin.isShowing()) {
+                payPwdWin.dismiss();
+                return true;
+            }
+            if (null != payInsufficientWin && payInsufficientWin.isShowing()) {
+                payInsufficientWin.dismiss();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

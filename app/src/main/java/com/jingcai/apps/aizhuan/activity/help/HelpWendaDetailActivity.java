@@ -65,13 +65,13 @@ public class HelpWendaDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_like = (TextView)findViewById(R.id.tv_like);
-        tv_comment = (TextView)findViewById(R.id.tv_comment);
-        tv_help = (TextView)findViewById(R.id.tv_help);
-        tv_my_help = (TextView)findViewById(R.id.tv_my_help);
+        tv_like = (TextView) findViewById(R.id.tv_like);
+        tv_comment = (TextView) findViewById(R.id.tv_comment);
+        tv_help = (TextView) findViewById(R.id.tv_help);
+        tv_my_help = (TextView) findViewById(R.id.tv_my_help);
 
-        boolean myHelpFlag = 0 == System.currentTimeMillis()%2;
-        if(myHelpFlag) {
+        boolean myHelpFlag = 0 == System.currentTimeMillis() % 2;
+        if (myHelpFlag) {
             tv_help.setVisibility(View.GONE);
             tv_my_help.setVisibility(View.VISIBLE);//我的答案
             findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                     startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class));
                 }
             });
-        }else {
+        } else {
             tv_my_help.setVisibility(View.GONE);
             tv_help.setVisibility(View.VISIBLE);//撰写
             findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
@@ -113,14 +113,20 @@ public class HelpWendaDetailActivity extends BaseActivity {
             }
         });
 
-        //长按，显示复制
-        groupListView.setOnLongClickListener(new View.OnLongClickListener() {
+        commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
             @Override
-            public boolean onLongClick(View v) {
-                Log.d("==", "------------onLongClick---------");
-                return true;
+            public void click(View view, HelpCommentAdapter.ViewHolder holder) {
+                startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class));
             }
         });
+//        //长按，显示复制
+//        groupListView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Log.d("==", "------------onLongClick---------");
+//                return true;
+//            }
+//        });
     }
 
     private void onLoad() {

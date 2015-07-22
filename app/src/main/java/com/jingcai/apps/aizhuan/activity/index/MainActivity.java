@@ -79,6 +79,8 @@ public class MainActivity extends BaseFragmentActivity {
         setContentView(R.layout.main_activity);
         initView();
         //loginOnEMChatServer("dingmm","111111");
+
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
     }
 
     private void loginOnEMChatServer(String username, String pwd) {
@@ -93,7 +95,7 @@ public class MainActivity extends BaseFragmentActivity {
                         //加载所有的对话
                         EMChatManager.getInstance().loadAllConversations();
                         Log.d("main", "登陆聊天服务器成功！");
-                       Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -157,17 +159,17 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onStart() {
-        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-        if (null != unreadMsgService) {
-            unreadMsgService.startCount();
-        }
+//        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+//        if (null != unreadMsgService) {
+//            unreadMsgService.startCount();
+//        }
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        unreadMsgService.reset();
-        unregisterReceiver(mReceiver);
+//        unreadMsgService.reset();
+//        unregisterReceiver(mReceiver);
         super.onStop();
     }
 

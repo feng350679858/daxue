@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@color/content_background"
     android:clickable="true"
+    android:orientation="horizontal"
     android:padding="10dp">
 
     <ImageView
@@ -23,13 +23,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/tv_stu_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:text="花几支"
                 android:textColor="@color/important_dark"
                 android:textSize="14sp" />
@@ -38,18 +38,18 @@
                 android:id="@+id/tv_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_stu_name"
-                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:text="浙江大学"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_school"
-                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:text="计算机学院"
                 android:textSize="12sp" />
 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_stu_name"
-                android:padding="5dp"
+                android:layout_marginTop="5dp"
                 android:text="11:31"
                 android:textSize="12sp" />
 
@@ -66,10 +66,10 @@
                 android:id="@+id/tv_comment_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_stu_name"
+                android:layout_alignParentRight="true"
                 android:clickable="true"
                 android:drawableLeft="@drawable/help_item_like"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="12"
@@ -77,15 +77,26 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
-
         <TextView
-            android:id="@+id/tv_pop_item"
+            android:id="@+id/tv_comment_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="回复 鸟几只：大放大打发打发士大夫大放大打发打发士大夫"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:lineSpacingMultiplier="1.2"
-            android:text="30分钟30分钟30分钟30分钟30分钟30分钟30分钟30分钟30分钟30分钟"
-            android:textSize="16sp" />
+            android:text="大放大打发打发士大夫大放大打发打发士大夫大放大打发打"
+            android:textColor="@color/important_dark"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </LinearLayout>
