@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.entity.MessageCategoryBean;
-import com.jingcai.apps.aizhuan.entity.TestMessageBean;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +36,16 @@ public class MessageListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private List<TestMessageBean> mMessages;
+    private List<ConversationBean> mMessages;
     private List<MessageCategoryBean> mCategorys;
+    private BitmapUtil mBitmapUtil;
 
     private OnMessageListClickListener mOnMessageListClickListener;
 
     public MessageListAdapter(Context ctx) {
         mContext = ctx;
         mLayoutInflater = LayoutInflater.from(ctx);
+        mBitmapUtil = new BitmapUtil(ctx);
         initCategory();
     }
 
@@ -57,8 +60,9 @@ public class MessageListAdapter extends BaseAdapter {
         mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_merchant,"兼职商家",0));
     }
 
-    public void setListData(List<TestMessageBean> messages) {
+    public void setListData(List<ConversationBean> messages) {
         mMessages = messages;
+        notifyDataSetChanged();
     }
 
 
@@ -75,11 +79,17 @@ public class MessageListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (mMessages == null) {
+            return 0;
+        }
         return mMessages.size() + CATEGORY_TYPE_COUNT;        //还有三项为其他的
     }
 
     @Override
     public Object getItem(int position) {
+        if (mMessages == null) {
+            return null;
+        }
         if(position > CATEGORY_TYPE_COUNT){
             return mMessages.get(position - CATEGORY_TYPE_COUNT);
         }else{
@@ -133,9 +143,9 @@ public class MessageListAdapter extends BaseAdapter {
             }
         }
         if (null != holderCon) {   //对话
-            TestMessageBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
+            final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
             holderCon.mTvName.setText(message.getName());
-//            holderCon.mIvLevel.setImageResource();  //TODO 等级图片还未确定
+            mBitmapUtil.getImage(holderCon.mIvLogo,message.getLogourl());
             holderCon.mTvContent.setText(message.getContent());
             holderCon.mTvTime.setText(message.getTime());
             int unreadCount = 0;
@@ -147,12 +157,12 @@ public class MessageListAdapter extends BaseAdapter {
             }
             holderCon.mTvBadge.setVisibility(unreadCount <= 0 ? View.INVISIBLE : View.VISIBLE);
             holderCon.mTvBadge.setText(message.getUnread());
-            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);  //TODO logo_url不确定
+//            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);  //TODO logo_url不确定
             holderCon.mItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(mOnMessageListClickListener != null)
-                        mOnMessageListClickListener.onItemClick(position);
+                        mOnMessageListClickListener.onItemClick(position,message);
                 }
             });
             holderCon.mDelete.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +182,7 @@ public class MessageListAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if(mOnMessageListClickListener != null)
-                        mOnMessageListClickListener.onItemClick(position);
+                        mOnMessageListClickListener.onItemClick(position,null);
                 }
             });
         }
@@ -198,7 +208,7 @@ public class MessageListAdapter extends BaseAdapter {
     }
 
     public interface OnMessageListClickListener{
-        void onItemClick(int position);
+        void onItemClick(int position,ConversationBean bean);
 
         /**
          * 滑动删除按钮,从对话开始计数

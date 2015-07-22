@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity {
                     showToast("登录成功");
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
                     UserSubject.loginSuccess(student);
-                    new JpushUtil(LoginActivity.this).login(UserSubject.getStudentid());
+                    new JpushUtil(LoginActivity.this).login(student.getStudentid());
                     HXHelper.getInstance().loginOnEMChatServer(student.getStudentid());  //环信连接
                     setResult(RESULT_OK);
                     finish();

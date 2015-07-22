@@ -1,6 +1,8 @@
 package com.jingcai.apps.aizhuan.util;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.util.Log;
 
 import com.easemob.EMCallBack;
@@ -19,13 +21,9 @@ import java.util.Hashtable;
 public class HXHelper {
 
     private static final String TAG = "HXHelper";
-
     private static HXHelper hxHelper;
 
-    private final InnerLock innerLock;
-
     private HXHelper() {
-        innerLock = new InnerLock();
     }
 
     public static HXHelper getInstance() {
@@ -135,4 +133,28 @@ public class HXHelper {
         Log.d(TAG, "获取所有对话成功，对话列表大小为:" + manager.getAllConversations().size());
         return manager.getAllConversations();
     }
+
+    public void regNewMessageReceiver(Context ctx,BroadcastReceiver broadcastReceiver) {
+        if(ctx == null){
+            throw new NullPointerException("can't register receiver,context should not be null");
+        }
+        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+        intentFilter.setPriority(3);
+        ctx.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    /**
+     * 获取所有未读的消息的数量
+     * @return 未读消息数量
+     */
+    public int getAllUnreadMsgCount(){
+        return EMChatManager.getInstance().getUnreadMsgsCount();
+    }
+
+    public void resetUnreadMsgCountByUsername(String username){
+        EMConversation con = EMChatManager.getInstance().getConversation(username);
+        con.resetUnreadMsgCount();
+    }
+
+
 }
