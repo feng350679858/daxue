@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.index;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -26,6 +27,8 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexReleaseFragment;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 import com.jingcai.apps.aizhuan.util.HXHelper;
+
+import java.util.List;
 
 /**
  * Created by Json Ding on 2015/7/9.
@@ -127,7 +130,21 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     @Override
+    protected void onResume() {
+        Log.d("==", "--------------onResume-----");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("==", "--------------onPause-----");
+        super.onPause();
+
+    }
+
+    @Override
     protected void onStart() {
+        Log.d("==", "--------------onStart-----");
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
         HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
         if (null != unreadMsgService) {
@@ -138,7 +155,11 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onStop() {
-        unreadMsgService.reset();
+        Log.d("==", "--------------onStop-----");
+        if (!isAppOnForeground()) {//app 进入后台
+            Log.d("==", "--------------进入后台-----");
+            unreadMsgService.reset();
+        }
         unregisterReceiver(mReceiver);
         unregisterReceiver(broadcastReceiver);
         super.onStop();
@@ -146,9 +167,35 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onDestroy() {
+        Log.d("==", "--------------onDestroy-----");
         unreadMsgService.startCount();
         unbindService(serviceConnection);
         super.onDestroy();
+    }
+    /**
+     * 程序是否在前台运行
+     *
+     * @return
+     */
+    public boolean isAppOnForeground() {
+        // Returns a list of application processes that are running on the device
+        ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = getApplicationContext().getPackageName();
+
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        if (appProcesses == null)
+            return false;
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void changeFragment(int tabIndex) {
