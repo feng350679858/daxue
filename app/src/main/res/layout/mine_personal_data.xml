@@ -4,6 +4,7 @@
     android:orientation="vertical">
     <include layout="@layout/include_header"/>
     <LinearLayout
+        android:id="@+id/ll_mine_profile_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -11,6 +12,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp">
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile_logopath"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
@@ -60,6 +62,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
         <TextView
+            android:id="@+id/tv_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="无所谓"/>
@@ -89,6 +92,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
         <TextView
+            android:id="@+id/tv_profile_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="男"/>
@@ -118,6 +122,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
         <TextView
+            android:id="@+id/tv_profile_areaname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="浙江 杭州 西湖区"/>
@@ -132,6 +137,7 @@
         android:paddingLeft="10dp"
         >
         <LinearLayout
+            android:id="@+id/ll_mine_profile_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -139,6 +145,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -156,6 +163,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15897854687"
@@ -164,6 +172,7 @@
                 android:drawablePadding="10dp"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_mine_profile_qq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -171,6 +180,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -188,6 +198,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_qq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="295476218"
@@ -196,6 +207,7 @@
                 android:drawablePadding="10dp"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_mine_profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -203,6 +215,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -220,6 +233,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="njjgdi@163.com"
@@ -262,6 +276,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_schoolname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="浙江工业大学"/>
@@ -274,6 +289,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -291,6 +307,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_joindate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2012"/>
@@ -320,6 +337,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_collegename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="艺术与设计"/>
@@ -350,6 +368,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <TextView
+                android:id="@+id/tv_profile_professional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="视觉传达"/>

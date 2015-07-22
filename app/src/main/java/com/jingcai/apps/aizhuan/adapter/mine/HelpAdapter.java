@@ -73,7 +73,7 @@ public class HelpAdapter extends BaseAdapter {
          //   viewHolder.layout_help_wenda.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
         //    viewHolder.tv_title.setText("����");
-            viewHolder.tv_title.setText("金");
+            viewHolder.tv_title.setText(region.getCoin()+"金");
        // } else {
          //   viewHolder.layout_help_jishi.setVisibility(View.GONE);
        //     viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);

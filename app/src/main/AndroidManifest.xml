@@ -143,6 +143,9 @@
         <activity android:name=".activity.mine.MinePersonalDataActivity"/>
         <activity android:name=".activity.mine.MineGoldExpenseActivity"/>
         <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
+        <activity android:name=".activity.mine.MineContactServiceActivity"/>
+        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
+
 
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />

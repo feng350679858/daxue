@@ -88,7 +88,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
                            // dialog.dismiss();
                         } else {
-                            showToast("δ�ҵ�SD��");
+                            showToast("未找到SD卡");
                            // dialog.dismiss();
                         }
                         dialog.dismiss();

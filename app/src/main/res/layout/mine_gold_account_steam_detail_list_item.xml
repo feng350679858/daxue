@@ -43,9 +43,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/ic_launcher"
-                    android:drawableStart="@drawable/ic_launcher"
                     android:gravity="center"
                     android:text="2014-4-13 08:21" />
 
@@ -65,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="+550币"
+                    android:text="+550"
                     android:textColor="@color/font_important"
                     android:textSize="18sp" />
 

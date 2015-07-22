@@ -133,7 +133,7 @@ public class MineResetpaypswActivity extends BaseActivity {
         findViewById(R.id.tv_finish_reset_pay_psw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View toastRoot = getLayoutInflater().inflate(R.layout.mine_reset_pay_psw_toast, null);
+              /*  View toastRoot = getLayoutInflater().inflate(R.layout.mine_reset_pay_psw_toast, null);
                // TextView message = (TextView) toastRoot.findViewById(R.id.tv_reset_pay_psw_toast);
                // message.setText("My Toast");
 
@@ -141,7 +141,7 @@ public class MineResetpaypswActivity extends BaseActivity {
                 toastStart.setGravity(Gravity.TOP, 0, 10);
                 toastStart.setDuration(Toast.LENGTH_LONG);
                 toastStart.setView(toastRoot);
-                toastStart.show();
+                toastStart.show();*/
                 new AzExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -188,6 +188,15 @@ public class MineResetpaypswActivity extends BaseActivity {
                 case 0: {
                     showToast("修改支付密码成功");
                     MineResetpaypswActivity.this.finish();
+                    View toastRoot = getLayoutInflater().inflate(R.layout.mine_reset_pay_psw_toast, null);
+                    // TextView message = (TextView) toastRoot.findViewById(R.id.tv_reset_pay_psw_toast);
+                    // message.setText("My Toast");
+
+                    Toast toastStart = new Toast(MineResetpaypswActivity.this);
+                    toastStart.setGravity(Gravity.TOP, 0, 10);
+                    toastStart.setDuration(Toast.LENGTH_LONG);
+                    toastStart.setView(toastRoot);
+                    toastStart.show();
                     break;
                 }
                 case 1: {

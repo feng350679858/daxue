@@ -96,7 +96,7 @@ public class IndexMineFragment extends BaseFragment {
         mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineContactServiceActivity.class);
+                Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
                 startActivity(intent);
             }
         });

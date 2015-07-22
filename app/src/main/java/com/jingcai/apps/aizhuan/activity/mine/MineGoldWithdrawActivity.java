@@ -63,6 +63,11 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
 
     private float mEnableGoldCount;
     private boolean isResultResume;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +109,10 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
     }
 
     private void initData() {
-        showProgressDialog("数据加载中...");
+        showProgressDialog("66加载中...");
         initBankData();
         initBalanceData();
+
     }
 
     private void initBalanceData() {
@@ -153,9 +159,9 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
                     public void success(Account04Response resp) {
                         ResponseResult result = resp.getResult();
                         if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(1, result.getMessage());
+                            messageHandler.postMessage(7, result.getMessage());
                         } else {
-                            messageHandler.postMessage(0, resp.getBody().getBank_list());
+                            messageHandler.postMessage(6, resp.getBody().getBank_list());
                         }
                     }
 
@@ -176,6 +182,7 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
         mWithDrawRMB = (TextView) findViewById(R.id.tv_mine_gold_withdraw_money);
         mNotEnoughText = (TextView) findViewById(R.id.tv_mine_account_withdraw_balance_not_enough);
         mListView = (ListView)findViewById(R.id.lv_mine_account_choice_list);
+        mListView.setOnItemClickListener(this);
         mListAdapter = new AccountChoiceListAdapter(this,mCurrentBank);
         mListAdapter.setFooterDividerEnabel(false);
         mInputCount.addTextChangedListener(new TextWatcher() {
@@ -323,6 +330,7 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
             }
         }
     }
+
     class MessageHandler extends BaseHandler {
             public MessageHandler(Context context) {
                 super(context);
@@ -357,6 +365,14 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
                         showToast("提现失败："+msg.obj);
                         break;
                     }
+                    case 6:{
+                        fillAccount((List<Account04Response.Account04Body.Bank>) msg.obj);
+                        break;
+                    }
+                    case 7: {
+                        showToast("金融账户获取失败："+msg.obj);
+                        break;
+                    }
                     default:
                         super.handleMessage(msg);
                         break;
@@ -389,5 +405,11 @@ public class MineGoldWithdrawActivity extends BaseActivity implements ListView.O
                 }
                 break;
         }
+    }
+
+    private void fillAccount(List<Account04Response.Account04Body.Bank> obj) {
+        mListAdapter.setData(obj);
+        mListView.setAdapter(mListAdapter);
+        mListAdapter.notifyDataSetChanged();
     }
 }
