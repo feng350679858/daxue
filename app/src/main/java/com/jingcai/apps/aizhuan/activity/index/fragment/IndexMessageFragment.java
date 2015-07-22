@@ -85,21 +85,16 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         final Hashtable<String, EMConversation> allConversations = HXHelper.getInstance().getAllConversations();
         Set<String> keySet = allConversations.keySet();
         ConversationBean bean = null;
-        boolean hasUnReadMsgFlag = false;
-        for(String s : keySet){
+        for (String s : keySet) {
             EMConversation con = allConversations.get(s);
-            bean = new ConversationBean(baseActivity,con);
-            if(con.getUnreadMsgCount()>0 && !hasUnReadMsgFlag){
-                hasUnReadMsgFlag = true;
-            }
+            bean = new ConversationBean(baseActivity, con);
             beans.add(bean);
         }
+//        //收到未读消息，显示未读提示
+//        if (HXHelper.getInstance().getAllUnreadMsgCount() > 0) {
+//            ((MainActivity)baseActivity).showUnread("1");
+//        }
         mMessageListAdapter.setListData(beans);
-
-        //收到未读消息，显示未读提示
-        if(hasUnReadMsgFlag){
-            ((MainActivity)baseActivity).showUnread("1");
-        }
     }
 
     private void initHeader() {
@@ -143,12 +138,18 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             }
         } else {//消息对话
             intent = new Intent(baseActivity, MessageConversationActivity.class);
+            intent.putExtra("conversationBean",bean);
+            if(null != bean){
+                final HXHelper instance = HXHelper.getInstance();
+                instance.resetUnreadMsgCountByUsername(bean.getStudentid()); //重置与该用户的未读消息数
+                final int allUnreadMsgCount = instance.getAllUnreadMsgCount();
+                if(allUnreadMsgCount == 0){
+                    ((MainActivity)baseActivity).markAsRead("1");
+                }
+            }
         }
         if (null != intent) {
             startActivity(intent);
-            if(null != bean){
-                HXHelper.getInstance().resetUnreadMsgCountByUsername(bean.getStudentid()); //重置与该用户的未读消息数
-            }
         }
     }
 

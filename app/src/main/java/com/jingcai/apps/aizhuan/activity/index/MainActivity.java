@@ -25,6 +25,7 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexReleaseFragment;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 
 /**
  * Created by Json Ding on 2015/7/9.
@@ -73,8 +74,6 @@ public class MainActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-
-        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
     }
 
     private void initView() {
@@ -121,11 +120,16 @@ public class MainActivity extends BaseFragmentActivity {
         };
 
         bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+
+
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
     }
 
     @Override
     protected void onStart() {
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
         if (null != unreadMsgService) {
             unreadMsgService.startCount();
         }
@@ -136,6 +140,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onStop() {
         unreadMsgService.reset();
         unregisterReceiver(mReceiver);
+        unregisterReceiver(broadcastReceiver);
         super.onStop();
     }
 
@@ -179,7 +184,7 @@ public class MainActivity extends BaseFragmentActivity {
 
 
     public static final String ACTION_UPDATE_BADGE = "action_update_badge";  //更新badge的广播
-    protected BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String type = intent.getStringExtra("type");
@@ -193,17 +198,39 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
 
+    /**
+     * 新消息广播接收器
+     */
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //收到未读消息，显示未读提示
+            if (HXHelper.getInstance().getAllUnreadMsgCount() > 0) {
+                showUnread("1");
+            }
+        }
+    };
 
     public void startCount() {
         unreadMsgService.startCount();
     }
+    public void reset(String type) {
+        unreadMsgService.reset();
+    }
 
+    /**
+     * 显示未读
+     * @param type
+     */
     public void showUnread(String type) {
         unreadMsgService.showUnread(type);
     }
 
-    public void reset(String type) {
+    /**
+     * 清除未读
+     * @param type
+     */
+    public void markAsRead(String type) {
         unreadMsgService.markAsRead(type);
-        unreadMsgService.reset();
     }
 }
