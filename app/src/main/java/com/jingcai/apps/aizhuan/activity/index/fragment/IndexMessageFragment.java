@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.easemob.chat.EMConversation;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
+import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageConversationActivity;
@@ -65,6 +66,9 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             @Override
             public void onReceive(Context context, Intent intent) {
                 loadConversations();  //加载所有的会话
+                if(HXHelper.getInstance().getAllUnreadMsgCount() > 0){
+                    ((MainActivity) baseActivity).showUnread("1");
+                }
             }
         };
         HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver);
@@ -130,12 +134,18 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             }
         } else {//消息对话
             intent = new Intent(baseActivity, MessageConversationActivity.class);
+            intent.putExtra("conversationBean",bean);
+            if(null != bean){
+                final HXHelper instance = HXHelper.getInstance();
+                instance.resetUnreadMsgCountByUsername(bean.getStudentid()); //重置与该用户的未读消息数
+                final int allUnreadMsgCount = instance.getAllUnreadMsgCount();
+                if(allUnreadMsgCount == 0){
+                    ((MainActivity)baseActivity).reset("1");
+                }
+            }
         }
         if (null != intent) {
             startActivity(intent);
-            if(null != bean){
-                HXHelper.getInstance().resetUnreadMsgCountByUsername(bean.getStudentid()); //重置与该用户的未读消息数
-            }
         }
     }
 

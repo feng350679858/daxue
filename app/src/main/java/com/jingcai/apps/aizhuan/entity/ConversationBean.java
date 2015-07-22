@@ -15,6 +15,7 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Date;
  * 这个类对环信SDK依赖
  * Created by Json Ding on 2015/7/13.
  */
-public class ConversationBean {
+public class ConversationBean implements Serializable{
     public static final String TAG = "ConversationBean";
     private String studentid;
     private String logourl;

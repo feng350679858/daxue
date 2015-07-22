@@ -114,7 +114,7 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 unreadMsgService = ((UnreadMsgService.SimpleBinder) service).getService();
-                unreadMsgService.startMessageUnreadMonitor();
+//                unreadMsgService.startMessageUnreadMonitor();
             }
         };
 
