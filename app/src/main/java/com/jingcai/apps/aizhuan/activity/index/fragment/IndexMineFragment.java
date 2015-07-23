@@ -1,4 +1,4 @@
-﻿package com.jingcai.apps.aizhuan.activity.index.fragment;
+package com.jingcai.apps.aizhuan.activity.index.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
