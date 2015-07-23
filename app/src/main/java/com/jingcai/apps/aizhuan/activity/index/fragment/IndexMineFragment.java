@@ -18,6 +18,7 @@ import com.jingcai.apps.aizhuan.activity.mine.MineHelpActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineResetpaypswActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
 import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
