@@ -13,6 +13,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineHelpActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineResetpaypswActivity;
@@ -74,7 +75,7 @@ public class IndexMineFragment extends BaseFragment {
         mainView.findViewById(R.id.ll_mine_contact_service).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineResetpaypswActivity.class);
+                Intent intent = new Intent(baseActivity,MineContactServiceActivity.class);
                 startActivity(intent);
             }
         });
@@ -97,6 +98,13 @@ public class IndexMineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
+                startActivity(intent);
+            }
+        });
+        mainView.findViewById(R.id.ll_mine_credit).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineCreditActivity.class);
                 startActivity(intent);
             }
         });

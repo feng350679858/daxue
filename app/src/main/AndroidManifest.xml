@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <!-- 操作外部存储设备文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -98,6 +99,12 @@
         <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpEvaluateActivity" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="aizhuan.activity.help.HelpEvaluateActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
    
 
@@ -145,7 +152,7 @@
         <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
         <activity android:name=".activity.mine.MineContactServiceActivity"/>
         <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
-
+        <activity android:name=".activity.mine.WeixinNumberActivity"/>
 
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />

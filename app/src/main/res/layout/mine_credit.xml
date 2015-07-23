@@ -1,5 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/include_header" />
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:gravity="center_horizontal"
+         android:paddingLeft="10dp"
+         android:paddingRight="10dp"
+         android:layout_marginTop="20dp">
+         <de.hdodenhof.circleimageview.CircleImageView
+             android:layout_width="65dp"
+             android:layout_height="65dp"
+             android:layout_gravity="center"
+             android:src="@drawable/ic_launcher"
+             />
 
+         <TextView
+             android:id="@+id/tv_mine_credit_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="陈秋实"
+             android:textColor="@color/important_dark"
+             android:textSize="24sp"
+             android:layout_marginTop="10dp"/>
+
+         <TextView
+             android:id="@+id/tv_mine_credit_school"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="浙江理工大学 人文学院"
+             android:textColor="@color/important_dark"
+             android:textSize="20sp"
+             android:layout_marginTop="10dp"/>
+
+          <TextView
+              android:id="@+id/tv_mine_credit_score"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/rate_bg"
+              android:text="   5.0"
+              android:textColor="@color/important_dark"
+              android:textSize="16sp"
+              android:layout_marginTop="10dp"/>
+     </LinearLayout>
+    <com.markmao.pulltorefresh.widget.XListView
+        xmlns:xlv="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+        android:id="@+id/xlv_credit_commit_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/divider_color"
+        android:headerDividersEnabled="false"
+        android:dividerHeight="5dp"
+        xlv:extraHeader="@layout/index_campus_fragment_header" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看更多评论"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

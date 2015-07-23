@@ -10,11 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.entity.TestCommentsBean;
-import com.jingcai.apps.aizhuan.util.StringUtil;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Partjob29Body.Parttimejob;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Json Ding on 2015/7/14.
@@ -26,23 +29,35 @@ public class CommentListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final LayoutInflater mInflater;
-    private List<TestCommentsBean> mComments;
+    private List<Parttimejob> mComments;
+    private BitmapUtil mBitmapUtil;
 
     public CommentListAdapter(Context ctx) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         mComments = new ArrayList<>();
+        mBitmapUtil = new BitmapUtil(ctx);
     }
 
-    public void setListData(List<TestCommentsBean> comments){
+    public void setListData(List<Parttimejob> comments){
         if(comments != null){
             mComments = comments;
         }
     }
 
+
+    public void addData(List<Parttimejob> list) {
+        if(mComments == null){
+            mComments = new ArrayList<>();
+        }
+        if(list != null){
+            mComments.addAll(list);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
-        return StringUtil.isNotEmpty(mComments.get(position).getReply()) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
+        return (mComments.get(position).getRefcomment() != null) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
     }
 
     @Override
@@ -83,39 +98,47 @@ public class CommentListAdapter extends BaseAdapter {
             holder.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
             holder.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
             holder.mTvTime = (TextView) convertView.findViewById(R.id.tv_time);
-            holder.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
+            holder.mIvLogo = (CircleImageView) convertView.findViewById(R.id.iv_logo);
 
             holder.mRefname = (TextView) convertView.findViewById(R.id.tv_reference_name);
             holder.mRefcontent = (TextView) convertView.findViewById(R.id.tv_reference_content);
             holder.mReflogo = (ImageView) convertView.findViewById(R.id.iv_reference_logo);
+            holder.mBtnReply = (TextView) convertView.findViewById(R.id.tv_reply);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TestCommentsBean comment = mComments.get(position);
+        Parttimejob comment = mComments.get(position);
 
-        holder.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);
-        holder.mTvName.setText(comment.getName());
-        holder.mTvTime.setText(comment.getTime());
+        mBitmapUtil.getImage(holder.mIvLogo,comment.getSourceimgurl());
+        holder.mTvName.setText(comment.getSourcename());
+        holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime(),"yyyyMMddHHmmss")));
         holder.mTvContent.setText(comment.getContent());
 
         if (null != holder.mTvReply) {
-            holder.mTvReply.setText(comment.getReply());
+            holder.mTvReply.setText(comment.getRefcomment().getRefcontent());
         }
 
-        holder.mRefname.setText(comment.getRefname());
-        holder.mRefcontent.setText(comment.getRefcontent());
-        holder.mReflogo.setImageResource(R.drawable.ic_launcher);
+        holder.mRefname.setText(comment.getReftarget().getStudentname());
+        holder.mRefcontent.setText(comment.getReftarget().getPubliccontent());
+        mBitmapUtil.getImage(holder.mReflogo,comment.getReftarget().getImgurl());
 
         return convertView;
     }
+
+    public void clearData() {
+        if(mComments != null){
+            mComments.clear();
+        }
+    }
+
 
     /**
      * 两种类型共用一个ViewHolder
      */
     private class ViewHolder {
 
-        private ImageView mIvLogo;
+        private CircleImageView mIvLogo;
         private TextView mTvName;
         private TextView mTvContent;
         private TextView mTvTime;
@@ -123,5 +146,6 @@ public class CommentListAdapter extends BaseAdapter {
         private TextView mRefname;
         private TextView mRefcontent;
         private ImageView mReflogo;
+        private TextView mBtnReply;
     }
 }

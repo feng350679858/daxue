@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/content_background"
-    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -26,6 +25,38 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="支付密码输入" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_pay_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_pay_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:text="需付款"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/tv_pay_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
+            android:text="2.5元"
+            android:textColor="@color/important_dark"
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -83,11 +114,23 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_set_pwd_tip"
         style="@style/sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="设置后，该密码即为该账号的支付密码" />
+
+    <TextView
+        android:id="@+id/tv_forget"
+        style="@style/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="忘记密码？" />
 
     <LinearLayout
         android:layout_width="match_parent"

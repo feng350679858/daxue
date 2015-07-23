@@ -7,12 +7,17 @@
 
     <include layout="@layout/include_header" />
 
-    <ListView
+    <com.markmao.pulltorefresh.widget.XListView
         android:id="@+id/lv_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
-
+        />
+    <ViewStub
+        android:id="@+id/stub_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/stub_general_empty_list_view"
         />
 </LinearLayout>

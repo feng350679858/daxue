@@ -30,6 +30,7 @@ public class PopupWin {
     private PopupWindow popupWindow;
     private int mWidth, mHeight;
     private int mAnimstyle;
+    private boolean mFocusable;
 
     private PopupWin(View view1, View view2) {
         this.mParentView = view1;
@@ -46,6 +47,7 @@ public class PopupWin {
         private int width = WindowManager.LayoutParams.MATCH_PARENT;
         private int height = WindowManager.LayoutParams.WRAP_CONTENT;
         private int animstyle = R.style.main_menu_animstyle;
+        private boolean focusable = true;
 
         private Builder(Context context) {
             this.context = context;
@@ -65,6 +67,7 @@ public class PopupWin {
             this.contentView = view;
             return this;
         }
+
         public Builder setWidth(int width) {
             this.width = width;
             return this;
@@ -77,6 +80,11 @@ public class PopupWin {
 
         public Builder setAnimstyle(int animstyle) {
             this.animstyle = animstyle;
+            return this;
+        }
+
+        public Builder setFocusable(boolean focusable) {
+            this.focusable = focusable;
             return this;
         }
 
@@ -110,6 +118,7 @@ public class PopupWin {
             win.mWidth = width;
             win.mHeight = height;
             win.mAnimstyle = animstyle;
+            win.mFocusable = focusable;
 
             if (null != mContentView) {
                 PopItemAdapter adapter = new PopItemAdapter(context, win, R.layout.popup_list_item);
@@ -155,7 +164,7 @@ public class PopupWin {
                             TextView tv = (TextView) v;
                             callback.select((String) tv.getTag(), tv.getText().toString());
                         }
-                        if(null != win) {
+                        if (null != win) {
                             win.dismiss();
                         }
                     }
@@ -194,14 +203,33 @@ public class PopupWin {
     private void build() {
         popupWindow = new PopupWindow(mContentView, mWidth, mHeight);
 
-        popupWindow.setFocusable(true);
-        if(0 != mAnimstyle) {
-            popupWindow.setAnimationStyle(mAnimstyle);
-        }
+        popupWindow.setFocusable(mFocusable);
+//        popupWindow.setTouchable(true);
 //        popupWindow.setBackgroundDrawable(new ColorDrawable(0x80000000));//半透明
         popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        popupWindow.setOutsideTouchable(false);
+//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.d("==", "-----onTouch------");
+//                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+//                    Log.d("==", "-----onOutTouch------");
+//                    //popupWindow.dismiss();
+//                    return true;
+//                }
+//                if (event.getAction() == MotionEvent.BUTTON_BACK) {
+//                    Log.d("==", "-----back------");
+//                    //popupWindow.dismiss();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        if (0 != mAnimstyle) {
+            popupWindow.setAnimationStyle(mAnimstyle);
+        }
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        if(null != mParentView) {
+        if (null != mParentView) {
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
@@ -222,14 +250,9 @@ public class PopupWin {
     public void show(View parent, int gravity, int x, int y) {
         check();
         popupWindow.showAtLocation(parent, gravity, x, y);
-        if(null != mParentView) {
+        if (null != mParentView) {
             ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
         }
-    }
-
-    public void dismiss() {
-        check();
-        popupWindow.dismiss();
     }
 
     public PopupWin setAction(@IdRes int viewId, View.OnClickListener clickListener) {
@@ -251,25 +274,17 @@ public class PopupWin {
             throw new RuntimeException("you should call build first");
         }
     }
-//        View dialogView = LayoutInflater.from(this).inflate(R.layout.help_jishi_deploy_endtime_pop, null);
-//
-//        final PopupWindow popupWindow = new PopupWindow(dialogView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        final View decorView = this.getWindow().getDecorView();
-//
-//        popupWindow.setFocusable(true);
-//        popupWindow.setAnimationStyle(R.style.main_menu_animstyle);
-//        popupWindow.setBackgroundDrawable(new ColorDrawable(0x80000000));
-//        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//        popupWindow.showAtLocation(decorView, Gravity.BOTTOM, 0, 0);
-//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//            @Override
-//            public void onDismiss() {
-//                ObjectAnimator.ofFloat(decorView, "alpha", 0.5f, 1.0f).setDuration(500).start();
-//            }
-//        });
-//        ObjectAnimator.ofFloat(decorView, "alpha", 1.0f, 0.5f).setDuration(500).start();
 
     public interface Callback {
         void select(String key, String val);
+    }
+
+    public boolean isShowing() {
+        return popupWindow.isShowing();
+    }
+
+    public void dismiss() {
+        check();
+        popupWindow.dismiss();
     }
 }

@@ -20,7 +20,7 @@
         android:layout_marginTop="10dp"
         android:text="陈秋实"
         android:textColor="@color/important_dark"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             android:padding="5dp"
             android:text="打赏金额(元)"
             android:textColor="@color/important_dark"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -72,9 +72,8 @@
             android:padding="5dp"
             android:textColor="@color/important_dark"
             android:textColorHint="@color/normal_grey"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </LinearLayout>
-
 
     <Button
         android:id="@+id/btn_reward"
@@ -86,6 +85,6 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/btn_yellow_boarded_bg_selector"
         android:text="马上打赏"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

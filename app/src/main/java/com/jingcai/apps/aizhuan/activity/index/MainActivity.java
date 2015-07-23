@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.index;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,12 +17,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroupManager;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
@@ -30,6 +26,9 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexReleaseFragment;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
+import com.jingcai.apps.aizhuan.util.HXHelper;
+
+import java.util.List;
 
 /**
  * Created by Json Ding on 2015/7/9.
@@ -71,43 +70,13 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
     private ImageView iv_campus_badge;
-    private TextView tv_message_num_badge;
+    private ImageView iv_message_badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
-        //loginOnEMChatServer("dingmm","111111");
-    }
-
-    private void loginOnEMChatServer(String username, String pwd) {
-        EMChatManager.getInstance().login(username, pwd, new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        //以下两句代码确保在登录的情况下调用
-                        //加载所有群组
-                        EMGroupManager.getInstance().loadAllGroups();
-                        //加载所有的对话
-                        EMChatManager.getInstance().loadAllConversations();
-                        Log.d("main", "登陆聊天服务器成功！");
-                       Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d("main", "登陆聊天服务器失败！");
-            }
-        });
     }
 
     private void initView() {
@@ -129,7 +98,7 @@ public class MainActivity extends BaseFragmentActivity {
         mIconViewArr[3] = (ImageView) findViewById(R.id.iv_mine);
 
         iv_campus_badge = (ImageView) findViewById(R.id.iv_campus_badge);
-        tv_message_num_badge = (TextView) findViewById(R.id.tv_message_num_badge);
+        iv_message_badge = (ImageView) findViewById(R.id.iv_message_badge);
 
         initService();
 
@@ -149,15 +118,35 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 unreadMsgService = ((UnreadMsgService.SimpleBinder) service).getService();
+                unreadMsgService.startCount();
             }
         };
 
         bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+
+
+        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("==", "--------------onResume-----");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("==", "--------------onPause-----");
+        super.onPause();
+
     }
 
     @Override
     protected void onStart() {
+        Log.d("==", "--------------onStart-----");
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
         if (null != unreadMsgService) {
             unreadMsgService.startCount();
         }
@@ -166,16 +155,47 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onStop() {
-        unreadMsgService.reset();
+        Log.d("==", "--------------onStop-----");
+        if (!isAppOnForeground()) {//app 进入后台
+            Log.d("==", "--------------进入后台-----");
+            unreadMsgService.reset();
+        }
         unregisterReceiver(mReceiver);
+        unregisterReceiver(broadcastReceiver);
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("==", "--------------onDestroy-----");
         unreadMsgService.startCount();
         unbindService(serviceConnection);
         super.onDestroy();
+    }
+    /**
+     * 程序是否在前台运行
+     *
+     * @return
+     */
+    public boolean isAppOnForeground() {
+        // Returns a list of application processes that are running on the device
+        ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = getApplicationContext().getPackageName();
+
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        if (appProcesses == null)
+            return false;
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void changeFragment(int tabIndex) {
@@ -211,7 +231,7 @@ public class MainActivity extends BaseFragmentActivity {
 
 
     public static final String ACTION_UPDATE_BADGE = "action_update_badge";  //更新badge的广播
-    protected BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String type = intent.getStringExtra("type");
@@ -220,12 +240,20 @@ public class MainActivity extends BaseFragmentActivity {
                 iv_campus_badge.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
             } else if ("1".equals(type)) {
                 int count = intent.getIntExtra("count", 0);
-                if (count > 0) {
-                    tv_message_num_badge.setVisibility(View.VISIBLE);
-                    tv_message_num_badge.setText(String.valueOf(count));
-                } else {
-                    tv_message_num_badge.setVisibility(View.INVISIBLE);
-                }
+                iv_message_badge.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
+    };
+
+    /**
+     * 新消息广播接收器
+     */
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //收到未读消息，显示未读提示
+            if (HXHelper.getInstance().getAllUnreadMsgCount() > 0) {
+                showUnread("1");
             }
         }
     };
@@ -233,13 +261,23 @@ public class MainActivity extends BaseFragmentActivity {
     public void startCount() {
         unreadMsgService.startCount();
     }
-
-    public void showUnread() {
-        unreadMsgService.showUnread();
+    public void reset(String type) {
+        unreadMsgService.reset();
     }
 
-    public void reset() {
-        unreadMsgService.markAsRead();
-        unreadMsgService.reset();
+    /**
+     * 显示未读
+     * @param type
+     */
+    public void showUnread(String type) {
+        unreadMsgService.showUnread(type);
+    }
+
+    /**
+     * 清除未读
+     * @param type
+     */
+    public void markAsRead(String type) {
+        unreadMsgService.markAsRead(type);
     }
 }

@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ public class MineContactServiceActivity extends BaseActivity {
 
         initHeader();  //初始化头部
 
+        initViews();
+
     }
     private void initHeader()
     {
@@ -56,6 +59,65 @@ public class MineContactServiceActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void initViews() {
+        //电话客服
+      findViewById(R.id.rl_mine_contact_service_tel).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              final PopupDialog dialog = new PopupDialog(MineContactServiceActivity.this, R.layout.comfirm_contact_merchant_dialog);
+              View contentView = dialog.getContentView();
+              //logo
+              ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageResource(R.drawable.ic_launcher);
+              //title
+              ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("客服赚赚");
+              //phone
+              ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(R.string.mine_contact_service_tel_num);
+              //2 button
+              contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      dialog.dismiss();
+                  }
+              });
+              contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      Intent intent = new Intent(Intent.ACTION_CALL);
+                      intent.setData(Uri.parse("tel:" + R.string.mine_contact_service_tel_num));
+                      startActivity(intent);
+                  }
+              });
+              dialog.show();
+          }
+      });
+
+        //QQ客服
+        findViewById(R.id.rl_mine_contact_service_qq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    PackageManager packageManager = MineContactServiceActivity.this.getPackageManager();
+                    packageManager.getApplicationInfo("QQ",packageManager.GET_UNINSTALLED_PACKAGES);
+                    String url = "mqqwpa://im/chat?chat_type=wpa&uin=2841329585";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+
+                }
+                catch (PackageManager.NameNotFoundException e){
+                    showToast("请先安装QQ哦亲");
+                }
+            }
+        });
+
+        //微信客服
+       findViewById(R.id.rl_mine_contact_service_wechat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineContactServiceActivity.this, WeixinNumberActivity.class);
+                startActivity(intent);
             }
         });
     }

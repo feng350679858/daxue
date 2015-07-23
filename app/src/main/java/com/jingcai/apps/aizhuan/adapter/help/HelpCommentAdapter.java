@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.adapter.help;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
@@ -80,8 +82,8 @@ public class HelpCommentAdapter extends BaseAdapter {
         viewHolder.tv_comment_like.setEnabled(position % 2 == 1);
         viewHolder.tv_comment_like.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("==", "------------onClick1---------");
+            public void onClick(View v) {//赞
+                Log.d("==", "------------点赞---------");
             }
         });
         if(null != callback) {
