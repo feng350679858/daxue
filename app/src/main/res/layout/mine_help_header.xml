@@ -43,10 +43,12 @@
             android:button="@null"
             android:padding="5dp"
             android:text="我的帮助"
+            android:checked="true"
             android:textColor="@color/important_dark"
             android:textSize="16sp" />
 
         <RadioButton
+            android:id="@+id/cb_wenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/yellow_btn_bg_selector"

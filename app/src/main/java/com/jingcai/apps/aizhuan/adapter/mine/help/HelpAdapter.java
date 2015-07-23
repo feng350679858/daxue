@@ -59,14 +59,16 @@ public class HelpAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.mine_help_list_item, null);
             viewHolder = new ViewHolder();
+            viewHolder.layout_jishi = convertView.findViewById(R.id.layout_jishi);
             viewHolder.layout_help_content_jishi = convertView.findViewById(R.id.layout_help_content_jishi);
             viewHolder.tv_help_status_jishi = (TextView) convertView.findViewById(R.id.tv_help_status_jishi);
             viewHolder.btn_evaluate = (Button) convertView.findViewById(R.id.btn_evaluate);
             viewHolder.btn_reward = (Button) convertView.findViewById(R.id.btn_reward);
 
 
+            viewHolder.layout_wenda = convertView.findViewById(R.id.layout_wenda);
             viewHolder.layout_help_content_wenda = convertView.findViewById(R.id.layout_help_content_wenda);
-            viewHolder.tv_help_status_jishi = (TextView) convertView.findViewById(R.id.tv_help_status_wenda);
+            viewHolder.tv_help_status_wenda = (TextView) convertView.findViewById(R.id.tv_help_status_wenda);
             viewHolder.tv_income_label = (TextView) convertView.findViewById(R.id.tv_income_label);
             viewHolder.tv_income_money = (TextView) convertView.findViewById(R.id.tv_income_money);
             viewHolder.btn_view_answer = (Button) convertView.findViewById(R.id.btn_view_answer);
@@ -79,12 +81,12 @@ public class HelpAdapter extends BaseAdapter {
 
 
         if (jishiFlag) {
-            viewHolder.layout_help_content_jishi.setVisibility(View.VISIBLE);
-            viewHolder.layout_help_content_wenda.setVisibility(View.GONE);
+            viewHolder.layout_jishi.setVisibility(View.VISIBLE);
+            viewHolder.layout_wenda.setVisibility(View.GONE);
             getJishiView(position, viewHolder);
         } else {
-            viewHolder.layout_help_content_jishi.setVisibility(View.GONE);
-            viewHolder.layout_help_content_wenda.setVisibility(View.VISIBLE);
+            viewHolder.layout_jishi.setVisibility(View.GONE);
+            viewHolder.layout_wenda.setVisibility(View.VISIBLE);
             getWendaView(position, viewHolder);
         }
         return convertView;
@@ -181,11 +183,13 @@ public class HelpAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public Base04Response.Body.Region region;
+        public View layout_jishi;
         public View layout_help_content_jishi;
         public TextView tv_help_status_jishi;
         public Button btn_evaluate;
         public Button btn_reward;
 
+        public View layout_wenda;
         public View layout_help_content_wenda;
         public TextView tv_help_status_wenda;
         public TextView tv_income_label;

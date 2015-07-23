@@ -85,7 +85,7 @@ public class HelpProvideListActivity extends BaseActivity {
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
 
-        commentAdapter.setJishiFlag(false);
+        commentAdapter.setJishiFlag(true);
 
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
