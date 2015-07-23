@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -22,6 +26,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -54,6 +59,34 @@ public class HelpWendaDetailActivity extends BaseActivity {
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("求问详情");
+
+        final ImageView iv_func = (ImageView) findViewById(R.id.iv_func);
+        iv_func.setVisibility(View.VISIBLE);
+        iv_func.setImageResource(R.drawable.icon_more1);
+        iv_func.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int dp10_px = HelpWendaDetailActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
+                Log.d("==", "---------" + dp10_px);
+                View contentView = LayoutInflater.from(HelpWendaDetailActivity.this).inflate(R.layout.help_wenda_answer_setting_pop, null);
+                PopupWin groupWin = PopupWin.Builder.create(HelpWendaDetailActivity.this)
+                        .setWidth(dp10_px * 17)
+                        .setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
+                        .setAnimstyle(0)//取消动画
+                        .setParentView(iv_func)
+                        .setContentView(contentView)
+                        .build();
+                View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
+                tv_pop_abuse_report.setVisibility(View.VISIBLE);
+                tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {//举报
+                        Log.d("==", "-----------tv_pop_abuse_report---");
+                    }
+                });
+                groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
+            }
+        });
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {

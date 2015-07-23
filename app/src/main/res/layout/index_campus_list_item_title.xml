@@ -91,7 +91,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/main_yellow"
             android:gravity="center"
-            android:text="100金"
+            android:text="2.5元"
             android:textColor="@color/important_dark"
             android:textSize="14sp" />
     </LinearLayout>

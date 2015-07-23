@@ -57,6 +57,46 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                         .setParentView(iv_func)
                         .setContentView(contentView)
                         .build();
+                {
+                    View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);//举报
+                    tv_pop_abuse_report.setVisibility(View.VISIBLE);
+                    tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("==", "-----------tv_pop_abuse_report---");
+                        }
+                    });
+                }
+                {
+                    View tv_pop_anonymous = groupWin.findViewById(R.id.tv_pop_anonymous);//使用匿名
+                    tv_pop_anonymous.setVisibility(View.VISIBLE);
+                    tv_pop_anonymous.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("==", "-----------tv_pop_anonymous---");
+                        }
+                    });
+                }
+                {
+                    View tv_pop_reedit = groupWin.findViewById(R.id.tv_pop_reedit);//再次编辑
+                    tv_pop_reedit.setVisibility(View.VISIBLE);
+                    tv_pop_reedit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("==", "-----------tv_pop_reedit---");
+                        }
+                    });
+                }
+                {
+                    View tv_pop_reward = groupWin.findViewById(R.id.tv_pop_reward);//打赏
+                    tv_pop_reward.setVisibility(View.VISIBLE);
+                    tv_pop_reward.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("==", "-----------tv_pop_reward---");
+                        }
+                    });
+                }
                 groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
             }
         });

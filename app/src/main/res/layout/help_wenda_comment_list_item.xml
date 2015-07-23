@@ -62,16 +62,19 @@
                 android:textSize="12sp" />
 
 
-            <TextView
+            <CheckBox
                 android:id="@+id/tv_comment_like"
+                android:button="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_stu_name"
                 android:layout_alignParentRight="true"
                 android:clickable="true"
                 android:drawableLeft="@drawable/help_item_like"
                 android:drawablePadding="5dp"
                 android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="12"
                 android:textColor="@color/normal_grey"
                 android:textSize="14sp" />
