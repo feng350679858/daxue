@@ -1,10 +1,14 @@
 package com.jingcai.apps.aizhuan.adapter.message;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +17,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.entity.MessageCategoryBean;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.SmileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +108,7 @@ public class MessageListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position,View convertView, ViewGroup parent) {
         ViewHolderCategory holderCat = null;
         ViewHolderConversation holderCon = null;
         int itemViewType = getItemViewType(position);
@@ -140,13 +145,18 @@ public class MessageListAdapter extends BaseAdapter {
                 case VIEW_TYPE_CONVERSATION:
                     holderCon = (ViewHolderConversation) convertView.getTag();
                     break;
+                default:
+                    throw new IllegalArgumentException("unknown item view type :"+itemViewType);
             }
+        }
+        if (convertView != null) {
+            convertView.setTranslationX(0);
         }
         if (null != holderCon) {   //对话
             final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
             holderCon.mTvName.setText(message.getName());
             mBitmapUtil.getImage(holderCon.mIvLogo,message.getLogourl());
-            holderCon.mTvContent.setText(message.getContent());
+            holderCon.mTvContent.setText(SmileUtils.getSmiledText(mContext,message.getContent()));
             holderCon.mTvTime.setText(message.getTime());
             int unreadCount = 0;
             try {
@@ -165,11 +175,24 @@ public class MessageListAdapter extends BaseAdapter {
                         mOnMessageListClickListener.onItemClick(position,message);
                 }
             });
+            final View cView = convertView;
             holderCon.mDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnMessageListClickListener != null)
-                        mOnMessageListClickListener.onDelete(position - CATEGORY_TYPE_COUNT);
+                    if(mOnMessageListClickListener != null) {
+                        final ObjectAnimator animator = ObjectAnimator.ofFloat(cView, "translationX", -cView.getWidth());
+                        animator.setInterpolator(new AnticipateOvershootInterpolator());
+                        animator.setDuration(750);
+                        animator.start();
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                mOnMessageListClickListener.onDelete(position - CATEGORY_TYPE_COUNT, message.getStudentid());
+                                mMessages.remove(position - CATEGORY_TYPE_COUNT);
+                                notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             });
         } else if (null != holderCat) {  //大类型
@@ -213,7 +236,8 @@ public class MessageListAdapter extends BaseAdapter {
         /**
          * 滑动删除按钮,从对话开始计数
          * @param position 对话所处的位置
+         * @param username 对方用户名
          */
-        void onDelete(int position);
+        void onDelete(int position,String username);
     }
 }

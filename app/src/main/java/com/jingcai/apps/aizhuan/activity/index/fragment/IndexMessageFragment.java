@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     @Override
     public void onResume() {
         super.onResume();
+        HXHelper.getInstance().reConnect();
         loadConversations();  //加载历史消息
     }
 
@@ -68,10 +70,11 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         mNewMessageReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.d(TAG, "IndexMessageFragment receive a new Message from " + intent.getStringExtra("from"));
                 loadConversations();  //加载所有的会话
             }
         };
-        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver);
+        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver,3);
     }
 
     @Override
@@ -90,10 +93,6 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             bean = new ConversationBean(baseActivity, con);
             beans.add(bean);
         }
-//        //收到未读消息，显示未读提示
-//        if (HXHelper.getInstance().getAllUnreadMsgCount() > 0) {
-//            ((MainActivity)baseActivity).showUnread("1");
-//        }
         mMessageListAdapter.setListData(beans);
     }
 
@@ -115,7 +114,6 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
 
     private void initView() {
         mLvMessages = (ListView) mBaseView.findViewById(R.id.lv_messages);
-//        mLvMessages.setOnItemClickListener(this);
         mMessageListAdapter = new MessageListAdapter(baseActivity);
         mMessageListAdapter.setOnMessageListClickListener(this);
         mLvMessages.setAdapter(mMessageListAdapter);
@@ -153,8 +151,15 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         }
     }
 
+
     @Override
-    public void onDelete(int position) {
-        showToast("delete button :"+position+"click.");
+    public void onDelete(int position,String username) {
+        final HXHelper instance = HXHelper.getInstance();
+        instance.deleteConversation(username);
+        final int allUnreadMsgCount = instance.getAllUnreadMsgCount();
+        if(allUnreadMsgCount == 0){
+            ((MainActivity)baseActivity).markAsRead("1");
+        }
+//        loadConversations();
     }
 }

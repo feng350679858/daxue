@@ -1,6 +1,8 @@
 package com.jingcai.apps.aizhuan.entity;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -15,7 +17,6 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  * 这个类对环信SDK依赖
  * Created by Json Ding on 2015/7/13.
  */
-public class ConversationBean implements Serializable{
+public class ConversationBean implements Parcelable{
     public static final String TAG = "ConversationBean";
     private String studentid;
     private String logourl;
@@ -34,6 +35,27 @@ public class ConversationBean implements Serializable{
 
     private AzService azService;
     private Context mContext;
+
+    public static final Parcelable.Creator<ConversationBean> CREATOR = new Parcelable.Creator<ConversationBean>() {
+        @Override
+        public ConversationBean createFromParcel(Parcel source) {
+            return new ConversationBean(source);
+        }
+        //重写createFromParcel方法，创建并返回一个获得了数据的ConversationBean对象
+        @Override
+        public ConversationBean[] newArray(int size) {
+            return new ConversationBean[size];
+        }
+    };
+
+    private ConversationBean(Parcel source){
+        studentid = source.readString();
+        logourl = source.readString();
+        name = source.readString();
+        content = source.readString();
+        time = source.readString();
+        unread = source.readString();
+    }
 
     public ConversationBean(Context ctx,@NonNull EMConversation conversation){
         EMMessage message = conversation.getLastMessage();
@@ -54,7 +76,7 @@ public class ConversationBean implements Serializable{
                 this.content = "[语音]";
                 break;
         }
-        if(message.getFrom().contains("admin")){
+        if(studentid.contains("admin")){
             this.name = "宿管阿姨";
             this.logourl = "http://img3.imgtn.bdimg.com/it/u=3681476745,3832605124&fm=21&gp=0.jpg";
             return;
@@ -138,5 +160,20 @@ public class ConversationBean implements Serializable{
 
     public void setUnread(String unread) {
         this.unread = unread;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(studentid);
+        dest.writeString(logourl);
+        dest.writeString(name);
+        dest.writeString(content);
+        dest.writeString(time);
+        dest.writeString(unread);
     }
 }

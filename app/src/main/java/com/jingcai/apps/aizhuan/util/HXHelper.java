@@ -11,6 +11,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroupManager;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
 import java.util.Hashtable;
 
@@ -134,12 +135,12 @@ public class HXHelper {
         return manager.getAllConversations();
     }
 
-    public void regNewMessageReceiver(Context ctx,BroadcastReceiver broadcastReceiver) {
+    public void regNewMessageReceiver(Context ctx,BroadcastReceiver broadcastReceiver,int priority) {
         if(ctx == null){
             throw new NullPointerException("can't register receiver,context should not be null");
         }
         IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-        intentFilter.setPriority(3);
+        intentFilter.setPriority(priority);
         ctx.registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -156,5 +157,18 @@ public class HXHelper {
         con.resetUnreadMsgCount();
     }
 
+    public void deleteConversation(String username){
+        EMChatManager.getInstance().deleteConversation(username);
+    }
+
+    /**
+     * 如果未连接，重新进行登录
+     */
+    public void reConnect(){
+        if(!EMChatManager.getInstance().isConnected()){
+            loginOnEMChatServer(UserSubject.getStudentid());
+        }
+
+    }
 
 }

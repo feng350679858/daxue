@@ -212,6 +212,7 @@ public class ConversationAdapter extends BaseAdapter {
 
         //设置用户头像  todo 根据UserSubject中的头像url设置用户头像
 //        setUserAvatar(message, holder.iv_avatar);
+        message.setUnread(true);
         switch (message.getType()) {
             // 根据消息type显示item
             case IMAGE: // 图片
