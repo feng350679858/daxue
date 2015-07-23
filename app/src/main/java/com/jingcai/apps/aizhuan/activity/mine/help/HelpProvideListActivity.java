@@ -72,10 +72,11 @@ public class HelpProvideListActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.cb_jishi){
                     commentAdapter.setJishiFlag(true);
+
                 }else {
                     commentAdapter.setJishiFlag(false);
                 }
-                initGroupData();
+                groupListView.autoRefresh();
             }
         });
 
