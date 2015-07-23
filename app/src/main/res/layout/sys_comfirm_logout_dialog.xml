@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/font_assistant"
-        android:text="asdfasdfasd"
+        android:text="退出后不会删除任何历史记录，下次登陆依然可以使用本帐号。"
         android:background="@color/white"/>
     <View
         android:layout_width="match_parent"

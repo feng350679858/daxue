@@ -24,6 +24,8 @@ public interface BizConstant {
     String BIZ_STU_04 = "stu04";//重置密码（忘记密码）
     String BIZ_STU_05 = "stu05";//设置校友可见
     String BTZ_STU_07 = "stu07";//重置支付密码
+    String BTZ_STU_11 = "stu11";//个人信用分查询
+    String BTZ_STU_12 = "stu12";
 
     /**
      * partjob
@@ -38,6 +40,9 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_08 = "partjob08";//获取已取消次数
     String BIZ_PARTTIME_JOB_09 = "partjob09";//手机端兼职列表查询（包含特殊搜索）
     String BIZ_PARTTIME_JOB_10 = "partjob10";//兼职标签详情列表查询
+    String BIZ_PARTTIME_JOB_11 = "partjob11";
+    String BIZ_PARTTIME_JOB_24 = "partjob24";
+    String BIZ_PARTTIME_JOB_27 = "partjob27";
     String BIZ_PARTTIME_JOB_29 = "partjob29";//评论列表查询
 
     /**

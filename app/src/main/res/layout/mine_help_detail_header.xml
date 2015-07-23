@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_mine_help_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+        <include layout="@layout/mine_help_list_item_title" />
+
+        <TextView
+            android:id="@+id/tv_mine_help_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/help_item_content_bg"
+            android:elegantTextHeight="true"
+            android:lineSpacingMultiplier="1.3"
+            android:text="求助内容请仔细想想慢慢想\n我是来卖萌的"
+            android:textColor="@color/important_dark"
+            android:textSize="20sp" />
+        <include layout="@layout/mine_campus_list_item_wenda" />
+    </LinearLayout>
+</LinearLayout>

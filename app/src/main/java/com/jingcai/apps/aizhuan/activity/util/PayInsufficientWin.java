@@ -45,7 +45,7 @@ public class PayInsufficientWin {
         mPopWin.setAction(R.id.tv_go, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
                 baseActivity.showToast("跳转至充值");
             }
         });

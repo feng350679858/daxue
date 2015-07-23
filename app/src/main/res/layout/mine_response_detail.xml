@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_mine_response"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+            <TextView
+                android:id="@+id/tv_mine_response_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015-08-26"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入: "
+                android:textColor="@color/important_dark"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tv_mine_response_gold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10元"
+                android:background="@color/main_yellow"
+                android:textSize="16sp"
+                android:textColor="@color/important_dark"/>
+        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+
+            android:background="@color/divider_color" />
+        <TextView
+            android:id="@+id/tv_mine_response_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  真的只有我知道张文朝和李狗蛋的关系，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/normal_grey"
+            android:textSize="16sp"
+            />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+
+            android:background="@color/divider_color" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:layout_width="45dp"
+               android:layout_height="45dp"
+               android:layout_gravity="center"
+               android:src="@drawable/ic_launcher"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="等待求助"
+               android:textColor="@color/important_dark"
+               android:textSize="20sp"/>
+           <View
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:layout_weight="1" />
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="查看问题"/>
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="编辑"/>
+       </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

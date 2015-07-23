@@ -157,7 +157,7 @@ public class MessageListAdapter extends BaseAdapter {
             }
             holderCon.mTvBadge.setVisibility(unreadCount <= 0 ? View.INVISIBLE : View.VISIBLE);
             holderCon.mTvBadge.setText(message.getUnread());
-//            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);  //TODO logo_url不确定
+//            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);
             holderCon.mItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
