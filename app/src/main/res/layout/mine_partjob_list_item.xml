@@ -33,10 +33,9 @@
             android:id="@+id/pj_list_item_logo"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_gravity="center_vertical"
             android:background="@drawable/img_border_gray"
-            android:padding="1dp"
-            android:scaleType="centerCrop"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/logo_merchant_default" />
 
         <LinearLayout
@@ -57,7 +56,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="美团外卖*派单"
                     android:textColor="@color/font_important"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -85,29 +83,34 @@
                         android:id="@+id/pj_list_item_salary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="110.00"
+                        android:maxWidth="70dp"
                         android:textColor="@color/font_red"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                         android:singleLine="true"
+                        android:ellipsize="end"/>
 
                     <TextView
                         android:id="@+id/pj_list_item_salaryunit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/天"
                         android:textColor="@color/font_normal"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="0.8">
 
                     <TextView
                         android:id="@+id/pj_list_item_wage_settlelength"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
                         android:background="@color/main_yellow"
                         android:padding="2dp"
                         android:textColor="@color/important_dark" />
@@ -126,7 +129,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="长期"
                     android:textColor="@color/font_normal"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -152,7 +154,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="50.3"
                 android:textColor="@color/font_normal"
                 android:textSize="12sp" />
 

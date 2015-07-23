@@ -13,9 +13,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <!--报名详情 => 工作信息 => 工作报酬 =>结算方式  -->
-    <string name="mine_partjob_list_salary_unit_per_hour">元/小时</string>
-    <string name="mine_partjob_list_salary_unit_per_day">元/天</string>
-    <string name="mine_partjob_list_salary_unit_per_month">元/月</string>
+    <string name="mine_partjob_list_salary_unit_per_hour">/小时</string>
+    <string name="mine_partjob_list_salary_unit_per_day">/天</string>
+    <string name="mine_partjob_list_salary_unit_per_month">/月</string>
     <!--报名详情 => 工作信息 => 工作报酬 =>结算方式  -->
     <string name="mine_partjob_detail_settle_length_day">日结</string>
     <string name="mine_partjob_detail_settle_length_week">周结</string>

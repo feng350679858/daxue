@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/logo_merchant_default" />
     <LinearLayout

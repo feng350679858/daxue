@@ -58,10 +58,9 @@ public class IndexMoneyFragment extends BaseFragment {
     private AzService azService;
     private MessageHandler messageHandler;
     private TextView tv_address;
-    private TextView city_more;
+    private TextView city_more,label_more;
     private View mainView;
     private ViewPager viewPager;
-    private ViewGroup viewGroup;
     private AutoMarqueeTextView am_text;
     private ImageView[] pageViews, imageDots;
     private LinearLayout linearLayout_label, linearlout_left, linearlout_right;
@@ -138,7 +137,16 @@ public class IndexMoneyFragment extends BaseFragment {
         });
     }
     private void initView() {
-
+        label_more=(TextView)mainView.findViewById(R.id.label_more);
+        label_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","gone");
+                startActivity(intent);
+            }
+        });
         city_more=(TextView)mainView.findViewById(R.id.partjob_city_more);
         city_more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +158,6 @@ public class IndexMoneyFragment extends BaseFragment {
             }
         });
         viewPager = (ViewPager) mainView.findViewById(R.id.img_advert);
-        viewGroup = (ViewGroup) mainView.findViewById(R.id.viewGroup);
 
         am_text = (AutoMarqueeTextView)mainView.findViewById(R.id.am_text);
 
@@ -583,7 +590,6 @@ public class IndexMoneyFragment extends BaseFragment {
 
 
     public void setAdverts(List<Base01Response.Body.Banner> adverts) {
-        viewGroup.removeAllViews();
         {
             pageViews = new ImageView[adverts.size()];
             for (int i = 0; i < adverts.size(); i++) {
@@ -599,18 +605,8 @@ public class IndexMoneyFragment extends BaseFragment {
                 bitmapUtil.getImage(imageView, banner.getImgurl());
             }
         }
-        {
-            imageDots = new ImageView[adverts.size()];
-            for (int i = 0; i < adverts.size(); i++) {
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(20, 20));
-                imageView.setPadding(20, 0, 20, 0);
-                imageView.setBackgroundResource(i == 0 ? R.drawable.page_indicator_focused : R.drawable.page_indicator);//默认选中第一张图片
-                viewGroup.addView(imageView);
-                imageDots[i] = imageView;
-//			group.getChildAt(i)
-            }
-        }
+
+
         viewPager.setAdapter(new ViewPagerAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
     }

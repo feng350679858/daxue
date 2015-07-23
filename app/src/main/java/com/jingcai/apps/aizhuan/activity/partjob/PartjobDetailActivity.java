@@ -249,7 +249,7 @@ public class PartjobDetailActivity extends BaseActivity {
 
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
-        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, "￥" + mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+        PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit,mParttimejob.getSalary(), mParttimejob.getSalaryunit());
         PartjobListAdapter.setSettlelength(partjob_content_settlelength, mParttimejob.getSettlelength());
         partjob_content_joinnum.setText(mParttimejob.getJoinnum());
         workernum = mParttimejob.getWorkernum();
@@ -271,13 +271,13 @@ public class PartjobDetailActivity extends BaseActivity {
         if ("0".equals(mParttimejob.getHealthlimit()))
             partjob_content_healthlimit.setText("2.不需要健康证");
         else
-            partjob_content_healthlimit.setText("2.需要健康证");
+            partjob_content_healthlimit.setText("2.有健康证");
         if ("0".equals(mParttimejob.getGenderlimit()))
             partjob_content_genderlimit.setText("3.男性");
         else if ("1".equals(mParttimejob.getGenderlimit()))
             partjob_content_genderlimit.setText("3.女性");
         else
-            partjob_content_genderlimit.setText("3.性别不限");
+            partjob_content_genderlimit.setVisibility(View.GONE);
         partjob_content_remarks.setText(mParttimejob.getRemarks());
         if (null != mParttimejob.getSchoolmate_list() && 0!=mParttimejob.getSchoolmate_list().size()) {
             for (Partjob02Response.Partjob02Body.Parttimejob.Schoolmate schoolmate : mParttimejob.getSchoolmate_list()) {

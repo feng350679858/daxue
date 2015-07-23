@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="本周还有%s次取消报名的操作权限，我们将以短信形式提醒商家您已取消本次报名。请您谨慎考虑！"
                 android:textColor="@color/font_assistant"
                 android:textSize="16sp" />
 

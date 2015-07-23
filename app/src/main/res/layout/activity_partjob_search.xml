@@ -21,10 +21,11 @@
 
         <com.jingcai.apps.aizhuan.view.ClearableEditText
             android:maxLines="1"
-            android:paddingLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            android:padding="3dp"
+            android:paddingTop="3dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_toRightOf="@+id/partjob_search_back"
             android:layout_toLeftOf="@+id/tv_cancel"
             android:textColor="@color/font_important"
@@ -50,7 +51,8 @@
             android:layout_height="wrap_content"
             android:padding="7dp"
             android:text="取消"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@color/font_important"
             android:layout_gravity="right|center_vertical" />
     </RelativeLayout>
