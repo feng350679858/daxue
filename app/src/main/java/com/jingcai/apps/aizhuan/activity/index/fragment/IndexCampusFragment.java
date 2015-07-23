@@ -19,6 +19,7 @@ import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaRewardActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
+import com.jingcai.apps.aizhuan.activity.mine.help.HelpProvideListActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -107,7 +108,8 @@ public class IndexCampusFragment extends BaseFragment {
 //                intent.putExtras(bundle);
 //                baseActivity.startActivity(intent);
 
-                baseActivity.startActivity(new Intent(baseActivity, HelpWendaRewardActivity.class));
+//                baseActivity.startActivity(new Intent(baseActivity, HelpWendaRewardActivity.class));
+                baseActivity.startActivity(new Intent(baseActivity, HelpProvideListActivity.class));
             }
         });
 
