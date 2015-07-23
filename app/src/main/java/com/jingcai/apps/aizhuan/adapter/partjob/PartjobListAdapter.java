@@ -59,8 +59,9 @@ public class PartjobListAdapter extends BaseAdapter{
             viewHolder.tv_salary = (TextView)convertView.findViewById(R.id.pj_list_item_salary);
             viewHolder.tv_salary_unit = (TextView)convertView.findViewById(R.id.pj_list_item_salaryunit);
             viewHolder.tv_workdays = (TextView)convertView.findViewById(R.id.pj_list_item_workdays);
-            viewHolder.iv_settlelength = (ImageView)convertView.findViewById(R.id.pj_list_item_wage_settlelength);
+            viewHolder.iv_settlelength = (TextView)convertView.findViewById(R.id.pj_list_item_wage_settlelength);
             viewHolder.iv_label = (ImageView)convertView.findViewById(R.id.pj_list_item_label);
+            viewHolder.tv_label=(TextView)convertView.findViewById(R.id.tv_pj_list_item_label);
             viewHolder.tv_distance_icon = convertView.findViewById(R.id.tv_distance_icon);
             viewHolder.tv_distance = (TextView) convertView.findViewById(R.id.tv_distance);
             viewHolder.tv_distance_unit = convertView.findViewById(R.id.tv_distance_unit);
@@ -79,7 +80,15 @@ public class PartjobListAdapter extends BaseAdapter{
         setWorkdays(viewHolder.tv_workdays, parttimejob.getWorktimetype(), parttimejob.getWorkdays());
         setDistance(viewHolder.tv_distance_icon, viewHolder.tv_distance, viewHolder.tv_distance_unit, parttimejob.getDistance());
         setSalary(viewHolder.tv_salary, viewHolder.tv_salary_unit, parttimejob.getSalary(), parttimejob.getSalaryunit());
-        setLabel(viewHolder.iv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
+        if(AdapterType.MinePartjob == adapterType){
+            setLabel(viewHolder.tv_label,parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
+            viewHolder.tv_label.setVisibility(View.VISIBLE);
+            viewHolder.iv_label.setVisibility(View.GONE);
+        }else {
+            setLabel(viewHolder.iv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
+            viewHolder.tv_label.setVisibility(View.GONE);
+            viewHolder.iv_label.setVisibility(View.VISIBLE);
+        }
         setSettlelength(viewHolder.iv_settlelength, parttimejob.getSettlelength());
 
         return convertView;
@@ -128,31 +137,41 @@ public class PartjobListAdapter extends BaseAdapter{
             } else {
                 iv_label.setImageResource(0);
             }
-        }else if(AdapterType.MinePartjob == adapterType) {
-            //长期兼职显示工作中
-            if("1".equals(worktimetype)){
-                if ("5".equals(label)) {//已取消
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_cancel);
-                }else{  //其他状态
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_working);
-                }
-            }else {
-                if ("1".equals(label)) {//已报名
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_joined);
-                } else if ("2".equals(label)) {//工作中
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_working);
-                } else if ("3".equals(label)) {//休息中
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_resting);
-                } else if ("4".equals(label)) {//已完成
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_finish);
-                } else if ("5".equals(label)) {//已取消
-                    iv_label.setImageResource(R.drawable.mine_partjob_item_status_cancel);
-                } else {
-                    iv_label.setImageResource(0);
-                }
-            }
         }else{
             iv_label.setImageResource(0);
+        }
+    }
+    public void setLabel(TextView iv_label, String worktimetype, String label, AdapterType adapterType) {
+        if (AdapterType.MinePartjob == adapterType) {
+            //长期兼职显示工作中
+            if ("1".equals(worktimetype)) {
+                if ("5".equals(label)) {//已取消
+                    iv_label.setText("已取消");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_cancel));
+                } else {  //其他状态
+                    iv_label.setText("工作中");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_working));
+                }
+            } else {
+                if ("1".equals(label)) {//已报名
+                    iv_label.setText("已报名");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_joined));
+                } else if ("2".equals(label)) {//工作中
+                    iv_label.setText("工作中");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_working));
+                } else if ("3".equals(label)) {//休息中
+                    iv_label.setText("休息中");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_resting));
+                } else if ("4".equals(label)) {//已完成
+                    iv_label.setText("已完成");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_finish));
+                } else if ("5".equals(label)) {//已取消
+                    iv_label.setText("已取消");
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_cancel));
+                } else {
+                    iv_label.setText("");
+                }
+            }
         }
     }
 
@@ -218,8 +237,9 @@ public class PartjobListAdapter extends BaseAdapter{
         protected TextView tv_salary;
         protected TextView tv_salary_unit;
         protected TextView tv_workdays;
-        protected ImageView iv_settlelength;
+        protected TextView iv_settlelength;
         protected ImageView iv_label;
+        protected TextView tv_label;
         protected View tv_distance_icon;
         protected TextView tv_distance;
         protected View tv_distance_unit;

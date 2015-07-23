@@ -57,11 +57,10 @@ public class IndexMoneyFragment extends BaseFragment {
     private AzExecutor azExecutor;
     private AzService azService;
     private MessageHandler messageHandler;
-    private PartjobSearchAdapter searchAdapter;
     private TextView tv_address;
+    private TextView city_more,label_more;
     private View mainView;
     private ViewPager viewPager;
-    private ViewGroup viewGroup;
     private AutoMarqueeTextView am_text;
     private ImageView[] pageViews, imageDots;
     private LinearLayout linearLayout_label, linearlout_left, linearlout_right;
@@ -103,8 +102,8 @@ public class IndexMoneyFragment extends BaseFragment {
         ((TextView)mainView.findViewById(R.id.tv_content)).setText("爱赚");
         ((TextView)mainView.findViewById(R.id.tv_content)).setVisibility(View.VISIBLE);
         ((ImageView)mainView.findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
-        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageDrawable(getResources().getDrawable(R.drawable.search));
         ((ImageView)mainView.findViewById(R.id.iv_func)).setVisibility(View.VISIBLE);
+        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageResource(R.drawable.search);
         ((TextView)mainView.findViewById(R.id.tv_func)).setVisibility(View.INVISIBLE);
         tv_address=(TextView)mainView.findViewById(R.id.tv_back);
         tv_address.setVisibility(View.VISIBLE);
@@ -119,13 +118,11 @@ public class IndexMoneyFragment extends BaseFragment {
         tv_address.setText(currentAreaname);
         tv_address.setTag(currentAreacode);
 
-        searchAdapter = new PartjobSearchAdapter(baseActivity);
-        searchAdapter.initAreaCode(currentAreacode);
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LocationCityActivity.class);
-                intent.putExtra("address",currentAreacode);
+                intent.putExtra("address",tv_address.getTag().toString());
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
@@ -133,16 +130,34 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                intent.putExtra("address",currentAreacode);
+                intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","visible");
                 startActivity(intent);
             }
         });
     }
     private void initView() {
-
-
+        label_more=(TextView)mainView.findViewById(R.id.label_more);
+        label_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","gone");
+                startActivity(intent);
+            }
+        });
+        city_more=(TextView)mainView.findViewById(R.id.partjob_city_more);
+        city_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                intent.putExtra("address",tv_address.getTag().toString());
+                intent.putExtra("cancel","gone");
+                startActivity(intent);
+            }
+        });
         viewPager = (ViewPager) mainView.findViewById(R.id.img_advert);
-        viewGroup = (ViewGroup) mainView.findViewById(R.id.viewGroup);
 
         am_text = (AutoMarqueeTextView)mainView.findViewById(R.id.am_text);
 
@@ -166,8 +181,6 @@ public class IndexMoneyFragment extends BaseFragment {
                     Log.i(TAG, "code=" + code + " name=" + name);
                     tv_address.setTag(code);
                     tv_address.setText(name);
-                    // 刷新区域数据
-                    searchAdapter.initAreaCode(code);
                     // 检索
                     initData();
                 }
@@ -281,7 +294,7 @@ public class IndexMoneyFragment extends BaseFragment {
                 if(null != GlobalConstant.gis) {
                     partjob.setGisx(GlobalConstant.gis.getGisx());
                     partjob.setGisy(GlobalConstant.gis.getGisy());
-                    partjob.setAreacode(GlobalConstant.gis.getAreacode());
+                    partjob.setAreacode(tv_address.getTag().toString());
                     partjob.setAreacode2(GlobalConstant.gis.getAreacode2());
                     partjob.setProvincename(GlobalConstant.gis.getProvincename());
                     partjob.setCityname(GlobalConstant.gis.getCityname());
@@ -359,9 +372,9 @@ public class IndexMoneyFragment extends BaseFragment {
                 }
                 case 8: {
                     if (null != msg.obj) {
-                        showToast("获取推荐位信息出错:" + msg.obj);
+                        showToast("获取广播信息出错:" + msg.obj);
                     } else {
-                        showToast("获取推荐位信息出错");
+                        showToast("获取广播信息出错");
                     }
                     break;
                 }
@@ -385,6 +398,7 @@ public class IndexMoneyFragment extends BaseFragment {
         am_text.setText(buff.toString());
     }
     private void setLabel(List<Busi01Response.Body.Label> list) {
+        linearLayout_label.removeAllViews();
         for (Busi01Response.Body.Label label : list) {
             View convertView = layoutInflator.inflate(R.layout.index_index_label_item, linearLayout_label, false);
             ImageView iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
@@ -408,6 +422,7 @@ public class IndexMoneyFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("labelid", labelid);
                     bundle.putString("labelname", labelname);
+                    intent.putExtra("address",tv_address.getTag().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -418,10 +433,10 @@ public class IndexMoneyFragment extends BaseFragment {
     private volatile int leftHeight = 0, rightHeight = 0;
     private void setRecommand(List<Busi02Response.Body.Recommend> list) {
         leftHeight = rightHeight = 0;
+        linearlout_left.removeAllViews();
+        linearlout_right.removeAllViews();
         int displayWidth = linearlout_right.getWidth();
         for (Busi02Response.Body.Recommend recommend : list) {
-//        for (int i = 0; i < list.size(); i++) {
-//            Busi02Response.Body.Recommend recommend = list.get(i);
             boolean leftFlag = leftHeight <= rightHeight;
             LinearLayout linearLayout = leftFlag ? linearlout_left : linearlout_right;
 
@@ -433,7 +448,6 @@ public class IndexMoneyFragment extends BaseFragment {
                 }catch (Exception e){
                 }
             }
-            //Log.d("==", "leftHeight=" + leftHeight + " -- rightHeight=" + rightHeight + " -- leftFlag=" + leftFlag + " -- height=" + height);
             if(leftFlag){
                 leftHeight += height;
             }else{
@@ -591,18 +605,8 @@ public class IndexMoneyFragment extends BaseFragment {
                 bitmapUtil.getImage(imageView, banner.getImgurl());
             }
         }
-        {
-            imageDots = new ImageView[adverts.size()];
-            for (int i = 0; i < adverts.size(); i++) {
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(20, 20));
-                imageView.setPadding(20, 0, 20, 0);
-                imageView.setBackgroundResource(i == 0 ? R.drawable.page_indicator_focused : R.drawable.page_indicator);//默认选中第一张图片
-                viewGroup.addView(imageView);
-                imageDots[i] = imageView;
-//			group.getChildAt(i)
-            }
-        }
+
+
         viewPager.setAdapter(new ViewPagerAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
     }

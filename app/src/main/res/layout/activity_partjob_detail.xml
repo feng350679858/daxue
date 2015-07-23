@@ -26,10 +26,8 @@
                 <ImageView
                     android:id="@+id/partjob_content_top"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:background="@drawable/img_border_gray"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher2" />
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -42,10 +40,9 @@
                         android:id="@+id/partjob_content_logo"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:background="@drawable/img_border_gray"
-                        android:minHeight="60dp"
+                        android:padding="2dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/mine_profile_default_head_img" />
+                        android:background="@drawable/img_border_gray" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -60,9 +57,8 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="20dp"
                             android:gravity="bottom"
-                            android:text="工作名"
                             android:textColor="@color/font_important"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -70,24 +66,30 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
-
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥"
+                                android:textColor="@color/font_red"
+                                android:textSize="14sp" />
                             <TextView
                                 android:id="@+id/partjob_content_salary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="bottom"
-                                android:text="工资"
-                                android:textColor="@color/red_normal"
-                                android:textSize="16sp" />
+                                android:maxWidth="70dp"
+                                android:textColor="@color/font_red"
+                                android:textSize="14sp"
+                                android:singleLine="true"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:id="@+id/partjob_content_salaryunit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="bottom"
-                                android:text="工资单位"
-                                android:textColor="@color/font_important"
-                                android:textSize="13sp" />
+                                android:textColor="@color/normal_grey"
+                                android:textSize="12sp"
+                                android:singleLine="true"
+                                android:ellipsize="end"/>
 
                             <TextView
                                 android:id="@+id/partjob_content_settlelength"
@@ -95,10 +97,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="15dp"
                                 android:background="@color/main_yellow"
-                                android:gravity="bottom|right"
-                                android:text="结算方式"
+                                android:gravity="center"
+                                android:padding="2dp"
                                 android:textColor="@color/font_important"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
@@ -112,10 +114,8 @@
                                     android:layout_alignParentBottom="true"
                                     android:layout_toLeftOf="@+id/partjob_content_workernum"
                                     android:gravity="right|bottom"
-                                    android:text="已加入人数"
                                     android:textColor="@color/font_red"
-                                    android:textSize="14sp" />
-
+                                    android:textSize="12sp" />
                                 <TextView
                                     android:id="@+id/partjob_content_workernum"
                                     android:layout_width="wrap_content"
@@ -123,8 +123,7 @@
                                     android:layout_alignParentBottom="true"
                                     android:layout_alignParentRight="true"
                                     android:gravity="right|bottom"
-                                    android:text="/工作人数"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </RelativeLayout>
 
                         </LinearLayout>
@@ -145,6 +144,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <View
@@ -160,7 +160,7 @@
                         android:gravity="center"
                         android:text="工作详情"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -182,6 +182,7 @@
                         android:id="@+id/partjob_content_workdays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -205,6 +206,7 @@
                         android:id="@+id/partjob_content_worktime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -228,6 +230,7 @@
                         android:id="@+id/partjob_content_endtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -251,6 +254,8 @@
                         android:id="@+id/partjob_content_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawablePadding="5dp"
                         android:drawableRight="@drawable/location"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
@@ -275,6 +280,7 @@
                         android:id="@+id/partjob_content_workcontent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -297,6 +303,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:orientation="vertical">
 
 
@@ -305,7 +312,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="1.身高："
                             android:textColor="@color/normal_grey"
                             android:textSize="12sp" />
 
@@ -314,7 +320,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="2.是否需要健康证："
                             android:textColor="@color/normal_grey"
                             android:textSize="12sp" />
 
@@ -322,7 +327,6 @@
                             android:id="@+id/partjob_content_genderlimit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3.性别："
                             android:textColor="@color/normal_grey"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -347,6 +351,7 @@
                         android:id="@+id/partjob_content_remarks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -372,13 +377,23 @@
                         android:background="@color/main_yellow" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
+                        android:gravity="left|center_vertical"
                         android:text="已报校友"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/partjob_detail_schoolmate_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:textColor="@color/assist_grey"
+                        android:text="共X人"/>
 
                 </LinearLayout>
 
@@ -389,7 +404,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/normal_grey"
-                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <HorizontalScrollView
@@ -417,8 +433,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_red_disabled"
-                android:text="是否报名"
                 android:textColor="@color/font_important"
                 android:textSize="17sp" />
 

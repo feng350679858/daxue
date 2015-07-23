@@ -45,7 +45,7 @@
                     android:id="@+id/btn_mine_partjob_detail_complain"
                     android:layout_width="50dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/btn_hollow_selector"
+                    android:background="@drawable/btn_yellow_hollow_selector"
                     android:gravity="center"
                     android:text="投诉"
                     android:textColor="@color/main_yellow"
@@ -211,7 +211,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <include layout="@layout/mine_partjob_detail_workday_list_item"/>
+                <include layout="@layout/mine_partjob_detail_workday_list_item" />
 
                 <ListView
                     android:id="@+id/lv_mine_partjob_detail_workday_list"
@@ -230,14 +230,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <include layout="@layout/include_confirm_buttons"/>
-    </LinearLayout>
+        <include layout="@layout/include_confirm_buttons" />
 </LinearLayout>

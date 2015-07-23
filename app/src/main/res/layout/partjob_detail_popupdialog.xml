@@ -66,6 +66,7 @@
 
                             android:layout_marginLeft="15dp"
                             android:text="结算方式"
+                            android:padding="2dp"
                             android:textColor="@color/font_important"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -100,6 +101,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
+                android:scaleType="centerCrop"
                 android:background="#22ffffff"
                 android:padding="3dp"
                 android:src="@drawable/mine_profile_default_head_img" />
@@ -157,8 +159,7 @@
                 android:gravity="center"
                 android:text="你确定要报名吗？"
                 android:textColor="@color/important_dark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <include layout="@layout/include_confirm_buttons"/>
         </LinearLayout>

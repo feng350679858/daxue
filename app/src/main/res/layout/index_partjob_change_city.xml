@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/content_background">
+    android:background="@color/content_background"
+    android:orientation="vertical">
 
     <include layout="@layout/include_header"></include>
 
     <TextView
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="定位到的位置"
         android:textColor="@color/font_assistant"
         android:textSize="16sp" />
@@ -19,37 +19,74 @@
         android:id="@+id/ll_located_address"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@drawable/sys_setting_field_bg">
+        android:background="@drawable/sys_setting_field_bg"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_index_partjob_change_city"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_location"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/icon_location"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="定位中.."
             android:textColor="@color/font_normal"
-            android:text="定位中"
             android:textSize="18sp" />
     </LinearLayout>
 
     <TextView
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="已开通城市"
         android:textColor="@color/font_assistant"
         android:textSize="16sp" />
 
-    <ListView
-        android:id="@+id/lv_index_partjob_change_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_index_partjob_change_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/location_bottom"
+                android:divider="@null"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none" />
 
 
+            <RelativeLayout
+                android:id="@+id/location_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentBottom="true">
+
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/location_bottom_content"
+                    android:background="@color/divider_color" />
+
+                <TextView
+                    android:id="@+id/location_bottom_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="其他城市正在建设中"
+                    android:textColor="@color/assist_grey"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/location_bottom_content"
+                    android:background="@color/divider_color" />
+            </RelativeLayout>
+        </RelativeLayout>
 </LinearLayout>

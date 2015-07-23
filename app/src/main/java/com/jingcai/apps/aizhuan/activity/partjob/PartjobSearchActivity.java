@@ -73,12 +73,16 @@ public class PartjobSearchActivity extends BaseActivity {
     }
     private ClearableEditText mTxtSearchKey;
     private void initHeader(){
+
         ((ImageButton)findViewById(R.id.partjob_search_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        String cancel_visiblity=getIntent().getStringExtra("cancel");
+        if(cancel_visiblity.equals("gone"))
+            ((TextView)findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
