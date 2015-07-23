@@ -15,6 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
@@ -63,7 +65,7 @@ public class MineAccountActivity extends BaseActivity {
 
     @Override
     public void onResume() {
-        //initData();
+        initData();
         super.onResume();
     }
     private void initView() {
@@ -75,9 +77,33 @@ public class MineAccountActivity extends BaseActivity {
             }
         });
 
-       // initComponent();
 
-       // initEvents();
+        findViewById(R.id.ll_gold_account_expense).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineAccountActivity.this, MineGoldExpenseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.ll_mine_gold_account_income).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineAccountActivity.this,MineGoldIncomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.ll_account_reset_pay_psw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineAccountActivity.this,MineResetPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+        initComponent();
+
+        initEvents();
         initEvents();
 
     }
@@ -155,7 +181,7 @@ public class MineAccountActivity extends BaseActivity {
 
     private void fillIncome(ArrayList<Account05Response.Account05Body.Account> accounts) {
         ArrayList<String> xVals = DateUtil.getWeekList();
-        ArrayList< Entry > entries = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>();
 
         float incomeThisWeek = 0f;
         float money = 0f;
@@ -165,12 +191,9 @@ public class MineAccountActivity extends BaseActivity {
             incomeThisWeek +=money;
         }
 
-
+        mTvIncome.setText(StringUtil.getFormatFloat(incomeThisWeek, "#,###"));
     }
 
-    /**
-     * ��ʼ���������
-     */
     private void initBalanceData() {
         new AzExecutor().execute(new Runnable() {
             @Override
@@ -198,7 +221,7 @@ public class MineAccountActivity extends BaseActivity {
             }
         });
     }
-   class MessageHandler extends BaseHandler {
+    class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
         }
@@ -212,7 +235,7 @@ public class MineAccountActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("�˻�����ȡʧ�ܣ�"+msg.obj);
+                    showToast("账户余额获取失败："+msg.obj);
                     break;
                 }
                 case 2: {
@@ -220,7 +243,7 @@ public class MineAccountActivity extends BaseActivity {
                     break;
                 }
                 case 3:{
-                    showToast("�˻������ȡʧ�ܣ�"+msg.obj);
+                    showToast("账户收入获取失败："+msg.obj);
                     break;
                 }
                 default:
@@ -232,10 +255,10 @@ public class MineAccountActivity extends BaseActivity {
 
 
 
-    /**
-     * ������
-     * @param  ����б�
-     */
+
+
+
+
     private void fillBalance(ArrayList<Account01Response.Account01Body.Wallet> wallets) {
         for(int i = 0 ; i < wallets.size(); i++){
             if("freeze".equals(wallets.get(i).getCode())){

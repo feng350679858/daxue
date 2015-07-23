@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.entity.MessageCategoryBean;
-import com.jingcai.apps.aizhuan.entity.TestMessageBean;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +36,21 @@ public class MessageListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private List<TestMessageBean> mMessages;
+    private List<ConversationBean> mMessages;
     private List<MessageCategoryBean> mCategorys;
+    private BitmapUtil mBitmapUtil;
+
+    private OnMessageListClickListener mOnMessageListClickListener;
 
     public MessageListAdapter(Context ctx) {
         mContext = ctx;
         mLayoutInflater = LayoutInflater.from(ctx);
+        mBitmapUtil = new BitmapUtil(ctx);
         initCategory();
+    }
+
+    public void setOnMessageListClickListener(OnMessageListClickListener listener){
+        mOnMessageListClickListener = listener;
     }
 
     private void initCategory() {
@@ -51,8 +60,9 @@ public class MessageListAdapter extends BaseAdapter {
         mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_merchant,"兼职商家",0));
     }
 
-    public void setListData(List<TestMessageBean> messages) {
+    public void setListData(List<ConversationBean> messages) {
         mMessages = messages;
+        notifyDataSetChanged();
     }
 
 
@@ -69,11 +79,17 @@ public class MessageListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (mMessages == null) {
+            return 0;
+        }
         return mMessages.size() + CATEGORY_TYPE_COUNT;        //还有三项为其他的
     }
 
     @Override
     public Object getItem(int position) {
+        if (mMessages == null) {
+            return null;
+        }
         if(position > CATEGORY_TYPE_COUNT){
             return mMessages.get(position - CATEGORY_TYPE_COUNT);
         }else{
@@ -87,7 +103,7 @@ public class MessageListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderCategory holderCat = null;
         ViewHolderConversation holderCon = null;
         int itemViewType = getItemViewType(position);
@@ -100,6 +116,7 @@ public class MessageListAdapter extends BaseAdapter {
                     holderCat.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
                     holderCat.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
                     holderCat.mTvTitle = (TextView) convertView.findViewById(R.id.tv_content);
+                    holderCat.mItem = convertView.findViewById(R.id.layout_line);
                     convertView.setTag(holderCat);
                     break;
                 case VIEW_TYPE_CONVERSATION:
@@ -111,26 +128,9 @@ public class MessageListAdapter extends BaseAdapter {
                     holderCon.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
                     holderCon.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
                     holderCon.mTvTime = (TextView) convertView.findViewById(R.id.tv_time);
+                    holderCon.mItem = convertView.findViewById(R.id.layout_line);
+                    holderCon.mDelete = convertView.findViewById(R.id.btn_account_list_unbind);
                     convertView.setTag(holderCon);
-                    View viewById = convertView.findViewById(R.id.layout_line);
-                    if(null != viewById) {
-                        viewById.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.d(TAG, "---------------click-----");
-                            }
-                        });
-                    }
-                    View btn_account_list_unbind = convertView.findViewById(R.id.btn_account_list_unbind);
-                    if(null != btn_account_list_unbind) {
-                        btn_account_list_unbind.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.d(TAG, "---------------click2-----");
-                            }
-                        });
-                    }
-                    break;
             }
         } else {  //convertView is not null
             switch (itemViewType) {
@@ -143,9 +143,9 @@ public class MessageListAdapter extends BaseAdapter {
             }
         }
         if (null != holderCon) {   //对话
-            TestMessageBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
+            final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
             holderCon.mTvName.setText(message.getName());
-//            holderCon.mIvLevel.setImageResource();  //TODO 等级图片还未确定
+            mBitmapUtil.getImage(holderCon.mIvLogo,message.getLogourl());
             holderCon.mTvContent.setText(message.getContent());
             holderCon.mTvTime.setText(message.getTime());
             int unreadCount = 0;
@@ -157,13 +157,34 @@ public class MessageListAdapter extends BaseAdapter {
             }
             holderCon.mTvBadge.setVisibility(unreadCount <= 0 ? View.INVISIBLE : View.VISIBLE);
             holderCon.mTvBadge.setText(message.getUnread());
-            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);  //TODO logo_url不确定
+//            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);
+            holderCon.mItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mOnMessageListClickListener != null)
+                        mOnMessageListClickListener.onItemClick(position,message);
+                }
+            });
+            holderCon.mDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mOnMessageListClickListener != null)
+                        mOnMessageListClickListener.onDelete(position - CATEGORY_TYPE_COUNT);
+                }
+            });
         } else if (null != holderCat) {  //大类型
             MessageCategoryBean category = mCategorys.get(position);
             holderCat.mIvLogo.setImageResource(category.getLogoResId());
             holderCat.mTvBadge.setVisibility(category.getBadgeCount() <= 0 ? View.INVISIBLE : View.VISIBLE);
             holderCat.mTvBadge.setText(String.valueOf(category.getBadgeCount()));
             holderCat.mTvTitle.setText(category.getTitle());
+            holderCat.mItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mOnMessageListClickListener != null)
+                        mOnMessageListClickListener.onItemClick(position,null);
+                }
+            });
         }
         return convertView;
     }
@@ -172,7 +193,7 @@ public class MessageListAdapter extends BaseAdapter {
         public ImageView mIvLogo;
         public TextView mTvTitle;
         public TextView mTvBadge;
-
+        public View mItem;
     }
 
     private class ViewHolderConversation {
@@ -182,5 +203,17 @@ public class MessageListAdapter extends BaseAdapter {
         public TextView mTvContent;
         public TextView mTvBadge;
         public ImageView mIvLevel;
+        public View mItem;
+        public View mDelete;
+    }
+
+    public interface OnMessageListClickListener{
+        void onItemClick(int position,ConversationBean bean);
+
+        /**
+         * 滑动删除按钮,从对话开始计数
+         * @param position 对话所处的位置
+         */
+        void onDelete(int position);
     }
 }

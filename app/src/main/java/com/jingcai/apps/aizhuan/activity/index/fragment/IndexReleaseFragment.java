@@ -54,11 +54,11 @@ public class IndexReleaseFragment extends Fragment implements View.OnClickListen
                 break;
             }
             case R.id.button_show_unread: {
-                mainActivity.showUnread();
+                mainActivity.showUnread("0");
                 break;
             }
             case R.id.button_reset: {
-                mainActivity.reset();
+                mainActivity.reset("0");
                 break;
             }
             case R.id.button_jishi_help: {

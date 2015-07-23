@@ -40,4 +40,9 @@
     <color name="mine_partjob_item_status_resting">#c889d8</color>
     <color name="mine_partjob_item_status_cancel">#989898</color>
     <color name="mine_partjob_item_status_finish">#F83240</color>
+    <!-- 用户等级背景 -->
+    <color name="student_level_1_5">#ff9c00</color>
+    <color name="student_level_6_10">#ff6c00</color>
+    <color name="student_level_11_15">#ff0000</color>
+    <color name="student_level_16_20">#ba6dbe</color>
 </resources>

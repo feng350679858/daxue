@@ -9,10 +9,6 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.adapter.message.CommentListAdapter;
-import com.jingcai.apps.aizhuan.entity.TestCommentsBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Json Ding on 2015/7/14.
@@ -51,19 +47,7 @@ public class MessageCommentActivity extends BaseActivity {
     private void initView() {
         mLvComments = (ListView) findViewById(R.id.lv_comments);
         mListAdapter = new CommentListAdapter(this);
-        List<TestCommentsBean> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            if (i % 2 == 0) {
-                list.add(new TestCommentsBean(null, "林" + i, null,
-                        "回复" + i + "爷：我最美！我最美！我最美！我最美！我最美！",
-                        "昨天", "回复" + i + "爷：我才最美！！！！", i + "爷", null, "萌萌哒"));
-            } else {
-                list.add(new TestCommentsBean(null, "林" + i, null,
-                        "回复" + i + "爷：我最美！我最美！我最美！我最美！我最美！",
-                        "昨天", null, i + "爷", null, "萌萌哒"));
-            }
-        }
-        mListAdapter.setListData(list);
+//        mListAdapter.setListData(list);
         mLvComments.setAdapter(mListAdapter);
     }
 

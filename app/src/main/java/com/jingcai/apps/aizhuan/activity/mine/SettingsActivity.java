@@ -88,22 +88,21 @@ public class SettingsActivity extends BaseActivity {
             public void onClick(View v) {
                 umengShareUtil.openShare();
 
-//                final PopupDialog popupDialog = new PopupDialog(getActivity(), R.layout.other_share_dialog);
-//                popupDialog.setAction(R.id.ll_other_share_qq, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //QQ����
+  //              final PopupDialog popupDialog = new PopupDialog(getActivity(), R.layout.other_share_dialog);
+ //             popupDialog.setAction(R.id.ll_other_share_qq, new View.OnClickListener() {
+ //                   @Override
+  //                  public void onClick(View v) {
+ //                      //QQ����
 //
-//                    }
-//                }).setAction(R.id.ll_other_share_weixin,new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //΢�ź���
-//                    }
-//                }).setAction(R.id.ll_other_share_friend,new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //����Ȧ
+  //                  }}).
+  //                    setAction(R.id.ll_other_share_weixin,new View.OnClickListener() {
+  //                  @Override
+//                   public void onClick(View v) {
+ //                       //΢�ź���
+ //                   }
+ //               }).setAction(R.id.ll_other_share_friend,new View.OnClickListener() {
+ //                   @Override
+ //                  public void onClick(View v) {//����Ȧ
 //                    }
 //                }).setAction(R.id.ll_other_share_weibo,new View.OnClickListener() {
 //                    @Override
@@ -119,9 +118,9 @@ public class SettingsActivity extends BaseActivity {
 //                    @Override
 //                    public void onClick(View v) {
 //                        //ȡ��
-//                        popupDialog.dismiss();
-//                    }
-//                }).show();
+//                       popupDialog.dismiss();
+//                  }
+ //               }).show();
             }
         });
     }
@@ -301,37 +300,34 @@ public class SettingsActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-//                case 0: {
-//                    boolean isVisiable = (boolean) msg.obj;
-//                    Preferences.setIsVisiable(SettingsActivity.this, isVisiable);
-//                    StringBuffer sb = new StringBuffer("sdfsfds");
-//                    sb.append(isVisiable ? "sdfs" : "sdfs");
-//                    sb.append("dfsdfsd");
-//                    showToast(sb.toString());
-//                    break;
-//                }
-//                case 1: {
-//                    showToast("sdfsdfsd:" + msg.obj);
-//                    break;
-//                }
-//                case 2: {
-////
-//                    Preferences.loginFail(SettingsActivity.this);
-//                    new JpushUtil(SettingsActivity.this).logout();
-//                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//
-//                    SettingsActivity.this.finish();
-//                    break;
-//                }
-//                case 3: {
-//                    showToast("xczxczx" + msg.obj);
-//                    break;
-//                }
-//                default: {
-//                    super.handleMessage(msg);
-//                }
+                case 0: {
+                    boolean isVisiable = (boolean) msg.obj;
+                    StringBuffer sb = new StringBuffer("校友");
+                    sb.append(isVisiable ? "能" : "不能");
+                    sb.append("看见你的报名情况");
+                    showToast(sb.toString());
+                    break;
+                }
+                case 1: {
+                    showToast("设置失败:" + msg.obj);
+                    break;
+                }
+                case 2: {
+                    new JpushUtil(SettingsActivity.this).logout();
+                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    SettingsActivity.this.finish();
+                    break;
+                }
+                case 3: {
+                    showToast("xczxczx" + msg.obj);
+                    break;
+                }
+                default: {
+                    super.handleMessage(msg);
+                }
             }
         }
     }

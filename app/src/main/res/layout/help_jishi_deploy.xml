@@ -404,6 +404,6 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_yellow_boarded_bg_selector"
             android:text="立即求助"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

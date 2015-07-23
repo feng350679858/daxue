@@ -1,10 +1,7 @@
 package com.jingcai.apps.aizhuan.util;
 
 import android.app.Application;
-import android.util.Log;
 
-import com.easemob.chat.EMChat;
-import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
@@ -25,18 +22,8 @@ public class ApplicationEx extends Application {
 
         Preferences.initClass(this);
 		UserSubject.init(Preferences.getInstance());
-        try {
-            //环信im
-            EMChat.getInstance().init(this);
-            /**
-             * debugMode == true 时为打开，sdk 会在log里输入调试信息
-             * @param debugMode
-             * 在做代码混淆的时候需要设置成false
-             */
-            EMChat.getInstance().setDebugMode(GlobalConstant.debugFlag);
-        } catch (Exception e) {
-            Log.e(TAG,"Init EMChat failed,Please check.");
-        }
+
+        HXHelper.getInstance().init(this);  //环信初始化
 
 
 

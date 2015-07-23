@@ -7,10 +7,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 
 public class UnreadMsgService extends Service {
     private final String TAG = UnreadMsgService.class.getSimpleName();
-    public static final int REQUEST_INTERVAL = 1 * 1000;
+    public static final int REQUEST_INTERVAL = 30 * 1000;
 
     public class SimpleBinder extends Binder {
         public UnreadMsgService getService() {
@@ -45,7 +46,7 @@ public class UnreadMsgService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "---------onDestroy-----------");
-        synchronized (this){
+        synchronized (this) {
             unreadMsgTask.shutdownFlag = true;
             notify();
         }
@@ -76,15 +77,19 @@ public class UnreadMsgService extends Service {
 //                }
 //            }
 
-            while(!shutdownFlag){
+            while (!shutdownFlag) {
                 try {
                     if (waitFlag) {
                         synchronized (this) {
                             wait();
                         }
-                    }else{
+                    } else {
                         //获取远程数据
-                        boardCastCount("1", count ++);
+                        Intent intent = new Intent("aizhuan.activity.help.HelpEvaluateActivity");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        //boardCastCount("1", count ++);
+                        boardCastCount("1", HXHelper.getInstance().getAllUnreadMsgCount());
                         Thread.sleep(REQUEST_INTERVAL);
                     }
                 } catch (InterruptedException e) {
@@ -103,24 +108,35 @@ public class UnreadMsgService extends Service {
     }
 
     public void startCount() {
-        synchronized (unreadMsgTask){
+        synchronized (unreadMsgTask) {
             unreadMsgTask.waitFlag = false;
             unreadMsgTask.notify();
         }
     }
 
     public void reset() {
-        synchronized (unreadMsgTask){
+        synchronized (unreadMsgTask) {
             boardCastCount("1", unreadMsgTask.count = 0);
             unreadMsgTask.waitFlag = true;
             unreadMsgTask.notify();
         }
     }
 
-    public void showUnread() {
-        boardCastCount("0", 1);
+    /**
+     * 显示一个小红点
+     * 类型：0校园 1消息
+     * @param type 类型
+     */
+    public void showUnread(String type) {
+        boardCastCount(type, 1);
     }
-    public void markAsRead() {
-        boardCastCount("0", 0);
+
+    /**
+     * 消失小红点
+     * 类型：0校园 1消息
+     * @param type 类型
+     */
+    public void markAsRead(String type) {
+        boardCastCount(type, 0);
     }
 }

@@ -58,6 +58,14 @@ public class BaseActivity extends Activity {
         }
     }
 
+    public int getScreenHeight() {
+        return screen_height;
+    }
+
+    public int getScreenWidth() {
+        return screen_width;
+    }
+
     /**
      * 在对应控件上，显示输入法
      *
