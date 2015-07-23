@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;

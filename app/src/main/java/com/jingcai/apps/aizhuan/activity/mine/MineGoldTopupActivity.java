@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -299,7 +299,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             if ("gold".equals(wallets.get(i).getCode())) {
                 mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
                 String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
-                ((TextView) findViewById(R.id.tv_mine_gold_rest)).setText(gold + "金");
+                ((TextView) findViewById(R.id.tv_mine_gold_topup_rest)).setText(gold + "金");
             }
         }
     }

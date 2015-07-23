@@ -11,8 +11,14 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
-import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineHelpActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineResetpaypswActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
+import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
 /**
@@ -66,5 +72,44 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        mainView.findViewById(R.id.ll_mine_contact_service).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineContactServiceActivity.class);
+                startActivity(intent);
+            }
+        });
+        mainView.findViewById(R.id.ll_mine_student_certification).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineStudentCertificationActivity.class);
+                startActivity(intent);
+            }
+        });
+        mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineHelpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
+                startActivity(intent);
+            }
+        });
+        mainView.findViewById(R.id.ll_mine_credit).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity,MineCreditActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
+
 }
