@@ -12,6 +12,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
+    <TextView
+        android:id="@+id/tv_pj_list_item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,16 +33,16 @@
             android:id="@+id/pj_list_item_logo"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_gravity="center_vertical"
             android:background="@drawable/img_border_gray"
-            android:scaleType="centerCrop"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/logo_merchant_default" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:orientation="vertical">
 
             <LinearLayout
@@ -46,7 +56,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="美团外卖*派单"
                     android:textColor="@color/font_important"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -54,14 +63,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.8">
+                    android:layout_weight="2">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -74,37 +83,45 @@
                         android:id="@+id/pj_list_item_salary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="110.00"
+                        android:maxWidth="70dp"
                         android:textColor="@color/font_red"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                         android:singleLine="true"
+                        android:ellipsize="end"/>
 
                     <TextView
                         android:id="@+id/pj_list_item_salaryunit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/天"
                         android:textColor="@color/font_normal"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="0.8">
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/pj_list_item_wage_settlelength"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:background="@color/main_yellow"
+                        android:padding="2dp"
+                        android:textColor="@color/important_dark" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginTop="2dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -112,7 +129,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="长期"
                     android:textColor="@color/font_normal"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -132,22 +148,22 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/icon_location" />
 
+
             <TextView
                 android:id="@+id/tv_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="50.3"
-                android:textSize="12sp"
-                android:textColor="@color/font_normal" />
+                android:textColor="@color/font_normal"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_distance_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="km"
-                android:textSize="12sp"
-                android:textColor="@color/font_normal" />
+                android:textColor="@color/font_normal"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

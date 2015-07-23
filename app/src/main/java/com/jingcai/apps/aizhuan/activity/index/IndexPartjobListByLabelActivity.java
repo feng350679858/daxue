@@ -36,7 +36,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
     private XListView partjobListView;
     private View layout_empty;
     private PartjobListAdapter partjobListAdapter;
-    private String labelid, labelname;
+    private String labelid, labelname,areacode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
 
         labelid = getIntent().getStringExtra("labelid");
         labelname = getIntent().getStringExtra("labelname");
+        areacode=getIntent().getStringExtra("address");
         if(StringUtil.isEmpty(labelid) || StringUtil.isEmpty(labelname)){
             showToast("标签参数错误");
             finish();
@@ -149,7 +150,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                         job.setProvincename(gis.getProvincename());
                         job.setCityname(gis.getCityname());
                     } else {
-                        job.setAreacode(GlobalConstant.AREA_CODE_HANGZHOU);
+                        job.setAreacode(areacode);
                     }
                     job.setStart(String.valueOf(mCurrentStart));
                     job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));

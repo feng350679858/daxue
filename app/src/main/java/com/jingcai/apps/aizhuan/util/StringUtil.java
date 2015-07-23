@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
  * Created by Json Ding on 2015/4/29.
  */
 public class StringUtil {
-    private static DecimalFormat moneyFormat = new DecimalFormat(".00");
+    private static DecimalFormat moneyFormat = new DecimalFormat(".0");
     private static DecimalFormat distnceFormat = new DecimalFormat("0.##");
     public static boolean isNotEmpty(String str){
         if(null != str && !"".equals(str)){
@@ -39,7 +39,7 @@ public class StringUtil {
 
     public static String money(String str){
         if(isEmpty(str)){
-            return "0.00";
+            return "0.0";
         }
         try {
             return moneyFormat.format(Double.parseDouble(str));

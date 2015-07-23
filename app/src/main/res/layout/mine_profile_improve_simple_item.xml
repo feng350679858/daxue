@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+<include layout="@layout/include_header"/>
+    <com.jingcai.apps.aizhuan.view.ClearableEditText
+        android:id="@+id/tv_mine_profile_improve_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/widget_clearable_edittext_del"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="@color/font_important"
+        android:textColorHint="@color/font_assistant"
+        android:textSize="16sp" />
+</LinearLayout>

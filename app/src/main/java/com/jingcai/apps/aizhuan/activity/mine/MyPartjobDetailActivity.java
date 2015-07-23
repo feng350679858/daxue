@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine.activity;
+package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,6 +44,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
     private TextView mTvWorkDaysEmptyTip;
     private View layout_worktimetype_long;
     private TextView tv_worktimetype_long;
+    private TextView tv_worktimetype_long_status;
 
     //按钮
     private Button mBtnCancle;  //取消报名
@@ -63,12 +64,12 @@ public class MyPartjobDetailActivity extends BaseActivity {
     private TextView mTvPartjobSalary;
     private TextView mTvPartjobSalaryUnit;
     private TextView mTvPartjobWorkdays;
-    private ImageView mIvPartjobSettlelength;
-    private ImageView mIvPartjobLabel;
+    private TextView mIvPartjobSettlelength;
+    private TextView mIvPartjobLabel;
     private View mTvDistanceIcon;
     private TextView mTvDistance;
     private View mTvDistanceUnit;
-
+    private PartjobListAdapter partjobListAdapter;
     /**
      * 接受到的数据
      */
@@ -103,15 +104,17 @@ public class MyPartjobDetailActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView() {
-
+        partjobListAdapter = new PartjobListAdapter(PartjobListAdapter.AdapterType.MinePartjob,this);
         //兼职信息
         mIvPartjobLogo = (ImageView) findViewById(R.id.pj_list_item_logo);
         mTvPartjobTitle = (TextView) findViewById(R.id.pj_list_item_title);
         mTvPartjobSalary = (TextView) findViewById(R.id.pj_list_item_salary);
         mTvPartjobSalaryUnit = (TextView) findViewById(R.id.pj_list_item_salaryunit);
         mTvPartjobWorkdays = (TextView) findViewById(R.id.pj_list_item_workdays);
-        mIvPartjobSettlelength = (ImageView) findViewById(R.id.pj_list_item_wage_settlelength);
-        mIvPartjobLabel = (ImageView) findViewById(R.id.pj_list_item_label);
+        mIvPartjobSettlelength = (TextView) findViewById(R.id.pj_list_item_wage_settlelength);
+        mIvPartjobLabel = (TextView) findViewById(R.id.tv_pj_list_item_label);
+        mIvPartjobLabel.setVisibility(View.VISIBLE);
+        ((ImageView) findViewById(R.id.pj_list_item_label)).setVisibility(View.GONE);
         mTvDistanceIcon = findViewById(R.id.tv_distance_icon);
         mTvDistance = (TextView) findViewById(R.id.tv_distance);
         mTvDistanceUnit = findViewById(R.id.tv_distance_unit);
@@ -141,10 +144,12 @@ public class MyPartjobDetailActivity extends BaseActivity {
 
         layout_worktimetype_long = findViewById(R.id.layout_workday);
         tv_worktimetype_long = (TextView) findViewById(R.id.tv_mine_partjob_detail_workdays_list_item_workday);
-
+        tv_worktimetype_long_status=(TextView)findViewById(R.id.tv_mine_partjob_detail_workdays_list_status);
         //按钮
         mBtnCancle = (Button) findViewById(R.id.btn_confirm_false);
+        mBtnCancle.setText("取消报名");
         mBtnContactMerchant = (Button) findViewById(R.id.btn_confirm_true);
+        mBtnContactMerchant.setText("联系商家");
         mBtnComplain = (Button) findViewById(R.id.btn_mine_partjob_detail_complain);
 
         mBtnCancle.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +262,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         PartjobListAdapter.setWorkdays(mTvPartjobWorkdays, mJoininfo.getWorktimetype(), mJoininfo.getWorkdays());
         PartjobListAdapter.setDistance(mTvDistanceIcon, mTvDistance, mTvDistanceUnit, mJoininfo.getDistance());
         PartjobListAdapter.setSalary(mTvPartjobSalary, mTvPartjobSalaryUnit, mJoininfo.getSalary(), mJoininfo.getSalaryunit());
-        PartjobListAdapter.setLabel(mIvPartjobLabel, mJoininfo.getWorktimetype(), mJoininfo.getLabel(), PartjobListAdapter.AdapterType.MinePartjob);
+        partjobListAdapter.setLabel(mIvPartjobLabel, mJoininfo.getWorktimetype(), mJoininfo.getLabel(), PartjobListAdapter.AdapterType.MinePartjob);
         PartjobListAdapter.setSettlelength(mIvPartjobSettlelength, mJoininfo.getSettlelength());
 
         PartjobListAdapter.setSalary(mTvWorkSalary, mTvWorkSalaryUnit, mJoininfo.getSalary(), mJoininfo.getSalaryunit());
@@ -283,9 +288,11 @@ public class MyPartjobDetailActivity extends BaseActivity {
 
             tv_worktimetype_long.setText("长期兼职");
             if(isCancel){
-                tv_worktimetype_long.setCompoundDrawablesWithIntrinsicBounds(R.drawable.partjob_detail_popup_time, 0, R.drawable.mine_partjob_detail_workday_list_cancel, 0);
+                tv_worktimetype_long_status.setText("已取消");
+                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_cancel));
             }else{
-                tv_worktimetype_long.setCompoundDrawablesWithIntrinsicBounds(R.drawable.partjob_detail_popup_time, 0, R.drawable.mine_partjob_detail_workday_list_working, 0);
+                tv_worktimetype_long_status.setText("工作中");
+                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_working));
             }
         }else {
             layout_worktimetype_long.setVisibility(View.GONE);

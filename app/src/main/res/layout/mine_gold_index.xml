@@ -124,6 +124,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <LinearLayout
+            android:id="@+id/ll_mine_gold_account_income"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -156,6 +157,7 @@
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_gold_account_expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
@@ -231,6 +233,7 @@
 
             android:background="@color/divider_color" />
         <LinearLayout
+            android:id="@+id/ll_account_reset_pay_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"

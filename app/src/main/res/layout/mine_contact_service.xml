@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="@drawable/ic_launcher"
+                    android:text="@string/mine_contact_service_qq"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="asdfsdafsdf"
+                    android:text="@string/mine_contact_service_tel"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="temnple"
+                    android:text="@string/mine_contact_service_wechat"
                     android:textColor="@color/font_assistant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -199,5 +199,5 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_arrow_right" />
         </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

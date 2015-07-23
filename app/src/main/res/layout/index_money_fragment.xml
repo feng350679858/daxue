@@ -20,15 +20,8 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/img_advert"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="80dp"
                 android:background="@color/white" />
-
-            <LinearLayout
-                android:id="@+id/viewGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal" />
 
             <com.jingcai.apps.aizhuan.view.AutoMarqueeTextView
                 android:id="@+id/am_text"
@@ -41,9 +34,9 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:paddingBottom="10dp"
+                android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:text=""
@@ -66,13 +59,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:padding="5dp"
                         android:text="优质精选"
                         android:layout_centerVertical="true"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/label_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -83,7 +78,7 @@
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
                 <HorizontalScrollView
@@ -107,8 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linearLayout_jingxuan"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:background="@color/white">
+                android:orientation="vertical">
 
 
                 <RelativeLayout
@@ -123,9 +117,11 @@
                         android:padding="5dp"
                         android:layout_centerVertical="true"
                         android:text="同城短期"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                     <TextView
+                        android:id="@+id/partjob_city_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -135,7 +131,7 @@
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/font_important"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
                 <LinearLayout

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.mine.activity.MineAccountActivity;
-import com.jingcai.apps.aizhuan.activity.mine.activity.SettingsActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
 
