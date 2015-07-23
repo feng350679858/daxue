@@ -22,7 +22,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/btn_hollow"
         android:paddingBottom="10dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"

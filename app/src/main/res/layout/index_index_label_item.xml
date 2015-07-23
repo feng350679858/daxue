@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/logo_merchant_default" />
     <LinearLayout
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="爱秀"
-        android:textColor="@color/font_normal"
+        android:textColor="@color/normal_grey"
         android:textSize="14dp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="展现最美的自我"
-        android:textColor="@color/font_normal"
+        android:textColor="@color/assist_grey"
         android:textSize="12dp" />
     </LinearLayout>
 </LinearLayout>

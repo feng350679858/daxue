@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.jingcai.apps.aizhuan.R;
@@ -32,8 +33,6 @@ import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PixelUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
-import com.github.mikephil.charting.data.Entry;
-
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -182,7 +181,7 @@ public class MineAccountActivity extends BaseActivity {
 
     private void fillIncome(ArrayList<Account05Response.Account05Body.Account> accounts) {
         ArrayList<String> xVals = DateUtil.getWeekList();
-        ArrayList< Entry > entries = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>();
 
         float incomeThisWeek = 0f;
         float money = 0f;
