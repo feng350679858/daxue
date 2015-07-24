@@ -26,6 +26,24 @@ public class Busi02Response extends BaseResponse<Busi02Response.Body> {
             private String areaname;
             private String width;
             private String height;
+            private String salary;
+            private String salaryunit;
+
+            public String getSalary() {
+                return salary;
+            }
+
+            public void setSalary(String salary) {
+                this.salary = salary;
+            }
+
+            public String getSalaryunit() {
+                return salaryunit;
+            }
+
+            public void setSalaryunit(String salaryunit) {
+                this.salaryunit = salaryunit;
+            }
 
             public String getId() {
                 return id;

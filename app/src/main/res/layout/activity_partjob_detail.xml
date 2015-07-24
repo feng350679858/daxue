@@ -40,9 +40,9 @@
                         android:id="@+id/partjob_content_logo"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="@drawable/img_border_gray"
                         android:padding="2dp"
-                        android:scaleType="fitCenter"
-                        android:background="@drawable/img_border_gray" />
+                        android:scaleType="fitCenter" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -66,30 +66,32 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="￥"
                                 android:textColor="@color/font_red"
                                 android:textSize="14sp" />
+
                             <TextView
                                 android:id="@+id/partjob_content_salary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
                                 android:maxWidth="70dp"
-                                android:textColor="@color/font_red"
-                                android:textSize="14sp"
                                 android:singleLine="true"
-                                android:ellipsize="end"/>
+                                android:textColor="@color/font_red"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/partjob_content_salaryunit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/normal_grey"
-                                android:textSize="12sp"
+                                android:ellipsize="end"
                                 android:singleLine="true"
-                                android:ellipsize="end"/>
+                                android:textColor="@color/normal_grey"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/partjob_content_settlelength"
@@ -116,6 +118,7 @@
                                     android:gravity="right|bottom"
                                     android:textColor="@color/font_red"
                                     android:textSize="12sp" />
+
                                 <TextView
                                     android:id="@+id/partjob_content_workernum"
                                     android:layout_width="wrap_content"
@@ -256,7 +259,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/location"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -358,6 +360,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/schoolmate_visibility"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -378,35 +381,25 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:gravity="left|center_vertical"
                         android:text="已报校友"
                         android:textColor="@color/font_important"
                         android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/partjob_detail_schoolmate_num"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="20dp"
                         android:gravity="center"
-                        android:textSize="12sp"
+                        android:text="共X人"
                         android:textColor="@color/assist_grey"
-                        android:text="共X人"/>
+                        android:textSize="12sp" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/schoolmate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/normal_grey"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
 
                 <HorizontalScrollView
                     android:id="@+id/horizontalScrollView"

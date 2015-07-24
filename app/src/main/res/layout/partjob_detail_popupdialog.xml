@@ -40,11 +40,17 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:text="￥"
+                            android:textColor="@color/red_normal"
+                            android:textSize="16sp" />
+                        <TextView
                             android:id="@+id/partjob_detail_popup_salary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:text="工资"
                             android:textColor="@color/red_normal"
                             android:textSize="16sp" />
 
@@ -53,7 +59,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:text="工资单位"
                             android:textColor="@color/normal_grey"
                             android:textSize="13sp" />
 
@@ -62,10 +67,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/main_yellow"
-                            android:gravity="bottom"
+                            android:gravity="center"
 
                             android:layout_marginLeft="15dp"
-                            android:text="结算方式"
                             android:padding="2dp"
                             android:textColor="@color/font_important"
                             android:textSize="14sp" />
@@ -101,10 +105,9 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:scaleType="centerCrop"
-                android:background="#22ffffff"
-                android:padding="3dp"
-                android:src="@drawable/mine_profile_default_head_img" />
+                android:scaleType="fitCenter"
+                android:background="@drawable/img_border_white"
+                android:padding="4dp" />
         </RelativeLayout>
 
         <LinearLayout

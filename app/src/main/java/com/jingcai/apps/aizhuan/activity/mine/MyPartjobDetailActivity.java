@@ -192,7 +192,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
                 dialog.show();
             }
         });
-   /*     mBtnComplain.setOnClickListener(new View.OnClickListener() {
+        mBtnComplain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mJoininfo != null) {
@@ -206,7 +206,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
                     showToast("兼职信息努力加载中，请稍后~");
                 }
             }
-        });*/
+        });
     }
 
     @Override
@@ -240,6 +240,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
                             messageHandler.postMessage(0, joininfo1);
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -272,7 +273,16 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mTvWorkWorktime.setText(mJoininfo.getWorktime());
         //工作地点
         mTvWorkAddress.setText(mJoininfo.getAddress());
-
+        if(null!=mJoininfo.getGisx()&&0!=Double.parseDouble(mJoininfo.getGisx())
+                && null!=mJoininfo.getGisy()&& 0!=Double.parseDouble(mJoininfo.getGisy())) {
+            mTvWorkAddress.setCompoundDrawables(null, null,getResources().getDrawable(R.drawable.location), null);
+            mTvWorkAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMap(mJoininfo.getGisx(), mJoininfo.getGisy());
+                }
+            });
+        }
         //1为取消状态
         boolean isCancel = "1".equals(mJoininfo.getIscancel());
         if (isCancel) {
@@ -315,6 +325,20 @@ public class MyPartjobDetailActivity extends BaseActivity {
                 mLvWorkDays.setAdapter(new MinePartjobWorkdayListAdapter(this, dateList, isCancel));
             }
         }
+    }
+    /**
+     * 显示地图
+     *
+     * @param gisx
+     * @param gisy
+     */
+    public void showMap(String gisx, String gisy) {
+        Intent intent = new Intent(MyPartjobDetailActivity.this, PartjobDetailMapActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("gisx", gisx);
+        bundle.putString("gisy", gisy);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

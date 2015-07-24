@@ -153,7 +153,7 @@
         <activity android:name=".activity.mine.MineContactServiceActivity"/>
         <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
         <activity android:name=".activity.mine.WeixinNumberActivity"/>
-
+        <activity android:name=".activity.mine.ComplainActivity"/>
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
         <meta-data android:name="EASEMOB_APPKEY" android:value="lee513579#izhuanc2ctest" />
