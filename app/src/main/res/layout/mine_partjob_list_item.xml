@@ -136,9 +136,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:background="@drawable/grey_alpha_radius_bg"
             android:orientation="horizontal">
 
             <ImageView
@@ -147,7 +149,7 @@
                 android:layout_height="15dp"
                 android:layout_marginBottom="1dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/icon_location" />
+                android:src="@drawable/partjob_pop_address" />
 
 
             <TextView
