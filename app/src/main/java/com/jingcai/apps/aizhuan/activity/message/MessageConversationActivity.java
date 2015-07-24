@@ -127,7 +127,7 @@ public class MessageConversationActivity extends BaseActivity{
 
 
     private void loadHistory() {
-        mAdapter = new ConversationAdapter(this);
+        mAdapter = new ConversationAdapter(this,mConversationBean);
         EMConversation conversation = EMChatManager.getInstance().getConversation(mReceiver);
         if (null == conversation) {
             showToast("会话异常，请重试");

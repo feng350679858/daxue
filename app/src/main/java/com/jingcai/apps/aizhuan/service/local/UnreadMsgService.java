@@ -85,9 +85,9 @@ public class UnreadMsgService extends Service {
                         }
                     } else {
                         //获取远程数据
-                        Intent intent = new Intent("aizhuan.activity.help.HelpEvaluateActivity");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+//                        Intent intent = new Intent("aizhuan.activity.help.HelpEvaluateActivity");
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(intent);
                         //boardCastCount("1", count ++);
                         boardCastCount("1", HXHelper.getInstance().getAllUnreadMsgCount());
                         Thread.sleep(REQUEST_INTERVAL);
