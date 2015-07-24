@@ -8,18 +8,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
-import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
-import com.jingcai.apps.aizhuan.activity.help.HelpWendaRewardActivity;
-import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
-import com.jingcai.apps.aizhuan.activity.mine.help.HelpProvideListActivity;
+import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -30,7 +25,6 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -109,7 +103,7 @@ public class IndexCampusFragment extends BaseFragment {
 //                baseActivity.startActivity(intent);
 
 //                baseActivity.startActivity(new Intent(baseActivity, HelpWendaRewardActivity.class));
-                baseActivity.startActivity(new Intent(baseActivity, HelpProvideListActivity.class));
+                baseActivity.startActivity(new Intent(baseActivity, MineHelpListActivity.class));
             }
         });
 

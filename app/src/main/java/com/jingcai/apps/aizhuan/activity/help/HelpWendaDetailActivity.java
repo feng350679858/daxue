@@ -76,14 +76,27 @@ public class HelpWendaDetailActivity extends BaseActivity {
                         .setParentView(iv_func)
                         .setContentView(contentView)
                         .build();
-                View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
-                tv_pop_abuse_report.setVisibility(View.VISIBLE);
-                tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {//举报
-                        Log.d("==", "-----------tv_pop_abuse_report---");
-                    }
-                });
+                {
+                    View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
+                    tv_pop_abuse_report.setVisibility(View.VISIBLE);
+                    tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {//举报
+                            Log.d("==", "-----------tv_pop_abuse_report---");
+                        }
+                    });
+                }
+                {
+                    //TODO发布作者，使用匿名
+                    View tv_pop_anonymous = groupWin.findViewById(R.id.tv_pop_anonymous);
+                    tv_pop_anonymous.setVisibility(View.VISIBLE);
+                    tv_pop_anonymous.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {//使用匿名
+                            Log.d("==", "-----------tv_pop_abuse_report---");
+                        }
+                    });
+                }
                 groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
             }
         });

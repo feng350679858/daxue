@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/content_background"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layout_jishi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
-            android:id="@+id/layout_help_content_jishi"
+            android:id="@+id/layout_jishi_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -50,7 +50,7 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/tv_help_status_jishi"
+                    android:id="@+id/tv_jishi_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -62,19 +62,20 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="140dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_item_content_bg"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_jishi_content"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:elegantTextHeight="true"
                     android:gravity="center_vertical"
-                    android:lineSpacingMultiplier="1.3"
+                    android:lineSpacingMultiplier="1.2"
                     android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"
                     android:textColor="@color/important_dark"
                     android:textSize="16sp" />
@@ -98,13 +99,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_cancel2" />
+                android:src="@drawable/icon_share_qq" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btn_comment"
+                android:id="@+id/btn_jishi_comment"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
@@ -130,7 +130,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/btn_evaluate"
+                android:id="@+id/btn_jishi_evaluate"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
@@ -139,7 +139,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/btn_reward"
+                android:id="@+id/btn_jishi_reward"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
@@ -153,10 +153,11 @@
         android:id="@+id/layout_wenda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
-            android:id="@+id/layout_help_content_wenda"
+            android:id="@+id/layout_wenda_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -184,17 +185,16 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/tv_income_label"
+                    android:id="@+id/tv_wenda_income_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="5dp"
-                    android:text="收入："
+                    android:text="收入:"
                     android:textColor="@color/normal_grey"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_income_money"
+                    android:id="@+id/tv_wenda_income_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -204,7 +204,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_help_status_wenda"
+                    android:id="@+id/tv_wenda_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -214,21 +214,52 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/layout_wenda_answer"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/field_divider" />
+
+                <TextView
+                    android:id="@+id/tv_wenda_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.3"
+                    android:maxLines="4"
+                    android:padding="5dp"
+                    android:text="        真的只有我知道。。。。。。。。ddddddd真的只有我知道。。。。\n哈哈哈哈aaaaaa\n。。。。ddddddd\n\n"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/field_divider" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_wenda_question"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_item_content_bg"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_wenda_question"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:elegantTextHeight="true"
                     android:gravity="center_vertical"
-                    android:lineSpacingMultiplier="1.3"
+                    android:lineSpacingMultiplier="1.2"
                     android:maxLines="3"
                     android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"
                     android:textColor="@color/important_dark"
@@ -242,13 +273,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_cancel2" />
+                android:src="@drawable/icon_share_qq" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -264,7 +294,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btn_view_answer"
+                android:id="@+id/btn_wenda_answer"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
@@ -274,7 +304,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/btn_view_question"
+                android:id="@+id/btn_wenda_question"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
@@ -283,7 +313,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/btn_reedit"
+                android:id="@+id/btn_wenda_reedit"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"

@@ -36,7 +36,7 @@
         android:showDividers="middle">
 
         <RadioButton
-            android:id="@+id/cb_jishi"
+            android:id="@+id/rb_jishi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/yellow_btn_bg_selector"
@@ -48,7 +48,7 @@
             android:textSize="16sp" />
 
         <RadioButton
-            android:id="@+id/cb_wenda"
+            android:id="@+id/rb_wenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/yellow_btn_bg_selector"

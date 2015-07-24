@@ -10,6 +10,19 @@
     android:showDividers="middle">
 
     <TextView
+        android:id="@+id/tv_pop_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_connect"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="联系客服"
+        android:textColor="@color/item_selected_color"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/tv_pop_abuse_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,6 +34,7 @@
         android:textColor="@color/item_selected_color"
         android:textSize="14sp"
         android:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_pop_share"
         android:layout_width="wrap_content"
