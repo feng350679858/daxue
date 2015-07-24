@@ -599,6 +599,7 @@ public class MessageConversationActivity extends BaseActivity{
             abortBroadcast();
             //发送方
             String username = intent.getStringExtra("from");
+            HXHelper.getInstance().resetUnreadMsgCountByUsername(username);
             Log.d(TAG,"MessageConversationActivity receive a new Message from "+username);
             if (username != null) {
                 if(username.equals(mConversationBean.getStudentid()))

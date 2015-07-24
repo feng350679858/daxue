@@ -9,7 +9,6 @@ import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMGroupManager;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
@@ -76,9 +75,7 @@ public class HXHelper {
                     @Override
                     public void onSuccess() {
 
-                        //以下两句代码确保在登录的情况下调用
-                        //加载所有群组
-                        EMGroupManager.getInstance().loadAllGroups();
+                        //登录的情况下调用
                         //加载所有的对话
                         EMChatManager.getInstance().loadAllConversations();
                         Log.d(TAG, "登陆聊天服务器成功！username:" + username + " pwd:" + username);

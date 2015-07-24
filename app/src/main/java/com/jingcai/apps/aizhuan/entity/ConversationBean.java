@@ -4,18 +4,12 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.util.DateUtils;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
-import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 import java.util.Date;
 
@@ -81,38 +75,9 @@ public class ConversationBean implements Parcelable{
             this.logourl = "http://img3.imgtn.bdimg.com/it/u=3681476745,3832605124&fm=21&gp=0.jpg";
             return;
         }
-        getStudentInfo(azService,studentid);
     }
 
-    private void getStudentInfo(final AzService azService, final String studentid) {
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Stu02Request req = new Stu02Request();
-                final Stu02Request.Student stu = req.new Student();
-                stu.setStudentid(studentid);
-                req.setStudent(stu);
-                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
-                    @Override
-                    public void success(Stu02Response response) {
-                        ResponseResult result = response.getResult();
-                        Stu02Response.Stu02Body stu02Body = response.getBody();
-                        Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
-                        student.setStudentid(studentid);
-                        if("0".equals(result.getCode())) {
-                            ConversationBean.this.name = student.getName();
-                            ConversationBean.this.logourl = student.getLogopath();
-                        }
-                    }
-                    @Override
-                    public void fail(AzException e) {
-                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
-                    }
-                });
-            }
-        });
 
-    }
 
     public String getStudentid() {
         return studentid;

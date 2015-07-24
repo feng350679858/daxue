@@ -13,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.TextMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
@@ -46,7 +50,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_message_fragment, container, false);
-
+        showProgressDialog("加载消息列表中...");
         initHeader();
 
         initView();
@@ -93,12 +97,31 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             bean = new ConversationBean(baseActivity, con);
             beans.add(bean);
         }
+
         mMessageListAdapter.setListData(beans);
+        closeProcessDialog();
     }
 
     private void initHeader() {
         TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         tvTitle.setText("消息");
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String to = "fc0fdc3a872146bd8ab5e4d3c3b95c34";
+                EMConversation conversation = EMChatManager.getInstance().getConversation(to);
+                EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+                message.setReceipt(to);
+                TextMessageBody body = new TextMessageBody("打开通道");
+                message.addBody(body);
+                try {
+                    EMChatManager.getInstance().sendMessage(message);
+                } catch (EaseMobException e) {
+                    Log.e(TAG,"send test message failed.");
+                }
+                conversation.addMessage(message);
+            }
+        });
         mBaseView.findViewById(R.id.ib_back).setVisibility(View.INVISIBLE);
         ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_message_bird);
