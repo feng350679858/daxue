@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 
 /**
@@ -35,6 +36,19 @@ public class HelpEvaluateActivity extends BaseActivity {
         setContentView(R.layout.help_evaluate);
 
         initView();
+
+//        new AzExecutor().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(300);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                messageHandler.postMessage(0);
+//            }
+//        });
+        btn_evaluate.setEnabled(true);
     }
 
     private void initView() {
@@ -90,6 +104,7 @@ public class HelpEvaluateActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
+                    finish();
                     break;
                 }
                 default: {

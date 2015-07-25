@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/mine_help_header" />
+
+    <com.markmao.pulltorefresh.widget.XListView xmlns:xlv="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+        android:id="@+id/xlv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_header"
+        android:divider="@color/divider_color"
+        android:dividerHeight="5dp"
+        android:headerDividersEnabled="false"/>
+
+</RelativeLayout>

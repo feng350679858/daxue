@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -64,8 +65,7 @@ public class HelpCommentAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.help_wenda_comment_list_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.tv_comment_like = (TextView) convertView.findViewById(R.id.tv_comment_like);
-            viewHolder.tv_comment_like = (TextView) convertView.findViewById(R.id.tv_comment_like);
+            viewHolder.tv_comment_like = (CheckBox) convertView.findViewById(R.id.tv_comment_like);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -79,7 +79,7 @@ public class HelpCommentAdapter extends BaseAdapter {
         }else{
             convertView.setBackgroundResource(R.drawable.list_item_bg);
         }
-        viewHolder.tv_comment_like.setEnabled(position % 2 == 1);
+        viewHolder.tv_comment_like.setChecked(position % 2 == 1);
         viewHolder.tv_comment_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//赞
@@ -136,7 +136,7 @@ public class HelpCommentAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public Base04Response.Body.Region region;
-        public TextView tv_comment_like;
+        public CheckBox tv_comment_like;
     }
 
     public interface Callback{

@@ -50,6 +50,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/layout_help"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -67,7 +68,7 @@
             android:text="帮TA"
             android:textColor="@color/normal_grey"
             android:textSize="14sp" />
-
+<!--
         <TextView
             android:id="@+id/tv_reward"
             android:layout_width="wrap_content"
@@ -92,6 +93,6 @@
             android:text="编辑"
             android:textColor="@color/normal_grey"
             android:textSize="14sp"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
     </FrameLayout>
 </LinearLayout>

@@ -3,14 +3,27 @@
     android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_more_pop"
+    android:divider="@drawable/pop_divider"
+    android:dividerPadding="5dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:divider="@drawable/pop_divider"
-    android:showDividers="middle"
-    android:dividerPadding="5dp">
+    android:showDividers="middle">
 
     <TextView
-        android:id="@+id/tv_abuse_report"
+        android:id="@+id/tv_pop_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_connect"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="联系客服"
+        android:textColor="@color/item_selected_color"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_pop_abuse_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/icon_abuse_report"
@@ -19,9 +32,24 @@
         android:padding="10dp"
         android:text="举报"
         android:textColor="@color/item_selected_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_pop_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_share"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="分享"
+        android:textColor="@color/item_selected_color"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_pop_anonymous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/icon_anonymous"
@@ -30,9 +58,11 @@
         android:padding="10dp"
         android:text="使用匿名"
         android:textColor="@color/item_selected_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_pop_reedit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/icon_reedit"
@@ -41,9 +71,11 @@
         android:padding="10dp"
         android:text="再次编辑"
         android:textColor="@color/item_selected_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_pop_reward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/icon_reward"
@@ -52,5 +84,6 @@
         android:padding="10dp"
         android:text="打赏"
         android:textColor="@color/item_selected_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 </LinearLayout>
