@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="我要投诉："
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_mine_partjob_detail_complain_logopath"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/img_border_gray"
+                android:scaleType="fitCenter"
+                android:padding="2dp"
+                android:src="@drawable/logo_merchant_default" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_mine_partjob_detail_complain_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="谷歌"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_mine_partjob_detail_complain_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="left|top"
+            android:hint="尽管吐槽吧！其他的交给我们！"
+            android:inputType="textMultiLine"
+            android:lines="15"
+            android:padding="10dp"
+            android:textColorHint="@color/font_assistant"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_mine_partjob_detail_complain_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_yellow_boarded_bg_selector"
+            android:text="提交投诉"
+            android:textColor="@color/important_dark"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

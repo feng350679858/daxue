@@ -43,50 +43,13 @@
         android:textColor="@color/font_assistant"
         android:textSize="16sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ListView
-                android:id="@+id/lv_index_partjob_change_city"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/location_bottom"
-                android:divider="@null"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none" />
+    <ListView
+        android:id="@+id/lv_index_partjob_change_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" />
 
 
-            <RelativeLayout
-                android:id="@+id/location_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_alignParentBottom="true">
-
-                <View
-                    android:layout_width="80dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/location_bottom_content"
-                    android:background="@color/divider_color" />
-
-                <TextView
-                    android:id="@+id/location_bottom_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="其他城市正在建设中"
-                    android:textColor="@color/assist_grey"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="80dp"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/location_bottom_content"
-                    android:background="@color/divider_color" />
-            </RelativeLayout>
-        </RelativeLayout>
 </LinearLayout>
