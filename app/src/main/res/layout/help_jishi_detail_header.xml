@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <include layout="@layout/index_campus_list_item_title" />
+
+<!--        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/help_item_content_bg"
+            android:elegantTextHeight="true"
+            android:lineSpacingMultiplier="1.2"
+            android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n\n\n\n\n\n内容请仔细想想慢慢想仔细想想慢慢想想想慢慢想\n想想慢慢想"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/help_item_content_bg"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elegantTextHeight="true"
+                android:lineSpacingMultiplier="1.2"
+                android:text="求助内容\n\n\n\n\n请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_gender_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:text="只限女生"
+                android:textColor="@color/normal_grey"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include layout="@layout/index_campus_list_item_jishi" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/divider_color" />
+</LinearLayout>

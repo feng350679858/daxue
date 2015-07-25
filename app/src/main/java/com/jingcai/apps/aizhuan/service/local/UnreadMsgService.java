@@ -11,7 +11,8 @@ import com.jingcai.apps.aizhuan.util.HXHelper;
 
 public class UnreadMsgService extends Service {
     private final String TAG = UnreadMsgService.class.getSimpleName();
-    public static final int REQUEST_INTERVAL = 30 * 1000;
+    public static final int REQUEST_INTERVAL = 60 * 2 * 1000;
+//    public static final int REQUEST_INTERVAL = 10 * 1000;
 
     public class SimpleBinder extends Binder {
         public UnreadMsgService getService() {
@@ -114,7 +115,7 @@ public class UnreadMsgService extends Service {
         }
     }
 
-    public void reset() {
+    public void freezeCount() {
         synchronized (unreadMsgTask) {
             boardCastCount("1", unreadMsgTask.count = 0);
             unreadMsgTask.waitFlag = true;

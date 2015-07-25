@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/help_item_jishi_help2"
+            android:drawablePadding="10dp"
+            android:text="帮助中，等待完成"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/cb_tip"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mine_help_text_yellow_bg"
+            android:button="@null"
+            android:checked="true"
+            android:clickable="false"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="剩余时间 12:16:10"
+            android:textColor="@color/important_dark"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/field_divider" />
+
+    <include layout="@layout/mine_help_jishi_process"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/field_divider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/help_item_jishi_help2"
+        android:drawablePadding="10dp"
+        android:padding="5dp"
+        android:text="帮助信息"
+        android:textColor="@color/important_dark"
+        android:textSize="16sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/field_divider"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/content_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="酬谢金额："
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="10元"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="发布时间："
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="2015-07-17 12:00"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="求助内容："
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="隐私内容："
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_share_qq" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="匿名xx"
+            android:textColor="@color/important_dark"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_view_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_white_boarded_bg_selector"
+            android:text="查看评论"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_action"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_yellow_boarded_bg_selector"
+            android:text="取消求助"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

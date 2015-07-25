@@ -158,7 +158,7 @@ public class MainActivity extends BaseFragmentActivity {
         Log.d("==", "--------------onStop-----");
         if (!isAppOnForeground()) {//app 进入后台
             Log.d("==", "--------------进入后台-----");
-            unreadMsgService.reset();
+            unreadMsgService.freezeCount();
         }
         unregisterReceiver(mReceiver);
         unregisterReceiver(broadcastReceiver);
@@ -262,8 +262,8 @@ public class MainActivity extends BaseFragmentActivity {
     public void startCount() {
         unreadMsgService.startCount();
     }
-    public void reset(String type) {
-        unreadMsgService.reset();
+    public void freezeCount(String type) {
+        unreadMsgService.freezeCount();
     }
 
     /**

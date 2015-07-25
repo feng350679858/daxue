@@ -33,7 +33,7 @@ public class PayPwdWin {
         mPopWin = PopupWin.Builder.create(baseActivity)
                 .setParentView(parentView)
                 .setContentView(contentView)
-                .setFocusable(false)
+//                .setFocusable(false)
                 .build();
         mPopWin.setAction(R.id.iv_cancel, new View.OnClickListener() {
             @Override

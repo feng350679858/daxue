@@ -101,8 +101,11 @@
     <!-- 支付密码弹出框密码样式样式 -->
     <style name="pop_pay_text">
         <item name="android:gravity">center</item>
-        <item name="android:padding">15dp</item>
-        <item name="android:textSize">26sp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/important_dark</item>
     </style>
     <style name="pop_pay_psw_text" parent="pop_pay_text">
@@ -112,6 +115,8 @@
     
     <style name="pop_pay_pad_text" parent="pop_pay_text">
         <item name="android:background">@drawable/list_item_bg</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
         <item name="android:clickable">true</item>
     </style>
 

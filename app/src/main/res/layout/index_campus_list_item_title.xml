@@ -23,19 +23,19 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp">
+            android:layout_width="40dp"
+            android:layout_height="40dp">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/icon_cancel2" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_share_qq" />
 
             <TextView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="bottom|right"
-                android:background="@color/main_yellow"
+                android:background="@drawable/help_grade"
                 android:gravity="center"
                 android:text="V1"
                 android:textColor="#FFF"
@@ -91,7 +91,7 @@
             android:layout_marginRight="5dp"
             android:background="@color/main_yellow"
             android:gravity="center"
-            android:text="100金"
+            android:text="2.5元"
             android:textColor="@color/important_dark"
             android:textSize="14sp" />
     </LinearLayout>

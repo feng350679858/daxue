@@ -19,7 +19,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/help_item_content_bg"
             android:elegantTextHeight="true"
-            android:lineSpacingMultiplier="1.3"
+            android:lineSpacingMultiplier="1.2"
             android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n\n\n\n\n\n内容请仔细想想慢慢想仔细想想慢慢想想想慢慢想\n想想慢慢想"
             android:textColor="@color/important_dark"
             android:textSize="16sp" />
