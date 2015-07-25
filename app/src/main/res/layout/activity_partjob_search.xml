@@ -57,7 +57,47 @@
             android:textSize="14sp"
             android:textStyle="bold" />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_index_pj_search_history"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
 
+        <RelativeLayout
+            android:padding="15dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/font_assistant"
+                android:text="搜索历史"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/icon_index_pj_search_history" />
+
+            <Button
+                android:id="@+id/btn_index_pj_search_history_delete"
+                android:layout_alignParentRight="true"
+                android:layout_width="13dp"
+                android:layout_height="16dp"
+                android:background="@drawable/icon_index_pj_search_del" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <ListView
+            android:divider="@null"
+            android:id="@+id/index_pj_search_history_list_lv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"></ListView>
+    </LinearLayout>
 
     <include layout="@layout/index_partjob_list"></include>
 

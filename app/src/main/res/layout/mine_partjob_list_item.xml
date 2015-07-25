@@ -140,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:gravity="center"
+            android:id="@+id/mine_partjob_list_item_location_bg"
             android:background="@drawable/grey_alpha_radius_bg"
             android:orientation="horizontal">
 
