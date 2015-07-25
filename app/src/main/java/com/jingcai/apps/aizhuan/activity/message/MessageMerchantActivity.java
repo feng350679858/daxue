@@ -85,7 +85,6 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     }
 
     private void initData() {
-        //TODO 接入服务端接口
         if(actionLock.tryLock()) {
             showProgressDialog("商家赶来中...");
             final Context context = this;
@@ -143,7 +142,7 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mCurrentSelectedItem = (MerchantListAdapter.ViewHolder)view.getTag();
-        final PopupDialog dialog = new PopupDialog(this,R.layout.dialog_comfirm_contact_merchant);
+        final PopupDialog dialog = new PopupDialog(this,R.layout.comfirm_contact_merchant_dialog);
         View contentView = dialog.getContentView();
         //logo
         ((ImageView)contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(mCurrentSelectedItem.iv_logo.getDrawable());

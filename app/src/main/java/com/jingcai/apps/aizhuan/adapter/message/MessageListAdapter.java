@@ -1,10 +1,15 @@
 package com.jingcai.apps.aizhuan.adapter.message;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,7 +17,15 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.entity.MessageCategoryBean;
+import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
+import com.jingcai.apps.aizhuan.util.AzException;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.SmileUtils;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +116,7 @@ public class MessageListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position,View convertView, ViewGroup parent) {
         ViewHolderCategory holderCat = null;
         ViewHolderConversation holderCon = null;
         int itemViewType = getItemViewType(position);
@@ -140,13 +153,25 @@ public class MessageListAdapter extends BaseAdapter {
                 case VIEW_TYPE_CONVERSATION:
                     holderCon = (ViewHolderConversation) convertView.getTag();
                     break;
+                default:
+                    throw new IllegalArgumentException("unknown item view type :"+itemViewType);
             }
+        }
+        if (convertView != null) {
+            convertView.setTranslationX(0);
         }
         if (null != holderCon) {   //对话
             final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
-            holderCon.mTvName.setText(message.getName());
-            mBitmapUtil.getImage(holderCon.mIvLogo,message.getLogourl());
-            holderCon.mTvContent.setText(message.getContent());
+            //如果姓名和头像的地址未获取到，则从服务端重新获取
+//            Log.i(TAG,"position:"+position+"\nname:"+message.getName()+"\nlogo:"+message.getLogourl());
+            if(StringUtil.isEmpty(message.getName()) || StringUtil.isEmpty(message.getLogourl())){
+                getStudentInfo(message,holderCon.mTvName,holderCon.mIvLogo);
+            }else{
+                holderCon.mTvName.setText(message.getName());
+                mBitmapUtil.getImage(holderCon.mIvLogo, message.getLogourl());
+            }
+
+            holderCon.mTvContent.setText(SmileUtils.getSmiledText(mContext,message.getContent()));
             holderCon.mTvTime.setText(message.getTime());
             int unreadCount = 0;
             try {
@@ -157,7 +182,7 @@ public class MessageListAdapter extends BaseAdapter {
             }
             holderCon.mTvBadge.setVisibility(unreadCount <= 0 ? View.INVISIBLE : View.VISIBLE);
             holderCon.mTvBadge.setText(message.getUnread());
-//            holderCon.mIvLogo.setImageResource(R.drawable.icon_index_message_list_item_comment);
+
             holderCon.mItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -165,11 +190,24 @@ public class MessageListAdapter extends BaseAdapter {
                         mOnMessageListClickListener.onItemClick(position,message);
                 }
             });
+            final View cView = convertView;
             holderCon.mDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnMessageListClickListener != null)
-                        mOnMessageListClickListener.onDelete(position - CATEGORY_TYPE_COUNT);
+                    if(mOnMessageListClickListener != null) {
+                        final ObjectAnimator animator = ObjectAnimator.ofFloat(cView, "translationX", -cView.getWidth());
+                        animator.setInterpolator(new AnticipateOvershootInterpolator());
+                        animator.setDuration(750);
+                        animator.start();
+                        animator.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                mOnMessageListClickListener.onDelete(position - CATEGORY_TYPE_COUNT, message.getStudentid());
+                                mMessages.remove(position - CATEGORY_TYPE_COUNT);
+                                notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             });
         } else if (null != holderCat) {  //大类型
@@ -187,6 +225,48 @@ public class MessageListAdapter extends BaseAdapter {
             });
         }
         return convertView;
+    }
+
+    private void getStudentInfo(final ConversationBean conversation, final TextView mTvName,final  ImageView mIvLogo) {
+        final AzService azService = new AzService(mContext);
+
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu02Request req = new Stu02Request();
+                final Stu02Request.Student stu = req.new Student();
+                stu.setStudentid(conversation.getStudentid());
+                req.setStudent(stu);
+                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
+                    @Override
+                    public void success(Stu02Response response) {
+                        ResponseResult result = response.getResult();
+                        Stu02Response.Stu02Body stu02Body = response.getBody();
+                        final Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
+                        if("0".equals(result.getCode())) {
+                            ((Activity) mContext).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //给传入的姓名TextView和头像ImageView赋值
+                                    final String name = student.getName();
+                                    final String logopath = student.getLogopath();
+                                    mTvName.setText(name);
+                                    mBitmapUtil.getImage(mIvLogo, logopath);
+                                    conversation.setName(name);
+                                    conversation.setLogourl(logopath);
+                                }
+                            });
+
+                        }
+                    }
+                    @Override
+                    public void fail(AzException e) {
+                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
+                    }
+                });
+            }
+        });
+
     }
 
     private class ViewHolderCategory {
@@ -213,7 +293,8 @@ public class MessageListAdapter extends BaseAdapter {
         /**
          * 滑动删除按钮,从对话开始计数
          * @param position 对话所处的位置
+         * @param username 对方用户名
          */
-        void onDelete(int position);
+        void onDelete(int position,String username);
     }
 }

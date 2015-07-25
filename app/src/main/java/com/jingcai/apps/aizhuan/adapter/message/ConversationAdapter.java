@@ -31,6 +31,8 @@ import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.common.ShowBigImage;
+import com.jingcai.apps.aizhuan.entity.ConversationBean;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.ConversationImageCache;
@@ -69,12 +71,14 @@ public class ConversationAdapter extends BaseAdapter {
     private List<EMMessage> mMessages;   //所有的聊天
     private Hashtable<String, Timer> timers;
     private BitmapUtil mBitmapUtil;
+    private ConversationBean mConversationBean;
 
-    public ConversationAdapter(Context ctx){
+    public ConversationAdapter(Context ctx,ConversationBean bean){
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         mBitmapUtil = new BitmapUtil(ctx);
         timers = new Hashtable<>();
+        mConversationBean = bean;
     }
 
     /**
@@ -211,7 +215,12 @@ public class ConversationAdapter extends BaseAdapter {
         }
 
         //设置用户头像  todo 根据UserSubject中的头像url设置用户头像
-//        setUserAvatar(message, holder.iv_avatar);
+        if(message.direct == EMMessage.Direct.SEND) {
+            mBitmapUtil.getImage(holder.iv_avatar, UserSubject.getLogourl());
+        }else{
+            mBitmapUtil.getImage(holder.iv_avatar,mConversationBean.getLogourl());
+        }
+        message.setUnread(true);
         switch (message.getType()) {
             // 根据消息type显示item
             case IMAGE: // 图片
