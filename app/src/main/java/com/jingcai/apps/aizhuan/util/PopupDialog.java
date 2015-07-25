@@ -15,8 +15,12 @@ import com.jingcai.apps.aizhuan.R;
 
 /**
  * 弹出指定布局的dialog,布局的gravity确定其显示的位置
+ *
+ * 这个类不可继续使用，使用更能更全的PopupWin
+ * @see com.jingcai.apps.aizhuan.util.PopupWin
  * Created by Json Ding on 2015/5/6.
  */
+@Deprecated
 public class PopupDialog  {
     private Context mContext;
     private View mContentView;

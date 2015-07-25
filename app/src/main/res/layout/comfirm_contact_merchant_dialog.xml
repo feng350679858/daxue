@@ -30,8 +30,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            app:border_color="@color/white"
-            app:border_width="2dp"
             android:src="@drawable/logo_merchant_default" />
     </RelativeLayout>
 
