@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -70,6 +72,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
     private TextView mTvDistance;
     private View mTvDistanceUnit;
     private PartjobListAdapter partjobListAdapter;
+    private PopupWin connectionWin;
     /**
      * 接受到的数据
      */
@@ -88,7 +91,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         initView();
     }
 
-    private void initHeader(){
+    private void initHeader() {
         ((TextView) findViewById(R.id.tv_content)).setText("报名详情");
         findViewById(R.id.iv_bird_badge).setVisibility(View.GONE);
         findViewById(R.id.iv_func).setVisibility(View.GONE);
@@ -100,11 +103,12 @@ public class MyPartjobDetailActivity extends BaseActivity {
             }
         });
     }
+
     /**
      * 初始化控件
      */
     private void initView() {
-        partjobListAdapter = new PartjobListAdapter(PartjobListAdapter.AdapterType.MinePartjob,this);
+        partjobListAdapter = new PartjobListAdapter(PartjobListAdapter.AdapterType.MinePartjob, this);
         //兼职信息
         mIvPartjobLogo = (ImageView) findViewById(R.id.pj_list_item_logo);
         mTvPartjobTitle = (TextView) findViewById(R.id.pj_list_item_title);
@@ -144,7 +148,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
 
         layout_worktimetype_long = findViewById(R.id.layout_workday);
         tv_worktimetype_long = (TextView) findViewById(R.id.tv_mine_partjob_detail_workdays_list_item_workday);
-        tv_worktimetype_long_status=(TextView)findViewById(R.id.tv_mine_partjob_detail_workdays_list_status);
+        tv_worktimetype_long_status = (TextView) findViewById(R.id.tv_mine_partjob_detail_workdays_list_status);
         //按钮
         mBtnCancle = (Button) findViewById(R.id.btn_confirm_false);
         mBtnCancle.setText("取消报名");
@@ -166,30 +170,37 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mBtnContactMerchant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PopupDialog dialog = new PopupDialog(MyPartjobDetailActivity.this, R.layout.comfirm_contact_merchant_dialog);
-                View contentView = dialog.getContentView();
-                //logo
-                ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(mIvPartjobLogo.getDrawable());
-                //title
-                ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText(mJoininfo.getName());
-                //phone
-                ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(mJoininfo.getPhone());
-                //2 button
-                contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + mJoininfo.getPhone()));
-                        startActivity(intent);
-                    }
-                });
-                dialog.show();
+                if (null == connectionWin) {
+                    View parentView = MyPartjobDetailActivity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(MyPartjobDetailActivity.this).inflate(R.layout.comfirm_contact_merchant_dialog, null);
+
+                    connectionWin = PopupWin.Builder.create(MyPartjobDetailActivity.this)
+                            .setParentView(parentView)
+                            .setContentView(contentView)
+                            .build();
+                    //logo
+                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(mIvPartjobLogo.getDrawable());
+                    //title
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText(mJoininfo.getName());
+                    //phone
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(mJoininfo.getPhone());
+                    //2 button
+                    contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            connectionWin.dismiss();
+                        }
+                    });
+                    contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + mJoininfo.getPhone()));
+                            startActivity(intent);
+                        }
+                    });
+                }
+                connectionWin.show();
             }
         });
         mBtnComplain.setOnClickListener(new View.OnClickListener() {
@@ -273,9 +284,9 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mTvWorkWorktime.setText(mJoininfo.getWorktime());
         //工作地点
         mTvWorkAddress.setText(mJoininfo.getAddress());
-        if(null!=mJoininfo.getGisx()&&0!=Double.parseDouble(mJoininfo.getGisx())
-                && null!=mJoininfo.getGisy()&& 0!=Double.parseDouble(mJoininfo.getGisy())) {
-            mTvWorkAddress.setCompoundDrawables(null, null,getResources().getDrawable(R.drawable.location), null);
+        if (null != mJoininfo.getGisx() && 0 != Double.parseDouble(mJoininfo.getGisx())
+                && null != mJoininfo.getGisy() && 0 != Double.parseDouble(mJoininfo.getGisy())) {
+            mTvWorkAddress.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.location), null);
             mTvWorkAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -291,20 +302,20 @@ public class MyPartjobDetailActivity extends BaseActivity {
         }
 
         //长期兼职
-        if("1".equals(mJoininfo.getWorktimetype())){
+        if ("1".equals(mJoininfo.getWorktimetype())) {
             layout_worktimetype_long.setVisibility(View.VISIBLE);
             mLvWorkDays.setVisibility(View.GONE);
             mTvWorkDaysEmptyTip.setVisibility(View.GONE);
 
             tv_worktimetype_long.setText("长期兼职");
-            if(isCancel){
+            if (isCancel) {
                 tv_worktimetype_long_status.setText("已取消");
                 tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_cancel));
-            }else{
+            } else {
                 tv_worktimetype_long_status.setText("工作中");
                 tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_working));
             }
-        }else {
+        } else {
             layout_worktimetype_long.setVisibility(View.GONE);
             //时间表
             String workDays = mJoininfo.getWorkdays();
@@ -326,6 +337,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
             }
         }
     }
+
     /**
      * 显示地图
      *
