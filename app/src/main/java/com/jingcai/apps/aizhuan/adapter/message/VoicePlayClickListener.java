@@ -115,16 +115,6 @@ public class VoicePlayClickListener implements View.OnClickListener {
 
             // 如果是接收的消息
             if (message.direct == EMMessage.Direct.RECEIVE) {
-                try {
-                    if (!message.isAcked) {
-                        message.isAcked = true;
-                        // 告知对方已读这条消息
-                        if (chatType != ChatType.GroupChat)
-                            EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-                    }
-                } catch (Exception e) {
-                    message.isAcked = false;
-                }
                 if (!message.isListened() && iv_read_status != null && iv_read_status.getVisibility() == View.VISIBLE) {
                     // 隐藏自己未播放这条语音消息的标志
                     iv_read_status.setVisibility(View.INVISIBLE);
@@ -167,7 +157,7 @@ public class VoicePlayClickListener implements View.OnClickListener {
             if (message.status == EMMessage.Status.SUCCESS) {
                 File file = new File(voiceBody.getLocalUrl());
                 if (file.exists() && file.isFile())
-                    playVoice(voiceBody.getLocalUrl());
+                    playVoice(file.getAbsolutePath());
                 else
                     EMLog.e(TAG, "voice file not exist");
 
