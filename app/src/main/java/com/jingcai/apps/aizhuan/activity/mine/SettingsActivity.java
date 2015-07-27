@@ -15,7 +15,6 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
-import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -24,6 +23,7 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu05.Stu05Response;
 import com.jingcai.apps.aizhuan.service.business.sys.sys05.Sys05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 import com.jingcai.apps.aizhuan.util.VersionUtil;
@@ -313,7 +313,10 @@ public class SettingsActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
+                    UserSubject.loginFail();
                     new JpushUtil(SettingsActivity.this).logout();
+                    HXHelper.getInstance().logout();  //环信连接
+
                     Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

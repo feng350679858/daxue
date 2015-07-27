@@ -2,6 +2,7 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.app.Application;
 
+import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
@@ -49,12 +50,13 @@ public class ApplicationEx extends Application {
 //		}
 
 		//=============JPush==================
-//		JpushUtil jpushUtil = new JpushUtil(this);
-//		jpushUtil.init();
-//
-//		if(UserSubject.isLogin()){
-//			jpushUtil.login(UserSubject.getStudentid());
-//		}
+		JpushUtil jpushUtil = new JpushUtil(this);
+		jpushUtil.init();
+
+		if(UserSubject.isLogin()){
+			jpushUtil.login(UserSubject.getStudentid());
+			HXHelper.getInstance().loginOnEMChatServer(UserSubject.getStudentid());  //环信连接
+		}
 	}
 
 	@Override
