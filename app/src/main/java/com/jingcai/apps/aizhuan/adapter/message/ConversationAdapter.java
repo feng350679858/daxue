@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.ConversationImageCache;
 import com.jingcai.apps.aizhuan.util.ImagePathUtils;
+import com.jingcai.apps.aizhuan.util.PixelUtil;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
 
 import java.io.File;
@@ -45,6 +47,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.easemob.chat.EMMessage.Type.IMAGE;
 import static com.easemob.chat.EMMessage.Type.TXT;
@@ -129,8 +133,7 @@ public class ConversationAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final EMMessage message = mMessages.get(position);    //获取消息
-        int itemViewType = getItemViewType(position);  //消息类型
-        EMMessage.ChatType chatType = message.getChatType();  //获取消息类型
+
         final ViewHolder holder;  //ViewHolder 所有类型共用一个ViewHolder
         if (convertView == null) {
             holder = new ViewHolder();
@@ -138,11 +141,10 @@ public class ConversationAdapter extends BaseAdapter {
             if (message.getType() == IMAGE) {
                 try {
                     holder.iv = ((ImageView) convertView.findViewById(R.id.iv_sendPicture));
-                    holder.iv_avatar = (ImageView) convertView.findViewById(R.id.iv_userhead);
+                    holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
                     holder.tv = (TextView) convertView.findViewById(R.id.percentage);
                     holder.pb = (ProgressBar) convertView.findViewById(R.id.progressBar);
                     holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
-                    holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
                 } catch (Exception e) {
                     Log.e(TAG,"can't find view in image type,check if you choose a wrong type.\n"+e.getMessage());
                 }
@@ -150,22 +152,21 @@ public class ConversationAdapter extends BaseAdapter {
                 try {
                     holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
                     holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
-                    holder.iv_avatar = (ImageView) convertView.findViewById(R.id.iv_userhead);
+                    holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
                     // 这里是文字内容
                     holder.tv = (TextView) convertView.findViewById(R.id.tv_chatcontent);
-                    holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
                 } catch (Exception e) {
                     Log.e(TAG, "can't find view in txt type,check if you choose a wrong type.\n" + e.getMessage());
                 }
             } else if (message.getType() == VOICE) {
                 try {
                     holder.iv = ((ImageView) convertView.findViewById(R.id.iv_voice));
-                    holder.iv_avatar = (ImageView) convertView.findViewById(R.id.iv_userhead);
+                    holder.iv_avatar = (CircleImageView) convertView.findViewById(R.id.iv_userhead);
                     holder.tv = (TextView) convertView.findViewById(R.id.tv_length);
                     holder.pb = (ProgressBar) convertView.findViewById(R.id.pb_sending);
                     holder.staus_iv = (ImageView) convertView.findViewById(R.id.msg_status);
-                    holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
                     holder.iv_read_status = (ImageView) convertView.findViewById(R.id.iv_unread_voice);
+                    holder.ll_voice_container = (LinearLayout) convertView.findViewById(R.id.ll_voice_container);
                 } catch (Exception e) {
                     Log.e(TAG, "can't find view in voice type,check if you choose a wrong type.\n" + e.getMessage());
                 }
@@ -174,47 +175,7 @@ public class ConversationAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        // 如果是发送的消息并且不是群聊消息，显示已读textview
-        if (!(chatType == EMMessage.ChatType.GroupChat || chatType == EMMessage.ChatType.ChatRoom)
-                && message.direct == EMMessage.Direct.SEND) {
-            holder.tv_ack = (TextView) convertView.findViewById(R.id.tv_ack);
-            holder.tv_delivered = (TextView) convertView.findViewById(R.id.tv_delivered);
-            if (holder.tv_ack != null) {
-                if (message.isAcked) {
-                    if (holder.tv_delivered != null) {
-                        holder.tv_delivered.setVisibility(View.INVISIBLE);
-                    }
-                    holder.tv_ack.setVisibility(View.VISIBLE);
-                } else {
-                    holder.tv_ack.setVisibility(View.INVISIBLE);
-                    // check and display msg delivered ack status
-                    if (holder.tv_delivered != null) {
-                        if (message.isDelivered) {
-                            holder.tv_delivered.setVisibility(View.VISIBLE);
-                        } else {
-                            holder.tv_delivered.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                }
-            }
-        } else {
-            // 如果是文本或者地图消息并且不是group messgae,chatroom message，显示的时候给对方发送已读回执
-            if ((MESSAGE_TYPE_RECV_TXT == itemViewType ||MESSAGE_TYPE_RECV_IMAGE==itemViewType)
-                    && !message.isAcked && chatType != EMMessage.ChatType.GroupChat && chatType != EMMessage.ChatType.ChatRoom) {
-                // 不是语音通话记录
-                if (!message.getBooleanAttribute(MESSAGE_ATTR_IS_VOICE_CALL, false)) {
-                    try {
-                        EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-                        // 发送已读回执
-                        message.isAcked = true;
-                    } catch (Exception e) {
-                        Log.e(TAG, "ack message failed,check the message you send.\n" + e.getMessage());
-                    }
-                }
-            }
-        }
-
-        //设置用户头像  todo 根据UserSubject中的头像url设置用户头像
+        //设置用户头像
         if(message.direct == EMMessage.Direct.SEND) {
             mBitmapUtil.getImage(holder.iv_avatar, UserSubject.getLogourl());
         }else{
@@ -230,6 +191,13 @@ public class ConversationAdapter extends BaseAdapter {
                   handleTextMessage(message, holder, position);
                 break;
             case VOICE: // 语音
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.ll_voice_container.getLayoutParams();
+                //消息条的宽度根据时间进行放大
+                final int dp_225 = PixelUtil.dip2px(mContext,225);
+                final int dp_100 = PixelUtil.dip2px(mContext, 80);
+                final int dp_20 = PixelUtil.dip2px(mContext,20);
+                final int width = dp_100 + (((VoiceMessageBody) message.getBody()).getLength()-1) / 2 * dp_20;
+                params.width = width > dp_225 ? dp_225:width;
                 handleVoiceMessage(message, holder);
             default:
                 // not supported
@@ -249,6 +217,13 @@ public class ConversationAdapter extends BaseAdapter {
                 timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
                 timestamp.setVisibility(View.VISIBLE);
             }
+        }
+        //最后一个增加padding,使之不贴着
+        if(position == getCount() -1){
+            final int paddingRight = convertView.getPaddingRight();
+            final int paddingLeft = convertView.getPaddingLeft();
+            final int paddingTop = convertView.getPaddingTop();
+            convertView.setPadding(paddingLeft, paddingTop, paddingRight, 15);
         }
         return convertView;
     }
@@ -566,8 +541,8 @@ public class ConversationAdapter extends BaseAdapter {
     private void handleVoiceMessage(final EMMessage message, final ViewHolder holder) {
         VoiceMessageBody voiceBody = (VoiceMessageBody) message.getBody();
         holder.tv.setText(voiceBody.getLength() + "\"");
-        holder.iv.setOnClickListener(new VoicePlayClickListener(message, holder.iv, holder.iv_read_status, this, ((Activity) mContext)));
-        holder.iv.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.ll_voice_container.setOnClickListener(new VoicePlayClickListener(message, holder.iv, holder.iv_read_status, this, ((Activity) mContext)));
+        holder.ll_voice_container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 //                activity.startActivityForResult(
@@ -853,22 +828,9 @@ public class ConversationAdapter extends BaseAdapter {
         TextView tv;
         ProgressBar pb;
         ImageView staus_iv;
-        ImageView iv_avatar;
-        TextView tv_usernick;
-        ImageView playBtn;
-        TextView timeLength;
-        TextView size;
-        LinearLayout container_status_btn;
-        LinearLayout ll_container;
+        CircleImageView iv_avatar;
         ImageView iv_read_status;
-        // 显示已读回执状态
-        TextView tv_ack;
-        // 显示送达回执状态
-        TextView tv_delivered;
-
-        TextView tv_file_name;
-        TextView tv_file_size;
-        TextView tv_file_download_state;
+        LinearLayout ll_voice_container;
     }
 
 }
