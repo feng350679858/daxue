@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="toastInAndOutAnim" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/custom_toast_in</item>
+        <item name="android:windowExitAnimation">@anim/custom_toast_out</item>
+    </style>
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

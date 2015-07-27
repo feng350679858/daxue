@@ -1,4 +1,4 @@
-include ':app', ':pulltorefresh', ':umenglib', ':wheel',':wheel-demo'
+include ':app', ':pulltorefresh', ':umenglib', ':wheel',':wheel-demo',':customtoast'
 project(':pulltorefresh').projectDir = new File('libraries/pulltorefresh')
 project(':umenglib').projectDir = new File('libraries/umenglib')
 project(':wheel').projectDir = new File('libraries/wheel')
