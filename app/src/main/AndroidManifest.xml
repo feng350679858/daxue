@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 操作外部存储设备文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -68,7 +68,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- sys -->
         <activity
@@ -82,34 +82,76 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.index.IndexPartjobListByLabelActivity"></activity>
-        <activity android:name=".activity.sys.IntroActivity"/>
-        <activity android:name=".activity.sys.LoginActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.sys.RegistActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.index.MainActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.index.IndexBannerDetailActivity" android:screenOrientation="portrait"/>
-
+        <activity android:name=".activity.index.IndexPartjobListByLabelActivity" />
+        <activity android:name=".activity.sys.IntroActivity" />
+        <activity
+            android:name=".activity.sys.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.sys.RegistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.sys.ErrorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.index.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.index.IndexBannerDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!-- help -->
-        <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpJishiDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaAnswerActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpEvaluateActivity" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
+        <activity
+            android:name=".activity.help.HelpJishiDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpJishiDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaAnswerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaRewardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpEvaluateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="aizhuan.activity.help.HelpEvaluateActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="aizhuan.activity.help.HelpEvaluateActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.mine.help.MineHelpListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.mine.help.MineHelpJishiActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-
-   
+        <activity
+            android:name=".activity.mine.help.MineHelpListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.mine.help.MineHelpJishiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
@@ -119,46 +161,50 @@
         <activity android:name=".activity.message.NotificationDetailActivity" />
         <activity android:name=".activity.message.MessageConversationActivity" />
 
-
         <!-- partjob -->
-        <activity android:name=".activity.mine.PartjobCancelActivity"/>
-        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"/>
-        <activity android:name=".activity.partjob.LocationCityActivity"/>
-        <activity android:name=".activity.partjob.PartjobDetailActivity"/>
-        <activity android:name=".activity.partjob.PartjobDetailMapActivity"/>
-        <activity android:name=".activity.partjob.PartjobSearchActivity"/>
+        <activity android:name=".activity.mine.PartjobCancelActivity" />
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" />
+        <activity android:name=".activity.partjob.LocationCityActivity" />
+        <activity android:name=".activity.partjob.PartjobDetailActivity" />
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity" />
+        <activity android:name=".activity.partjob.PartjobSearchActivity" />
 
         <!-- common -->
-        <activity android:name=".activity.common.ShowBigImage"/>
-
+        <activity android:name=".activity.common.ShowBigImage" />
 
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService" />
 
-
         <!-- mine -->
-        <activity android:name=".activity.mine.MineAccountActivity"/>
-        <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
-        <activity android:name=".activity.mine.SettingsActivity"/>
-        <activity android:name=".activity.mine.MineGoldTopupActivity"/>
-        <activity android:name=".activity.mine.MineSuggestionActivity"/>
-        <activity android:name=".activity.mine.MineGoldWithdrawActivity"/>
-        <activity android:name=".activity.mine.MineResetPasswordActivity"/>
-        <activity android:name=".activity.mine.MineResetpaypswActivity"/>
-        <activity android:name=".activity.mine.MyPartjobListActivity"/>
-        <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
-        <activity android:name=".activity.mine.MineHelpActivity"/>
-        <activity android:name=".activity.mine.MineCreditActivity"/>
-        <activity android:name=".activity.mine.MinePersonalDataActivity"/>
-        <activity android:name=".activity.mine.MineGoldExpenseActivity"/>
-        <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
-        <activity android:name=".activity.mine.MineContactServiceActivity"/>
-        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
-        <activity android:name=".activity.mine.WeixinNumberActivity"/>
-        <activity android:name=".activity.mine.ComplainActivity"/>
+        <activity android:name=".activity.mine.MineAccountActivity" />
+        <activity android:name=".activity.mine.MineStudentCertificationActivity" />
+        <activity android:name=".activity.mine.SettingsActivity" />
+        <activity android:name=".activity.mine.MineGoldTopupActivity" />
+        <activity android:name=".activity.mine.MineSuggestionActivity" />
+        <activity android:name=".activity.mine.MineGoldWithdrawActivity" />
+        <activity android:name=".activity.mine.MineResetPasswordActivity" />
+        <activity android:name=".activity.mine.MineResetpaypswActivity" />
+        <activity android:name=".activity.mine.MyPartjobListActivity" />
+        <activity android:name=".activity.mine.MyPartjobDetailActivity" />
+        <activity android:name=".activity.mine.MineHelpActivity" />
+        <activity android:name=".activity.mine.MineCreditActivity" />
+        <activity android:name=".activity.mine.MinePersonalDataActivity" />
+        <activity android:name=".activity.mine.MineGoldExpenseActivity" />
+        <activity android:name=".activity.mine.MineGoldIncomeActivity" />
+        <activity android:name=".activity.mine.MineContactServiceActivity" />
+        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity" />
+        <activity android:name=".activity.mine.WeixinNumberActivity" />
+        <activity android:name=".activity.mine.ComplainActivity" />
+        <activity android:name=".activity.mine.ProfileImproveActivity" />
         <!-- meta-data -->
-        <meta-data android:name="SECRET_KEY" android:value="123" />
-        <meta-data android:name="EASEMOB_APPKEY" android:value="lee513579#izhuanc2ctest" />
+        <meta-data
+            android:name="SECRET_KEY"
+            android:value="123" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="lee513579#izhuanc2ctest" />
+
+
     </application>
 
 </manifest>
