@@ -45,7 +45,7 @@
                     android:id="@+id/btn_mine_partjob_detail_complain"
                     android:layout_width="50dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/btn_yellow_hollow_selector"
+                    android:background="@drawable/complain"
                     android:gravity="center"
                     android:text="投诉"
                     android:textColor="@color/main_yellow"
@@ -164,14 +164,8 @@
                             android:id="@+id/tv_mine_partjob_detail_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/normal_grey" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginLeft="5dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/icon_location" />
+                            android:drawablePadding="5dp"
+                            android:textColor="@color/normal_grey"/>
 
                     </LinearLayout>
                 </LinearLayout>

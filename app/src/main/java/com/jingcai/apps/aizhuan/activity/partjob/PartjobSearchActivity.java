@@ -2,10 +2,13 @@ package com.jingcai.apps.aizhuan.activity.partjob;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.mine.LocationListAdapter;
 import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.adapter.partjob.PartjobSearchAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
@@ -38,9 +42,12 @@ import com.jingcai.apps.aizhuan.view.MultiDirectionSlidingDrawer;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class PartjobSearchActivity extends BaseActivity {
     private static final String TAG = PartjobSearchActivity.class.getName();
@@ -51,7 +58,10 @@ public class PartjobSearchActivity extends BaseActivity {
     private View linear_search_special;//特殊搜索使用
     private int mCurrentStart = 0;
     private XListView partjobListView;
+    private LocationListAdapter mAdapter;
     private View layout_empty;
+    private ListView lv_history;
+    private LinearLayout ll_index_pj_search_history;
     private PartjobListAdapter partjobListAdapter;
     private MultiDirectionSlidingDrawer mDrawer;
     private LinearLayout layout_gender_limit, layout_worktype_limit, layout_area_limit, layout_search_all;
@@ -59,6 +69,8 @@ public class PartjobSearchActivity extends BaseActivity {
     private TextView tv_gender_limit, tv_worktype_limit, tv_area_limit, tv_search_all;
     private String lastSelectedWayFlag = null;
     private String currentAreacode;
+    private String cancel_visiblity;
+    private boolean ishistory_gone=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,33 +83,42 @@ public class PartjobSearchActivity extends BaseActivity {
 
 
     }
-    private ClearableEditText mTxtSearchKey;
-    private void initHeader(){
 
-        ((ImageButton)findViewById(R.id.partjob_search_back)).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (ll_index_pj_search_history.getVisibility()==View.VISIBLE) {
+                ll_index_pj_search_history.setVisibility(View.GONE);
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    private ClearableEditText mTxtSearchKey;
+
+    private void initHeader() {
+
+        ((ImageButton) findViewById(R.id.partjob_search_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        String cancel_visiblity=getIntent().getStringExtra("cancel");
-        if(cancel_visiblity.equals("gone"))
-            ((TextView)findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
+        cancel_visiblity = getIntent().getStringExtra("cancel");
+        //将搜索关键字输入editText中
+        mTxtSearchKey = (ClearableEditText) findViewById(R.id.index_pj_search_content);
+        mTxtSearchKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTxtSearchKey.setText("");
-                if (mDrawer.isOpened()) {
-                    mDrawer.animateClose();
-                }
-                doReSearch();
+                initHistoryData();
+                if(ishistory_gone)
+                    ll_index_pj_search_history.setVisibility(View.VISIBLE);
+                else
+                    ishistory_gone=true;
             }
         });
-    }
-    private void initView() {
-
-        //将搜索关键字输入editText中
-        mTxtSearchKey = (ClearableEditText)findViewById(R.id.index_pj_search_content);
         mTxtSearchKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -108,21 +129,91 @@ public class PartjobSearchActivity extends BaseActivity {
                         int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
                         pref.update(Preferences.Partjob.SEARCH_KEY_PREFIX + index, mSearchKey);
                         pref.update(Preferences.Partjob.SEARCH_INDEX, ++index);
-
                         hideInputMethodDialog(PartjobSearchActivity.this);
+                        ll_index_pj_search_history.setVisibility(View.GONE);
+                        ishistory_gone=false;
+                        doReSearch();
                     }
                     if (mDrawer.isOpened()) {
                         mDrawer.animateClose();
                         changeArrowDirection(getSearchViewArrow(lastSelectedWayFlag), false);
                     }
-                    doReSearch();
+
+
                 }
                 return false;
             }
         });
+        mTxtSearchKey.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        mDrawer = (MultiDirectionSlidingDrawer)findViewById(R.id.drawer);
-        partjobListView = (XListView)findViewById(R.id.index_pj_list_lv2);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mTxtSearchKey.getText().toString().equals("") && cancel_visiblity.equals("gone"))
+                    ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
+                else
+                    ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.VISIBLE);
+            }
+        });
+        //判断进入方式
+        if (cancel_visiblity.equals("gone"))
+            ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
+        ((TextView) findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ll_index_pj_search_history.setVisibility(View.GONE);
+                mTxtSearchKey.setText("");
+                if (mDrawer.isOpened()) {
+                    mDrawer.animateClose();
+                }
+                doReSearch();
+                ll_index_pj_search_history.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void initView() {
+        ll_index_pj_search_history = (LinearLayout) findViewById(R.id.ll_index_pj_search_history);
+        lv_history = (ListView) findViewById(R.id.index_pj_search_history_list_lv);
+        lv_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String searchKey = mAdapter.getListData(position).get("name");
+                mTxtSearchKey.setText(searchKey);
+                if (mDrawer.isOpened()) {
+                    mDrawer.animateClose();
+                    changeArrowDirection(getSearchViewArrow(lastSelectedWayFlag), false);
+                }
+                ll_index_pj_search_history.setVisibility(View.GONE);
+                hideInputMethodDialog(PartjobSearchActivity.this);
+                doReSearch();
+            }
+        });
+
+
+        findViewById(R.id.btn_index_pj_search_history_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Preferences pref = Preferences.getInstance(Preferences.TYPE.partjob);
+                int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
+                for(int i=index-1;i>=0;i--){
+                    pref.delete(Preferences.Partjob.SEARCH_KEY_PREFIX + i);
+                    pref.update(Preferences.Partjob.SEARCH_INDEX, --index);
+                }
+                initHistoryData();
+            }
+        });
+
+        mDrawer = (MultiDirectionSlidingDrawer) findViewById(R.id.drawer);
+        partjobListView = (XListView) findViewById(R.id.index_pj_list_lv2);
         layout_empty = findViewById(R.id.layout_empty);
 
         //检索部分
@@ -218,18 +309,55 @@ public class PartjobSearchActivity extends BaseActivity {
     private final int REQUEST_CODE_ADDRESS = 11;//切换城市
     private final int REQUEST_CODE_SEARCH = 12;//检索
 
-    private void initDate(){
+    private void initDate() {
         currentAreacode = getIntent().getStringExtra("address");
         searchAdapter.initAreaCode(currentAreacode);
         initListData();
     }
 
-    private void alphaBackground(boolean openFlag){
+    private void initHistoryData() {
+        if (mAdapter == null) {
+            mAdapter = new LocationListAdapter(this);
+            mAdapter.isShowIndicator(false);
+            lv_history.setAdapter(mAdapter);
+        }
+        List<String> historyList = new ArrayList<String>();
+        Preferences pref = Preferences.getInstance(Preferences.TYPE.partjob);
+        int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
+        for(int i=0;i<index;i++){
+            historyList.add(pref.getString(Preferences.Partjob.SEARCH_KEY_PREFIX + i));
+        }
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = (historyList.size() - 1); i >= 0; i--) {
+            String str = historyList.get(i);
+            if (isExists(list, str)) {
+                continue;
+            }
+
+            Map<String, String> item = new HashMap<>();
+            item.put("name", str);
+            item.put("code", str);
+            list.add(item);
+        }
+        mAdapter.setListData(list);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private boolean isExists(List<Map<String, String>> list, String name) {
+        for (Map<String, String> map : list) {
+            if (name.equals(map.get("code"))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void alphaBackground(boolean openFlag) {
         AnimatorSet alphaAnimation = new AnimatorSet();
-        if(openFlag) {
+        if (openFlag) {
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(partjobListView, "alpha", 0.25f));
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(layout_empty, "alpha", 0.25f));
-        }else{
+        } else {
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(partjobListView, "alpha", 1.0f));
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(layout_empty, "alpha", 1.0f));
         }
@@ -237,14 +365,15 @@ public class PartjobSearchActivity extends BaseActivity {
         alphaAnimation.setDuration(250);
         alphaAnimation.start();
     }
-    private void changeArrowDirection(View view, boolean openFlag){
-        if(null == view){
+
+    private void changeArrowDirection(View view, boolean openFlag) {
+        if (null == view) {
             return;
         }
         AnimatorSet alphaAnimation = new AnimatorSet();
-        if(openFlag) {
+        if (openFlag) {
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(view, "rotation", 180f));
-        }else{
+        } else {
             alphaAnimation.playTogether(ObjectAnimator.ofFloat(view, "rotation", 0f));
         }
         //alphaAnimation.playTogether(alpha_menu);
@@ -256,7 +385,7 @@ public class PartjobSearchActivity extends BaseActivity {
         return new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA).format(new Date());
     }
 
-    private XListView.IXListViewListener listViewListener = new XListView.IXListViewListener(){
+    private XListView.IXListViewListener listViewListener = new XListView.IXListViewListener() {
         @Override
         public void onRefresh() {
             messageHandler.post(new Runnable() {
@@ -266,6 +395,7 @@ public class PartjobSearchActivity extends BaseActivity {
                 }
             });
         }
+
         @Override
         public void onLoadMore() {
             messageHandler.post(new Runnable() {
@@ -284,15 +414,15 @@ public class PartjobSearchActivity extends BaseActivity {
     }
 
 
-
     private void doReSearch() {
         partjobListAdapter.clearData();
         mCurrentStart = 0;
         partjobListView.setPullLoadEnable(true);
         initListData();
     }
+
     private void initListData() {
-        if(actionLock.tryLock()) {
+        if (actionLock.tryLock()) {
             showProgressDialog("列表加载中...");
             new AzExecutor().execute(new Runnable() {
                 @Override
@@ -324,9 +454,9 @@ public class PartjobSearchActivity extends BaseActivity {
                             if ("0".equals(result.getCode())) {
                                 Partjob09Response.Body body = response.getBody();
                                 List<Partjob09Response.Body.Parttimejob> messageList = body.getParttimejob_list();
-                                if(0 == mCurrentStart && messageList.size()<1){
+                                if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);
-                                }else {
+                                } else {
                                     messageHandler.postMessage(0, messageList);
                                 }
                             } else {
@@ -338,7 +468,7 @@ public class PartjobSearchActivity extends BaseActivity {
                         public void fail(AzException e) {
                             try {
                                 messageHandler.postException(e);
-                            }finally {
+                            } finally {
                                 actionLock.unlock();
                             }
                         }
@@ -348,7 +478,7 @@ public class PartjobSearchActivity extends BaseActivity {
         }
     }
 
-    class MessageHandler extends BaseHandler{
+    class MessageHandler extends BaseHandler {
         public MessageHandler(Context ctx) {
             super(ctx);
         }
@@ -356,14 +486,14 @@ public class PartjobSearchActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             closeProcessDialog();
-            switch (msg.what){
+            switch (msg.what) {
                 case 0: {
                     try {
                         List<Partjob09Response.Body.Parttimejob> list = (List<Partjob09Response.Body.Parttimejob>) msg.obj;
                         partjobListAdapter.addData(list);
                         partjobListAdapter.notifyDataSetChanged();
 
-                        if(0 == mCurrentStart){
+                        if (0 == mCurrentStart) {
                             partjobListView.setVisibility(View.VISIBLE);
                             layout_empty.setVisibility(View.GONE);
                         }
@@ -373,29 +503,29 @@ public class PartjobSearchActivity extends BaseActivity {
                         if (list.size() < GlobalConstant.PAGE_SIZE) {
                             partjobListView.setPullLoadEnable(false);
                         }
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
                 case 1: {
-                    try{
+                    try {
                         showToast("获取消息失败:" + msg.obj);
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
                 case 2: {
-                    try{
+                    try {
                         partjobListView.setVisibility(View.GONE);
                         layout_empty.setVisibility(View.VISIBLE);
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-                default:{
+                default: {
                     super.handleMessage(msg);
                 }
             }
@@ -405,27 +535,27 @@ public class PartjobSearchActivity extends BaseActivity {
     private class SearchSpecialClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.search_special_0:{
+            switch (v.getId()) {
+                case R.id.search_special_0: {
                     tv_search_all.setText("全部");
                     tv_search_all.setTag(null);
                     break;
                 }
-                case R.id.search_special_1:{
-                    if(checkAndPerformLogin()) {
+                case R.id.search_special_1: {
+                    if (checkAndPerformLogin()) {
                         tv_search_all.setText("老东家");
                         tv_search_all.setTag("1");
                         break;
-                    }else{
+                    } else {
                         return;
                     }
                 }
-                case R.id.search_special_2:{
+                case R.id.search_special_2: {
                     tv_search_all.setText("周末汇");
                     tv_search_all.setTag("2");
                     break;
                 }
-                case R.id.search_special_3:{
+                case R.id.search_special_3: {
                     tv_search_all.setText("紧急令");
                     tv_search_all.setTag("3");
                     break;
@@ -452,33 +582,34 @@ public class PartjobSearchActivity extends BaseActivity {
         private int length = getResources().getDimensionPixelSize(R.dimen.margin_1dp);
         private String wayFlag;
 
-        public SearchNormalClickListener(String wayFlag){
+        public SearchNormalClickListener(String wayFlag) {
             this.wayFlag = wayFlag;
         }
+
         @Override
         public void onClick(View v) {
-            if(wayFlag.equals(lastSelectedWayFlag)){
+            if (wayFlag.equals(lastSelectedWayFlag)) {
                 if (mDrawer.isOpened()) {
                     mDrawer.animateClose();
                     changeArrowDirection(getSearchViewArrow(wayFlag), false);
                     return;
-                }else{
+                } else {
 //                    mDrawer.animateOpen();
                 }
-            }else{
+            } else {
                 changeArrowDirection(getSearchViewArrow(lastSelectedWayFlag), false);
             }
             FrameLayout.LayoutParams layoutParam = null;
-            if("-1".equals(wayFlag)){
+            if ("-1".equals(wayFlag)) {
                 listview_search_normal.setVisibility(View.GONE);
                 linear_search_special.setVisibility(View.VISIBLE);
                 //显示特殊搜索，隐藏通用搜索
-                layoutParam = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, length * 120);
-            }else{
+                layoutParam = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, length * 120);
+            } else {
                 listview_search_normal.setVisibility(View.VISIBLE);
                 linear_search_special.setVisibility(View.GONE);
                 //隐藏特殊搜索，显示通用搜索
-                layoutParam = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.MATCH_PARENT, length * ("0".equals(wayFlag)?153:240));
+                layoutParam = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, length * ("0".equals(wayFlag) ? 153 : 240));
 
                 searchAdapter.changeWayFlag(wayFlag);
             }
@@ -493,13 +624,13 @@ public class PartjobSearchActivity extends BaseActivity {
     }
 
     private View getSearchViewArrow(String wayFlag) {
-        if("0".equalsIgnoreCase(wayFlag)){
+        if ("0".equalsIgnoreCase(wayFlag)) {
             return iv_gender_limit;
-        }else if("1".equalsIgnoreCase(wayFlag)){
+        } else if ("1".equalsIgnoreCase(wayFlag)) {
             return iv_worktype_limit;
-        }else if("2".equalsIgnoreCase(wayFlag)){
+        } else if ("2".equalsIgnoreCase(wayFlag)) {
             return iv_area_limit;
-        }else if("-1".equalsIgnoreCase(wayFlag)){
+        } else if ("-1".equalsIgnoreCase(wayFlag)) {
             return iv_search_all;
         }
         return null;

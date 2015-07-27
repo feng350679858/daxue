@@ -126,7 +126,7 @@ public class MainActivity extends BaseFragmentActivity {
 
 
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver,3);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onStart() {
         Log.d("==", "--------------onStart-----");
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver);
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver,3);
         if (null != unreadMsgService) {
             unreadMsgService.startCount();
         }
@@ -252,6 +252,7 @@ public class MainActivity extends BaseFragmentActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             //收到未读消息，显示未读提示
+            Log.d(TAG, "MainActivity receive a new Message from " + intent.getStringExtra("from"));
             if (HXHelper.getInstance().getAllUnreadMsgCount() > 0) {
                 showUnread("1");
             }

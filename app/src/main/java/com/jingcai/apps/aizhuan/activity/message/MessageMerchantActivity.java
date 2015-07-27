@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.AdapterView;
@@ -25,7 +26,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob07.Partjob07Resp
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.Date;
@@ -40,6 +41,7 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     private int mCurrentStart = 0;  //当前的开始
     private MerchantListAdapter mMerchantListAdapter;
     private MerchantListAdapter.ViewHolder mCurrentSelectedItem;
+    private PopupWin mContactWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,6 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     }
 
     private void initData() {
-        //TODO 接入服务端接口
         if(actionLock.tryLock()) {
             showProgressDialog("商家赶来中...");
             final Context context = this;
@@ -143,30 +144,38 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mCurrentSelectedItem = (MerchantListAdapter.ViewHolder)view.getTag();
-        final PopupDialog dialog = new PopupDialog(this,R.layout.dialog_comfirm_contact_merchant);
-        View contentView = dialog.getContentView();
-        //logo
-        ((ImageView)contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(mCurrentSelectedItem.iv_logo.getDrawable());
-        //title
-        ((TextView)contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText(mCurrentSelectedItem.merchant.getJobtitle());
-        //phone
-        ((TextView)contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(mCurrentSelectedItem.merchant.getPhone());
-        //2 button
-        contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + mCurrentSelectedItem.merchant.getPhone()));
-                startActivity(intent);
-            }
-        });
-        dialog.show();
+        if (null == mContactWin) {
+            View parentView = MessageMerchantActivity.this.getWindow().getDecorView();
+            View contentView = LayoutInflater.from(MessageMerchantActivity.this).inflate(R.layout.comfirm_contact_merchant_dialog, null);
+
+            mContactWin = PopupWin.Builder.create(MessageMerchantActivity.this)
+                    .setParentView(parentView)
+                    .setContentView(contentView)
+                    .build();
+            //logo
+            ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(mCurrentSelectedItem.iv_logo.getDrawable());
+            //title
+            ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText(mCurrentSelectedItem.tv_title.getText());
+            //phone
+            final String phone = mCurrentSelectedItem.merchant.getPhone();
+            ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(phone);
+            //2 button
+            contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContactWin.dismiss();
+                }
+            });
+            contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + phone));
+                    startActivity(intent);
+                }
+            });
+        }
+        mContactWin.show();
     }
     private void onLoad() {
         mListView.stopRefresh();

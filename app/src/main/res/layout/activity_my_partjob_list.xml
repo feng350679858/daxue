@@ -11,8 +11,6 @@
         android:id="@+id/lv_mine_partjob"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="@dimen/divider_height"
-        android:divider="@color/divider_color"
         android:cacheColorHint="#00000000" />
 
     <include layout="@layout/empty_content" />

@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,6 +44,7 @@ import com.jingcai.apps.aizhuan.adapter.message.ConversationAdapter;
 import com.jingcai.apps.aizhuan.adapter.message.EmotionPagerAdapter;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.util.AppUtil;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
 import com.jingcai.apps.aizhuan.util.StringUtil;
@@ -65,9 +65,10 @@ public class MessageConversationActivity extends BaseActivity{
     private static final String TAG = "MessageChatActivity";
     private static final int REQUEST_CODE_CAMERA = 0;
     private static final int REQUEST_CODE_PICK_PICTURE = 1;
+    public static final String IMAGE_DIR = "/aizhuan/image/";
     private MessageHandler mHandler;
     private TextView mBtnSend;
-    private String mReceiver = "18868831847";
+    private String mReceiver;
     private EditText mEtMessage;
     private NewMessageBroadcastReceiver msgReceiver;
     private ViewPager mVpEmotion;
@@ -101,9 +102,7 @@ public class MessageConversationActivity extends BaseActivity{
         getIntentData();
         initHeader();
         initViews();
-        showInputMethodDialog(mEtMessage);
         loadHistory();
-
         registerReceiver();
     }
 
@@ -113,7 +112,8 @@ public class MessageConversationActivity extends BaseActivity{
     private void getIntentData() {
         final Intent intent = getIntent();
         if (intent != null) {
-            mConversationBean = (ConversationBean) intent.getSerializableExtra("conversationBean");
+            mConversationBean = intent.getParcelableExtra("conversationBean");
+            mReceiver = mConversationBean.getStudentid();
         }
     }
 
@@ -121,20 +121,22 @@ public class MessageConversationActivity extends BaseActivity{
      * 注册接收新信息的接收器
      */
     private void registerReceiver() {
-        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-        registerReceiver(msgReceiver, intentFilter);
+        msgReceiver = new NewMessageBroadcastReceiver();
+        HXHelper.getInstance().regNewMessageReceiver(this,msgReceiver,10);
     }
 
 
     private void loadHistory() {
-        mAdapter = new ConversationAdapter(this);
+        mAdapter = new ConversationAdapter(this,mConversationBean);
         EMConversation conversation = EMChatManager.getInstance().getConversation(mReceiver);
-        if (null == conversation || conversation.getAllMsgCount() <= 0) {
+        if (null == conversation) {
+            showToast("会话异常，请重试");
             return;
         }
         List<EMMessage> allMessages = conversation.getAllMessages();
         mAdapter.setListData(allMessages);   //***与conversation的message列表绑定，因此不需要手动进行更新
         mListMessage.setAdapter(mAdapter);
+        mListMessage.setSelection(allMessages.size());
     }
 
     private void initViews() {
@@ -412,7 +414,6 @@ public class MessageConversationActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
                 int dp10_px = MessageConversationActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
-                Log.d(TAG, "---------" + dp10_px);
                 View contentView = LayoutInflater.from(MessageConversationActivity.this).inflate(R.layout.popup_message_conversation_func, null);
                 PopupWin groupWin = PopupWin.Builder.create(MessageConversationActivity.this)
                         .setWidth(dp10_px * 17)
@@ -425,7 +426,7 @@ public class MessageConversationActivity extends BaseActivity{
             }
         });
 
-        tvTitle.setText("七爷");
+        tvTitle.setText(mConversationBean.getName());
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -440,8 +441,6 @@ public class MessageConversationActivity extends BaseActivity{
             EMConversation conversation = EMChatManager.getInstance().getConversation(mReceiver);
             //创建一条文本消息
             EMMessage message = EMMessage.createSendMessage(messageType);
-            //如果是群聊，设置chattype,默认是单聊
-            //message.setChatType(EMMessage.ChatType.GroupChat);
             MessageBody messageBody = null;
             switch (messageType) {
                 case TXT:
@@ -465,7 +464,6 @@ public class MessageConversationActivity extends BaseActivity{
             //把消息加入到此会话对象中
             conversation.addMessage(message);
             //发送消息 加入消息列表中，adapter会处理发送
-//            mAdapter.addMessage(message);
             mAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             mHandler.postMessage(MESSAGE_WHAT_SHOW_TOAST,"发送失败:" + e.getMessage());
@@ -486,7 +484,7 @@ public class MessageConversationActivity extends BaseActivity{
                         return;
                     }
 
-                    File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/aizhuan/image/");
+                    File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + IMAGE_DIR);
                     if (!path.exists()) {
                         path.mkdirs();
                     }
@@ -515,7 +513,7 @@ public class MessageConversationActivity extends BaseActivity{
     };
 
     private static final int MESSAGE_WHAT_SHOW_TOAST = 0;
-    private static final int MESSAGE_WHAT_EXIT = 2;
+
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
@@ -528,14 +526,15 @@ public class MessageConversationActivity extends BaseActivity{
                 case MESSAGE_WHAT_SHOW_TOAST:
                     showToast(msg.obj.toString());
                     break;
-                case MESSAGE_WHAT_EXIT:
-                    showToast("退出成功");
-                    unregisterReceiver(msgReceiver);
-                    finish();
-                    break;
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(msgReceiver);
     }
 
     @Override
@@ -555,7 +554,7 @@ public class MessageConversationActivity extends BaseActivity{
                     FileOutputStream fileOutputStream = null;
 
                     try {
-                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/aizhuan/image");
+                        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + IMAGE_DIR);
                         if(!file.exists()){
                             file.mkdirs();
                         }
@@ -598,24 +597,14 @@ public class MessageConversationActivity extends BaseActivity{
         public void onReceive(Context context, Intent intent) {
             // 注销广播
             abortBroadcast();
-            // 消息id（每条消息都会生成唯一的一个id，目前是SDK生成）
-            String msgId = intent.getStringExtra("msgid");
             //发送方
             String username = intent.getStringExtra("from");
-            // 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-//            EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-            EMConversation conversation = EMChatManager.getInstance().getConversation(username);
-            EMMessage getMessage = conversation.getMessage(msgId);
-            mAdapter.notifyDataSetChanged();
-
-            // 如果是群聊消息，获取到group id
-           /* if (message.getChatType() == EMMessage.ChatType.GroupChat) {
-                username = message.getTo();
+            HXHelper.getInstance().resetUnreadMsgCountByUsername(username);
+            Log.d(TAG,"MessageConversationActivity receive a new Message from "+username);
+            if (username != null) {
+                if(username.equals(mConversationBean.getStudentid()))
+                    mAdapter.notifyDataSetChanged();
             }
-            if (!username.equals(username)) {
-                // 消息不是发给当前会话，return
-                return;
-            }*/
         }
     }
 }

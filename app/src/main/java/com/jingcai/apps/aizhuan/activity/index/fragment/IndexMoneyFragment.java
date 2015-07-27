@@ -24,13 +24,11 @@ import com.jingcai.apps.aizhuan.activity.index.IndexPartjobListByLabelActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobSearchActivity;
-import com.jingcai.apps.aizhuan.adapter.partjob.PartjobSearchAdapter;
+import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.business.advice.advice05.Advice05Request;
 import com.jingcai.apps.aizhuan.service.business.advice.advice05.Advice05Response;
-import com.jingcai.apps.aizhuan.service.business.base.base01.Base01Request;
-import com.jingcai.apps.aizhuan.service.business.base.base01.Base01Response;
 import com.jingcai.apps.aizhuan.service.business.busi.busi01.Busi01Request;
 import com.jingcai.apps.aizhuan.service.business.busi.busi01.Busi01Response;
 import com.jingcai.apps.aizhuan.service.business.busi.busi02.Busi02Request;
@@ -60,7 +58,6 @@ public class IndexMoneyFragment extends BaseFragment {
     private TextView tv_address;
     private TextView city_more,label_more;
     private View mainView;
-    private ViewPager viewPager;
     private AutoMarqueeTextView am_text;
     private ImageView[] pageViews, imageDots;
     private LinearLayout linearLayout_label, linearlout_left, linearlout_right;
@@ -157,7 +154,6 @@ public class IndexMoneyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        viewPager = (ViewPager) mainView.findViewById(R.id.img_advert);
 
         am_text = (AutoMarqueeTextView)mainView.findViewById(R.id.am_text);
 
@@ -166,8 +162,6 @@ public class IndexMoneyFragment extends BaseFragment {
         linearlout_right = (LinearLayout) mainView.findViewById(R.id.linearlout_right);
 
 
-        viewPager.setAdapter(new ViewPagerAdapter());
-        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
 
 
     }
@@ -192,31 +186,6 @@ public class IndexMoneyFragment extends BaseFragment {
         }
     }
     private void initData() {
-        //请求广告位信息
-        azExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Base01Request req = new Base01Request();
-                Base01Request.Banner banner = req.new Banner();
-                banner.setPlatform(GlobalConstant.TERMINAL_TYPE_ANDROID);
-                req.setBanner(banner);
-                azService.doTrans(req, Base01Response.class, new AzService.Callback<Base01Response>() {
-                    @Override
-                    public void success(Base01Response resp) {
-                        if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(1, resp.getBody().getBanner_list());
-                        } else {
-                            messageHandler.postMessage(2, resp.getResultMessage());
-                        }
-                    }
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        });
-
         //请求世界消息列表
         azExecutor.execute(new Runnable() {
             @Override
@@ -326,19 +295,6 @@ public class IndexMoneyFragment extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1: {
-                    List<Base01Response.Body.Banner> list = (List<Base01Response.Body.Banner>) msg.obj;
-                    setAdverts(list);
-                    break;
-                }
-                case 2: {
-                    if (null != msg.obj) {
-                        showToast("获取banner信息出错:" + msg.obj);
-                    } else {
-                        showToast("获取banner信息出错");
-                    }
-                    break;
-                }
                 case 3: {
                     List<Busi01Response.Body.Label> list = (List<Busi01Response.Body.Label>) msg.obj;
                     setLabel(list);
@@ -377,10 +333,6 @@ public class IndexMoneyFragment extends BaseFragment {
                         showToast("获取广播信息出错");
                     }
                     break;
-                }
-                case 9: {
-                    // 切换当前显示的图片
-                    viewPager.setCurrentItem((int) msg.obj);
                 }
                 default: {
                     super.handleMessage(msg);
@@ -455,6 +407,8 @@ public class IndexMoneyFragment extends BaseFragment {
             }
 
             View convertView = layoutInflator.inflate(R.layout.index_index_recommend_item, linearLayout, false);
+            TextView tv_salary=(TextView)convertView.findViewById(R.id.tv_salary);
+            TextView tv_salary_unit=(TextView)convertView.findViewById(R.id.tv_salary_unit);
             ImageView iv_image = (ImageView) convertView.findViewById(R.id.iv_image);
             ImageView iv_logo = (ImageView) convertView.findViewById(R.id.iv_logo);
             TextView tv_text = (TextView) convertView.findViewById(R.id.tv_text);
@@ -466,6 +420,7 @@ public class IndexMoneyFragment extends BaseFragment {
             iv_image.setLayoutParams(ivImageLayoutParam);
             bitmapUtil.getImage(iv_image, recommend.getImgurl(), R.drawable.logo_merchant_default);
             bitmapUtil.getImage(iv_logo, recommend.getLogopath(), R.drawable.logo_merchant_default);
+            PartjobListAdapter.setSalary(tv_salary,tv_salary_unit,recommend.getSalary(),recommend.getSalaryunit());
             tv_text.setText(recommend.getText());
             tv_name.setText(recommend.getName());
             tv_area.setText(recommend.getAreaname());
@@ -485,84 +440,6 @@ public class IndexMoneyFragment extends BaseFragment {
                     startActivity(intent);
                 }
             });
-        }
-    }
-
-    /**
-     * 指引页面Adapter
-     */
-    class ViewPagerAdapter extends PagerAdapter {
-        @Override
-        public int getCount() {
-            return null == pageViews ? 0 : pageViews.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return super.getItemPosition(object);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup arg0, int arg1, Object arg2) {
-            arg0.removeView(pageViews[arg1]);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup arg0, int arg1) {
-            View view = pageViews[arg1];
-            arg0.addView(view);
-            Base01Response.Body.Banner banner = (Base01Response.Body.Banner) view.getTag();
-
-            final String linkUrl = banner.getRedirecturl();
-            final String title = banner.getTitle();
-            pageViews[arg1].setOnClickListener(new View.OnClickListener() {
-                public void onClick(final View arg0) {
-                    if (StringUtil.isEmpty(linkUrl)) return;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("title", title);
-                    bundle.putString("url", linkUrl);
-
-                    Intent intent = new Intent(arg0.getContext(), IndexBannerDetailActivity.class);
-                    intent.putExtras(bundle);
-                    arg0.getContext().startActivity(intent);
-                }
-            });
-            return view;
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-    }
-
-
-    /**
-     * 指引页面改监听器
-     */
-    class GuidePageChangeListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        @Override
-        public void onPageSelected(int arg0) {
-            for (int i = 0; i < imageDots.length; i++) {
-                imageDots[arg0].setBackgroundResource(R.drawable.page_indicator_focused);
-                if (arg0 != i) {
-                    imageDots[i].setBackgroundResource(R.drawable.page_indicator);
-                }
-            }
         }
     }
 
@@ -586,29 +463,6 @@ public class IndexMoneyFragment extends BaseFragment {
         // 当Activity不可见的时候停止切换
         scheduledExecutorService.shutdown();
         super.onStop();
-    }
-
-
-    public void setAdverts(List<Base01Response.Body.Banner> adverts) {
-        {
-            pageViews = new ImageView[adverts.size()];
-            for (int i = 0; i < adverts.size(); i++) {
-                Base01Response.Body.Banner banner = adverts.get(i);
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setTag(banner);
-
-                pageViews[i] = imageView;
-
-                //添加下载任务
-                //new DownloadTask().execute(adverts.get(i).getImgUrl(), imageView);
-                bitmapUtil.getImage(imageView, banner.getImgurl());
-            }
-        }
-
-
-        viewPager.setAdapter(new ViewPagerAdapter());
-        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
     }
 
     @Override

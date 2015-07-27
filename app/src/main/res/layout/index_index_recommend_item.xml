@@ -29,9 +29,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo_merchant_default"
-            app:border_width="1dp"
-            app:border_color="@color/white"/>
+            android:src="@drawable/logo_merchant_default"/>
 
         <LinearLayout
             android:layout_marginTop="10dp"

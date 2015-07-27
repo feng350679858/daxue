@@ -56,7 +56,6 @@
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:gravity="bottom"
                     android:inputType="text"
                     android:maxLines="2"
                     android:padding="5dp"

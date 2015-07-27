@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -93,6 +95,9 @@ private void initHeader(){
         }).locate();
 
         mListCity = (ListView) findViewById(R.id.lv_index_partjob_change_city);
+        View location_city_bottom = LayoutInflater.from(LocationCityActivity.this).inflate(R.layout.location_city_bottom, null);
+
+        mListCity.addFooterView(location_city_bottom);
         mListAdapter = new LocationListAdapter(this);
         mListCity.setAdapter(mListAdapter);
 

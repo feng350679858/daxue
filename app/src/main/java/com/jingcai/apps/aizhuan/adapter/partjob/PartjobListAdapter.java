@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -64,7 +65,8 @@ public class PartjobListAdapter extends BaseAdapter{
             viewHolder.tv_label=(TextView)convertView.findViewById(R.id.tv_pj_list_item_label);
             viewHolder.tv_distance_icon = convertView.findViewById(R.id.tv_distance_icon);
             viewHolder.tv_distance = (TextView) convertView.findViewById(R.id.tv_distance);
-            viewHolder.tv_distance_unit = convertView.findViewById(R.id.tv_distance_unit);
+            viewHolder.tv_distance_unit = (TextView)convertView.findViewById(R.id.tv_distance_unit);
+            viewHolder.location_bg=(LinearLayout)convertView.findViewById(R.id.mine_partjob_list_item_location_bg);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -78,6 +80,9 @@ public class PartjobListAdapter extends BaseAdapter{
         //标题
         viewHolder.tv_title.setText(parttimejob.getTitle());
         setWorkdays(viewHolder.tv_workdays, parttimejob.getWorktimetype(), parttimejob.getWorkdays());
+        if("-1".equals(parttimejob.getDistance()) || StringUtil.isEmpty(parttimejob.getDistance())) {
+            viewHolder.location_bg.setVisibility(View.INVISIBLE);
+        }
         setDistance(viewHolder.tv_distance_icon, viewHolder.tv_distance, viewHolder.tv_distance_unit, parttimejob.getDistance());
         setSalary(viewHolder.tv_salary, viewHolder.tv_salary_unit, parttimejob.getSalary(), parttimejob.getSalaryunit());
         if(AdapterType.MinePartjob == adapterType){
@@ -243,6 +248,7 @@ public class PartjobListAdapter extends BaseAdapter{
         protected View tv_distance_icon;
         protected TextView tv_distance;
         protected View tv_distance_unit;
+        protected LinearLayout location_bg;
         protected Partjob01Response.Body.Parttimejob partjob;
 
         public Partjob01Response.Body.Parttimejob getPartjob() {

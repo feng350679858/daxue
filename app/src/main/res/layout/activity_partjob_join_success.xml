@@ -48,11 +48,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_yellow_hollow_selector"
-                android:drawableLeft="@drawable/partjob_join_success_share"
+                android:drawableLeft="@drawable/share"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:text="兼职分享"
-                android:textColor="@color/font_red"
+                android:textColor="@color/main_yellow"
                 android:textSize="18sp" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:text="联系商家"
-                android:textColor="@color/font_red"
+                android:textColor="@color/main_yellow"
                 android:textSize="18sp" />
 
         </LinearLayout>
