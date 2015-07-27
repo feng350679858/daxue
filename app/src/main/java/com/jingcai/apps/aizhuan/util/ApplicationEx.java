@@ -50,13 +50,13 @@ public class ApplicationEx extends Application {
 //		}
 
 		//=============JPush==================
-		JpushUtil jpushUtil = new JpushUtil(this);
-		jpushUtil.init();
-
-		if(UserSubject.isLogin()){
-			jpushUtil.login(UserSubject.getStudentid());
-			HXHelper.getInstance().loginOnEMChatServer(UserSubject.getStudentid());  //环信连接
-		}
+//		JpushUtil jpushUtil = new JpushUtil(this);
+//		jpushUtil.init();
+//
+//		if(UserSubject.isLogin()){
+//			jpushUtil.login(UserSubject.getStudentid());
+//			HXHelper.getInstance().loginOnEMChatServer(UserSubject.getStudentid());  //环信连接
+//		}
 	}
 
 	@Override
