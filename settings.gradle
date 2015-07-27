@@ -1,6 +1,8 @@
-include ':app', ':pulltorefresh', ':umenglib'
+include ':app', ':pulltorefresh', ':umenglib', ':wheel',':wheel-demo'
 project(':pulltorefresh').projectDir = new File('libraries/pulltorefresh')
 project(':umenglib').projectDir = new File('libraries/umenglib')
+project(':wheel').projectDir = new File('libraries/wheel')
+project(':wheel-demo').projectDir = new File('demos/wheel-demo')
 
 if (!System.properties['buildToolsVersion']) {
     System.properties['buildToolsVersion'] =  "21.1.2"
