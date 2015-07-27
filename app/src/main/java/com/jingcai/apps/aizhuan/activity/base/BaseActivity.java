@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
+import com.jingcai.apps.widget.TopToast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +27,7 @@ public class BaseActivity extends Activity {
     private static final String TAG = "BaseActivity";
     protected static final int REQUEST_CODE_LOGIN = 11;
     protected float density;
-    protected int screen_height, screen_width;
+    protected int screen_height, screen_width, title_height;
     protected Looper looper = null;
 
     private ProgressDialog progressDialog = null;
@@ -40,12 +42,16 @@ public class BaseActivity extends Activity {
             getWindowManager().getDefaultDisplay().getSize(point);
             screen_width = point.x;
             screen_height = point.y;
+            title_height = getResources().getDimensionPixelSize(R.dimen.header_height);
         }
         looper = Looper.myLooper();
     }
 
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        TopToast topToast = TopToast.makeText(this, msg, TopToast.LENGTH_LONG);
+        topToast.setOffsetY(title_height);
+        topToast.show();
     }
 
     public void showProgressDialog(String msg) {

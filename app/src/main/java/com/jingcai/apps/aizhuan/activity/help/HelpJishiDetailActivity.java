@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -107,6 +106,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                showToast("提交成功，请继续！");
                 finish();
             }
         });
