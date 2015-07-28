@@ -2,11 +2,11 @@
 
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-
+        classpath 'com.android.tools.build:gradle:' + System.properties['androidGradlePluginVersion']
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -15,7 +15,7 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        maven { url "http://192.168.0.20:8081/nexus/content/repositories/jingcai_android_snapshots/" }
+        //maven { url "http://192.168.0.20:8081/nexus/content/repositories/jingcai_android_snapshots/" }
         //mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }
