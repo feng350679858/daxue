@@ -52,5 +52,6 @@
     <string name="mine_contact_service_tel_num">057122956566</string>
     <!--完善资料-->
     <string name="profile_improve_warning">请填写真实资料，否则会影响后期认证导致部分功能无法正常使用</string>
+    <string name="title_activity_profile_improve2">ProfileImprove2Activity</string>
 
 </resources>

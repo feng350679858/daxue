@@ -14,44 +14,43 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="30dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <TextView
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/profile_improve_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="真实姓名"
-            android:visibility="invisible"
-            android:textColor="@color/main_yellow"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:layout_height="wrap_content">
 
-        <com.jingcai.apps.aizhuan.view.ClearableEditText
-            android:id="@+id/profile_improve_name_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@null"
-            android:text="真实姓名"
-            android:textCursorDrawable="@drawable/yellow_cursor"
-            android:textColor="@color/important_dark"
-            android:textSize="14sp" />
+            <com.jingcai.apps.aizhuan.view.ClearableEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:text=""
+                android:textColor="@color/important_dark"
+                android:textCursorDrawable="@drawable/yellow_cursor"
+                android:textSize="14sp" />
+        </android.support.design.widget.TextInputLayout>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/profile_improve_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="性别"
-            android:visibility="invisible"
             android:textColor="@color/main_yellow"
             android:textSize="12sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/profile_improve_gender_input"
@@ -65,18 +64,19 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/profile_improve_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="地区"
             android:textColor="@color/main_yellow"
-            android:visibility="invisible"
             android:textSize="12sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/profile_improve_location_input"
@@ -90,18 +90,20 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/profile_improve_spreading_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推广码"
-            android:visibility="invisible"
             android:textColor="@color/main_yellow"
             android:textSize="12sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:visibility="invisible" />
+
         <com.jingcai.apps.aizhuan.view.ClearableEditText
             android:id="@+id/profile_improve_spreading_code_input"
             android:layout_width="match_parent"
@@ -109,33 +111,34 @@
             android:layout_marginTop="5dp"
             android:background="@null"
             android:text="推广码"
-            android:textCursorDrawable="@drawable/yellow_cursor"
             android:textColor="@color/important_dark"
+            android:textCursorDrawable="@drawable/yellow_cursor"
             android:textSize="14sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/profile_improve_warning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/important_dark"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
+
         <Button
             android:id="@+id/profile_improve_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="下一步"
-            android:textSize="16sp"
-            android:gravity="center"
             android:background="@drawable/btn_yellow_boarded_bg_selector"
             android:enabled="false"
-            />
+            android:gravity="center"
+            android:text="下一步"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
