@@ -7,7 +7,7 @@ project(':wheel-demo').projectDir = new File('demos/wheel-demo')
 
 //override your build tools version in project gradle.properties or ~/.gradle/gradle.properties
 if (!System.properties['buildToolsVersion']) {
-    System.properties['buildToolsVersion'] = "21.1.2"
+    System.properties['buildToolsVersion'] = "22.0.1"
 }
 if (!System.properties['androidGradlePluginVersion']) {
     System.properties['androidGradlePluginVersion'] = "1.2.3"
