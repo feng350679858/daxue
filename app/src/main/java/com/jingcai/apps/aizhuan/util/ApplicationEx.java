@@ -2,7 +2,6 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.app.Application;
 
-import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
@@ -25,8 +24,6 @@ public class ApplicationEx extends Application {
 		UserSubject.init(Preferences.getInstance());
 
         HXHelper.getInstance().init(this);  //环信初始化
-
-
 
         //=============定位
 //		mLocationClient = new LocationClient(this.getApplicationContext());

@@ -2,6 +2,7 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
@@ -11,8 +12,11 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
+import com.jingcai.apps.aizhuan.service.local.UpdateContactInfoService;
 
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * 环信的工具类
@@ -22,6 +26,9 @@ public class HXHelper {
 
     private static final String TAG = "HXHelper";
     private static HXHelper hxHelper;
+    private Context mContext;
+
+    private List<ContactInfo> mContactList;
 
     private HXHelper() {
     }
@@ -38,12 +45,30 @@ public class HXHelper {
     }
 
     /**
+     * 设置消息联系人列表信息
+     * @param contactList 联系人列表
+     */
+    public void setContactList(List<ContactInfo> contactList){
+        mContactList = contactList;
+    }
+
+    /**
+     * 获取消息联系人列表信息
+     *
+     * @return 联系人列表
+     */
+    public List<ContactInfo> getContactList(){
+        return mContactList;
+    }
+
+    /**
      * 初始化
      *
      * @param context 上下文
      */
     public void init(Context context) {
         try {
+            mContext = context;
             //环信im
             EMChat.getInstance().init(context);
             /**
@@ -74,12 +99,12 @@ public class HXHelper {
                 EMChatManager.getInstance().login(username, username, new EMCallBack() {//回调
                     @Override
                     public void onSuccess() {
-
-                        //登录的情况下调用
                         //加载所有的对话
-                        EMChatManager.getInstance().loadAllConversations();
-                        Log.d(TAG, "登陆聊天服务器成功！username:" + username + " pwd:" + username);
-
+                        final EMChatManager instance = EMChatManager.getInstance();
+                        instance.loadAllConversations();
+                        Log.d(TAG, "登陆聊天服务器成功！username:" + username);
+                        //TODO 根据conversation 更新本地数据库
+                        mContext.startService(new Intent(mContext, UpdateContactInfoService.class));
                     }
 
                     @Override
