@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.support.annotation.IntDef;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +12,10 @@ import android.widget.TextView;
 
 import com.jingcai.apps.custometoast.R;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TopToast {
-    @IntDef({LENGTH_SHORT, LENGTH_LONG})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Duration {
-    }
-
     public static final int LENGTH_SHORT = 1;
     public static final int LENGTH_LONG = 2;
 
@@ -35,7 +27,7 @@ public class TopToast {
     private Activity mActivity;
     private boolean mIsShowing;
 
-    private TopToast(Context context, String text, @Duration int time) {
+    private TopToast(Context context, String text, int time) {
         wdm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         timer = new Timer();
@@ -75,7 +67,7 @@ public class TopToast {
         params.y = offsetY;
     }
 
-    public static TopToast makeText(Context context, String text, @Duration int time) {
+    public static TopToast makeText(Context context, String text, int time) {
         TopToast customeToast = new TopToast(context, text, time);
         return customeToast;
     }
