@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -22,6 +21,7 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys02.Sys02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DES3Util;
+import com.jingcai.apps.aizhuan.view.ClearableEditText;
 
 /**
  * Created by Json Ding on 2015/4/28.
@@ -30,9 +30,11 @@ public class RegistActivity extends BaseActivity {
     private AzExecutor azExecutor;
     private AzService azService;
     private MessageHandler messageHandler;
-    private EditText et_phone, et_checkstr, et_password, et_repeat_password;
-    private Button btn_send_checkstr, btn_regist, btn_forget_pwd;
+    private ClearableEditText et_phone, et_checkstr, et_password, et_repeat_password;
+    private TextView btn_send_checkstr;
+
     private boolean forgetFlag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,24 +49,24 @@ public class RegistActivity extends BaseActivity {
     }
 
     private void initViews() {
-        et_phone = (EditText)findViewById(R.id.et_phone);
-        et_checkstr = (EditText)findViewById(R.id.et_checkstr);
-        et_password = (EditText)findViewById(R.id.et_password);
-        et_repeat_password = (EditText)findViewById(R.id.et_repeat_password);
+        et_phone = (ClearableEditText) findViewById(R.id.et_phone);
+        et_checkstr = (ClearableEditText) findViewById(R.id.et_checkstr);
+        et_password = (ClearableEditText) findViewById(R.id.et_password);
+        et_repeat_password = (ClearableEditText) findViewById(R.id.et_repeat_password);
 
-        findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 messageHandler.postMessage(9);
             }
         });
-        btn_send_checkstr = (Button) findViewById(R.id.btn_send_checkstr);
+        btn_send_checkstr = (TextView) findViewById(R.id.btn_send_checkstr);
         btn_send_checkstr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(11 != et_phone.getText().toString().length()){
-                    showToast("请输入11位手机号");
-                    return ;
+                if (11 != et_phone.getText().toString().length()) {
+                    showToast("请输入11位手机号", 0);
+                    return;
                 }
                 azExecutor.execute(new Runnable() {
                     @Override
@@ -83,6 +85,7 @@ public class RegistActivity extends BaseActivity {
                                     messageHandler.postMessage(2);
                                 }
                             }
+
                             @Override
                             public void fail(AzException e) {
                                 messageHandler.postException(e);
@@ -106,17 +109,21 @@ public class RegistActivity extends BaseActivity {
             }
         });
 
-        btn_regist = (Button)findViewById(R.id.btn_regist);
-        btn_forget_pwd= (Button)findViewById(R.id.btn_forget_pwd);
-        TextView tv_has_account = (TextView)findViewById(R.id.tv_has_account);
-        if(forgetFlag){
-            tv_has_account.setVisibility(View.GONE);
-            btn_regist.setVisibility(View.GONE);
+
+        if (forgetFlag) {
+            findViewById(R.id.civ_head_logo).setVisibility(View.GONE);
+            findViewById(R.id.layout_regist_confirm).setVisibility(View.GONE);
+            findViewById(R.id.tv_has_account).setVisibility(View.GONE);
+            findViewById(R.id.btn_regist).setVisibility(View.GONE);
+
+            findViewById(R.id.tv_forget_pwd_tip).setVisibility(View.VISIBLE);
+
+            Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
             btn_forget_pwd.setVisibility(View.VISIBLE);
             btn_forget_pwd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    azExecutor.execute(new Runnable(){
+                    azExecutor.execute(new Runnable() {
                         @Override
                         public void run() {
                             Stu04Request req = new Stu04Request();
@@ -130,12 +137,13 @@ public class RegistActivity extends BaseActivity {
                                 @Override
                                 public void success(BaseResponse response) {
                                     ResponseResult result = response.getResult();
-                                    if(!"0".equals(result.getCode())){
+                                    if (!"0".equals(result.getCode())) {
                                         messageHandler.postMessage(7, result.getMessage());
-                                    }else{
+                                    } else {
                                         messageHandler.postMessage(8);
                                     }
                                 }
+
                                 @Override
                                 public void fail(AzException e) {
                                     messageHandler.postException(e);
@@ -145,20 +153,22 @@ public class RegistActivity extends BaseActivity {
                     });
                 }
             });
-        }else{
-            btn_forget_pwd.setVisibility(View.GONE);
-            tv_has_account.setVisibility(View.VISIBLE);
-            btn_regist.setVisibility(View.VISIBLE);
-            tv_has_account.setOnClickListener(new View.OnClickListener() {
+        } else {
+            //服务条款
+            findViewById(R.id.tv_service_rule).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    messageHandler.postMessage(9);
+                    //TODO 显示服务条款
                 }
             });
+            Button btn_regist = (Button) findViewById(R.id.btn_regist);
             btn_regist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    azExecutor.execute(new Runnable(){
+                    if (!checkRegist()) {
+                        return;
+                    }
+                    azExecutor.execute(new Runnable() {
                         @Override
                         public void run() {
                             Sys01Request req = new Sys01Request();
@@ -172,12 +182,13 @@ public class RegistActivity extends BaseActivity {
                                 @Override
                                 public void success(BaseResponse response) {
                                     ResponseResult result = response.getResult();
-                                    if(!"0".equals(result.getCode())){
+                                    if (!"0".equals(result.getCode())) {
                                         messageHandler.postMessage(3, result.getMessage());
-                                    }else{
+                                    } else {
                                         messageHandler.postMessage(4);
                                     }
                                 }
+
                                 @Override
                                 public void fail(AzException e) {
                                     messageHandler.postException(e);
@@ -190,36 +201,53 @@ public class RegistActivity extends BaseActivity {
         }
     }
 
+    private boolean checkRegist() {
+        if (11 != et_phone.getText().toString().length()) {
+            showToast("请输入11位手机号", 0);
+            return false;
+        }
+        int length = et_password.getText().toString().length();
+        if (6 < length || length > 16) {
+            showToast("密码长度必须在6至16位之间", 0);
+            return false;
+        }
+        if (!et_password.getText().toString().equals(et_repeat_password.getText().toString())) {
+            showToast("密码输入不一致", 0);
+            return false;
+        }
+        return false;
+    }
+
     class MessageHandler extends BaseHandler {
-        public MessageHandler(Context context){
+        public MessageHandler(Context context) {
             super(context);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 1:{
-                    if(null != msg.obj){
-                        showToast(String.valueOf(msg.obj));
+            switch (msg.what) {
+                case 1: {
+                    if (null != msg.obj) {
+                        showToast(String.valueOf(msg.obj), 0);
                     } else {
-                        showToast("发送验证码失败");
+                        showToast("发送验证码失败", 0);
                     }
                     break;
                 }
-                case 2:{
-                    showToast("发送验证码成功");
+                case 2: {
+                    showToast("发送验证码成功", 0);
                     break;
                 }
-                case 3:{
-                    if(null != msg.obj){
-                        showToast(String.valueOf(msg.obj));
+                case 3: {
+                    if (null != msg.obj) {
+                        showToast(String.valueOf(msg.obj), 0);
                     } else {
-                        showToast("注册失败");
+                        showToast("注册失败", 0);
                     }
                     break;
                 }
-                case 4:{
-                    showToast("注册成功");
+                case 4: {
+                    showToast("注册成功", 0);
                     Intent intent = new Intent();
                     intent.putExtra("phone", et_phone.getText().toString());
                     intent.putExtra("password", et_password.getText().toString());
@@ -227,31 +255,31 @@ public class RegistActivity extends BaseActivity {
                     finish();
                     break;
                 }
-                case 5:{
+                case 5: {
                     int count = (int) msg.obj;
-                    if(count >0) {
-                        btn_send_checkstr.setText("剩余" + count + "秒");
-                        if(btn_send_checkstr.isEnabled()) {
+                    if (count > 0) {
+                        btn_send_checkstr.setText(count + "秒后重发");
+                        if (btn_send_checkstr.isEnabled()) {
                             btn_send_checkstr.setEnabled(false);
                         }
-                    }else{
+                    } else {
                         btn_send_checkstr.setText("发送验证");
-                        if(!btn_send_checkstr.isEnabled()) {
+                        if (!btn_send_checkstr.isEnabled()) {
                             btn_send_checkstr.setEnabled(true);
                         }
                     }
                     break;
                 }
-                case 7:{
-                    if(null != msg.obj){
-                        showToast(String.valueOf(msg.obj));
+                case 7: {
+                    if (null != msg.obj) {
+                        showToast(String.valueOf(msg.obj), 0);
                     } else {
-                        showToast("重置密码失败");
+                        showToast("重置密码失败", 0);
                     }
                     break;
                 }
-                case 8:{
-                    showToast("重置密码成功");
+                case 8: {
+                    showToast("重置密码成功", 0);
                     Intent intent = new Intent();
                     intent.putExtra("phone", et_phone.getText().toString());
                     intent.putExtra("password", et_password.getText().toString());
@@ -259,12 +287,12 @@ public class RegistActivity extends BaseActivity {
                     finish();
                     break;
                 }
-                case 9:{
+                case 9: {
                     setResult(RESULT_CANCELED, null);
                     finish();
                     break;
                 }
-                default:{
+                default: {
                     super.handleMessage(msg);
                 }
             }

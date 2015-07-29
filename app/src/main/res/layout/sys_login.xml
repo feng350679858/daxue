@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:background="@color/content_background"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right">
-
+        android:layout_height="@dimen/header_height"
+        android:gravity="right|center_vertical">
 
         <TextView
             android:id="@+id/tv_regist"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_height="match_parent"
             android:text="注册"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/normal_grey"
             android:textSize="14sp" />
-
     </LinearLayout>
 
 
@@ -36,96 +35,100 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="40dp"
-        android:divider="@drawable/field_divider"
-        android:orientation="vertical"
-        android:showDividers="middle|end">
+        android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_username"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:divider="@drawable/field_divider"
+            android:orientation="vertical"
+            android:showDividers="middle|end">
 
-            <com.jingcai.apps.aizhuan.view.ClearableEditText
-                android:id="@+id/et_username"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawablePadding="10dp"
-                android:hint="账号"
-                android:inputType="number"
-                android:maxLength="11"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:textColor="@color/important_dark"
-                android:textColorHint="@color/normal_grey"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.TextInputLayout>
+                <com.jingcai.apps.aizhuan.view.ClearableEditText
+                    android:id="@+id/et_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:hint="账号"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/important_dark"
+                    android:textColorHint="@color/normal_grey"
+                    android:textSize="14sp" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_password"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.jingcai.apps.aizhuan.view.ClearableEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:hint="密码"
+                    android:inputType="textPassword"
+                    android:maxLength="16"
+                    android:minLines="6"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text=""
+                    android:textColor="@color/important_dark"
+                    android:textColorHint="@color/normal_grey"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_yellow_boarded_bg_selector"
+            android:text="登录"
+            android:textColor="@color/normal_grey"
+            android:textSize="16sp" />
 
-            <com.jingcai.apps.aizhuan.view.ClearableEditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawablePadding="10dp"
-                android:hint="密码"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:minLines="6"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text=""
-                android:textColor="@color/important_dark"
-                android:textColorHint="@color/normal_grey"
-                android:textSize="14sp" />
-        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/tv_fegret_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="忘记密码"
+            android:textColor="@color/normal_grey"
+            android:textSize="14sp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:text="可用爱学贷账号直接登录"
+            android:textColor="@color/normal_grey"
+            android:textSize="12sp" />
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_yellow_boarded_bg_selector"
-        android:text="登录"
-        android:textColor="@color/normal_grey"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tv_fegret_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:text="忘记密码"
-        android:textColor="@color/normal_grey"
-        android:textSize="14sp" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="可用爱学贷账号直接登录"
-        android:textColor="@color/normal_grey"
-        android:textSize="12sp" />
 </LinearLayout>

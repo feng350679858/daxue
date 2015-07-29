@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -117,6 +118,12 @@ public class ClearableEditText extends EditText implements View.OnFocusChangeLis
         super.finalize();
         mDrawableRight = null;
     }
+
+//    @Override
+//    protected void onFinishInflate() {
+//        super.onFinishInflate();
+//        setOnFocusChangeListener(this);
+//    }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
