@@ -21,6 +21,7 @@ import java.util.List;
 public class Database {
 	private static final String TAG = "Database";
 	private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "dalegexue_db";
 
 	//contact info
 	private final String CONTACT_INFO_TABLE = "contact_info";
@@ -33,14 +34,14 @@ public class Database {
 
 	private final String CONTACT_INFO_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + CONTACT_INFO_TABLE
 			+ " (" + CONTACT_INFO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-            + STUDENT_ID + "TEXT NOT NULL ,"
-            + RECEIVER_ID + "TEXT NOT NULL ,"
+            + STUDENT_ID + " TEXT NOT NULL ,"
+            + RECEIVER_ID + " TEXT NOT NULL ,"
 			+ NAME + " TEXT NOT NULL , "
+			+ LAST_UPDATE + " LONG NOT NULL , "
 			+ LOGO_URL + " TEXT NOT NULL)";
 
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
-	private static final String DATABASE_NAME = "dalegexue_db";
 
 	private final Context mContext;
 
@@ -134,10 +135,10 @@ public class Database {
         List<ContactInfo> contacts = new ArrayList<>();
 
         while (cursor.moveToNext()){
-            String receiverId = cursor.getString(cursor.getColumnIndex(STUDENT_ID));
+            String receiverId = cursor.getString(cursor.getColumnIndex(RECEIVER_ID));
             String name = cursor.getString(cursor.getColumnIndex(NAME));
             String logoUrl = cursor.getString(cursor.getColumnIndex(LOGO_URL));
-            long lastUpdate = cursor.getLong(cursor.getColumnIndex(LOGO_URL));
+            long lastUpdate = cursor.getLong(cursor.getColumnIndex(LAST_UPDATE));
 
             ContactInfo contactInfo = new ContactInfo(receiverId,name,logoUrl,lastUpdate);
 

@@ -193,7 +193,7 @@ public class LoginActivity extends BaseActivity {
                 case 0: {
                     showToast("登录成功", 0);
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
-                    //UserSubject.loginSuccess(student);
+                    UserSubject.loginSuccess(student);
                     new JpushUtil(LoginActivity.this).login(student.getStudentid());
                     HXHelper.getInstance().loginOnEMChatServer(student.getStudentid());  //环信连接
                     setResult(RESULT_OK);

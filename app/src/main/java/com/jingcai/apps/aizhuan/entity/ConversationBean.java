@@ -1,6 +1,5 @@
 package com.jingcai.apps.aizhuan.entity;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -9,7 +8,6 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.util.DateUtils;
-import com.jingcai.apps.aizhuan.service.AzService;
 
 import java.util.Date;
 
@@ -26,9 +24,6 @@ public class ConversationBean implements Parcelable{
     private String content;
     private String time;
     private String unread;
-
-    private AzService azService;
-    private Context mContext;
 
     public static final Parcelable.Creator<ConversationBean> CREATOR = new Parcelable.Creator<ConversationBean>() {
         @Override
@@ -51,11 +46,8 @@ public class ConversationBean implements Parcelable{
         unread = source.readString();
     }
 
-    public ConversationBean(Context ctx,@NonNull EMConversation conversation){
+    public ConversationBean(@NonNull EMConversation conversation){
         EMMessage message = conversation.getLastMessage();
-        mContext = ctx;
-        azService = new AzService(ctx);
-
         this.unread = String.valueOf(conversation.getUnreadMsgCount());  //未读消息
         this.studentid = conversation.getUserName();  //对方的用户名
         this.time = DateUtils.getTimestampString(new Date(message.getMsgTime()));

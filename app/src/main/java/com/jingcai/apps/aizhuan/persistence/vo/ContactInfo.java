@@ -11,6 +11,7 @@ public class ContactInfo {
     private long lastUpdate;
 
     public ContactInfo() {
+        this.lastUpdate = System.currentTimeMillis();
     }
 
     public ContactInfo(String studentid, String name, String logourl) {

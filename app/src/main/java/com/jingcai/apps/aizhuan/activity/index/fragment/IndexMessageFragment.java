@@ -39,6 +39,7 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.HXHelper;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -116,8 +117,11 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         ConversationBean bean = null;
         for (String s : keySet) {
             EMConversation con = allConversations.get(s);
-            bean = new ConversationBean(baseActivity, con);
-            assembleBean(bean);
+            bean = new ConversationBean(con);
+            //环信管理端发过来的信息
+            if(StringUtil.isEmpty(bean.getName())){
+                assembleBean(bean);
+            }
             beans.add(bean);
         }
 
@@ -140,7 +144,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             bean.setName(c.getName());
             bean.setLogourl(c.getLogourl());
             //如果超时
-            if ((System.currentTimeMillis() - c.getLastUpdate())/1000 > GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
+            if ((System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
                 return;
             }
         }
@@ -177,7 +181,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
                                 Log.d(TAG,"update a contact info in database.");
                             }else{
                                 ContactInfo newContact = new ContactInfo();
-                                newContact.setStudentid(student.getStudentid());
+                                newContact.setStudentid(bean.getStudentid());
                                 newContact.setLogourl(student.getLogopath());
                                 newContact.setName(student.getName());
                                 mDb.insertContactInfo(UserSubject.getStudentid(), newContact);
