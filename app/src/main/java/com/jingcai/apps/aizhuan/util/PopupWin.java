@@ -32,6 +32,8 @@ public class PopupWin {
     private int mAnimstyle;
     private boolean mFocusable;
 
+    private OnShowStateChangeCallBack mOnShowStateChangeCallBack;
+
     private PopupWin(View view1, View view2) {
         this.mParentView = view1;
         this.mContentView = view2;
@@ -253,6 +255,9 @@ public class PopupWin {
         if (null != mParentView) {
             ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
         }
+        if(null != mOnShowStateChangeCallBack){
+            mOnShowStateChangeCallBack.onShow();
+        }
     }
 
     public PopupWin setAction(@IdRes int viewId, View.OnClickListener clickListener) {
@@ -286,5 +291,17 @@ public class PopupWin {
     public void dismiss() {
         check();
         popupWindow.dismiss();
+        if(null != mOnShowStateChangeCallBack){
+            mOnShowStateChangeCallBack.onDimiss();
+        }
+    }
+
+    public void setCallBack(OnShowStateChangeCallBack callback){
+        mOnShowStateChangeCallBack = callback;
+    }
+
+    public interface OnShowStateChangeCallBack {
+        void onShow();
+        void onDimiss();
     }
 }
