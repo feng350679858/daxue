@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class Database {
 	private final String RECEIVER_ID = "receiver_id";   //对方id
 	private final String NAME = "name";                 //对方姓名
 	private final String LOGO_URL = "logo_url";         //对方头像地址
+	private final String LAST_UPDATE = "last_update";   //上一次更新时间
 
 	private final String CONTACT_INFO_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + CONTACT_INFO_TABLE
 			+ " (" + CONTACT_INFO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
@@ -42,24 +44,26 @@ public class Database {
 
 	private final Context mContext;
 
-	public Database(Context context) {
+    private static Database mDatabase;
+
+	private Database(Context context) {
 		this.mContext = context;
 	}
 
-//    /**
-//     * context传入applicationContext {@see Activity#getApplicationContext()}
-//     * @param context applicationContext
-//     */
-//    public static Database getInstance(Context context){
-//        if(null == mDatabase){
-//            synchronized (Database.class){
-//                if(null == mDatabase){
-//                    mDatabase = new Database(context);
-//                }
-//            }
-//        }
-//        return mDatabase;
-//    }
+    /**
+     * context传入applicationContext {@see Activity#getApplicationContext()}
+     * @param context applicationContext
+     */
+    public static Database getInstance(Context context){
+        if(null == mDatabase){
+            synchronized (Database.class){
+                if(null == mDatabase){
+                    mDatabase = new Database(context);
+                }
+            }
+        }
+        return mDatabase;
+    }
 
 	private class DatabaseHelper extends SQLiteOpenHelper {
 		DatabaseHelper(Context context) {
@@ -101,21 +105,46 @@ public class Database {
      * @return 联系人信息列表
      */
 	public List<ContactInfo> fetchContactsInfoByStudentId(String studentId) {
-		String sql = "SELECT * FROM " + CONTACT_INFO_TABLE + " WHERE " + STUDENT_ID
-				+ " = ? ORDER BY "+CONTACT_INFO_ID;
-        final Cursor cursor = mDb.rawQuery(sql, new String[]{studentId});
+        return fetchContactsInfoByStudentId(studentId,null);
+    }
+
+    /**
+     * 将当前登录的学生与指定的接收者的信息
+     * @param _studentId 当前登录学生的id
+     * @param _receiverId 接收者学生id
+     * @return 联系人信息列表
+     */
+    public List<ContactInfo> fetchContactsInfoByStudentId(String _studentId,String _receiverId) {
+        final boolean hasReceiver = StringUtil.isNotEmpty(_receiverId);
+        //组装SQL
+        StringBuilder sql = new StringBuilder("SELECT * FROM ").append(CONTACT_INFO_TABLE)
+                                .append(" WHERE ").append(STUDENT_ID).append(" = ?");
+        if(hasReceiver){
+            sql.append(" AND ").append(RECEIVER_ID).append(" =? ");
+        }
+        sql.append("ORDER BY ").append(CONTACT_INFO_ID);
+
+        final String[] selectionArgs;
+        if(hasReceiver){
+            selectionArgs = new String[]{_studentId,_receiverId};
+        }else{
+            selectionArgs = new String[]{_studentId};
+        }
+        final Cursor cursor = mDb.rawQuery(sql.toString(), selectionArgs);
         List<ContactInfo> contacts = new ArrayList<>();
 
         while (cursor.moveToNext()){
             String receiverId = cursor.getString(cursor.getColumnIndex(STUDENT_ID));
             String name = cursor.getString(cursor.getColumnIndex(NAME));
             String logoUrl = cursor.getString(cursor.getColumnIndex(LOGO_URL));
+            long lastUpdate = cursor.getLong(cursor.getColumnIndex(LOGO_URL));
 
-            ContactInfo contactInfo = new ContactInfo(receiverId,name,logoUrl);
+            ContactInfo contactInfo = new ContactInfo(receiverId,name,logoUrl,lastUpdate);
+
             contacts.add(contactInfo);
         }
         cursor.close();
-        Log.d(TAG,"find "+contacts.size()+" contacts info by student id:"+studentId);
+        Log.d(TAG,"find "+contacts.size()+" contacts info by student id:"+_studentId);
         return contacts;
     }
 
@@ -131,6 +160,7 @@ public class Database {
         initialValues.put(RECEIVER_ID, contactInfo.getStudentid());
         initialValues.put(NAME, contactInfo.getName());
         initialValues.put(LOGO_URL, contactInfo.getLogourl());
+        initialValues.put(LAST_UPDATE,contactInfo.getLastUpdate());
 		return mDb.insert(CONTACT_INFO_TABLE, null, initialValues);
 	}
 
@@ -144,17 +174,20 @@ public class Database {
         ContentValues updateValues = new ContentValues();
         updateValues.put(NAME, contactInfo.getName());
         updateValues.put(LOGO_URL, contactInfo.getLogourl());
-        return mDb.update(CONTACT_INFO_TABLE,updateValues,RECEIVER_ID +"=? and "+STUDENT_ID+"=?",new String[]{contactInfo.getStudentid(),studentId});
+        updateValues.put(LAST_UPDATE,System.currentTimeMillis());
+        return mDb.update(CONTACT_INFO_TABLE,updateValues,RECEIVER_ID +"=? and "+STUDENT_ID+"=?",
+                new String[]{contactInfo.getStudentid(),studentId});
     }
 
     /**
      * 删除联系人信息，根据receiverId和当前登录的studentId
      * @param studentId 当前登录学生的id
      * @param contactInfo 删除的对象
-     * @return
+     * @return row effected
      */
     public int deleteContactInfo(String studentId,ContactInfo contactInfo){
-        return mDb.delete(CONTACT_INFO_TABLE,RECEIVER_ID +"=? and "+STUDENT_ID+"=?",new String[]{contactInfo.getStudentid(),studentId});
+        return mDb.delete(CONTACT_INFO_TABLE,RECEIVER_ID +"=? and "+STUDENT_ID+"=?",
+                new String[]{contactInfo.getStudentid(),studentId});
     }
 
 }

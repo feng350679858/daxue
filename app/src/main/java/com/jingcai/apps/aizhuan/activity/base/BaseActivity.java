@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;

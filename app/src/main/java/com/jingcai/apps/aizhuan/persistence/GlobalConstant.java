@@ -23,6 +23,7 @@ public class GlobalConstant {
     public static String h5Url = null;//http://192.168.0.18:9080
 
     public static int PAGE_SIZE = 10;
+    public static long CONTACT_INFO_UPDATE_TIME_OUT_SENCODE = 3600 * 24 * 7;  //7天
     public static Gis gis = new Gis();
 
     public static Gis getGis() {

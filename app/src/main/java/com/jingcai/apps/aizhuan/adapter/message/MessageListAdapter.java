@@ -3,7 +3,6 @@ package com.jingcai.apps.aizhuan.adapter.message;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,15 +16,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.entity.MessageCategoryBean;
-import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
-import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
-import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,14 +154,9 @@ public class MessageListAdapter extends BaseAdapter {
         }
         if (null != holderCon) {   //对话
             final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
-            //如果姓名和头像的地址未获取到，则从服务端重新获取
-//            Log.i(TAG,"position:"+position+"\nname:"+message.getName()+"\nlogo:"+message.getLogourl());
-            if(StringUtil.isEmpty(message.getName()) || StringUtil.isEmpty(message.getLogourl())){
-                getStudentInfo(message,holderCon.mTvName,holderCon.mIvLogo);
-            }else{
-                holderCon.mTvName.setText(message.getName());
-                mBitmapUtil.getImage(holderCon.mIvLogo, message.getLogourl());
-            }
+
+            holderCon.mTvName.setText(message.getName());
+            mBitmapUtil.getImage(holderCon.mIvLogo, message.getLogourl(),true,R.drawable.logo_merchant_default);
 
             holderCon.mTvContent.setText(SmileUtils.getSmiledText(mContext,message.getContent()));
             holderCon.mTvTime.setText(message.getTime());
@@ -225,48 +212,6 @@ public class MessageListAdapter extends BaseAdapter {
             });
         }
         return convertView;
-    }
-
-    private void getStudentInfo(final ConversationBean conversation, final TextView mTvName,final  ImageView mIvLogo) {
-        final AzService azService = new AzService(mContext);
-
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Stu02Request req = new Stu02Request();
-                final Stu02Request.Student stu = req.new Student();
-                stu.setStudentid(conversation.getStudentid());
-                req.setStudent(stu);
-                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
-                    @Override
-                    public void success(Stu02Response response) {
-                        ResponseResult result = response.getResult();
-                        Stu02Response.Stu02Body stu02Body = response.getBody();
-                        final Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
-                        if("0".equals(result.getCode())) {
-                            ((Activity) mContext).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //给传入的姓名TextView和头像ImageView赋值
-                                    final String name = student.getName();
-                                    final String logopath = student.getLogopath();
-                                    mTvName.setText(name);
-                                    mBitmapUtil.getImage(mIvLogo, logopath);
-                                    conversation.setName(name);
-                                    conversation.setLogourl(logopath);
-                                }
-                            });
-
-                        }
-                    }
-                    @Override
-                    public void fail(AzException e) {
-                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
-                    }
-                });
-            }
-        });
-
     }
 
     private class ViewHolderCategory {

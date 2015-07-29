@@ -8,14 +8,29 @@ public class ContactInfo {
     private String studentid;
     private String name;
     private String logourl;
+    private long lastUpdate;
 
     public ContactInfo() {
     }
 
     public ContactInfo(String studentid, String name, String logourl) {
+
+        this(studentid,name,logourl,System.currentTimeMillis());
+    }
+
+    public ContactInfo(String studentid, String name, String logoUrl, long lastUpdate) {
         this.studentid = studentid;
         this.name = name;
-        this.logourl = logourl;
+        this.logourl = logoUrl;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public String getStudentid() {

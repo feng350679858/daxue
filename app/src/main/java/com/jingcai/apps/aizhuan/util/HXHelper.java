@@ -2,7 +2,6 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
@@ -13,7 +12,6 @@ import com.easemob.chat.EMConversation;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
-import com.jingcai.apps.aizhuan.service.local.UpdateContactInfoService;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -103,8 +101,6 @@ public class HXHelper {
                         final EMChatManager instance = EMChatManager.getInstance();
                         instance.loadAllConversations();
                         Log.d(TAG, "登陆聊天服务器成功！username:" + username);
-                        //TODO 根据conversation 更新本地数据库
-                        mContext.startService(new Intent(mContext, UpdateContactInfoService.class));
                     }
 
                     @Override
