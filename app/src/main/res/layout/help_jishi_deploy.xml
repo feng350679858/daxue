@@ -145,8 +145,8 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="不限"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark"/>
+                        android:textColor="@color/important_dark"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -183,8 +183,8 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="浙江大学"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
+                        android:textColor="@color/important_dark"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -217,10 +217,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/icon_remove1" />
+                    android:src="@drawable/icon_remove1"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <FrameLayout
+                android:id="@+id/layout_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -235,8 +237,7 @@
                     android:gravity="center"
                     android:hint="指定在线老友帮助你"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:id="@+id/layout_friend_selected"
@@ -244,13 +245,13 @@
                     android:layout_height="64dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/icon_share_qq"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/icon_share_qq" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -261,13 +262,15 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_friend_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="夏邑"
-                            android:textSize="16sp"
-                            android:textColor="@color/important_dark" />
+                            android:textColor="@color/important_dark"
+                            android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/tv_friend_school_college"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -336,8 +339,8 @@
                         android:hint="不低于20金"
                         android:maxLength="5"
                         android:numeric="integer"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
+                        android:textColor="@color/important_dark"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -374,8 +377,8 @@
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="30分钟"
-                        android:textSize="14sp"
-                        android:textColor="@color/important_dark" />
+                        android:textColor="@color/important_dark"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
