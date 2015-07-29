@@ -14,7 +14,7 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Request;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.widget.TopToast;
+import com.jingcai.apps.widget.TopToast2;
 
 public class BaseHandler extends Handler {
     private final String TAG = "==" + BaseHandler.class.getName();
@@ -49,15 +49,15 @@ public class BaseHandler extends Handler {
         switch (msg.what) {
             case 1000: {//通用提示
                 if (msg.obj != null) {
-                    showToast(String.valueOf(msg.obj));
+                    showInnerToast(String.valueOf(msg.obj));
                 } else {
-                    showToast("网络连接失败！");
+                    showInnerToast("网络连接失败！");
                 }
                 break;
             }
             case 1001: {//解析返回异常
                 Log.e(TAG, String.valueOf(msg.obj));
-                showToast("解析服务端返回异常");
+                showInnerToast("解析服务端返回异常");
                 break;
             }
             case 1002: {//未登录异常
@@ -65,19 +65,19 @@ public class BaseHandler extends Handler {
                 if (UserSubject.isLogin()) {
                     relogin();//重新尝试登录系统
                 } else {
-                    showToast("请重新登录");
+                    showInnerToast("请重新登录");
                     UserSubject.loginFail();
                 }
                 break;
             }
             case 1003: {//超时
                 Log.e(TAG, String.valueOf(msg.obj));
-                showToast("请求超时，请重试");
+                showInnerToast("请求超时，请重试");
                 break;
             }
             case 1004: {//已重新登录
                 Log.e(TAG, String.valueOf(msg.obj));
-                showToast("会话过期，已重新登录，请重试");
+                showInnerToast("会话过期，已重新登录，请重试");
                 break;
             }
         }
@@ -117,9 +117,14 @@ public class BaseHandler extends Handler {
         });
     }
 
-    public void showToast(String msg) {
-        TopToast topToast = TopToast.makeText(context, msg, TopToast.LENGTH_LONG);
-        topToast.setOffsetY(title_height);
-        topToast.show();
+    private void showInnerToast(String msg) {
+        showInnerToast(msg, title_height);
+    }
+
+    private void showInnerToast(String msg, int height) {
+//        TopToast topToast = TopToast.makeText(context, msg, TopToast.LENGTH_LONG);
+//        topToast.setOffsetY(title_height);
+//        topToast.show();
+        TopToast2.showToast(context, msg, height);
     }
 }

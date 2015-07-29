@@ -41,9 +41,9 @@ public class LoginActivity extends BaseActivity {
 
         messageHandler = new MessageHandler(this);
 
-        if(UserSubject.isLogin()){
+        if (UserSubject.isLogin()) {
             doLogin(UserSubject.getPhone(), DES3Util.decrypt(UserSubject.getPassword()));
-        }else {
+        } else {
             initViews();
         }
     }
@@ -52,12 +52,12 @@ public class LoginActivity extends BaseActivity {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
 
-        if(StringUtil.isNotEmpty(UserSubject.getPhone())){
+        if (StringUtil.isNotEmpty(UserSubject.getPhone())) {
             et_username.setText(UserSubject.getPhone());
         }
 
         findViewById(R.id.btn_login).setOnClickListener(loginListener);
-        findViewById(R.id.btn_fegret_pwd).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_fegret_pwd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity {
 //                finish();
             }
         });
-        findViewById(R.id.btn_regist).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_regist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
@@ -74,12 +74,31 @@ public class LoginActivity extends BaseActivity {
                 //finish();
             }
         });
-        findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageHandler.postMessage(4);
-            }
-        });
+
+//        final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.til_pwd);
+//        textInputLayout.setHint("Password");
+
+//        EditText editText = textInputLayout.getEditText();
+//
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                if (s.length() > 4) {
+//                    textInputLayout.setError("Password error");
+//                    textInputLayout.setErrorEnabled(true);
+//                } else {
+//                    textInputLayout.setErrorEnabled(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
     }
 
     private View.OnClickListener loginListener = new View.OnClickListener() {
@@ -124,6 +143,7 @@ public class LoginActivity extends BaseActivity {
                             getStudentInfo(azService, sys04Body.getStudent().getStudentid(), encryptPassword);
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -132,7 +152,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
 
 
     private void getStudentInfo(AzService azService, final String studentid, final String encryptPassword) {
@@ -148,12 +167,13 @@ public class LoginActivity extends BaseActivity {
                 Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
                 student.setStudentid(studentid);
                 student.setPassword(encryptPassword);
-                if(!"0".equals(result.getCode())) {
+                if (!"0".equals(result.getCode())) {
                     messageHandler.postMessage(2, result.getMessage());
-                }else{
+                } else {
                     messageHandler.postMessage(0, student);
                 }
             }
+
             @Override
             public void fail(AzException e) {
                 messageHandler.postException(e);
@@ -165,38 +185,33 @@ public class LoginActivity extends BaseActivity {
         MessageHandler(Context ctx) {
             super(ctx);
         }
+
         @Override
         public void handleMessage(Message msg) {
             closeProcessDialog();
-            switch (msg.what){
-                case 0:{
-                    showToast("登录成功");
+            switch (msg.what) {
+                case 0: {
+                    showToast("登录成功", 0);
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
-                    UserSubject.loginSuccess(student);
+                    //UserSubject.loginSuccess(student);
                     new JpushUtil(LoginActivity.this).login(student.getStudentid());
                     HXHelper.getInstance().loginOnEMChatServer(student.getStudentid());  //环信连接
                     setResult(RESULT_OK);
                     finish();
                     break;
                 }
-                case 1:{
-                    showToast("登录失败,"+ msg.obj);
+                case 1: {
+                    showToast("登录失败," + msg.obj);
                     UserSubject.loginFail();
                     new JpushUtil(LoginActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
                     break;
                 }
-                case 3:{
+                case 3: {
                     showToast("获取用户信息失败");
                     break;
                 }
-                case 4:{
-                    showToast("已取消登录");
-                    setResult(RESULT_CANCELED);
-                    finish();
-                    break;
-                }
-                default:{
+                default: {
                     super.handleMessage(msg);
                 }
             }
