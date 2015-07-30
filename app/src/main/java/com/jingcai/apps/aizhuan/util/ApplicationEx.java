@@ -2,6 +2,7 @@ package com.jingcai.apps.aizhuan.util;
 
 import android.app.Application;
 
+import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 

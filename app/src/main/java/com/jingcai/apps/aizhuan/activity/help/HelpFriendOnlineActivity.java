@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.qrcode.zxing.activity.CaptureActivity;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.List;
  * Created by lejing on 15/7/29.
  */
 public class HelpFriendOnlineActivity extends BaseActivity {
+    public static final int REQUEST_CODE_FRIEND = 1100;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpFriendAdapter helpFriendAdapter;
@@ -59,7 +62,7 @@ public class HelpFriendOnlineActivity extends BaseActivity {
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 添加老友
+                startActivityForResult(new Intent(HelpFriendOnlineActivity.this, CaptureActivity.class), REQUEST_CODE_FRIEND);
             }
         });
 
@@ -210,6 +213,20 @@ public class HelpFriendOnlineActivity extends BaseActivity {
                     }
                 }
             });
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_FRIEND:{
+                if(RESULT_OK == resultCode){
+                    Log.d("==", "-----------studentid-----"+data.getStringExtra("studentid"));
+                }
+            }
+            default: {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 }
