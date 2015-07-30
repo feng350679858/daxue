@@ -12,17 +12,18 @@ public class Partjob11Request extends BaseRequest {
     public String getTranscode() {
         return BizConstant.BIZ_PARTTIME_JOB_11;
     }
-    private Partjob11Request partjob11Request;
 
-    public Partjob11Request getPartjob11Request() {
-        return partjob11Request;
+    private Parttimejob parttimejob;
+
+    public Parttimejob getParttimejob() {
+        return parttimejob;
     }
 
-    public void setPartjob11Request(Partjob11Request partjob11Request) {
-        this.partjob11Request = partjob11Request;
+    public void setParttimejob(Parttimejob parttimejob) {
+        this.parttimejob = parttimejob;
     }
 
-    public class Parttimejob{
+    public class Parttimejob {
         private String studentid;
         private String gisx;
         private String gisy;
