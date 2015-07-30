@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
@@ -20,25 +19,25 @@ import java.util.List;
  */
 public class ResponseAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Partjob27Response.Partjob27Body.Region> regionList;
+    private List<Partjob27Response.Partjob27Body.Parttimejob> parttimejobList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
     public ResponseAdapter(Context ctx) {
         mContext = ctx;
-        regionList = new ArrayList<>();
+        parttimejobList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
         bitmapUtil = new BitmapUtil(ctx);
     }
 
     @Override
     public int getCount() {
-        return regionList.size();
+        return parttimejobList.size();
     }
 
     @Override
-    public Partjob27Response.Partjob27Body.Region getItem(int position) {
-        return regionList.get(position);
+    public Partjob27Response.Partjob27Body.Parttimejob getItem(int position) {
+        return parttimejobList.get(position);
     }
 
     @Override
@@ -65,8 +64,8 @@ public class ResponseAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Partjob27Response.Partjob27Body.Region region = regionList.get(position);
-        viewHolder.region = region;//?????????viewHolder
+        Partjob27Response.Partjob27Body.Parttimejob parttimejob = parttimejobList.get(position);
+        viewHolder.parttimejob = parttimejob;//?????????viewHolder
 
         // if (0 == position % 2) {
         // viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
@@ -79,29 +78,29 @@ public class ResponseAdapter extends BaseAdapter {
         //     viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
         //   viewHolder.tv_gender_limit.setVisibility(View.GONE);
       // viewHolder.tv_title.setText(region.getCoin());
-        viewHolder.tv_help_time.setText(region.getOptime());
-        viewHolder.tv_content.setText(region.getContent());
+        viewHolder.tv_help_time.setText(parttimejob.getOptime());
+        viewHolder.tv_content.setText(parttimejob.getContent());
 
         return convertView;
     }
 
     public void clearData() {
-        regionList.clear();
+        parttimejobList.clear();
     }
 
-    public void addData(List< Partjob27Response.Partjob27Body.Region> list) {
-        regionList.addAll(list);
+    public void addData(List<Partjob27Response.Partjob27Body.Parttimejob> list) {
+        parttimejobList.addAll(list);
     }
 
-    public Partjob27Response.Partjob27Body.Region getMerchant(int position) {
-        if (position >= regionList.size()) {
+    public Partjob27Response.Partjob27Body.Parttimejob getMerchant(int position) {
+        if (position >= parttimejobList.size()) {
             return null;
         }
-        return regionList.get(position);
+        return parttimejobList.get(position);
     }
 
     public class ViewHolder {
-        public Partjob27Response.Partjob27Body.Region region;
+        public Partjob27Response.Partjob27Body.Parttimejob parttimejob;
         public View layout_help_content;
         // public View layout_help_jishi;
         //  public View layout_help_wenda;

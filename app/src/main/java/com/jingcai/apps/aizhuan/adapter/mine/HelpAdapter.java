@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
@@ -20,25 +19,25 @@ import java.util.List;
  */
 public class HelpAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Partjob24Response.Partjob24Body.Region> regionList;
+    private List<Partjob24Response.Partjob24Body.Parttimejob> parttimejobList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
     public HelpAdapter(Context ctx) {
         mContext = ctx;
-        regionList = new ArrayList<>();
+        parttimejobList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
         bitmapUtil = new BitmapUtil(ctx);
     }
 
     @Override
     public int getCount() {
-        return regionList.size();
+        return parttimejobList.size();
     }
 
     @Override
-    public Partjob24Response.Partjob24Body.Region getItem(int position) {
-        return regionList.get(position);
+    public Partjob24Response.Partjob24Body.Parttimejob getItem(int position) {
+        return parttimejobList.get(position);
     }
 
     @Override
@@ -65,24 +64,24 @@ public class HelpAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Partjob24Response.Partjob24Body.Region region = regionList.get(position);
-        viewHolder.region = region;//���������viewHolder
+        Partjob24Response.Partjob24Body.Parttimejob parttimejob = parttimejobList.get(position);
+        viewHolder.parttimejob = parttimejob;//���������viewHolder
 
        // if (0 == position % 2) {
            // viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
          //   viewHolder.layout_help_wenda.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
         //    viewHolder.tv_title.setText("����");
-            viewHolder.tv_title.setText(region.getCoin()+"金");
+            viewHolder.tv_title.setText(parttimejob.getCoin()+"金");
        // } else {
          //   viewHolder.layout_help_jishi.setVisibility(View.GONE);
        //     viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
          //   viewHolder.tv_gender_limit.setVisibility(View.GONE);
          //   viewHolder.tv_title.setText(region.getCoin());
-            viewHolder.tv_help_time.setText(region.getOptime());
-            viewHolder.tv_content.setText(region.getContent());
+            viewHolder.tv_help_time.setText(parttimejob.getOptime());
+            viewHolder.tv_content.setText(parttimejob.getContent());
 
-            String s=region.getStatus();
+            String s= parttimejob.getStatus();
           if (s==null )
           {
               viewHolder.tv_gender_limit.setText("null");
@@ -116,22 +115,22 @@ public class HelpAdapter extends BaseAdapter {
     }
 
     public void clearData() {
-        regionList.clear();
+        parttimejobList.clear();
     }
 
-    public void addData(List< Partjob24Response.Partjob24Body.Region> list) {
-        regionList.addAll(list);
+    public void addData(List<Partjob24Response.Partjob24Body.Parttimejob> list) {
+        parttimejobList.addAll(list);
     }
 
-    public Partjob24Response.Partjob24Body.Region getMerchant(int position) {
-        if (position >= regionList.size()) {
+    public Partjob24Response.Partjob24Body.Parttimejob getMerchant(int position) {
+        if (position >= parttimejobList.size()) {
             return null;
         }
-        return regionList.get(position);
+        return parttimejobList.get(position);
     }
 
     public class ViewHolder {
-        public Partjob24Response.Partjob24Body.Region region;
+        public Partjob24Response.Partjob24Body.Parttimejob parttimejob;
         public View layout_help_content;
        // public View layout_help_jishi;
       //  public View layout_help_wenda;
