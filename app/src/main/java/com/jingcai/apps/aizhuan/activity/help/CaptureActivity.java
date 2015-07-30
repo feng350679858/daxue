@@ -1,4 +1,4 @@
-package com.jingcai.apps.qrcode.zxing.activity;
+package com.jingcai.apps.aizhuan.activity.help;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,13 +13,15 @@ import android.os.Vibrator;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.jingcai.apps.qrcode.R;
+import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.qrcode.zxing.camera.CameraManager;
-import com.jingcai.apps.qrcode.zxing.decoding.CaptureActivityHandler;
 import com.jingcai.apps.qrcode.zxing.decoding.InactivityTimer;
 import com.jingcai.apps.qrcode.zxing.view.ViewfinderView;
 
@@ -47,15 +49,30 @@ public class CaptureActivity extends Activity implements Callback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.qrcode_capture);
+		setContentView(R.layout.help_add_friend_qrcode_capture);
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
+        initHeader();
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 	}
 
-	@Override
+    private void initHeader() {
+        TextView tvTitle = (TextView) findViewById(com.jingcai.apps.aizhuan.R.id.tv_content);
+        tvTitle.setText("二维码");
+
+        ImageButton btnBack = (ImageButton) findViewById(com.jingcai.apps.aizhuan.R.id.ib_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+    }
+
+    @Override
 	protected void onResume() {
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
@@ -125,8 +142,7 @@ public class CaptureActivity extends Activity implements Callback {
 			return;
 		}
 		if (handler == null) {
-			handler = new CaptureActivityHandler(this, decodeFormats,
-					characterSet);
+			handler = new CaptureActivityHandler(this, decodeFormats,characterSet);
 		}
 	}
 

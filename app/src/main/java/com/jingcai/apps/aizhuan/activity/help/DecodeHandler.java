@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jingcai.apps.qrcode.zxing.decoding;
+package com.jingcai.apps.aizhuan.activity.help;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +29,6 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.jingcai.apps.qrcode.R;
-import com.jingcai.apps.qrcode.zxing.activity.CaptureActivity;
 import com.jingcai.apps.qrcode.zxing.camera.CameraManager;
 import com.jingcai.apps.qrcode.zxing.camera.PlanarYUVLuminanceSource;
 

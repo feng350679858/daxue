@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jingcai.apps.qrcode.zxing.decoding;
+package com.jingcai.apps.aizhuan.activity.help;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -22,7 +22,6 @@ import android.os.Looper;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
-import com.jingcai.apps.qrcode.zxing.activity.CaptureActivity;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -32,7 +31,7 @@ import java.util.concurrent.CountDownLatch;
  * This thread does all the heavy lifting of decoding the images.
  * �����߳�
  */
-final class DecodeThread extends Thread {
+final public class DecodeThread extends Thread {
 
   public static final String BARCODE_BITMAP = "barcode_bitmap";
   private final CaptureActivity activity;
