@@ -63,7 +63,6 @@ public class LoginActivity extends BaseActivity {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
                 intent.putExtra("forgetFlag", true);
                 startActivityForResult(intent, REQUEST_CODE_FORGET_PWD);
-//                finish();
             }
         });
         findViewById(R.id.tv_regist).setOnClickListener(new View.OnClickListener() {
@@ -71,34 +70,8 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_REGIST);
-                //finish();
             }
         });
-
-//        final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.til_pwd);
-//        textInputLayout.setHint("Password");
-
-//        EditText editText = textInputLayout.getEditText();
-//
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                if (s.length() > 4) {
-//                    textInputLayout.setError("Password error");
-//                    textInputLayout.setErrorEnabled(true);
-//                } else {
-//                    textInputLayout.setErrorEnabled(false);
-//                }
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
     }
 
     private View.OnClickListener loginListener = new View.OnClickListener() {
@@ -108,7 +81,7 @@ public class LoginActivity extends BaseActivity {
             String password = et_password.getText().toString();
             if (username.length() < 1 || password.length() < 1) {
                 //showDialog(WSUtil.DIALOG_USER_PWD_EMPTY);
-                showToast("账号密码不能为空");
+                showToast("账号密码不能为空", 0);
                 return;
             }
             showProgressDialog("正在登录...");
@@ -201,14 +174,14 @@ public class LoginActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("登录失败," + msg.obj);
+                    showToast("登录失败," + msg.obj, 0);
                     UserSubject.loginFail();
                     new JpushUtil(LoginActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
                     break;
                 }
                 case 3: {
-                    showToast("获取用户信息失败");
+                    showToast("获取用户信息失败", 0);
                     break;
                 }
                 default: {

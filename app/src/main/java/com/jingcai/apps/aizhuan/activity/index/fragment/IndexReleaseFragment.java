@@ -38,39 +38,39 @@ public class IndexReleaseFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView() {
-        mBaseView.findViewById(R.id.button_start_count).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_show_unread).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_reset).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_jishi_help).setOnClickListener(this);
-        mBaseView.findViewById(R.id.button_wenda_help).setOnClickListener(this);
+//        mBaseView.findViewById(R.id.button_start_count).setOnClickListener(this);
+//        mBaseView.findViewById(R.id.button_show_unread).setOnClickListener(this);
+//        mBaseView.findViewById(R.id.button_reset).setOnClickListener(this);
+//        mBaseView.findViewById(R.id.button_jishi_help).setOnClickListener(this);
+//        mBaseView.findViewById(R.id.button_wenda_help).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        switch (v.getId()) {
-            case R.id.button_start_count: {
-                mainActivity.startCount();
-                break;
-            }
-            case R.id.button_show_unread: {
-                mainActivity.showUnread("0");
-                break;
-            }
-            case R.id.button_reset: {
-                mainActivity.freezeCount("0");
-                break;
-            }
-            case R.id.button_jishi_help: {
-                Intent intent = new Intent(this.getActivity(), HelpJishiDeployActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.button_wenda_help: {
-                Intent intent = new Intent(this.getActivity(), HelpWendaDeployActivity.class);
-                startActivity(intent);
-                break;
-            }
-        }
+//        MainActivity mainActivity = (MainActivity) getActivity();
+//        switch (v.getId()) {
+//            case R.id.button_start_count: {
+//                mainActivity.startCount();
+//                break;
+//            }
+//            case R.id.button_show_unread: {
+//                mainActivity.showUnread("0");
+//                break;
+//            }
+//            case R.id.button_reset: {
+//                mainActivity.freezeCount("0");
+//                break;
+//            }
+//            case R.id.button_jishi_help: {
+//                Intent intent = new Intent(this.getActivity(), HelpJishiDeployActivity.class);
+//                startActivity(intent);
+//                break;
+//            }
+//            case R.id.button_wenda_help: {
+//                Intent intent = new Intent(this.getActivity(), HelpWendaDeployActivity.class);
+//                startActivity(intent);
+//                break;
+//            }
+//        }
     }
 }

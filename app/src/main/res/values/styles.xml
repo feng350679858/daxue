@@ -1,8 +1,13 @@
 <resources>
 
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light"><!--
+        <item name="colorPrimaryDark">@color/darker_yellow</item>
+        <item name="colorPrimary">@color/main_yellow</item>
+        <item name="colorControlNormal">@color/main_yellow</item>-->
+        <item name="colorAccent">@color/main_yellow</item>
     </style>
+
 
     <!-- 不带数字的badge -->
     <style name="style_badge">

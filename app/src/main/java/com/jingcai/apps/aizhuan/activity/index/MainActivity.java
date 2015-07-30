@@ -13,20 +13,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDeployActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDeployActivity;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
-import com.jingcai.apps.aizhuan.activity.index.fragment.IndexReleaseFragment;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 import com.jingcai.apps.aizhuan.util.HXHelper;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 
 import java.util.List;
 
@@ -37,10 +42,7 @@ public class MainActivity extends BaseFragmentActivity {
     private static final String TAG = "MainActivity";
 
     //Tab相关
-    private LinearLayout mLlCampus;
-    private LinearLayout mLlMessgage;
-    private LinearLayout mLlMoney;
-    private LinearLayout mLlMine;
+    private LinearLayout mLlCampus, mLlMessgage, mLlMoney, mLlMine;
     private ImageButton mBtnRelease;
     private int mCurrentTabIndex;
 
@@ -48,7 +50,7 @@ public class MainActivity extends BaseFragmentActivity {
     private final int[] mFocusedTabIconDrawableIds = {R.drawable.icon_index_tab_campus_focused, R.drawable.icon_index_tab_message_focused, R.drawable.icon_index_tab_money_focused, R.drawable.icon_index_tab_mine_focused};
     private final ImageView[] mIconViewArr = new ImageView[mNormalTabIconDrawableIds.length];
 
-    private final Class[] mTabFragmentClassArr = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class, IndexReleaseFragment.class};
+    private final Class[] mTabFragmentClassArr = {IndexCampusFragment.class, IndexMessageFragment.class, IndexMoneyFragment.class, IndexMineFragment.class};
     private final Fragment[] mTabFragmentArr = new Fragment[mTabFragmentClassArr.length];
 
     private ServiceConnection serviceConnection;
@@ -67,6 +69,44 @@ public class MainActivity extends BaseFragmentActivity {
             focusTapedIcon(mCurrentTabIndex);
             //切换当前显示的Fragment到指定的fragment
             changeFragment(mCurrentTabIndex);
+        }
+    };
+    private View.OnClickListener releaseClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            View parentView = MainActivity.this.getWindow().getDecorView();
+            View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.index_release_fragment, null);
+
+            final PopupWin selfdeftimeWin = PopupWin.Builder.create(MainActivity.this)
+                    .setParentView(parentView)
+                    .setContentView(contentView)
+                    .setWidth(ViewGroup.LayoutParams.MATCH_PARENT)
+                    .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                    .build();
+            String html = "正有<font color='red'>100+位</font>在线帮助您";
+            ((TextView)selfdeftimeWin.findViewById(R.id.tv_school_num)).setText(android.text.Html.fromHtml(html));
+            selfdeftimeWin.setAction(R.id.btn_cancel, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selfdeftimeWin.dismiss();
+                }
+            }).setAction(R.id.layout_wenda, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, HelpWendaDeployActivity.class);
+                    startActivity(intent);
+                    selfdeftimeWin.dismiss();
+                }
+            }).setAction(R.id.layout_jishi, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, HelpJishiDeployActivity.class);
+                    startActivity(intent);
+                    selfdeftimeWin.dismiss();
+                }
+            });
+            selfdeftimeWin.show();
         }
     };
     private ImageView iv_campus_badge;
@@ -90,7 +130,7 @@ public class MainActivity extends BaseFragmentActivity {
         mLlMessgage.setOnClickListener(mTabClickListener);
         mLlMoney.setOnClickListener(mTabClickListener);
         mLlMine.setOnClickListener(mTabClickListener);
-        mBtnRelease.setOnClickListener(mTabClickListener);
+        mBtnRelease.setOnClickListener(releaseClickListener);
 
         mIconViewArr[0] = (ImageView) findViewById(R.id.iv_campus);
         mIconViewArr[1] = (ImageView) findViewById(R.id.iv_message);
@@ -126,7 +166,7 @@ public class MainActivity extends BaseFragmentActivity {
 
 
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver,3);
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver, 3);
     }
 
     @Override
@@ -146,7 +186,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onStart() {
         Log.d("==", "--------------onStart-----");
         registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
-        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver,3);
+        HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver, 3);
         if (null != unreadMsgService) {
             unreadMsgService.startCount();
         }
@@ -172,6 +212,7 @@ public class MainActivity extends BaseFragmentActivity {
         unbindService(serviceConnection);
         super.onDestroy();
     }
+
     /**
      * 程序是否在前台运行
      *
@@ -262,12 +303,14 @@ public class MainActivity extends BaseFragmentActivity {
     public void startCount() {
         unreadMsgService.startCount();
     }
+
     public void freezeCount(String type) {
         unreadMsgService.freezeCount();
     }
 
     /**
      * 显示未读
+     *
      * @param type
      */
     public void showUnread(String type) {
@@ -276,6 +319,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     /**
      * 清除未读
+     *
      * @param type
      */
     public void markAsRead(String type) {
