@@ -13,12 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
-import com.jingcai.apps.widget.TopToast;
+import com.jingcai.apps.widget.TopToast2;
 
 import java.util.Stack;
 
@@ -28,7 +27,7 @@ import java.util.Stack;
 public class BaseFragment extends Fragment {
     protected Activity baseActivity;
     protected Looper looper = null;
-    private ProgressDialog progressDialog =null;
+    private ProgressDialog progressDialog = null;
     private final int REQUEST_CODE_LOGIN = 101;
     protected static int screen_height, screen_width, title_height;
     protected static float density;
@@ -103,17 +102,22 @@ public class BaseFragment extends Fragment {
 //        progressDialog = ProgressDialog.show(this, "提示", msg, false, false);
     }
 
-    public void closeProcessDialog(){
-        if(null != progressDialog) {
+    public void closeProcessDialog() {
+        if (null != progressDialog) {
             progressDialog.dismiss();
         }
     }
 
-    public void showToast(String msg){
+    public void showToast(String msg) {
+        showToast(msg, title_height);
+    }
+
+    public void showToast(String msg, int height) {
 //        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
-        TopToast topToast = TopToast.makeText(getActivity(), msg, TopToast.LENGTH_LONG);
-        topToast.setOffsetY(title_height);
-        topToast.show();
+//        TopToast topToast = TopToast.makeText(getActivity(), msg, TopToast.LENGTH_LONG);
+//        topToast.setOffsetY(title_height);
+//        topToast.show();
+        TopToast2.showToast(getActivity(), msg, height);
     }
 
     private static Stack<BaseFragment> fragmentStack = new Stack<>();
@@ -121,20 +125,20 @@ public class BaseFragment extends Fragment {
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         Fragment parentFragment = getParentFragment();
-        if(null != parentFragment){
+        if (null != parentFragment) {
             fragmentStack.push(this);
             parentFragment.startActivityForResult(intent, requestCode);
-        }else {
+        } else {
             super.startActivityForResult(intent, requestCode);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        BaseFragment fragment = fragmentStack.isEmpty()?null:fragmentStack.pop();
-        if(null != fragment){
+        BaseFragment fragment = fragmentStack.isEmpty() ? null : fragmentStack.pop();
+        if (null != fragment) {
             fragment.onActivityResult(requestCode, resultCode, data);
-            return ;
+            return;
         }
         switch (requestCode) {
             case REQUEST_CODE_LOGIN: {
@@ -163,6 +167,7 @@ public class BaseFragment extends Fragment {
         super.onPause();
 //        MobclickAgent.onPageEnd(this.getClass().getName());
     }
+
     /**
      * 隐藏输入发
      */
@@ -176,9 +181,10 @@ public class BaseFragment extends Fragment {
 
     /**
      * 返回键，需要配合activity
+     *
      * @return
      */
-    public boolean keyBack(){
+    public boolean keyBack() {
         return false;
     }
 }

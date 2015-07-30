@@ -496,9 +496,9 @@ public class MessageConversationActivity extends BaseActivity{
             public void success(BaseResponse resp) {
                 final ResponseResult result = resp.getResult();
                 if("0".equals(result.getCode())){
-                    mHandler.showToast("举报成功");
+                    showToast("举报成功");
                 }else{
-                    mHandler.showToast("举报失败:"+result.getMessage());
+                    showToast("举报失败:"+result.getMessage());
                 }
             }
 
@@ -541,7 +541,7 @@ public class MessageConversationActivity extends BaseActivity{
             //发送消息 加入消息列表中，adapter会处理发送
             mAdapter.notifyDataSetChanged();
         } catch (Exception e) {
-            mHandler.showToast( e.getMessage());
+            showToast(e.getMessage());
         }
     }
 

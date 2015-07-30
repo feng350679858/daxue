@@ -31,6 +31,8 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,24 +106,29 @@ public class HelpJishiDetailActivity extends BaseActivity {
             }
         });
 
+//        Field field = null;
+//        try {
+//            int i = com.android.internal.R.style.Animation_Toast;
+//            field = com.android.internal.R.style.class.getField("Animation_Toast");
+//            Field modifiersField = Field.class.getDeclaredField("modifiers");
+//            modifiersField.setAccessible(true);
+//            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+//            field.set(null, com.jingcai.apps.custometoast.R.style.toastInAndOutAnim);
+//        } catch (NoSuchFieldException e ){
+//        } catch (IllegalAccessException e) {
+//        }
+
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("提交成功，请继续！");
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.toast_layout, null);
-                ((TextView) layout.findViewById(com.jingcai.apps.custometoast.R.id.tv_text)).setText("提交成功，请继续！");
-
-                Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.TOP|Gravity.FILL_HORIZONTAL, 0, title_height * 2);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(layout);
-                toast.show();
+                String message = "提交成功，请继续！";
+                showToast(message);
 //                finish();
             }
         });
     }
+
     private void initView() {
         TextView tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setText("跑腿");

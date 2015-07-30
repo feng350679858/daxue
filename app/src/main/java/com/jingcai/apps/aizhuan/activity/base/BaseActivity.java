@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
-import com.jingcai.apps.widget.TopToast;
+import com.jingcai.apps.widget.TopToast2;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,10 +47,14 @@ public class BaseActivity extends Activity {
     }
 
     public void showToast(String msg) {
+        showToast(msg, title_height);
+    }
+    public void showToast(String msg, int height) {
 //        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        TopToast topToast = TopToast.makeText(this, msg, TopToast.LENGTH_LONG);
-        topToast.setOffsetY(title_height);
-        topToast.show();
+//        TopToast topToast = TopToast.makeText(this, msg, TopToast.LENGTH_LONG);
+//        topToast.setOffsetY(height);
+//        topToast.show();
+        TopToast2.showToast(this, msg, height);
     }
 
     public void showProgressDialog(String msg) {

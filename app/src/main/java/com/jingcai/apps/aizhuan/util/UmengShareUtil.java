@@ -153,7 +153,7 @@ public class UmengShareUtil {
 //        uMusic.setThumb("http://www.umeng.com/images/pic/social/chart_1.png");
 
         if(null == localImage){
-            localImage = new UMImage(activity, R.drawable.ic_launcher2);
+            localImage = new UMImage(activity, R.drawable.ic_launcher);
         }
 
         mController.setShareContent(msg);

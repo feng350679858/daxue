@@ -28,7 +28,18 @@ import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageNotificationActivity;
 import com.jingcai.apps.aizhuan.adapter.message.MessageListAdapter;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.persistence.db.Database;
+import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
+import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
+import com.jingcai.apps.aizhuan.util.AzException;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.HXHelper;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -43,6 +54,8 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     private ListView mLvMessages;
     private MessageListAdapter mMessageListAdapter;
     private BroadcastReceiver mNewMessageReceiver;
+    private AzService azService;
+    private Database mDb;
 
     private View mBaseView;
 
@@ -50,11 +63,12 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_message_fragment, container, false);
-        showProgressDialog("加载消息列表中...");
+        azService = new AzService(baseActivity);
+        mDb = Database.getInstance(baseActivity.getApplicationContext());
+        mDb.open();
+
         initHeader();
-
         initView();
-
         initMessageReceiver();  //注册新消息广播接收
 
         return mBaseView;
@@ -65,6 +79,12 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         super.onResume();
         HXHelper.getInstance().reConnect();
         loadConversations();  //加载历史消息
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mDb.close();
     }
 
     /**
@@ -87,6 +107,9 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         baseActivity.unregisterReceiver(mNewMessageReceiver);  //注销广播
     }
 
+    /**
+     * 从环信加载会话列表，然后从本地数据库中加载用户的信息组装到Adapter需要的bean中
+     */
     private void loadConversations() {
         List<ConversationBean> beans = new ArrayList<>();
         final Hashtable<String, EMConversation> allConversations = HXHelper.getInstance().getAllConversations();
@@ -94,7 +117,11 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         ConversationBean bean = null;
         for (String s : keySet) {
             EMConversation con = allConversations.get(s);
-            bean = new ConversationBean(baseActivity, con);
+            bean = new ConversationBean(con);
+            //环信管理端发过来的信息
+            if(StringUtil.isEmpty(bean.getName())){
+                assembleBean(bean);
+            }
             beans.add(bean);
         }
 
@@ -102,26 +129,100 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         closeProcessDialog();
     }
 
+    /**
+     * 从数据库中将用户的姓名和头像取出
+     * @param bean
+     */
+    private void assembleBean(final ConversationBean bean) {
+        final List<ContactInfo> contactInfos
+                = mDb.fetchContactsInfoByStudentId(UserSubject.getStudentid(), bean.getStudentid());
+        ContactInfo c = null;
+
+        if(contactInfos.size() > 0){
+            //在数据库中存在，直接从本地获取
+            c = contactInfos.get(0);
+            bean.setName(c.getName());
+            bean.setLogourl(c.getLogourl());
+            //如果超时
+            if ((System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
+                return;
+            }
+        }
+        getAndSaveStudentInfo(bean,c);
+    }
+
+    /**
+     * 异步从远程获取学生信息，将其赋值给bean对象，并将其存储至数据库
+     * @param bean
+     */
+    private void getAndSaveStudentInfo(final ConversationBean bean,final ContactInfo existContact) {
+
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu02Request req = new Stu02Request();
+                final Stu02Request.Student stu = req.new Student();
+                stu.setStudentid(bean.getStudentid());
+                req.setStudent(stu);
+                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
+                    @Override
+                    public void success(Stu02Response response) {
+                        ResponseResult result = response.getResult();
+                        Stu02Response.Stu02Body stu02Body = response.getBody();
+                        final Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
+                        if("0".equals(result.getCode())) {
+                            bean.setName(student.getName());
+                            bean.setLogourl(student.getLogopath());
+
+                            if(existContact != null){
+                                existContact.setName(student.getName());
+                                existContact.setLogourl(student.getLogopath());
+                                mDb.updateContactInfo(UserSubject.getStudentid(),existContact);
+                                Log.d(TAG,"update a contact info in database.");
+                            }else{
+                                ContactInfo newContact = new ContactInfo();
+                                newContact.setStudentid(bean.getStudentid());
+                                newContact.setLogourl(student.getLogopath());
+                                newContact.setName(student.getName());
+                                mDb.insertContactInfo(UserSubject.getStudentid(), newContact);
+                                Log.d(TAG,"create a contact info in database.");
+                            }
+                        }
+                    }
+                    @Override
+                    public void fail(AzException e) {
+                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
+                    }
+                });
+            }
+        });
+
+    }
+
     private void initHeader() {
         TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
         tvTitle.setText("消息");
-        tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String to = "fc0fdc3a872146bd8ab5e4d3c3b95c34";
-                EMConversation conversation = EMChatManager.getInstance().getConversation(to);
-                EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
-                message.setReceipt(to);
-                TextMessageBody body = new TextMessageBody("打开通道");
-                message.addBody(body);
-                try {
-                    EMChatManager.getInstance().sendMessage(message);
-                } catch (EaseMobException e) {
-                    Log.e(TAG,"send test message failed.");
+
+        if(GlobalConstant.debugFlag){
+            tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String to = "fc0fdc3a872146bd8ab5e4d3c3b95c34";
+                    EMConversation conversation = EMChatManager.getInstance().getConversation(to);
+                    EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+                    message.setReceipt(to);
+                    TextMessageBody body = new TextMessageBody("打开通道");
+                    message.addBody(body);
+                    try {
+                        EMChatManager.getInstance().sendMessage(message);
+                    } catch (EaseMobException e) {
+                        Log.e(TAG,"send test message failed.");
+                    }
+                    conversation.addMessage(message);
                 }
-                conversation.addMessage(message);
-            }
-        });
+            });
+        }
+
         mBaseView.findViewById(R.id.ib_back).setVisibility(View.INVISIBLE);
         ImageView ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
         ivFunc.setImageResource(R.drawable.icon_index_message_bird);

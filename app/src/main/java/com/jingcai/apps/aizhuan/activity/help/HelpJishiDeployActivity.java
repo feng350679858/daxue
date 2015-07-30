@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -39,10 +40,12 @@ import java.util.Map;
  */
 public class HelpJishiDeployActivity extends BaseActivity {
     private final static String TAG = "JishiHelpDeployActivity";
+    public static final int REQUEST_CODE_FRIEND = 1101;
     private MessageHandler messageHandler;
     private PopupWin groupWin;
     private PopupWin end_timeWin;
-    private EditText et_end_time;;
+    private EditText et_end_time;
+
     private PopupWin selfdeftimeWin;
     private PopupWin genderWin;
     private XListView groupListView;
@@ -53,6 +56,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private EditText et_content, et_secret, et_pay_money;
     private View iv_friend_clear, layout_friend_selected;
     private TextView tv_gender, tv_group, tv_friend, tv_end_time;
+    private TextView tv_friend_name, tv_friend_school_college;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,8 @@ public class HelpJishiDeployActivity extends BaseActivity {
         iv_friend_clear = findViewById(R.id.iv_friend_clear);
         layout_friend_selected = findViewById(R.id.layout_friend_selected);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
+        tv_friend_name = (TextView) findViewById(R.id.tv_friend_name);
+        tv_friend_school_college = (TextView) findViewById(R.id.tv_friend_school_college);
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
         tv_end_time = (TextView) findViewById(R.id.tv_end_time);
 
@@ -97,7 +103,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         tv_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null == genderWin) {
+                if (null == genderWin) {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("0", "男");
                     map.put("1", "女");
@@ -175,19 +181,28 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 groupWin.show();
             }
         });
-        tv_friend.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.layout_friend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectWin(true);
+                Intent intent = new Intent(HelpJishiDeployActivity.this, HelpFriendOnlineActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FRIEND);
             }
         });
+//        tv_friend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(HelpJishiDeployActivity.this, HelpFriendOnlineActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_FRIEND);
+//            }
+//        });
+//        layout_friend_selected.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(HelpJishiDeployActivity.this, HelpFriendOnlineActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_FRIEND);
+//            }
+//        });
         iv_friend_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSelectWin(false);
-            }
-        });
-        layout_friend_selected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSelectWin(false);
@@ -236,12 +251,12 @@ public class HelpJishiDeployActivity extends BaseActivity {
         });
     }
 
-    private void showSelectWin(boolean selectFlag){
-        if(selectFlag){
+    private void showSelectWin(boolean selectFlag) {
+        if (selectFlag) {
             tv_friend.setVisibility(View.GONE);
             iv_friend_clear.setVisibility(View.VISIBLE);
             layout_friend_selected.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tv_friend.setVisibility(View.VISIBLE);
             iv_friend_clear.setVisibility(View.GONE);
             layout_friend_selected.setVisibility(View.GONE);
@@ -249,7 +264,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     }
 
     private void showSeldefEndtimeDialog() {
-        if(null == selfdeftimeWin) {
+        if (null == selfdeftimeWin) {
             View parentView = this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(this).inflate(R.layout.help_jishi_deploy_endtime_pop, null);
             et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
@@ -398,6 +413,25 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 }
             });
         }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_FRIEND: {
+                if (resultCode == RESULT_OK) {
+                    String username = data.getStringExtra("username");
+                    String schoolname = data.getStringExtra("schoolname");
+                    String collegename = data.getStringExtra("collegename");
+                    tv_friend_name.setText(username);
+                    tv_friend_school_college.setText(schoolname + "-" + collegename);
+                    showSelectWin(true);
+                }
+                break;
+            }
+            default: {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 }

@@ -41,9 +41,9 @@ public class LoginActivity extends BaseActivity {
 
         messageHandler = new MessageHandler(this);
 
-        if(UserSubject.isLogin()){
+        if (UserSubject.isLogin()) {
             doLogin(UserSubject.getPhone(), DES3Util.decrypt(UserSubject.getPassword()));
-        }else {
+        } else {
             initViews();
         }
     }
@@ -52,32 +52,24 @@ public class LoginActivity extends BaseActivity {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
 
-        if(StringUtil.isNotEmpty(UserSubject.getPhone())){
+        if (StringUtil.isNotEmpty(UserSubject.getPhone())) {
             et_username.setText(UserSubject.getPhone());
         }
 
         findViewById(R.id.btn_login).setOnClickListener(loginListener);
-        findViewById(R.id.btn_fegret_pwd).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_fegret_pwd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
                 intent.putExtra("forgetFlag", true);
                 startActivityForResult(intent, REQUEST_CODE_FORGET_PWD);
-//                finish();
             }
         });
-        findViewById(R.id.btn_regist).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_regist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegistActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_REGIST);
-                //finish();
-            }
-        });
-        findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageHandler.postMessage(4);
             }
         });
     }
@@ -89,7 +81,7 @@ public class LoginActivity extends BaseActivity {
             String password = et_password.getText().toString();
             if (username.length() < 1 || password.length() < 1) {
                 //showDialog(WSUtil.DIALOG_USER_PWD_EMPTY);
-                showToast("账号密码不能为空");
+                showToast("账号密码不能为空", 0);
                 return;
             }
             showProgressDialog("正在登录...");
@@ -124,6 +116,7 @@ public class LoginActivity extends BaseActivity {
                             getStudentInfo(azService, sys04Body.getStudent().getStudentid(), encryptPassword);
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -132,7 +125,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
 
 
     private void getStudentInfo(AzService azService, final String studentid, final String encryptPassword) {
@@ -148,12 +140,13 @@ public class LoginActivity extends BaseActivity {
                 Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
                 student.setStudentid(studentid);
                 student.setPassword(encryptPassword);
-                if(!"0".equals(result.getCode())) {
+                if (!"0".equals(result.getCode())) {
                     messageHandler.postMessage(2, result.getMessage());
-                }else{
+                } else {
                     messageHandler.postMessage(0, student);
                 }
             }
+
             @Override
             public void fail(AzException e) {
                 messageHandler.postException(e);
@@ -165,12 +158,13 @@ public class LoginActivity extends BaseActivity {
         MessageHandler(Context ctx) {
             super(ctx);
         }
+
         @Override
         public void handleMessage(Message msg) {
             closeProcessDialog();
-            switch (msg.what){
-                case 0:{
-                    showToast("登录成功");
+            switch (msg.what) {
+                case 0: {
+                    showToast("登录成功", 0);
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
                     UserSubject.loginSuccess(student);
                     new JpushUtil(LoginActivity.this).login(student.getStudentid());
@@ -179,24 +173,18 @@ public class LoginActivity extends BaseActivity {
                     finish();
                     break;
                 }
-                case 1:{
-                    showToast("登录失败,"+ msg.obj);
+                case 1: {
+                    showToast("登录失败," + msg.obj, 0);
                     UserSubject.loginFail();
                     new JpushUtil(LoginActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
                     break;
                 }
-                case 3:{
-                    showToast("获取用户信息失败");
+                case 3: {
+                    showToast("获取用户信息失败", 0);
                     break;
                 }
-                case 4:{
-                    showToast("已取消登录");
-                    setResult(RESULT_CANCELED);
-                    finish();
-                    break;
-                }
-                default:{
+                default: {
                     super.handleMessage(msg);
                 }
             }

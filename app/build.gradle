@@ -38,4 +38,5 @@ dependencies {
     compile project(':pulltorefresh')
     compile project(':umenglib')
     compile project(':wheel')
+    compile project(':qrcode')
 }
