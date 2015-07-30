@@ -33,7 +33,6 @@ import java.util.List;
 
 public class IndexCampusFragment extends BaseFragment {
     private View mBaseView;
-
     private MessageHandler messageHandler;
     private XListView groupListView;
     private CampusAdapter campusAdapter;

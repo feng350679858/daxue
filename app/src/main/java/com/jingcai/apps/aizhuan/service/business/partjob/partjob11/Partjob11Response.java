@@ -7,29 +7,33 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob11Response extends BaseResponse<Partjob11Response.Partjob11Body> {
+public class Partjob11Response extends BaseResponse<Partjob11Response.BOdy> {
 
-    public class Partjob11Body {
-        private List<Merchant> merchant_list;
+    public class BOdy {
+        private List<Parttimejob> parttimejob_list;
 
-        public List<Merchant> getMerchant_list() {
-            return merchant_list;
+        public List<Parttimejob> getParttimejob_list() {
+            return parttimejob_list;
         }
 
-        public void setMerchant_list(List<Merchant> merchant_list) {
-            this.merchant_list = merchant_list;
+        public void setParttimejob_list(List<Parttimejob> parttimejob_list) {
+            this.parttimejob_list = parttimejob_list;
         }
 
-        public class Merchant{
+        public class Parttimejob {
             private String helpid;
             private String type;
-            private String coin;
+            private String money;
             private String content;
+            private String genderlimit;
             private String sourceid;
             private String sourcename;
             private String sourceschool;
             private String sourcecollege;
             private String optime;
+            private String praisecount;
+            private String commentcount;
+            private String status;
 
             public String getHelpid() {
                 return helpid;
@@ -45,14 +49,6 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Partjob11B
 
             public void setType(String type) {
                 this.type = type;
-            }
-
-            public String getCoin() {
-                return coin;
-            }
-
-            public void setCoin(String coin) {
-                this.coin = coin;
             }
 
             public String getContent() {
@@ -101,6 +97,46 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Partjob11B
 
             public void setOptime(String optime) {
                 this.optime = optime;
+            }
+
+            public String getCommentcount() {
+                return commentcount;
+            }
+
+            public void setCommentcount(String commentcount) {
+                this.commentcount = commentcount;
+            }
+
+            public String getGenderlimit() {
+                return genderlimit;
+            }
+
+            public void setGenderlimit(String genderlimit) {
+                this.genderlimit = genderlimit;
+            }
+
+            public String getMoney() {
+                return money;
+            }
+
+            public void setMoney(String money) {
+                this.money = money;
+            }
+
+            public String getPraisecount() {
+                return praisecount;
+            }
+
+            public void setPraisecount(String praisecount) {
+                this.praisecount = praisecount;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
             }
         }
     }

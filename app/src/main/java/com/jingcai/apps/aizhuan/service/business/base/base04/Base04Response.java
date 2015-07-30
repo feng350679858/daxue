@@ -19,6 +19,7 @@ public class Base04Response extends BaseResponse<Base04Response.Body> {
         public static class Region {
             private String regionid;
             private String regionname;
+            //TODO delete
             private boolean selected;
 
             public String getRegionid() {

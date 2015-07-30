@@ -16,7 +16,7 @@ public class Base04Request extends BaseRequest {
 
     @Override
     public String getTranscode() {
-        return BizConstant.BIZ_BASE_03;
+        return BizConstant.BIZ_BASE_04;
     }
 
     public class Region {

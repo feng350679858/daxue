@@ -80,7 +80,7 @@
                 android:drawablePadding="10dp"
                 android:background="@color/content_background"
                 android:padding="10dp"
-                android:text="兼职分享"
+                android:text="分享兼职"
                 android:textColor="@color/important_dark"
                 android:textSize="14sp" />
 

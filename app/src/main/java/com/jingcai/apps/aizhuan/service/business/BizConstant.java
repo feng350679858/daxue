@@ -24,6 +24,8 @@ public interface BizConstant {
     String BIZ_STU_04 = "stu04";//重置密码（忘记密码）
     String BIZ_STU_05 = "stu05";//设置校友可见
     String BTZ_STU_07 = "stu07";//重置支付密码
+    String BTZ_STU_08 = "stu08";//上下线
+    String BTZ_STU_10 = "stu10";//老友列表
     String BTZ_STU_11 = "stu11";//个人信用分查询
     String BTZ_STU_12 = "stu12";
 
@@ -40,10 +42,13 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_08 = "partjob08";//获取已取消次数
     String BIZ_PARTTIME_JOB_09 = "partjob09";//手机端兼职列表查询（包含特殊搜索）
     String BIZ_PARTTIME_JOB_10 = "partjob10";//兼职标签详情列表查询
-    String BIZ_PARTTIME_JOB_11 = "partjob11";
+    String BIZ_PARTTIME_JOB_11 = "partjob11";//帮助列表查询
+    String BIZ_PARTTIME_JOB_16 = "partjob16";//发布即时型求助
+    String BIZ_PARTTIME_JOB_17 = "partjob17";//发布问答型求助
     String BIZ_PARTTIME_JOB_21 = "partjob21";//举报
     String BIZ_PARTTIME_JOB_24 = "partjob24";
     String BIZ_PARTTIME_JOB_27 = "partjob27";
+    String BIZ_PARTTIME_JOB_28 = "partjob28";//问答型求助发布
     String BIZ_PARTTIME_JOB_29 = "partjob29";//评论列表查询
 
     /**
@@ -73,6 +78,7 @@ public interface BizConstant {
     String BIZ_BASE_01   = "base01";//banner信息查询
     String BIZ_BASE_02   = "base02";//版本信息查询
     String BIZ_BASE_03   = "base03";//Loading图获取
+    String BIZ_BASE_04   = "base04";//圈子列表查询
     /**
      * base
      */
