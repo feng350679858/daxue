@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.jingcai.apps.qrcode.zxing.decoding;
+package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Intent;
 import android.net.Uri;
 
 import com.google.zxing.BarcodeFormat;
+import com.jingcai.apps.qrcode.zxing.decoding.Intents;
 
 import java.util.Arrays;
 import java.util.List;

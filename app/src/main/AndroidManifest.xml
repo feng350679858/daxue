@@ -117,9 +117,8 @@
         <activity android:name=".activity.mine.help.MineHelpJishiActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
 
         <!-- 隐藏键盘 -->
-        <activity android:configChanges="orientation|keyboardHidden" android:name="com.jingcai.apps.qrcode.zxing.activity.CaptureActivity"
-            android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:configChanges="orientation|keyboardHidden" android:name=".activity.help.CaptureActivity"
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
    
 
         <!-- Message -->
