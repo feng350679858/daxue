@@ -24,59 +24,14 @@ public class Partjob28Request extends BaseRequest {
     }
 
     public class Parttimejob {
-        private String studentid;
-        private String topicid;
-        private String topiccontent;
-        private String content;
-        private String regionid;
-        private String anonflag;
+        private String topicname;
 
-        public String getAnonflag() {
-            return anonflag;
+        public String getTopicname() {
+            return topicname;
         }
 
-        public void setAnonflag(String anonflag) {
-            this.anonflag = anonflag;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getRegionid() {
-            return regionid;
-        }
-
-        public void setRegionid(String regionid) {
-            this.regionid = regionid;
-        }
-
-        public String getStudentid() {
-            return studentid;
-        }
-
-        public void setStudentid(String studentid) {
-            this.studentid = studentid;
-        }
-
-        public String getTopiccontent() {
-            return topiccontent;
-        }
-
-        public void setTopiccontent(String topiccontent) {
-            this.topiccontent = topiccontent;
-        }
-
-        public String getTopicid() {
-            return topicid;
-        }
-
-        public void setTopicid(String topicid) {
-            this.topicid = topicid;
+        public void setTopicname(String topicname) {
+            this.topicname = topicname;
         }
     }
 }

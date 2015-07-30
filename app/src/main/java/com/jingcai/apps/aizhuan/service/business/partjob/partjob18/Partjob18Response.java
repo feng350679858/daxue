@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.Partjob24;
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob18;
 
 
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24Body> {
+public class Partjob18Response extends BaseResponse<Partjob18Response.Body> {
 
-    public static class Partjob24Body {
+    public static class Body {
         private List<Parttimejob> parttimejob_list;
 
         public List<Parttimejob> getParttimejob_list() {
@@ -26,6 +26,7 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
         private String helpid;
         private String optime;
         private String money;
+        private String gender;
         private String status;
         private String content;
         private String sourceid;
@@ -33,6 +34,14 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
         private String sourceimgurl;
         private String sourceschool;
         private String sourcecollege;
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
 
         public String getContent() {
             return content;

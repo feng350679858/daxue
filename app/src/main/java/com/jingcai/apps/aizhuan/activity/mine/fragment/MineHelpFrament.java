@@ -1,28 +1,20 @@
 package com.jingcai.apps.aizhuan.activity.mine.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
-import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.adapter.mine.HelpAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -113,14 +105,14 @@ public class MineHelpFrament extends BaseFragment {
                 @Override
                 public void run() {
                     if (GlobalConstant.debugFlag) {
-                        List<Partjob24Response.Partjob24Body.Region> regionList = new ArrayList<Partjob24Response.Partjob24Body.Region>();
+                        List<Partjob24Response.Partjob24Body.Parttimejob> parttimejobList = new ArrayList<Partjob24Response.Partjob24Body.Parttimejob>();
                         for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob24Response.Partjob24Body.Region region = new Partjob24Response.Partjob24Body.Region();
-                            region.setHelpid("" + (i + mCurrentStart));
-                            region.setSourceschool("浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
+                            Partjob24Response.Partjob24Body.Parttimejob parttimejob = new Partjob24Response.Partjob24Body.Parttimejob();
+                            parttimejob.setHelpid("" + (i + mCurrentStart));
+                            parttimejob.setSourceschool("浙江大学" + (i + mCurrentStart));
+                            parttimejobList.add(parttimejob);
                         }
-                        messageHandler.postMessage(0, regionList);
+                        messageHandler.postMessage(0, parttimejobList);
                     } else {
                         final AzService azService = new AzService(baseActivity);
                         final Partjob24Request req = new Partjob24Request();
@@ -137,11 +129,11 @@ public class MineHelpFrament extends BaseFragment {
                                     messageHandler.postMessage(1, result.getMessage());
                                 } else {
                                     Partjob24Response.Partjob24Body partjob07Body = response.getBody();
-                                    List< Partjob24Response.Partjob24Body.Region> regionList =  partjob07Body.getRegion_list();
+                                    List<Partjob24Response.Partjob24Body.Parttimejob> parttimejobList =  partjob07Body.getParttimejob_list();
                                     //if (regionList.size() < 1 && 0 == mCurrentStart) {
                                     //    messageHandler.postMessage(2);
                                     //} else {
-                                    messageHandler.postMessage(0, regionList);
+                                    messageHandler.postMessage(0, parttimejobList);
                                     //}
                                 }
                             }
@@ -174,7 +166,7 @@ public class MineHelpFrament extends BaseFragment {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Partjob24Response.Partjob24Body.Region> list = (List<Partjob24Response.Partjob24Body.Region>) msg.obj;
+                        List<Partjob24Response.Partjob24Body.Parttimejob> list = (List<Partjob24Response.Partjob24Body.Parttimejob>) msg.obj;
                         helpAdapter.addData(list);
                         helpAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();

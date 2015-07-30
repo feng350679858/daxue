@@ -1,16 +1,15 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.Partjob24;
-
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob15;
 
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/7/18.
+ * Created by Administrator on 2015/7/21.
  */
-public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24Body> {
+public class Partjob15Response extends BaseResponse<Partjob15Response.Body> {
 
-    public static class Partjob24Body {
+    public static class Body {
         private List<Parttimejob> parttimejob_list;
 
         public List<Parttimejob> getParttimejob_list() {
@@ -23,16 +22,24 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
     }
 
     public static class Parttimejob {
-        private String helpid;
-        private String optime;
-        private String money;
-        private String status;
-        private String content;
         private String sourceid;
-        private String sourcename;
+        private String sourcelevel;
         private String sourceimgurl;
+        private String sourcename;
         private String sourceschool;
         private String sourcecollege;
+        private String content;
+        private String optime;
+        private String praisecount;
+        private String anonflag;
+
+        public String getAnonflag() {
+            return anonflag;
+        }
+
+        public void setAnonflag(String anonflag) {
+            this.anonflag = anonflag;
+        }
 
         public String getContent() {
             return content;
@@ -40,22 +47,6 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
 
         public void setContent(String content) {
             this.content = content;
-        }
-
-        public String getHelpid() {
-            return helpid;
-        }
-
-        public void setHelpid(String helpid) {
-            this.helpid = helpid;
-        }
-
-        public String getMoney() {
-            return money;
-        }
-
-        public void setMoney(String money) {
-            this.money = money;
         }
 
         public String getOptime() {
@@ -66,12 +57,20 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
             this.optime = optime;
         }
 
+        public String getPraisecount() {
+            return praisecount;
+        }
+
+        public void setPraisecount(String praisecount) {
+            this.praisecount = praisecount;
+        }
+
         public String getSourcecollege() {
             return sourcecollege;
         }
 
         public void setSourcecollege(String sourcecollege) {
-            sourcecollege = sourcecollege;
+            this.sourcecollege = sourcecollege;
         }
 
         public String getSourceid() {
@@ -90,6 +89,14 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
             this.sourceimgurl = sourceimgurl;
         }
 
+        public String getSourcelevel() {
+            return sourcelevel;
+        }
+
+        public void setSourcelevel(String sourcelevel) {
+            this.sourcelevel = sourcelevel;
+        }
+
         public String getSourcename() {
             return sourcename;
         }
@@ -104,14 +111,6 @@ public class Partjob24Response extends BaseResponse<Partjob24Response.Partjob24B
 
         public void setSourceschool(String sourceschool) {
             this.sourceschool = sourceschool;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
         }
     }
 }

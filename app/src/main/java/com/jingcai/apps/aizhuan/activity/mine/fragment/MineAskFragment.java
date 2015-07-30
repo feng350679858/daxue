@@ -10,14 +10,11 @@ import android.view.ViewGroup;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.mine.HelpAdapter;
 import com.jingcai.apps.aizhuan.adapter.mine.ResponseAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Request;
-import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -107,14 +104,14 @@ public class MineAskFragment extends BaseFragment {
                 @Override
                 public void run() {
                     if (GlobalConstant.debugFlag) {
-                        List<Partjob27Response.Partjob27Body.Region> regionList = new ArrayList<Partjob27Response.Partjob27Body.Region>();
+                        List<Partjob27Response.Partjob27Body.Parttimejob> parttimejobList = new ArrayList<Partjob27Response.Partjob27Body.Parttimejob>();
                         for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob27Response.Partjob27Body.Region region= new Partjob27Response.Partjob27Body.Region();
-                            region.setHelpid("" + (i + mCurrentStart));
-                            region.setSourceschool("浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
+                            Partjob27Response.Partjob27Body.Parttimejob parttimejob = new Partjob27Response.Partjob27Body.Parttimejob();
+                            parttimejob.setHelpid("" + (i + mCurrentStart));
+                            parttimejob.setSourceschool("浙江大学" + (i + mCurrentStart));
+                            parttimejobList.add(parttimejob);
                         }
-                        messageHandler.postMessage(0, regionList);
+                        messageHandler.postMessage(0, parttimejobList);
                     } else {
                         final AzService azService = new AzService(baseActivity);
                         final Partjob27Request req = new Partjob27Request();
@@ -131,11 +128,11 @@ public class MineAskFragment extends BaseFragment {
                                     messageHandler.postMessage(1, result.getMessage());
                                 } else {
                                     Partjob27Response.Partjob27Body partjob07Body = response.getBody();
-                                    List< Partjob27Response.Partjob27Body.Region> regionList =  partjob07Body.getRegion_list();
+                                    List<Partjob27Response.Partjob27Body.Parttimejob> parttimejobList =  partjob07Body.getParttimejob_list();
                                     //if (regionList.size() < 1 && 0 == mCurrentStart) {
                                     //    messageHandler.postMessage(2);
                                     //} else {
-                                    messageHandler.postMessage(0, regionList);
+                                    messageHandler.postMessage(0, parttimejobList);
                                     //}
                                 }
                             }
@@ -168,7 +165,7 @@ public class MineAskFragment extends BaseFragment {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Partjob27Response.Partjob27Body.Region> list = (List<Partjob27Response.Partjob27Body.Region>) msg.obj;
+                        List<Partjob27Response.Partjob27Body.Parttimejob> list = (List<Partjob27Response.Partjob27Body.Parttimejob>) msg.obj;
                         responseAdapter.addData(list);
                         responseAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();

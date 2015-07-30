@@ -10,82 +10,98 @@ import java.util.List;
 public class Partjob27Response extends BaseResponse<Partjob27Response.Partjob27Body> {
 
     public static class Partjob27Body {
-        private List<Region> region_list;
+        private List<Parttimejob> parttimejob_list;
 
-        public List<Region> getRegion_list() {
-            return region_list;
+        public List<Parttimejob> getParttimejob_list() {
+            return parttimejob_list;
         }
 
-        public void setRegion_list(List<Region> region_list) {
-            this.region_list = region_list;
+        public void setParttimejob_list(List<Parttimejob> parttimejob_list) {
+            this.parttimejob_list = parttimejob_list;
+        }
+    }
+
+    public static class Parttimejob {
+        private String helpid;
+        private String optime;
+        private String content;
+        private String salary;
+        private String sourceid;
+        private String sourcename;
+        private String sourceimgurl;
+        private String sourceschool;
+        private String sourcecollege;
+
+        public String getContent() {
+            return content;
         }
 
-        public static class Region {
-            private String helpid;
-            private String optime;
+        public void setContent(String content) {
+            this.content = content;
+        }
 
-            private String content;
-            private String sourceid;
-            private String Sourcename;
-            private String Sourceschool;
-            private String Sourcecollege;
+        public String getHelpid() {
+            return helpid;
+        }
 
-            public String getHelpid() {
-                return helpid;
-            }
+        public void setHelpid(String helpid) {
+            this.helpid = helpid;
+        }
 
-            public void setHelpid(String helpid) {
-                this.helpid = helpid;
-            }
+        public String getOptime() {
+            return optime;
+        }
 
-            public String getOptime() {
-                return optime;
-            }
+        public void setOptime(String optime) {
+            this.optime = optime;
+        }
 
-            public void setOptime(String optime) {
-                this.optime = optime;
-            }
+        public String getSalary() {
+            return salary;
+        }
 
-            public String getContent() {
-                return content;
-            }
+        public void setSalary(String salary) {
+            this.salary = salary;
+        }
 
-            public void setContent(String content) {
-                this.content = content;
-            }
+        public String getSourcecollege() {
+            return sourcecollege;
+        }
 
-            public String getSourceid() {
-                return sourceid;
-            }
+        public void setSourcecollege(String sourcecollege) {
+            this.sourcecollege = sourcecollege;
+        }
 
-            public void setSourceid(String sourceid) {
-                this.sourceid = sourceid;
-            }
+        public String getSourceid() {
+            return sourceid;
+        }
 
-            public String getSourcename() {
-                return Sourcename;
-            }
+        public void setSourceid(String sourceid) {
+            this.sourceid = sourceid;
+        }
 
-            public void setSourcename(String sourcename) {
-                Sourcename = sourcename;
-            }
+        public String getSourceimgurl() {
+            return sourceimgurl;
+        }
 
+        public void setSourceimgurl(String sourceimgurl) {
+            this.sourceimgurl = sourceimgurl;
+        }
 
-            public String getSourceschool() {
-                return Sourceschool;
-            }
+        public String getSourcename() {
+            return sourcename;
+        }
 
-            public void setSourceschool(String sourceschool) {
-                Sourceschool = sourceschool;
-            }
+        public void setSourcename(String sourcename) {
+            this.sourcename = sourcename;
+        }
 
-            public String getSourcecollege() {
-                return Sourcecollege;
-            }
+        public String getSourceschool() {
+            return sourceschool;
+        }
 
-            public void setSourcecollege(String sourcecollege) {
-                Sourcecollege = sourcecollege;
-            }
+        public void setSourceschool(String sourceschool) {
+            this.sourceschool = sourceschool;
         }
     }
 }
