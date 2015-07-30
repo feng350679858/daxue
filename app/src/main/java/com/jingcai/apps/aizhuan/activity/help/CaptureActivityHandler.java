@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jingcai.apps.qrcode.zxing.decoding;
+package com.jingcai.apps.aizhuan.activity.help;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,14 +28,13 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.jingcai.apps.qrcode.R;
-import com.jingcai.apps.qrcode.zxing.activity.CaptureActivity;
 import com.jingcai.apps.qrcode.zxing.camera.CameraManager;
 import com.jingcai.apps.qrcode.zxing.view.ViewfinderResultPointCallback;
 
 import java.util.Vector;
 
 /**
- * This class handles all the messaging which comprises the state machine for qrcode_capture.
+ * This class handles all the messaging which comprises the state machine for help_add_friend_qrcode_capture.
  */
 public final class CaptureActivityHandler extends Handler {
 
@@ -52,7 +51,7 @@ public final class CaptureActivityHandler extends Handler {
   }
 
   public CaptureActivityHandler(CaptureActivity activity, Vector<BarcodeFormat> decodeFormats,
-      String characterSet) {
+                                String characterSet) {
     this.activity = activity;
     decodeThread = new DecodeThread(activity, decodeFormats, characterSet,
         new ViewfinderResultPointCallback(activity.getViewfinderView()));
