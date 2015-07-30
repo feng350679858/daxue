@@ -1,12 +1,176 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.jingcai.apps.aizhuan.activity.mine.ProfileImprove2Activity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical"
+    tools:context="com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/include_header" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/profile_improve_school"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:hintTextAppearance="@style/text_input_layout">
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="学校"
+                android:inputType="text"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textCursorDrawable="@drawable/yellow_cursor"
+                android:textSize="16sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <com.markmao.pulltorefresh.widget.XListView
+            android:id="@+id/lv_mine_profile_improve_school"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_college"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:editable="false"
+                android:hint="学院"
+                android:singleLine="true"
+                android:paddingTop="10dp"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_professional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:hint="专业"
+                android:singleLine="true"
+                android:paddingTop="10dp"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <com.markmao.pulltorefresh.widget.XListView
+            android:id="@+id/lv_mine_profile_improve_professional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_joindate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:editable="false"
+                android:hint="入学年份"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textCursorDrawable="@drawable/yellow_cursor"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:id="@+id/profile_improve_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/important_dark"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/profile_improve_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_yellow_boarded_bg_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="完成"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

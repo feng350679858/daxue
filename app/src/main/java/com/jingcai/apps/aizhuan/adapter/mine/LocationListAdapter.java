@@ -46,6 +46,7 @@ public class LocationListAdapter extends BaseAdapter {
 
     public void clearListData(){
         list.clear();
+
     }
 
     public void isShowIndicator(boolean flag){

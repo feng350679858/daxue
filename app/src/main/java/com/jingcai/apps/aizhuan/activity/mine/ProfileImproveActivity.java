@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,28 +49,27 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.view.ClearableEditText;
-import android.support.design.widget.TextInputLayout;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 
 public class ProfileImproveActivity extends BaseActivity {
-    private TextInputLayout name;
-    private ClearableEditText name_input;
-    private TextView gender, gender_input;
-    private TextView location, location_input;
-    private TextView spreading_code;
-    private ClearableEditText spreading_code_input;
+    public static final String TAG = "ProfileImproveActivity";
+    private TextInputLayout name, gender, location, spreading_code;
+    private ClearableEditText name_input, spreading_code_input;
+    private EditText gender_input, location_input;
     private TextView warning;
     private Button next;
-    private PopupWin genderWin, areaWin;
+    private PopupWin genderWin, areaWin,connectionWin;
 
     private AzService azService;
     private MessageHandler messageHandler;
 
-    private Stu03Request.Student student03;
     private List<School01Response.Body.Areainfo> provinceList;
     private List<School02Response.Body.Areainfo> cityList;
     private List<School03Response.Body.Areainfo> areaList;
@@ -79,9 +81,12 @@ public class ProfileImproveActivity extends BaseActivity {
     private boolean provinceScrolling = false, cityScrolling = false;
     private MyTextWatcher myTextWatcher = new MyTextWatcher();
     private Stu03Request req03 = new Stu03Request();
-     WheelView provinces;
-     WheelView cities;
-     WheelView areas;
+    private WheelView provinces;
+    private WheelView cities;
+    private WheelView areas;
+    private String joindate, school, college, professional, schoolname, collegename,email,qq;
+    private String gender_string, areaname_string, areacode_string;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,88 +94,174 @@ public class ProfileImproveActivity extends BaseActivity {
         messageHandler = new MessageHandler(this);
         initHeader();
         initView();
-        initDate();
+//        initDate();
     }
 
     private void initHeader() {
-        ((TextView) findViewById(R.id.tv_content)).setText("完善资料");
+        ((TextView) findViewById(R.id.tv_content)).setText("资料完善");
         findViewById(R.id.iv_bird_badge).setVisibility(View.GONE);
         findViewById(R.id.iv_func).setVisibility(View.GONE);
-        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ib_back).setVisibility(View.GONE);
+        ((TextView) findViewById(R.id.tv_func)).setText("联系客服");
+        ((TextView) findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
+        ((TextView)findViewById(R.id.tv_func)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
-                finish();
+                if (null == connectionWin) {
+                    View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(ProfileImproveActivity.this).inflate(R.layout.comfirm_contact_merchant_dialog, null);
+
+                    connectionWin = PopupWin.Builder.create(ProfileImproveActivity.this)
+                            .setParentView(parentView)
+                            .setContentView(contentView)
+                            .build();
+                    //logo
+                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(getResources().getDrawable(R.drawable.logo_merchant_default));
+                    //title
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("联系人");
+                    //phone
+                    final TextView phone=(TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
+                    phone.setText("15712345678");
+                    //2 button
+                    contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            connectionWin.dismiss();
+                        }
+                    });
+                    contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+                            startActivity(intent);
+                        }
+                    });
+                }
+                connectionWin.show();
             }
         });
     }
 
     private void initView() {
-        name = (TextView) findViewById(R.id.profile_improve_name);
-
-        gender = (TextView) findViewById(R.id.profile_improve_gender);
-        gender_input = (TextView) findViewById(R.id.profile_improve_gender_input);
+        name = (TextInputLayout) findViewById(R.id.profile_improve_name);
+        name_input=(ClearableEditText)name.getEditText();
+        name_input.addTextChangedListener(myTextWatcher);
+        gender = (TextInputLayout) findViewById(R.id.profile_improve_gender);
+        gender.setHint("性别");
+        gender_input = gender.getEditText();
+        gender_input.addTextChangedListener(myTextWatcher);
         gender_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gender.setVisibility(View.VISIBLE);
-                if (!"性别".equals(gender_input.getText().toString()))
-                    myTextWatcher.addFlag();
-                gender_input.setText("");
-                if (null == genderWin) {
-                    View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
-                    View contentView = LayoutInflater.from(ProfileImproveActivity.this).inflate(R.layout.gender_popupwin, null);
 
+                if (null == genderWin) {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("0", "男");
+                    map.put("1", "女");
+                    View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
                     genderWin = PopupWin.Builder.create(ProfileImproveActivity.this)
+                            .setData(map, new PopupWin.Callback() {
+                                @Override
+                                public void select(String key, String val) {
+                                    gender_input.setText(val);
+                                    gender_input.setTag(key);
+                                }
+                            })
                             .setParentView(parentView)
-                            .setContentView(contentView)
                             .build();
-                    contentView.findViewById(R.id.gender_popupwin_male).setOnClickListener(new View.OnClickListener() {
+
+                    genderWin.setOnShowStateChangeCallBack(new PopupWin.OnShowStateChangeCallBack() {
                         @Override
-                        public void onClick(View v) {
-                            gender_input.setText("男");
-                            myTextWatcher.subFlag();
-                            genderWin.dismiss();
+                        public void onShow() {
+
+                        }
+
+                        @Override
+                        public void onDimiss() {
+                            gender_input.clearFocus();
                         }
                     });
-                    contentView.findViewById(R.id.gender_popupwin_female).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            gender_input.setText("女");
-                            myTextWatcher.subFlag();
-                            genderWin.dismiss();
-                        }
-                    });
-                    contentView.findViewById(R.id.gender_popupwin_cancel).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            genderWin.dismiss();
-                        }
-                    });
+
                 }
                 genderWin.show();
             }
         });
-        location = (TextView) findViewById(R.id.profile_improve_location);
+//        gender_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    if (null == genderWin) {
+//                        View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
+//                        View contentView = LayoutInflater.from(ProfileImproveActivity.this).inflate(R.layout.gender_popupwin, null);
+//
+//                        genderWin = PopupWin.Builder.create(ProfileImproveActivity.this)
+//                                .setParentView(parentView)
+//                                .setContentView(contentView)
+////                                .setFocusable(false)
+//                                .build();
+//                        genderWin.setOnShowStateChangeCallBack(new PopupWin.OnShowStateChangeCallBack() {
+//                            @Override
+//                            public void onShow() {
+//                                gender_string = gender_input.getText().toString();
+//                            }
+//
+//                            @Override
+//                            public void onDimiss() {
+//                                if ("".equals(gender_input.getText().toString()) && !"".equals(gender_string))
+//                                    myTextWatcher.subFlag();
+//                                gender_input.setText(gender_string);
+//                                gender_input.clearFocus();
+//                            }
+//                        });
+//                        contentView.findViewById(R.id.gender_popupwin_male).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                gender_string = "男";
+//                                genderWin.dismiss();
+//                            }
+//                        });
+//                        contentView.findViewById(R.id.gender_popupwin_female).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                gender_string = "女";
+//                                genderWin.dismiss();
+//                            }
+//                        });
+//                        contentView.findViewById(R.id.gender_popupwin_cancel).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                genderWin.dismiss();
+//                            }
+//                        });
+//                    }
+//                    genderWin.show();
+//
+//
+//                }
+//            }
+//        });
+        location = (TextInputLayout) findViewById(R.id.profile_improve_location);
+        location.setHint("区域");
         initWheel();//加载区域滚轮
-        location_input = (TextView) findViewById(R.id.profile_improve_location_input);
-        location_input.setOnClickListener(new View.OnClickListener() {
+        location_input = location.getEditText();
+        location_input.addTextChangedListener(myTextWatcher);
+       /* location_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                location.setVisibility(View.VISIBLE);
-                if (!"地区".equals(location_input.getText().toString()))
-                    myTextWatcher.addFlag();
-                location_input.setText("");
+            public void onFocusChange(View v, boolean hasFocus) {
                 areaWin.show();
             }
-        });
-        spreading_code = (TextView) findViewById(R.id.profile_improve_spreading_code);
-        spreading_code_input = (ClearableEditText) findViewById(R.id.profile_improve_spreading_code_input);
-        spreading_code_input.setOnClickListener(new View.OnClickListener() {
+        });*/
+        spreading_code = (TextInputLayout) findViewById(R.id.profile_improve_spreading_code);
+        spreading_code_input = (ClearableEditText) spreading_code.getEditText();
+        spreading_code_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                spreading_code.setVisibility(View.VISIBLE);
-                spreading_code_input.setText("");
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
+                }else {
+                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
             }
         });
         warning = (TextView) findViewById(R.id.profile_improve_warning);
@@ -178,19 +269,23 @@ public class ProfileImproveActivity extends BaseActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String gender_string, spreading_code_string = "";
-                if ("男".equals(gender_input.getText().toString()))
-                    gender_string = "0";
-                else
-                    gender_string = "1";
-                if (!"推广码".equals(spreading_code_input.getText().toString())
-                        && !"".equals(spreading_code_input.getText().toString()))
-                    spreading_code_string = spreading_code_input.getText().toString();
                 Intent intent = new Intent(ProfileImproveActivity.this, ProfileImprove2Activity.class);
                 intent.putExtra("name", name_input.getText().toString());
-                intent.putExtra("gender", gender_string);
-                intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
-                intent.putExtra("promotioncode", spreading_code_string);
+                intent.putExtra("gender", gender_input.getTag().toString());
+              //  if (location_input.isEnabled())
+                  //  intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
+              //  else
+               //     intent.putExtra("areacode", "");
+                intent.putExtra("promotioncode", spreading_code_input.getText().toString());
+                intent.putExtra("joindate", joindate);
+                intent.putExtra("school", school);
+                intent.putExtra("schoolname", schoolname);
+                intent.putExtra("college", college);
+                intent.putExtra("collegename", collegename);
+                intent.putExtra("professional", professional);
+                intent.putExtra("email",email);
+                intent.putExtra("qq", qq);
+                startActivity(intent);
             }
         });
         //在TextVew中加入图片
@@ -229,16 +324,19 @@ public class ProfileImproveActivity extends BaseActivity {
                 next.setEnabled(true);
             else
                 next.setEnabled(false);
+            System.out.println(flag);
         }
 
         public void addFlag() {
             flag++;
+            System.out.println(flag);
         }
 
         public void subFlag() {
             flag--;
             if (0 == flag)
                 next.setEnabled(true);
+            System.out.println(flag);
         }
     }
 
@@ -253,9 +351,28 @@ public class ProfileImproveActivity extends BaseActivity {
                     .setParentView(parentView)
                     .setContentView(contentView)
                     .build();
-             provinces = (WheelView) contentView.findViewById(R.id.area_popupwin_province);
-             cities = (WheelView) contentView.findViewById(R.id.area_popupwin_city);
-             areas = (WheelView) contentView.findViewById(R.id.area_popupwin_area);
+            areaWin.setOnShowStateChangeCallBack(new PopupWin.OnShowStateChangeCallBack() {
+                @Override
+                public void onShow() {
+                    areaname_string = location_input.getText().toString();
+                    if (null != location_input.getTag())
+                        areacode_string = location_input.getTag().toString();
+                    else
+                        areacode_string = "";
+                }
+
+                @Override
+                public void onDimiss() {
+                    if ("".equals(location_input.getText().toString()) && !"".equals(areaname_string))
+                        myTextWatcher.subFlag();
+                    location_input.setText(areaname_string);
+                    location_input.setTag(areacode_string);
+                    gender_input.clearFocus();
+                }
+            });
+            provinces = (WheelView) contentView.findViewById(R.id.area_popupwin_province);
+            cities = (WheelView) contentView.findViewById(R.id.area_popupwin_city);
+            areas = (WheelView) contentView.findViewById(R.id.area_popupwin_area);
             ((ImageView) contentView.findViewById(R.id.area_popupwin_cancel)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -265,10 +382,10 @@ public class ProfileImproveActivity extends BaseActivity {
             ((ImageView) contentView.findViewById(R.id.area_popupwin_confirm)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    location_input.setText(provinceAdapter.getItemName(provinces.getCurrentItem()).toString()
-                            + " " + cityAdapter.getItemName(cities.getCurrentItem())
-                            + " " + areaAdapter.getItemName(areas.getCurrentItem()));
-                    myTextWatcher.subFlag();
+                    areaname_string = provinceAdapter.getItemName(provinces.getCurrentItem()).toString()
+                            + " " + cityAdapter.getItemName(cities.getCurrentItem()).toString()
+                            + " " + areaAdapter.getItemName(areas.getCurrentItem()).toString();
+                    areacode_string = areaAdapter.getItemText(areas.getCurrentItem()).toString();
                 }
             });
 
@@ -491,31 +608,34 @@ public class ProfileImproveActivity extends BaseActivity {
 
 
     private void fillStudentInView(Stu02Response.Stu02Body.Student student) {
-        name.setVisibility(View.VISIBLE);
         if (null != student.getName() && !"".equals(student.getName())) {
             name_input.setText(student.getName());
             name_input.setEnabled(false);
-            myTextWatcher.subFlag();
         }
-        gender.setVisibility(View.VISIBLE);
         if (null != student.getGender() && !"".equals((student.getGender()))) {
             if ("0".equals(student.getGender()))
                 gender_input.setText("男");
             else
                 gender_input.setText("女");
+            gender_input.setTag(student.getGender());
             gender_input.setEnabled(false);
             myTextWatcher.subFlag();
         }
-        location.setVisibility(View.VISIBLE);
         if (null != student.getAreaname() && !"".equals(student.getAreaname())) {
             location_input.setText(student.getAreaname());
             location_input.setEnabled(false);
-            myTextWatcher.subFlag();
         }
-        spreading_code.setVisibility(View.VISIBLE);
         if (null != student.getPromotioncode() && !"".equals(student.getPromotioncode())) {
             spreading_code_input.setText(student.getPromotioncode());
             spreading_code_input.setEnabled(false);
         }
+        joindate = student.getJoindate();
+        college = student.getCollege();
+        college = student.getCollegename();
+        school = student.getSchoolname();
+        schoolname = student.getSchoolname();
+        professional = student.getProfessional();
+        email=student.getEmail();
+        qq=student.getQq();
     }
 }

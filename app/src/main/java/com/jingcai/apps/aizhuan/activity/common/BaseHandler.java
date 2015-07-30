@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -14,14 +14,17 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Request;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.widget.TopToast;
 
 public class BaseHandler extends Handler {
     private final String TAG = "==" + BaseHandler.class.getName();
     private Context context;
+    private int title_height;
 
     public BaseHandler(Context ctx) {
         super(Looper.myLooper());
         this.context = ctx;
+        title_height = context.getResources().getDimensionPixelSize(R.dimen.header_height);
     }
 
     public BaseHandler(Context ctx, Looper looper) {
@@ -115,6 +118,8 @@ public class BaseHandler extends Handler {
     }
 
     public void showToast(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        TopToast topToast = TopToast.makeText(context, msg, TopToast.LENGTH_LONG);
+        topToast.setOffsetY(title_height);
+        topToast.show();
     }
 }

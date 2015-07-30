@@ -182,6 +182,8 @@ public class LoginActivity extends BaseActivity {
                 case 1:{
                     showToast("登录失败,"+ msg.obj);
                     UserSubject.loginFail();
+                    new JpushUtil(LoginActivity.this).logout();
+                    HXHelper.getInstance().logout();  //环信连接
                     break;
                 }
                 case 3:{

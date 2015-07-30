@@ -21,6 +21,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexPartjobListByLabelActivity;
+import com.jingcai.apps.aizhuan.activity.mine.ProfileImprove2Activity;
 import com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;

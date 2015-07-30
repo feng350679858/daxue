@@ -43,7 +43,13 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.message.ConversationAdapter;
 import com.jingcai.apps.aizhuan.adapter.message.EmotionPagerAdapter;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
+import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob21.Partjob21Request;
 import com.jingcai.apps.aizhuan.util.AppUtil;
+import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.SmileUtils;
@@ -54,7 +60,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -94,11 +102,15 @@ public class MessageConversationActivity extends BaseActivity{
     private File mCameraFile;  //照相机返回的file
     private ConversationBean mConversationBean;
 
+    private PopupWin mReportWin;
+
+    private AzService mAzService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_conversation);
+        mHandler = new MessageHandler(this);
         getIntentData();
         initHeader();
         initViews();
@@ -413,15 +425,42 @@ public class MessageConversationActivity extends BaseActivity{
         ivFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int dp10_px = MessageConversationActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
+                final int dp10_px = MessageConversationActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
                 View contentView = LayoutInflater.from(MessageConversationActivity.this).inflate(R.layout.popup_message_conversation_func, null);
-                PopupWin groupWin = PopupWin.Builder.create(MessageConversationActivity.this)
+                final PopupWin groupWin = PopupWin.Builder.create(MessageConversationActivity.this)
                         .setWidth(dp10_px * 17)
                         .setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
                         .setAnimstyle(0)//取消动画
                         .setParentView(ivFunc)
                         .setContentView(contentView)
                         .build();
+                contentView.findViewById(R.id.tv_abuse_report).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        groupWin.dismiss();
+                        if(null == mReportWin) {
+                            Map<String, String> map = new LinkedHashMap<>();
+                            map.put("1", "非法广告信息");
+                            map.put("2", "色情淫秽信息");
+                            map.put("3", "虚假信息");
+                            map.put("4", "敏感信息");
+                            map.put("5", "恶意信息");
+                            map.put("6", "骚扰我");
+                            map.put("7", "其他");
+                            View parentView = MessageConversationActivity.this.getWindow().getDecorView();
+                            mReportWin = PopupWin.Builder.create(MessageConversationActivity.this)
+                                    .setData(map, new PopupWin.Callback() {
+                                        @Override
+                                        public void select(String key, String val) {
+                                            sendReport(key);  //举报
+                                        }
+                                    })
+                                    .setParentView(parentView)
+                                    .build();
+                        }
+                        mReportWin.show();
+                    }
+                });
                 groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
             }
         });
@@ -433,6 +472,42 @@ public class MessageConversationActivity extends BaseActivity{
                 finish();
             }
         });
+    }
+
+    /**
+     * 发送举报
+     * @param type 类型
+     */
+    private void sendReport(String type) {
+        if(mAzService == null){
+            mAzService = new AzService(this);
+        }
+        Partjob21Request req = new Partjob21Request();
+        Partjob21Request.Parttimejob parttimejob = req.new Parttimejob();
+        parttimejob.setContenttype("4");  //举报类型：人
+        parttimejob.setContentid(mReceiver); // 举报对象：接收者
+        parttimejob.setSourceid(UserSubject.getStudentid());  //举报人：当前登录学生
+        parttimejob.setType(type);  //内容类型
+        parttimejob.setTargetid(mReceiver);  //举报对象：消息接收者
+        req.setParttimejob(parttimejob);
+
+        mAzService.doTrans(req, BaseResponse.class,new AzService.Callback<BaseResponse>() {
+            @Override
+            public void success(BaseResponse resp) {
+                final ResponseResult result = resp.getResult();
+                if("0".equals(result.getCode())){
+                    mHandler.showToast("举报成功");
+                }else{
+                    mHandler.showToast("举报失败:"+result.getMessage());
+                }
+            }
+
+            @Override
+            public void fail(AzException e) {
+                mHandler.postException(e);
+            }
+        });
+
     }
 
     private void sendMessage(EMMessage.Type messageType, Object... args) {
@@ -466,7 +541,7 @@ public class MessageConversationActivity extends BaseActivity{
             //发送消息 加入消息列表中，adapter会处理发送
             mAdapter.notifyDataSetChanged();
         } catch (Exception e) {
-            mHandler.postMessage(MESSAGE_WHAT_SHOW_TOAST,"发送失败:" + e.getMessage());
+            mHandler.showToast( e.getMessage());
         }
     }
 
@@ -512,7 +587,6 @@ public class MessageConversationActivity extends BaseActivity{
         }
     };
 
-    private static final int MESSAGE_WHAT_SHOW_TOAST = 0;
 
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
@@ -522,11 +596,7 @@ public class MessageConversationActivity extends BaseActivity{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what) {
-                case MESSAGE_WHAT_SHOW_TOAST:
-                    showToast(msg.obj.toString());
-                    break;
-            }
+
 
         }
     }

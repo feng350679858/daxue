@@ -108,18 +108,24 @@ public class UserSubject {
     }
 
     public static void init(Preferences instance) {
+        loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
+        if(!loginFlag){
+            name = null;
+            level = "0";
+            schoolname = null;
+            logourl = null;
+        }else{
+            name = instance.getString(Preferences.PARAM_NAME, "");
+            level = instance.getString(Preferences.PARAM_LEVEL, "");
+            schoolname = instance.getString(Preferences.PARAM_SCHOOL_NAME, "");
+            logourl = instance.getString(Preferences.PARAM_LOGOURL, "");
+        }
         studentid = instance.getString(Preferences.PARAM_STUDENTID, "");
         phone = instance.getString(Preferences.PARAM_PHONE, "");
         password = instance.getString(Preferences.PARAM_PASSPORD, "");
-        name = instance.getString(Preferences.PARAM_NAME, "");
         gender = instance.getString(Preferences.PARAM_GENDER, "");
-        logourl = instance.getString(Preferences.PARAM_LOGOURL, "");
-        schoolname = instance.getString(Preferences.PARAM_SCHOOL_NAME, "");
         cityname = instance.getString(Preferences.PARAM_CITY_NAME, "");
         isvisiable = instance.getString(Preferences.PARAM_ISVISIABLE, "");
-        level = instance.getString(Preferences.PARAM_LEVEL, "");
-
-        loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
     }
 
 

@@ -2,7 +2,6 @@
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
     </style>
 
     <!-- 不带数字的badge -->
@@ -118,8 +117,11 @@
         <item name="android:paddingBottom">18dp</item>
         <item name="android:clickable">true</item>
     </style>
-
-
-
-
+    <!--TextInputLayout样式-->
+    <style name="text_input_layout" parent="@android:style/TextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/main_yellow</item>
+        <item name="colorAccent">@color/main_yellow</item>
+    </style>
 </resources>

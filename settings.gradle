@@ -1,12 +1,14 @@
-include ':app', ':pulltorefresh', ':umenglib', ':wheel',':wheel-demo'
+include ':app', ':pulltorefresh', ':umenglib', ':wheel', ':toptoast', ':wheel-demo'
 project(':pulltorefresh').projectDir = new File('libraries/pulltorefresh')
 project(':umenglib').projectDir = new File('libraries/umenglib')
 project(':wheel').projectDir = new File('libraries/wheel')
+project(':toptoast').projectDir = new File('libraries/toptoast')
 project(':wheel-demo').projectDir = new File('demos/wheel-demo')
 
+//override your build tools version in project gradle.properties or ~/.gradle/gradle.properties
 if (!System.properties['buildToolsVersion']) {
-    System.properties['buildToolsVersion'] =  "21.1.2"
+    System.properties['buildToolsVersion'] = "21.1.2"
 }
 if (!System.properties['androidGradlePluginVersion']) {
-    System.properties['androidGradlePluginVersion'] = "1.1.0"
+    System.properties['androidGradlePluginVersion'] = "1.2.3"
 }

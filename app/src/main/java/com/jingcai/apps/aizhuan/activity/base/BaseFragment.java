@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
+import com.jingcai.apps.widget.TopToast;
 
 import java.util.Stack;
 
@@ -28,20 +30,21 @@ public class BaseFragment extends Fragment {
     protected Looper looper = null;
     private ProgressDialog progressDialog =null;
     private final int REQUEST_CODE_LOGIN = 101;
-    protected static int screen_height, screen_width;
+    protected static int screen_height, screen_width, title_height;
     protected static float density;
     protected final InnerLock actionLock = new InnerLock();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         baseActivity = getActivity();
-
-        density = baseActivity.getApplicationContext().getResources().getDisplayMetrics().density;
-        Point point = new Point();
-        baseActivity.getWindowManager().getDefaultDisplay().getSize(point);
-        screen_width = point.x;
-        screen_height = point.y;
-
+        {
+            density = baseActivity.getApplicationContext().getResources().getDisplayMetrics().density;
+            Point point = new Point();
+            baseActivity.getWindowManager().getDefaultDisplay().getSize(point);
+            screen_width = point.x;
+            screen_height = point.y;
+            title_height = getResources().getDimensionPixelSize(R.dimen.header_height);
+        }
         looper = Looper.myLooper();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -107,7 +110,10 @@ public class BaseFragment extends Fragment {
     }
 
     public void showToast(String msg){
-        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+        TopToast topToast = TopToast.makeText(getActivity(), msg, TopToast.LENGTH_LONG);
+        topToast.setOffsetY(title_height);
+        topToast.show();
     }
 
     private static Stack<BaseFragment> fragmentStack = new Stack<>();

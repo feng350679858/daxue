@@ -1,18 +1,19 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -107,7 +108,17 @@ public class HelpJishiDetailActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                showToast("提交成功，请继续！");
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.toast_layout, null);
+                ((TextView) layout.findViewById(com.jingcai.apps.custometoast.R.id.tv_text)).setText("提交成功，请继续！");
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.TOP|Gravity.FILL_HORIZONTAL, 0, title_height * 2);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+//                finish();
             }
         });
     }
