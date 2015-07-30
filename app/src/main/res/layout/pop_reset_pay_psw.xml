@@ -27,7 +27,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:divider="@drawable/field_divider"
+        android:divider="@drawable/field_divider_grey"
         android:showDividers="middle"
         android:background="@drawable/img_border_gray"
         >
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:divider="@drawable/field_divider"
+        android:divider="@drawable/field_divider_grey"
         android:showDividers="middle"
         android:background="@color/white"
         android:layout_gravity="bottom">
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:showDividers="middle">
             <TextView
                 android:id="@+id/tv_mine_num_1"
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:showDividers="middle">
             <TextView
                 android:id="@+id/tv_mine_num_4"
@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:showDividers="middle">
             <TextView
                 android:id="@+id/tv_mine_num_7"
@@ -210,7 +210,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:showDividers="middle">
             <TextView
                 android:layout_width="0dp"

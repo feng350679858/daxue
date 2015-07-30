@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg">
+        android:background="@drawable/list_item_bg">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
-        android:background="@drawable/sys_setting_field_bg">
+        android:background="@drawable/list_item_bg">
 
         <RelativeLayout
             android:layout_width="match_parent"

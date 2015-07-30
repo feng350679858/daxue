@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">

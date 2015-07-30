@@ -41,14 +41,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@drawable/field_divider" />
+        android:background="@drawable/field_divider_grey" />
 
     <include layout="@layout/mine_help_jishi_process"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@drawable/field_divider" />
+        android:background="@drawable/field_divider_grey" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/field_divider"
+        android:background="@drawable/field_divider_grey"
         android:scrollbars="none">
 
         <LinearLayout

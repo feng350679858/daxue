@@ -224,7 +224,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/field_divider" />
+                    android:background="@drawable/field_divider_grey" />
 
                 <TextView
                     android:id="@+id/tv_wenda_answer"
@@ -240,7 +240,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/field_divider" />
+                    android:background="@drawable/field_divider_grey" />
             </LinearLayout>
 
             <RelativeLayout
