@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+  <color name="result_view">#b0000000</color>
+  <color name="viewfinder_mask">#60000000</color>
+  <!-- text1 color -->
+  <color name="white">#ffffffff</color>
+  <!-- text2 color -->
+  <color name="yellow">#c0ffff00</color>
+
+</resources>

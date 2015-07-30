@@ -37,4 +37,5 @@ dependencies {
     compile project(':toptoast')
     compile project(':pulltorefresh')
     compile project(':umenglib')
+    compile project(':qrcode')
 }
