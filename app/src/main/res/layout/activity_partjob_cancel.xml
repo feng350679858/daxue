@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_partjob_cancel_tip"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/font_assistant"
+                android:textColor="@color/assist_grey"
                 android:textSize="16sp" />
 
         </LinearLayout>

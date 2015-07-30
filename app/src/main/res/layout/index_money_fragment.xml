@@ -64,7 +64,7 @@
                         android:padding="5dp"
                         android:text="优质精选"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/font_important"
+                        android:textColor="@color/important_dark"
                         android:textSize="14sp" />
 
                     <TextView
@@ -78,7 +78,7 @@
                         android:drawableRight="@drawable/icon_right_triangle"
                         android:padding="5dp"
                         android:text="更多"
-                        android:textColor="@color/font_important"
+                        android:textColor="@color/important_dark"
                         android:textSize="14sp" />
                 </RelativeLayout>
 
@@ -119,7 +119,7 @@
                         android:layout_centerVertical="true"
                         android:text="同城短期"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/font_important"
+                        android:textColor="@color/important_dark"
                         android:textSize="14sp" />
                     <TextView
                         android:id="@+id/partjob_city_more"
@@ -131,7 +131,7 @@
                         android:drawableRight="@drawable/icon_right_triangle"
                         android:padding="5dp"
                         android:text="更多"
-                        android:textColor="@color/font_important"
+                        android:textColor="@color/important_dark"
                         android:textSize="14sp" />
                 </RelativeLayout>
 

@@ -12,7 +12,7 @@
         android:paddingBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/font_assistant"
+        android:textColor="@color/assist_grey"
         android:text="退出后不会删除任何历史记录，下次登陆依然可以使用本帐号。"
         android:background="@color/white"/>
     <View
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/sys_setting_field_bg"
         android:text="确认退出"
-        android:textColor="@color/font_red"
+        android:textColor="@color/red"
         android:textSize="18sp"/>
 
     <Button

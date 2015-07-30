@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -77,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="￥"
-                        android:textColor="@color/font_red"
+                        android:textColor="@color/red"
                         android:textSize="14sp" />
 
                     <TextView
@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="70dp"
-                        android:textColor="@color/font_red"
+                        android:textColor="@color/red"
                         android:textSize="16sp"
                          android:singleLine="true"
                         android:ellipsize="end"/>
@@ -94,7 +94,7 @@
                         android:id="@+id/pj_list_item_salaryunit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/font_normal"
+                        android:textColor="@color/normal_grey"
                         android:textSize="12sp"
                         android:singleLine="true"
                         android:ellipsize="end"/>
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textColor="@color/font_normal"
+                    android:textColor="@color/normal_grey"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
@@ -158,7 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="12sp" />
 
             <TextView
@@ -166,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="km"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

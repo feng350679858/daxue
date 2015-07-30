@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="兼职信息"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="工作信息"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="工作地点:"
-                        android:textColor="@color/font_assistant" />
+                        android:textColor="@color/assist_grey" />
 
                     <LinearLayout
                         android:id="@+id/layout_address"
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="时间表"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
             </LinearLayout>

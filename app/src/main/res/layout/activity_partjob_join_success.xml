@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="恭喜你，报名成功!"
-            android:textColor="@color/font_important"
+            android:textColor="@color/important_dark"
             android:textSize="18sp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="请立即与商家联系，确认工作事项。"
-            android:textColor="@color/font_assistant"
+            android:textColor="@color/assist_grey"
             android:textSize="16sp" />
 
 

@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="支付宝"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <ImageView

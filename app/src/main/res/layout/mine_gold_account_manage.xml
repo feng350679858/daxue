@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="金融账号"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -45,7 +45,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@id/arrow_1"
                 android:text="0个"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="重置支付密码"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView

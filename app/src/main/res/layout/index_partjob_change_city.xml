@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="定位到的位置"
-        android:textColor="@color/font_assistant"
+        android:textColor="@color/assist_grey"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:text="定位中.."
-            android:textColor="@color/font_normal"
+            android:textColor="@color/normal_grey"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="已开通城市"
-        android:textColor="@color/font_assistant"
+        android:textColor="@color/assist_grey"
         android:textSize="16sp" />
 
     <ListView

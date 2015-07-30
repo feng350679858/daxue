@@ -65,7 +65,7 @@
             android:inputType="textMultiLine"
             android:lines="15"
             android:padding="10dp"
-            android:textColorHint="@color/font_assistant"
+            android:textColorHint="@color/assist_grey"
             android:textSize="14sp" />
 
         <Button

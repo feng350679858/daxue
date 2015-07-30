@@ -77,7 +77,7 @@
                 android:clickable="true"
                 android:padding="10dp"
                 android:text="朋友邀请"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -102,7 +102,7 @@
                 android:clickable="true"
                 android:padding="10dp"
                 android:text="我有话说"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -139,7 +139,7 @@
                 android:clickable="true"
                 android:padding="10dp"
                 android:text="修改密码"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -164,7 +164,7 @@
                 android:clickable="true"
                 android:padding="10dp"
                 android:text="版本更新"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -200,7 +200,7 @@
                 android:clickable="true"
                 android:padding="10dp"
                 android:text="关于我们"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
             <ImageView
@@ -219,6 +219,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/sys_setting_field_bg"
         android:text="退出登录"
-        android:textColor="@color/font_red"
+        android:textColor="@color/red"
         android:textSize="18sp" />
 </LinearLayout>

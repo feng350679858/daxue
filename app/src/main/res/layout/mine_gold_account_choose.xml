@@ -34,7 +34,7 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_horizontal"
                 android:text="添加账户"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="18sp" />
 
             <ImageView

@@ -36,7 +36,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="支付宝"
-                    android:textColor="@color/font_important" />
+                    android:textColor="@color/important_dark" />
 
                 <TextView
                     android:id="@+id/tv_mine_account_choose_list_item_code"

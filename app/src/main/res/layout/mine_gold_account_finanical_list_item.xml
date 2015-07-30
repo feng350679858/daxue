@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textColor="@color/font_important" />
+                    android:textColor="@color/important_dark" />
 
                 <TextView
                     android:id="@+id/tv_account_list_code"
@@ -53,7 +53,7 @@
                 android:id="@+id/btn_account_list_unbind"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/font_red"
+                android:background="@color/red"
                 android:gravity="center"
                 android:text="解绑"
                 android:textColor="@color/white"
