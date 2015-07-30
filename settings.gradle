@@ -1,8 +1,9 @@
-include ':app', ':pulltorefresh', ':umenglib', ':wheel', ':toptoast', ':wheel-demo',':qrcode'
+include ':app', ':pulltorefresh', ':umenglib', ':wheel', ':toptoast',':qrcode', ':wheel-demo'
 project(':pulltorefresh').projectDir = new File('libraries/pulltorefresh')
 project(':umenglib').projectDir = new File('libraries/umenglib')
 project(':wheel').projectDir = new File('libraries/wheel')
 project(':toptoast').projectDir = new File('libraries/toptoast')
+project(':qrcode').projectDir = new File('libraries/qrcode')
 project(':wheel-demo').projectDir = new File('demos/wheel-demo')
 
 //override your build tools version in project gradle.properties or ~/.gradle/gradle.properties
