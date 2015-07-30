@@ -86,7 +86,7 @@ public class AccountStreamInputListAdapter extends BaseAdapter {
         switch (status){
             case "1":
                 tv_status.setText("进行中");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.font_red));
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
             case "2" :
                 tv_status.setText("冻结中");
@@ -94,7 +94,7 @@ public class AccountStreamInputListAdapter extends BaseAdapter {
                 break;
             case "3" :
                 tv_status.setText("已完成");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.red_normal));
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
             case "4" :
                 tv_status.setText("进失败");

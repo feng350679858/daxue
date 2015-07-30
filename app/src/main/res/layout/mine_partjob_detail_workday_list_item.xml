@@ -13,7 +13,7 @@
         android:drawableLeft="@drawable/partjob_pop_time"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
-        android:textColor="@color/font_normal"
+        android:textColor="@color/normal_grey"
         android:textSize="18sp" />
     <TextView
         android:id="@+id/tv_mine_partjob_detail_workdays_list_status"

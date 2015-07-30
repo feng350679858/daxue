@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:showDividers="middle">-->
@@ -29,8 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/hollow_black_text_bg"
-        android:divider="@drawable/field_divider2"
+        android:background="@drawable/hollow_black_radius_bg"
+        android:divider="@drawable/field_divider_dark"
         android:orientation="horizontal"
         android:padding="1dp"
         android:showDividers="middle">

@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/field_divider" />
+            android:background="@drawable/field_divider_grey" />
 
         <TextView
             android:id="@+id/et_help_content"
@@ -114,7 +114,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@drawable/field_divider" />
+            android:background="@drawable/field_divider_grey" />
 
         <include
             android:id="@+id/layout_help_wenda"

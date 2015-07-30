@@ -5,7 +5,7 @@
     android:background="@drawable/bg_more_pop"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:divider="@drawable/pop_divider"
+    android:divider="@drawable/field_divider_dark"
     android:showDividers="middle"
     android:dividerPadding="5dp">
 

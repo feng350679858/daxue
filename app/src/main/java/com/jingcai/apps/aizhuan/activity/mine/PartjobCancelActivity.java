@@ -207,7 +207,7 @@ public class PartjobCancelActivity extends BaseActivity{
                     mBtnComfirm.setEnabled(true);
                 }else{
                     mTxtMention.setText(R.string.mine_partjob_cancel_no_chance);
-                    mBtnComfirm.setTextColor(getResources().getColor(R.color.font_assistant));
+                    mBtnComfirm.setTextColor(getResources().getColor(R.color.assist_grey));
                     mBtnComfirm.setEnabled(false);
                 }
             } catch (Exception e) {

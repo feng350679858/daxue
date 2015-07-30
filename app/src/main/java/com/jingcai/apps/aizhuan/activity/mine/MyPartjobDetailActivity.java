@@ -26,7 +26,6 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob04.Partjob04Resp
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
@@ -297,7 +296,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         //1为取消状态
         boolean isCancel = "1".equals(mJoininfo.getIscancel());
         if (isCancel) {
-            mBtnCancle.setTextColor(getResources().getColor(R.color.font_assistant));
+            mBtnCancle.setTextColor(getResources().getColor(R.color.assist_grey));
             mBtnCancle.setEnabled(false);
         }
 

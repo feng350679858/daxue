@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:clickable="true">
 
         <RelativeLayout
@@ -29,7 +29,7 @@
                 android:drawableStart="@drawable/ic_launcher"
                 android:gravity="center_horizontal"
                 android:text="添加账户"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="18sp" />
 
             <ImageView

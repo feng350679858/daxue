@@ -46,7 +46,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="陈秋实"
-            android:textColor="@color/font_important"
+            android:textColor="@color/important_dark"
             android:textSize="14sp" />
 
         <LinearLayout
