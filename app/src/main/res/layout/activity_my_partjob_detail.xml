@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="vertical"
             android:showDividers="middle">
 
@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="兼职信息"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -45,7 +45,7 @@
                     android:id="@+id/btn_mine_partjob_detail_complain"
                     android:layout_width="50dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/complain"
+                    android:background="@drawable/yellow_hollow_bg_selector"
                     android:gravity="center"
                     android:text="投诉"
                     android:textColor="@color/main_yellow"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="vertical"
             android:showDividers="middle">
 
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="工作信息"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="工作地点:"
-                        android:textColor="@color/font_assistant" />
+                        android:textColor="@color/assist_grey" />
 
                     <LinearLayout
                         android:id="@+id/layout_address"
@@ -178,7 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="vertical"
             android:showDividers="middle">
 
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="时间表"
-                    android:textColor="@color/font_important"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
             </LinearLayout>

@@ -43,7 +43,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
 
         final ImageView iv_func = (ImageView) findViewById(R.id.iv_func);
         iv_func.setVisibility(View.VISIBLE);
-        iv_func.setImageResource(R.drawable.icon_more1);
+        iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

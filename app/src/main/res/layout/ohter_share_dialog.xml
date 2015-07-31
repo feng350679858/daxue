@@ -26,7 +26,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="分享到"
-            android:textColor="@color/font_normal"
+            android:textColor="@color/normal_grey"
             android:textSize="18sp" />
 
         <View
@@ -64,7 +64,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="QQ好友" />
@@ -75,7 +75,7 @@
                 android:layout_weight="1" />
             <LinearLayout
                 android:id="@+id/ll_other_share_weixin"
-                android:textColor="@color/font_assistant"
+                android:textColor="@color/assist_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -89,7 +89,7 @@
                     android:src="@drawable/icon_share_weixin" />
 
                 <TextView
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="朋友圈" />
@@ -140,7 +140,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="微博" />
@@ -185,7 +185,7 @@
                 android:layout_weight="1" />
             <LinearLayout
                 android:id="@+id/ll_other_share_weibo"
-                android:textColor="@color/font_assistant"
+                android:textColor="@color/assist_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -199,7 +199,7 @@
                     android:src="@drawable/icon_share_qq_weibo" />
 
                 <TextView
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="短信" />
@@ -250,7 +250,7 @@
 
                 <TextView
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="邮箱" />

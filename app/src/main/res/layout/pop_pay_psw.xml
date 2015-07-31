@@ -66,7 +66,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/img_border_gray"
-        android:divider="@drawable/field_divider"
+        android:divider="@drawable/field_divider_grey"
         android:orientation="horizontal"
         android:showDividers="middle">
 
@@ -139,14 +139,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/white"
-        android:divider="@drawable/field_divider"
+        android:divider="@drawable/field_divider_grey"
         android:orientation="vertical"
         android:showDividers="middle">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="horizontal"
             android:showDividers="middle">
 
@@ -178,7 +178,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="horizontal"
             android:showDividers="middle">
 
@@ -210,7 +210,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="horizontal"
             android:showDividers="middle">
 
@@ -242,7 +242,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:orientation="horizontal"
             android:showDividers="middle">
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
-    android:divider="@drawable/fieldset_divider"
+    android:divider="@drawable/field_divider_grey"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:showDividers="middle">
