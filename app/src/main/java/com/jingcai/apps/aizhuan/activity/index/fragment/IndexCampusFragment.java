@@ -149,7 +149,7 @@ public class IndexCampusFragment extends BaseFragment {
                             job.setCommentcount(String.valueOf(i));
                             job.setCommentcount("22");
                             job.setGenderlimit(String.valueOf(random.nextInt(3)));
-                            job.setMoney(String.valueOf(random.nextDouble()));
+                            job.setMoney(String.valueOf(random.nextInt(100))+".23");
                             job.setContent("内容xxx的范德萨发到付浙江打发士大夫大学" + (i + mCurrentStart));
                             job.setSourceid(String.valueOf(random.nextInt(10000)));
                             job.setSourcename("花几支" + i);
