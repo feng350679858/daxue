@@ -31,12 +31,21 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Body> {
         private String sourceid;
         private String sourcename;
         private String sourceimgurl;
+        private String sourcelevel;
         private String sourceschool;
         private String sourcecollege;
         private String optime;
         private String praisecount;
         private String commentcount;
         private String status;
+
+        public String getSourcelevel() {
+            return sourcelevel;
+        }
+
+        public void setSourcelevel(String sourcelevel) {
+            this.sourcelevel = sourcelevel;
+        }
 
         public String getSourceimgurl() {
             return sourceimgurl;

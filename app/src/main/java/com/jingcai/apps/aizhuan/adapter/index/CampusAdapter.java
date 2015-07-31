@@ -2,6 +2,7 @@ package com.jingcai.apps.aizhuan.adapter.index;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.GenderUtil;
+import com.jingcai.apps.aizhuan.util.DictUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,10 +103,31 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
             viewHolder.layout_help_wenda.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
-            viewHolder.tv_gender_limit.setText(GenderUtil.get(region.getGenderlimit()));
+            viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, region.getGenderlimit()));
+
+            viewHolder.tv_title.setText("1".equals(region.getType()) ? "跑腿" : "公告");
 
             viewHolder.tv_jishi_like.setText(region.getPraisecount());
             viewHolder.tv_jishi_comment.setText(region.getCommentcount());
+
+            if("1".equals(region.getStatus())){
+                viewHolder.tv_jishi_help.setText("帮TA");
+            }else{
+                viewHolder.tv_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, region.getStatus()));
+            }
+
+            viewHolder.layout_jishi_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
             viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
@@ -114,13 +136,27 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_wenda_help.setVisibility(View.VISIBLE);
             viewHolder.tv_wenda_help_my.setVisibility(View.GONE);
 
+            viewHolder.tv_title.setText(region.getTitle());
+
             viewHolder.tv_wenda_like.setText(region.getPraisecount());
             viewHolder.tv_wenda_comment.setText(region.getCommentcount());
+
+            viewHolder.layout_wenda_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("==", "------------");
+                }
+            });
+            viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
-        viewHolder.tv_title.setText(region.getTitle());
         bitmapUtil.getImage(viewHolder.civ_head_logo, region.getSourceimgurl(), true, R.drawable.default_image);
-        viewHolder.ltv_level.setLevel(10);
+        viewHolder.ltv_level.setLevel(Integer.parseInt(region.getSourcelevel()));
         viewHolder.tv_stu_name.setText(region.getSourcename());
         viewHolder.tv_stu_college.setText(region.getSourcecollege());
         viewHolder.tv_deploy_time.setText(DateUtil.getHumanlityDateString(region.getOptime()));
