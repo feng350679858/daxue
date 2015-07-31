@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_ref_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
-    android:background="@color/content_background"
+    android:background="@drawable/list_item_bg_reverse"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/list_item_padding">
 
     <ImageView
         android:id="@+id/iv_reference_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
+        android:layout_width="@dimen/size_ref_logo"
+        android:layout_height="@dimen/size_ref_logo"
+        android:src="@drawable/default_image" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="我不管，我最美！我不管，我最没，我不管！！！！！！！！！！！！！！！！！！！！！！！"
+            android:text="我不管，我最美！我不管，我最美，我不管！！！！！！！！！！！！！！！！！！！！！！！"
             style="@style/sub_title" />
     </LinearLayout>
 </LinearLayout>

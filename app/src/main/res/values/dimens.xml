@@ -38,4 +38,8 @@
     <dimen name="dp_10">10dp</dimen>
     <!-- 头像直径 -->
     <dimen name="avatar_diameter">50dp</dimen>
+    <!--  评论、赞中引用的部分的logo -->
+    <dimen name="size_ref_logo">70dp</dimen>
+    <!-- 等级图标直径 -->
+    <dimen name="level_circle_diameter">15dp</dimen>
 </resources>
