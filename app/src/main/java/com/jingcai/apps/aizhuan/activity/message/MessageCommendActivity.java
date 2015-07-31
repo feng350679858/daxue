@@ -55,43 +55,47 @@ public class MessageCommendActivity extends BaseActivity {
     private void initData() {
         if(actionLock.tryLock()) {
             showProgressDialog("评论努力加载中...");
-            new AzExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    final Partjob29Request req = new Partjob29Request();
-                    Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
-
-                    parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                    parttimejob.setStart(String.valueOf(mCurrentStart));
-                    parttimejob.setReceiverid(UserSubject.getStudentid());
-
-                    req.setParttimejob(parttimejob);
-                    azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {
-                        @Override
-                        public void success(Partjob29Response resp) {
-                            ResponseResult result = resp.getResult();
-                            if ("0".equals(result.getCode())) {
-                                Partjob29Response.Partjob29Body body = resp.getBody();
-                                List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = body.getParttimejob_list();
-                                if(0 == mCurrentStart && parttimejob_list.size()<1){
-                                    messageHandler.postMessage(2);
-                                }else {
-                                    messageHandler.postMessage(0, parttimejob_list);
-                                }
-                            } else {
-                                messageHandler.postMessage(1, result.getMessage());
-                            }
-                        }
-
-                        @Override
-                        public void fail(AzException e) {
-
-                        }
-                    });
-
-                }
-            });
+            loadCommend();
         }
+    }
+
+    private void loadCommend() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                final Partjob29Request req = new Partjob29Request();
+                Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
+
+                parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                parttimejob.setStart(String.valueOf(mCurrentStart));
+                parttimejob.setReceiverid(UserSubject.getStudentid());
+
+                req.setParttimejob(parttimejob);
+                azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {
+                    @Override
+                    public void success(Partjob29Response resp) {
+                        ResponseResult result = resp.getResult();
+                        if ("0".equals(result.getCode())) {
+                            Partjob29Response.Partjob29Body body = resp.getBody();
+                            List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = body.getParttimejob_list();
+                            if(0 == mCurrentStart && parttimejob_list.size()<1){
+                                messageHandler.postMessage(2);
+                            }else {
+                                messageHandler.postMessage(0, parttimejob_list);
+                            }
+                        } else {
+                            messageHandler.postMessage(1, result.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+
+                    }
+                });
+
+            }
+        });
     }
 
     private void initHeader() {

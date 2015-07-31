@@ -24,7 +24,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:src="@drawable/mini_avatar_shadow" />
+            android:src="@drawable/default_head_img" />
 
        <TextView
              android:maxWidth="225.0dip"
