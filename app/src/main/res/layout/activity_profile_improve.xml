@@ -92,7 +92,10 @@
                 android:layout_marginTop="5dp"
                 android:background="@null"
                 android:hint="地区"
+                android:editable="false"
                 android:paddingTop="10dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:textColor="@color/important_dark"
                 android:textColorHint="@color/important_dark"
                 android:textSize="16sp" />

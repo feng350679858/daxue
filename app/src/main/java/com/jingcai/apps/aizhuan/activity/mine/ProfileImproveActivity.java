@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.Spannable;
@@ -51,8 +52,11 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.view.ClearableEditText;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import kankan.wheel.widget.OnWheelScrollListener;
@@ -65,17 +69,13 @@ public class ProfileImproveActivity extends BaseActivity {
     private EditText gender_input, location_input;
     private TextView warning;
     private Button next;
-    private PopupWin genderWin, areaWin,connectionWin;
+    private PopupWin genderWin, areaWin, connectionWin;
 
     private AzService azService;
     private MessageHandler messageHandler;
 
-    private List<School01Response.Body.Areainfo> provinceList;
-    private List<School02Response.Body.Areainfo> cityList;
-    private List<School03Response.Body.Areainfo> areaList;
-    private ProvinceAdapter provinceAdapter;
-    private CityAdapter cityAdapter;
-    private AreaAdapter areaAdapter;
+    private List<School03Response.Body.Areainfo> provinceList,cityList,areaList;
+    private AreaAdapter provinceAdapter,cityAdapter,areaAdapter;
 
     private String cityCode, areaCode;
     private boolean provinceScrolling = false, cityScrolling = false;
@@ -84,7 +84,7 @@ public class ProfileImproveActivity extends BaseActivity {
     private WheelView provinces;
     private WheelView cities;
     private WheelView areas;
-    private String joindate, school, college, professional, schoolname, collegename,email,qq;
+    private String joindate, school, college, professional, schoolname, collegename, email, qq;
     private String gender_string, areaname_string, areacode_string;
 
     @Override
@@ -94,7 +94,7 @@ public class ProfileImproveActivity extends BaseActivity {
         messageHandler = new MessageHandler(this);
         initHeader();
         initView();
-//        initDate();
+        initDate();
     }
 
     private void initHeader() {
@@ -104,7 +104,7 @@ public class ProfileImproveActivity extends BaseActivity {
         findViewById(R.id.ib_back).setVisibility(View.GONE);
         ((TextView) findViewById(R.id.tv_func)).setText("联系客服");
         ((TextView) findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.tv_func)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.tv_func)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null == connectionWin) {
@@ -120,7 +120,7 @@ public class ProfileImproveActivity extends BaseActivity {
                     //title
                     ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("联系人");
                     //phone
-                    final TextView phone=(TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
+                    final TextView phone = (TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
                     phone.setText("15712345678");
                     //2 button
                     contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
@@ -145,10 +145,9 @@ public class ProfileImproveActivity extends BaseActivity {
 
     private void initView() {
         name = (TextInputLayout) findViewById(R.id.profile_improve_name);
-        name_input=(ClearableEditText)name.getEditText();
+        name_input = (ClearableEditText) name.getEditText();
         name_input.addTextChangedListener(myTextWatcher);
         gender = (TextInputLayout) findViewById(R.id.profile_improve_gender);
-        gender.setHint("性别");
         gender_input = gender.getEditText();
         gender_input.addTextChangedListener(myTextWatcher);
         gender_input.setOnClickListener(new View.OnClickListener() {
@@ -187,79 +186,27 @@ public class ProfileImproveActivity extends BaseActivity {
                 genderWin.show();
             }
         });
-//        gender_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    if (null == genderWin) {
-//                        View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
-//                        View contentView = LayoutInflater.from(ProfileImproveActivity.this).inflate(R.layout.gender_popupwin, null);
-//
-//                        genderWin = PopupWin.Builder.create(ProfileImproveActivity.this)
-//                                .setParentView(parentView)
-//                                .setContentView(contentView)
-////                                .setFocusable(false)
-//                                .build();
-//                        genderWin.setOnShowStateChangeCallBack(new PopupWin.OnShowStateChangeCallBack() {
-//                            @Override
-//                            public void onShow() {
-//                                gender_string = gender_input.getText().toString();
-//                            }
-//
-//                            @Override
-//                            public void onDimiss() {
-//                                if ("".equals(gender_input.getText().toString()) && !"".equals(gender_string))
-//                                    myTextWatcher.subFlag();
-//                                gender_input.setText(gender_string);
-//                                gender_input.clearFocus();
-//                            }
-//                        });
-//                        contentView.findViewById(R.id.gender_popupwin_male).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                gender_string = "男";
-//                                genderWin.dismiss();
-//                            }
-//                        });
-//                        contentView.findViewById(R.id.gender_popupwin_female).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                gender_string = "女";
-//                                genderWin.dismiss();
-//                            }
-//                        });
-//                        contentView.findViewById(R.id.gender_popupwin_cancel).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                genderWin.dismiss();
-//                            }
-//                        });
-//                    }
-//                    genderWin.show();
-//
-//
-//                }
-//            }
-//        });
+
         location = (TextInputLayout) findViewById(R.id.profile_improve_location);
-        location.setHint("区域");
-        initWheel();//加载区域滚轮
+
+
         location_input = location.getEditText();
         location_input.addTextChangedListener(myTextWatcher);
-       /* location_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        location_input.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onClick(View v) {
                 areaWin.show();
             }
-        });*/
+        });
+
         spreading_code = (TextInputLayout) findViewById(R.id.profile_improve_spreading_code);
         spreading_code_input = (ClearableEditText) spreading_code.getEditText();
         spreading_code_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
+                if (hasFocus) {
                     name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
-                }else {
+                } else {
                     name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                 }
             }
@@ -272,10 +219,10 @@ public class ProfileImproveActivity extends BaseActivity {
                 Intent intent = new Intent(ProfileImproveActivity.this, ProfileImprove2Activity.class);
                 intent.putExtra("name", name_input.getText().toString());
                 intent.putExtra("gender", gender_input.getTag().toString());
-              //  if (location_input.isEnabled())
-                  //  intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
-              //  else
-               //     intent.putExtra("areacode", "");
+                //  if (location_input.isEnabled())
+                //  intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
+                //  else
+                //     intent.putExtra("areacode", "");
                 intent.putExtra("promotioncode", spreading_code_input.getText().toString());
                 intent.putExtra("joindate", joindate);
                 intent.putExtra("school", school);
@@ -283,7 +230,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 intent.putExtra("college", college);
                 intent.putExtra("collegename", collegename);
                 intent.putExtra("professional", professional);
-                intent.putExtra("email",email);
+                intent.putExtra("email", email);
                 intent.putExtra("qq", qq);
                 startActivity(intent);
             }
@@ -340,10 +287,8 @@ public class ProfileImproveActivity extends BaseActivity {
         }
     }
 
-    private void initWheel() {
-        provinceAdapter = new ProvinceAdapter(this, provinceList);
-        cityAdapter = new CityAdapter(this, cityList);
-        areaAdapter = new AreaAdapter(this, areaList);
+    private void initProvinceWheel() {
+
         if (null == areaWin) {
             View parentView = ProfileImproveActivity.this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(ProfileImproveActivity.this).inflate(R.layout.area_popupwin, null);
@@ -363,16 +308,20 @@ public class ProfileImproveActivity extends BaseActivity {
 
                 @Override
                 public void onDimiss() {
-                    if ("".equals(location_input.getText().toString()) && !"".equals(areaname_string))
-                        myTextWatcher.subFlag();
                     location_input.setText(areaname_string);
                     location_input.setTag(areacode_string);
-                    gender_input.clearFocus();
                 }
             });
+
             provinces = (WheelView) contentView.findViewById(R.id.area_popupwin_province);
+            provinces.setVisibleItems(5);
             cities = (WheelView) contentView.findViewById(R.id.area_popupwin_city);
+            cities.setVisibleItems(5);
             areas = (WheelView) contentView.findViewById(R.id.area_popupwin_area);
+            areas.setVisibleItems(5);
+
+            provinceAdapter = new AreaAdapter(this,provinceList);
+            provinces.setViewAdapter(provinceAdapter);
             ((ImageView) contentView.findViewById(R.id.area_popupwin_cancel)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -383,14 +332,13 @@ public class ProfileImproveActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     areaname_string = provinceAdapter.getItemName(provinces.getCurrentItem()).toString()
-                            + " " + cityAdapter.getItemName(cities.getCurrentItem()).toString()
-                            + " " + areaAdapter.getItemName(areas.getCurrentItem()).toString();
+                            + "  " + cityAdapter.getItemName(cities.getCurrentItem()).toString()
+                            + "  " + areaAdapter.getItemName(areas.getCurrentItem()).toString();
                     areacode_string = areaAdapter.getItemText(areas.getCurrentItem()).toString();
+                    areaWin.dismiss();
                 }
             });
 
-            provinces.setVisibleItems(5);
-            provinces.setViewAdapter(provinceAdapter);
             provinces.setShadowColor(0xFFFFFFFF, 0x88FFFFFF, 0x00FFFFFF);
             provinces.addScrollingListener(new OnWheelScrollListener() {
                 @Override
@@ -404,118 +352,111 @@ public class ProfileImproveActivity extends BaseActivity {
                     updateAreas(provinces.getCurrentItem(), 0);
                 }
             });
-            cities.setVisibleItems(5);
-            cities.setViewAdapter(cityAdapter);
-            cities.setShadowColor(0xFFFFFFFF, 0x88FFFFFF, 0x00FFFFFF);
-            cities.addScrollingListener(new OnWheelScrollListener() {
-                @Override
-                public void onScrollingStarted(WheelView wheel) {
-                    cityScrolling = true;
-                }
+            provinces.setCurrentItem(2);
+            updateAreas(0, 0);
 
-                @Override
-                public void onScrollingFinished(WheelView wheel) {
-                    cityScrolling = false;
-                    updateAreas(cities.getCurrentItem(), 1);
-                }
-            });
-            areas.setVisibleItems(5);
-            areas.setViewAdapter(areaAdapter);
-            areas.setShadowColor(0xFFFFFFFF, 0x88FFFFFF, 0x00FFFFFF);
         }
-        getProvinceInfo();
+
+    }
+
+    private void initCityWheel() {
+        if (cityList == null || 0 == cityList.size()) {
+            School03Response school03Response = new School03Response();
+            School03Response.Body body = school03Response.new Body();
+            School03Response.Body.Areainfo areainfo = body.new Areainfo();
+            areainfo.setName(provinceAdapter.getItemName(provinces.getCurrentItem()).toString());
+            areainfo.setCode(provinceAdapter.getItemText(provinces.getCurrentItem()).toString());
+            cityList = new ArrayList<School03Response.Body.Areainfo>();
+            cityList.add(areainfo);
+        }
+        cityAdapter = new AreaAdapter(this, cityList);
+
+        cities.setViewAdapter(cityAdapter);
+        cities.setShadowColor(0xFFFFFFFF, 0x88FFFFFF, 0x00FFFFFF);
+        cities.addScrollingListener(new OnWheelScrollListener() {
+            @Override
+            public void onScrollingStarted(WheelView wheel) {
+                cityScrolling = true;
+            }
+
+            @Override
+            public void onScrollingFinished(WheelView wheel) {
+                cityScrolling = false;
+                updateAreas(cities.getCurrentItem(), 1);
+            }
+        });
+        cities.setCurrentItem(2);
+
+        updateAreas(0, 1);
+
+    }
+
+    private void initAreaWheel() {
+        if (areaList == null || 0 == areaList.size()) {
+            School03Response school03Response = new School03Response();
+            School03Response.Body body = school03Response.new Body();
+            School03Response.Body.Areainfo areainfo = body.new Areainfo();
+            areainfo.setName(cityAdapter.getItemName(cities.getCurrentItem()).toString());
+            areainfo.setCode(cityAdapter.getItemText(cities.getCurrentItem()).toString());
+            areaList = new ArrayList<School03Response.Body.Areainfo>();
+            areaList.add(areainfo);
+        }
+        areaAdapter = new AreaAdapter(this, areaList);
+        areas.setViewAdapter(areaAdapter);
+        areas.setShadowColor(0xFFFFFFFF, 0x88FFFFFF, 0x00FFFFFF);
+
+        areas.setCurrentItem(2);
     }
 
     //更新城市或地区信息
     private void updateAreas(int index, int flag) {
         if (flag == 0) {
-            cityCode = provinceAdapter.getItemText(index).toString();
-            getCityInfo();
+            areaCode = provinceAdapter.getItemText(index).toString();
+            getAreaInfo(2);
         } else {
             areaCode = cityAdapter.getItemText(index).toString();
-            getAreaInfo();
+            getAreaInfo(3);
         }
     }
 
-    private void getProvinceInfo() {
-        new AzExecutor().execute(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                azService = new AzService(ProfileImproveActivity.this);
-                School01Request req = new School01Request();
-                azService.doTrans(req, School01Response.class, new AzService.Callback<School01Response>() {
-                    @Override
-                    public void success(School01Response response) {
-                        ResponseResult result = response.getResult();
-                        School01Response.Body school01Body = response.getBody();
-                        List<School01Response.Body.Areainfo> areainfo = school01Body.getAreainfo_list();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(2);
-                        } else {
-                            messageHandler.postMessage(3, areainfo);
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        }));
-    }
-
-    private void getCityInfo() {
-        new AzExecutor().execute(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                azService = new AzService(ProfileImproveActivity.this);
-                School02Request req = new School02Request();
-                School02Request.Areainfo areainfo = req.new Areainfo();
-                areainfo.setCode(cityCode);
-                azService.doTrans(req, School02Response.class, new AzService.Callback<School02Response>() {
-                    @Override
-                    public void success(School02Response response) {
-                        ResponseResult result = response.getResult();
-                        School02Response.Body school02Body = response.getBody();
-                        List<School02Response.Body.Areainfo> areainfo = school02Body.getAreainfo_list();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(4);
-                        } else {
-                            messageHandler.postMessage(5, areainfo);
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        }));
-    }
-
-    private void getAreaInfo() {
+    private void getAreaInfo(final int type) {
         new AzExecutor().execute(new Thread(new Runnable() {
             @Override
             public void run() {
                 azService = new AzService(ProfileImproveActivity.this);
                 School03Request req = new School03Request();
                 School03Request.Areainfo areainfo = req.new Areainfo();
-                areainfo.setCode(cityCode);
+                areainfo.setCode(areaCode);
+                req.setAreainfo(areainfo);
                 azService.doTrans(req, School03Response.class, new AzService.Callback<School03Response>() {
                     @Override
                     public void success(School03Response response) {
                         ResponseResult result = response.getResult();
                         School03Response.Body School03Body = response.getBody();
                         List<School03Response.Body.Areainfo> areainfo = School03Body.getAreainfo_list();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(6);
-                        } else {
-                            messageHandler.postMessage(7, areainfo);
+                        switch (type) {
+                            case 1:
+                                if (!"0".equals(result.getCode())) {
+                                    messageHandler.postMessage(2);
+                                } else {
+                                    messageHandler.postMessage(3, areainfo);
+                                }
+                                break;
+                            case 2:
+                                if (!"0".equals(result.getCode())) {
+                                    messageHandler.postMessage(4);
+                                } else {
+                                    messageHandler.postMessage(5, areainfo);
+                                }
+                                break;
+                            default:
+                                if (!"0".equals(result.getCode())) {
+                                    messageHandler.postMessage(6);
+                                } else {
+                                    messageHandler.postMessage(7, areainfo);
+                                }
                         }
                     }
-
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -527,6 +468,12 @@ public class ProfileImproveActivity extends BaseActivity {
 
     private void initDate() {
         showProgressDialog("数据加载中...");
+        areaCode = "100000";
+        getAreaInfo(1);
+        //     loadProfileData();
+    }
+
+    private void loadProfileData() {
         new AzExecutor().execute(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -580,7 +527,9 @@ public class ProfileImproveActivity extends BaseActivity {
                     break;
                 }
                 case 3: {
-                    provinceList = (List<School01Response.Body.Areainfo>) msg.obj;
+                    provinceList = (List<School03Response.Body.Areainfo>) msg.obj;
+                    Log.i(TAG, provinceList.toString());
+                    initProvinceWheel();
                     break;
                 }
                 case 4: {
@@ -588,15 +537,19 @@ public class ProfileImproveActivity extends BaseActivity {
                     break;
                 }
                 case 5: {
-                    cityList = (List<School02Response.Body.Areainfo>) msg.obj;
+                    cityList = (List<School03Response.Body.Areainfo>) msg.obj;
+                    Log.i(TAG, cityList.toString());
+                    initCityWheel();//加载区域滚轮
                     break;
                 }
                 case 6: {
-                    showToast("已开通省份获取失败:" + msg.obj);
+                    showToast("已开通地区获取失败:" + msg.obj);
                     break;
                 }
                 case 7: {
                     areaList = (List<School03Response.Body.Areainfo>) msg.obj;
+                    Log.i(TAG, areaList.toString());
+                    initAreaWheel();//加载区域滚轮
                     break;
                 }
                 default: {
@@ -619,7 +572,6 @@ public class ProfileImproveActivity extends BaseActivity {
                 gender_input.setText("女");
             gender_input.setTag(student.getGender());
             gender_input.setEnabled(false);
-            myTextWatcher.subFlag();
         }
         if (null != student.getAreaname() && !"".equals(student.getAreaname())) {
             location_input.setText(student.getAreaname());
@@ -635,7 +587,7 @@ public class ProfileImproveActivity extends BaseActivity {
         school = student.getSchoolname();
         schoolname = student.getSchoolname();
         professional = student.getProfessional();
-        email=student.getEmail();
-        qq=student.getQq();
+        email = student.getEmail();
+        qq = student.getQq();
     }
 }

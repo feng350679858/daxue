@@ -23,9 +23,13 @@ public class  ProvinceAdapter extends AbstractWheelTextAdapter {
     /**
      * Constructor
      */
-    public ProvinceAdapter(Context context,List<School01Response.Body.Areainfo> areaList) {
+    public ProvinceAdapter(Context context) {
         super(context, R.layout.area_adapter_item,NO_RESOURCE);
-        areaArrayList=areaList;
+    }
+
+    public void setData(List<School01Response.Body.Areainfo> dataList){
+        areaArrayList = dataList;
+        notifyDataChangedEvent();
     }
 
     @Override

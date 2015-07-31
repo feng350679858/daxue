@@ -47,7 +47,7 @@ public class MineResetPasswordActivity extends BaseActivity{
         findViewById(R.id.ll_mine_gold_account_forgot_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MineResetPasswordActivity.this,MineResetpaypswActivity.class);
+                Intent intent = new Intent(MineResetPasswordActivity.this,SafeCheckActivity.class);
                 startActivity(intent);
             }
         });
