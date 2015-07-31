@@ -17,6 +17,15 @@ public class Sys04Response extends BaseResponse<Sys04Response.Sys04Body> {
 
         public class Student {
             private String studentid;
+            private String initflag;
+
+            public String getInitflag() {
+                return initflag;
+            }
+
+            public void setInitflag(String initflag) {
+                this.initflag = initflag;
+            }
 
             public String getStudentid() {
                 return studentid;

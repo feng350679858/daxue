@@ -24,11 +24,11 @@ public class Partjob12Request extends BaseRequest {
     }
 
     public class Parttimejob {
-        private String sourceid;
-        private String targettype;
+        private String sourceid;//发表者学生id
+        private String targettype;//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
         private String targetid;
+        private String optype;//评论类型 1：评论 2：点赞
         private String content;
-        private String optype;
 
         public String getContent() {
             return content;

@@ -18,6 +18,7 @@ public class UserSubject {
     private static String isvisiable;
     private static String level;
     private static boolean loginFlag = false;
+    private static boolean onlineFlag = false;
 
     public static boolean isLogin() {
         return loginFlag;
@@ -107,6 +108,10 @@ public class UserSubject {
         UserSubject.level = level;
     }
 
+    public static boolean getOnlineFlag() {
+        return onlineFlag;
+    }
+
     public static void init(Preferences instance) {
         loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
         if(!loginFlag){
@@ -114,11 +119,13 @@ public class UserSubject {
             level = "0";
             schoolname = null;
             logourl = null;
+            onlineFlag = false;
         }else{
             name = instance.getString(Preferences.PARAM_NAME, "");
             level = instance.getString(Preferences.PARAM_LEVEL, "");
             schoolname = instance.getString(Preferences.PARAM_SCHOOL_NAME, "");
             logourl = instance.getString(Preferences.PARAM_LOGOURL, "");
+            onlineFlag = instance.getBoolean(Preferences.PARAM_ONLINE_FLAG, false);
         }
         studentid = instance.getString(Preferences.PARAM_STUDENTID, "");
         phone = instance.getString(Preferences.PARAM_PHONE, "");
@@ -142,6 +149,7 @@ public class UserSubject {
         isvisiable = stu.getIsvisiable();
         level = stu.getLevel();
         loginFlag = true;
+        onlineFlag = "1".equals(stu.getOnlineflag());
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -155,6 +163,7 @@ public class UserSubject {
         pref.update(Preferences.PARAM_ISVISIABLE, isvisiable);
         pref.update(Preferences.PARAM_LEVEL, level);
         pref.update(Preferences.PARAM_LOGIN_FLAG, loginFlag);
+        pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
     }
 
     public static void loginFail() {
@@ -163,7 +172,18 @@ public class UserSubject {
         schoolname = null;
         logourl = null;
         loginFlag = false;
+        onlineFlag = false;
 
         Preferences.getInstance().update(Preferences.PARAM_LOGIN_FLAG, loginFlag);
+    }
+
+    /**
+     * 修改上下线状态
+     * @param onlineFlag
+     */
+    public static void setOnlineFlag(boolean onlineFlag) {
+        UserSubject.onlineFlag = onlineFlag;
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+根标签为animation-list，其中oneshot代表着是否只展示一遍，设置为false会不停的循环播放动画
+根标签下，通过item标签对动画中的每一个图片进行声明
+android:duration 表示展示所用的该图片的时间长度
+ -->
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item android:drawable="@drawable/egg037" android:duration="25"></item>
+    <item android:drawable="@drawable/egg038" android:duration="25"></item>
+    <item android:drawable="@drawable/egg039" android:duration="25"></item>
+    <item android:drawable="@drawable/egg040" android:duration="25"></item>
+    <item android:drawable="@drawable/egg041" android:duration="25"></item>
+    <item android:drawable="@drawable/egg042" android:duration="25"></item>
+    <item android:drawable="@drawable/egg043" android:duration="25"></item>
+    <item android:drawable="@drawable/egg044" android:duration="25"></item>
+    <item android:drawable="@drawable/egg045" android:duration="25"></item>
+    <item android:drawable="@drawable/egg046" android:duration="25"></item>
+    <item android:drawable="@drawable/egg047" android:duration="25"></item>
+    <item android:drawable="@drawable/egg048" android:duration="25"></item>
+    <item android:drawable="@drawable/egg049" android:duration="25"></item>
+    <item android:drawable="@drawable/egg050" android:duration="25"></item>
+    <item android:drawable="@drawable/egg051" android:duration="25"></item>
+    <item android:drawable="@drawable/egg052" android:duration="25"></item>
+    <item android:drawable="@drawable/egg053" android:duration="25"></item>
+    <item android:drawable="@drawable/egg054" android:duration="25"></item>
+    <item android:drawable="@drawable/egg055" android:duration="25"></item>
+    <item android:drawable="@drawable/egg056" android:duration="25"></item>
+    <item android:drawable="@drawable/egg057" android:duration="25"></item>
+    <item android:drawable="@drawable/egg058" android:duration="25"></item>
+    <item android:drawable="@drawable/egg059" android:duration="25"></item>
+    <item android:drawable="@drawable/egg060" android:duration="25"></item>
+    <item android:drawable="@drawable/egg061" android:duration="25"></item>
+    <item android:drawable="@drawable/egg062" android:duration="25"></item>
+    <item android:drawable="@drawable/egg063" android:duration="25"></item>
+    <item android:drawable="@drawable/egg064" android:duration="25"></item>
+
+</animation-list>

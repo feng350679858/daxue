@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,9 +42,8 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_jishi_help;
+    private CheckBox cb_jishi_help;
     private EditText et_reploy_comment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,8 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
 
-        tv_jishi_help = (TextView) findViewById(R.id.tv_jishi_help);
-        tv_jishi_help.setVisibility(View.VISIBLE);//帮TA
+        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
+        cb_jishi_help.setVisibility(View.VISIBLE);//帮TA
         findViewById(R.id.layout_jishi_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

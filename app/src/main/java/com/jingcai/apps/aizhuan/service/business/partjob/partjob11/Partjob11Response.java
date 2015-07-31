@@ -38,6 +38,42 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Body> {
         private String praisecount;
         private String commentcount;
         private String status;
+        private String helpflag;
+        private String helperid;
+        private String praiseflag;
+        private String praiseid;
+
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
+
+        public String getHelperid() {
+            return helperid;
+        }
+
+        public void setHelperid(String helperid) {
+            this.helperid = helperid;
+        }
+
+        public String getHelpflag() {
+            return helpflag;
+        }
+
+        public void setHelpflag(String helpflag) {
+            this.helpflag = helpflag;
+        }
+
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
 
         public String getSourcelevel() {
             return sourcelevel;

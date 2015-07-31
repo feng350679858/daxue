@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_wenda_help, tv_wenda_help_my, tv_wenda_comment, tv_wenda_like;
+    private CheckBox cb_wenda_help, cb_wenda_help_my, cb_wenda_comment, cb_wenda_like;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +112,15 @@ public class HelpWendaDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_wenda_like = (TextView) findViewById(R.id.tv_wenda_like);
-        tv_wenda_comment = (TextView) findViewById(R.id.tv_wenda_comment);
-        tv_wenda_help = (TextView) findViewById(R.id.tv_wenda_help);
-        tv_wenda_help_my = (TextView) findViewById(R.id.tv_wenda_help_my);
+        cb_wenda_like = (CheckBox) findViewById(R.id.cb_wenda_like);
+        cb_wenda_comment = (CheckBox) findViewById(R.id.cb_wenda_comment);
+        cb_wenda_help = (CheckBox) findViewById(R.id.cb_wenda_help);
+        cb_wenda_help_my = (CheckBox) findViewById(R.id.cb_wenda_help_my);
 
         boolean myHelpFlag = 0 == System.currentTimeMillis() % 2;
         if (myHelpFlag) {
-            tv_wenda_help.setVisibility(View.GONE);
-            tv_wenda_help_my.setVisibility(View.VISIBLE);//我的答案
+            cb_wenda_help.setVisibility(View.GONE);
+            cb_wenda_help_my.setVisibility(View.VISIBLE);//我的答案
             findViewById(R.id.layout_wenda_help).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -127,8 +128,8 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 }
             });
         } else {
-            tv_wenda_help_my.setVisibility(View.GONE);
-            tv_wenda_help.setVisibility(View.VISIBLE);//撰写
+            cb_wenda_help.setVisibility(View.VISIBLE);//撰写
+            cb_wenda_help_my.setVisibility(View.GONE);
             findViewById(R.id.layout_wenda_help).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,7 +137,6 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 }
             });
         }
-
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));

@@ -7,16 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
+import com.jingcai.apps.aizhuan.util.AzException;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.DictUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +41,17 @@ public class CampusAdapter extends BaseAdapter {
     private List<Partjob11Response.Parttimejob> regionList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
+    private Callback callback;
 
     public CampusAdapter(Activity ctx) {
         baseActivity = ctx;
         regionList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
         bitmapUtil = new BitmapUtil(ctx);
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -76,93 +90,116 @@ public class CampusAdapter extends BaseAdapter {
 
             viewHolder.layout_help_jishi = convertView.findViewById(R.id.layout_help_jishi);
             viewHolder.layout_jishi_like = convertView.findViewById(R.id.layout_jishi_like);
-            viewHolder.tv_jishi_like = (TextView) convertView.findViewById(R.id.tv_jishi_like);
+            viewHolder.cb_jishi_like = (CheckBox) convertView.findViewById(R.id.cb_jishi_like);
             viewHolder.layout_jishi_comment = convertView.findViewById(R.id.layout_jishi_comment);
-            viewHolder.tv_jishi_comment = (TextView) convertView.findViewById(R.id.tv_jishi_comment);
+            viewHolder.cb_jishi_comment = (CheckBox) convertView.findViewById(R.id.cb_jishi_comment);
             viewHolder.layout_jishi_help = convertView.findViewById(R.id.layout_jishi_help);
-            viewHolder.tv_jishi_help = (TextView) convertView.findViewById(R.id.tv_jishi_help);
+            viewHolder.cb_jishi_help = (CheckBox) convertView.findViewById(R.id.cb_jishi_help);
 
             viewHolder.layout_help_wenda = convertView.findViewById(R.id.layout_help_wenda);
             viewHolder.layout_wenda_like = convertView.findViewById(R.id.layout_wenda_like);
-            viewHolder.tv_wenda_like = (TextView) convertView.findViewById(R.id.tv_wenda_like);
+            viewHolder.cb_wenda_like = (CheckBox) convertView.findViewById(R.id.cb_wenda_like);
             viewHolder.layout_wenda_comment = convertView.findViewById(R.id.layout_wenda_comment);
-            viewHolder.tv_wenda_comment = (TextView) convertView.findViewById(R.id.tv_wenda_comment);
+            viewHolder.cb_wenda_comment = (CheckBox) convertView.findViewById(R.id.cb_wenda_comment);
             viewHolder.layout_wenda_help = convertView.findViewById(R.id.layout_wenda_help);
-            viewHolder.tv_wenda_help = (TextView) convertView.findViewById(R.id.tv_wenda_help);//撰写
-            viewHolder.tv_wenda_help_my = (TextView) convertView.findViewById(R.id.tv_wenda_help_my);//我的答案
+            viewHolder.cb_wenda_help = (CheckBox) convertView.findViewById(R.id.cb_wenda_help);//撰写
+            viewHolder.cb_wenda_help_my = (CheckBox) convertView.findViewById(R.id.cb_wenda_help_my);//我的答案
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Partjob11Response.Parttimejob region = regionList.get(position);
-        viewHolder.region = region;//将对象存入viewHolder
+        final Partjob11Response.Parttimejob job = regionList.get(position);
+        viewHolder.region = job;//将对象存入viewHolder
 
-        final boolean jishiFlag = "1".equals(region.getType()) || "3".equals(region.getType());
+        final boolean jishiFlag = "1".equals(job.getType()) || "3".equals(job.getType());
         if (jishiFlag) {
             viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
             viewHolder.layout_help_wenda.setVisibility(View.GONE);
             viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
-            viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, region.getGenderlimit()));
+            viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGenderlimit()));
 
-            viewHolder.tv_title.setText("1".equals(region.getType()) ? "跑腿" : "公告");
+            viewHolder.tv_title.setText("1".equals(job.getType()) ? "跑腿" : "公告");
 
-            viewHolder.tv_jishi_like.setText(region.getPraisecount());
-            viewHolder.tv_jishi_comment.setText(region.getCommentcount());
-
-            if("1".equals(region.getStatus())){
-                viewHolder.tv_jishi_help.setText("帮TA");
-            }else{
-                viewHolder.tv_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, region.getStatus()));
-            }
+            //点赞
+            viewHolder.cb_jishi_like.setText(job.getPraisecount());
+            viewHolder.cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));
+            final CheckBox cb_jishi_like = viewHolder.cb_jishi_like;
 
             viewHolder.layout_jishi_like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    callback.jishi_like(cb_jishi_like, job);
                 }
             });
-            viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+            //评论
+            viewHolder.cb_jishi_comment.setText(job.getCommentcount());
+            if("1".equals(job.getStatus())){//即时帮助-求助中
+                viewHolder.cb_jishi_help.setText("帮TA");
+                viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO 检查是否可以帮助，可以帮助显示确认对话框
+                    }
+                });
+            }else{//显示状态
+                viewHolder.cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+            }
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
             viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
             viewHolder.tv_gender_limit.setVisibility(View.GONE);
-            //TODO
-            viewHolder.tv_wenda_help.setVisibility(View.VISIBLE);
-            viewHolder.tv_wenda_help_my.setVisibility(View.GONE);
 
-            viewHolder.tv_title.setText(region.getTitle());
+            viewHolder.tv_title.setText(job.getTitle());
 
-            viewHolder.tv_wenda_like.setText(region.getPraisecount());
-            viewHolder.tv_wenda_comment.setText(region.getCommentcount());
-
+            //点赞
+            viewHolder.cb_wenda_like.setText(job.getPraisecount());
+            //本人是否已经点赞
+            viewHolder.cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));
+            final CheckBox cb_wenda_like = viewHolder.cb_wenda_like;
             viewHolder.layout_wenda_like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("==", "------------");
+                    boolean checked = cb_wenda_like.isChecked();
+                    cb_wenda_like.setChecked(!checked);
+                    Log.d("==", "-----------checked--" + !checked);
                 }
             });
+            //评论
+            viewHolder.cb_wenda_comment.setText(job.getCommentcount());
+
+            //本人问答帮助
+            final boolean selfFlag = "1".equals(job.getHelpflag());
+            if(selfFlag){
+                viewHolder.cb_wenda_help.setVisibility(View.GONE);
+                viewHolder.cb_wenda_help_my.setVisibility(View.VISIBLE);
+            } else{
+                viewHolder.cb_wenda_help.setVisibility(View.VISIBLE);
+                viewHolder.cb_wenda_help_my.setVisibility(View.GONE);
+            }
             viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if(selfFlag){
+                        //TODO 我的帮助
+                    }else{
+                        //TODO 撰写
+                    }
                 }
             });
         }
 
-        bitmapUtil.getImage(viewHolder.civ_head_logo, region.getSourceimgurl(), true, R.drawable.default_image);
-        viewHolder.ltv_level.setLevel(Integer.parseInt(region.getSourcelevel()));
-        viewHolder.tv_stu_name.setText(region.getSourcename());
-        viewHolder.tv_stu_college.setText(region.getSourcecollege());
-        viewHolder.tv_deploy_time.setText(DateUtil.getHumanlityDateString(region.getOptime()));
-        viewHolder.tv_money.setText(region.getMoney());
-
-        viewHolder.tv_content.setText(region.getContent());
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_image);
+        if(StringUtil.isNotEmpty(job.getSourcelevel())) {
+            viewHolder.ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
+        }else{
+            viewHolder.ltv_level.setLevel(1);
+        }
+        viewHolder.tv_stu_name.setText(job.getSourcename());
+        viewHolder.tv_stu_college.setText(job.getSourcecollege());
+        viewHolder.tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        viewHolder.tv_money.setText(job.getMoney());
+        viewHolder.tv_content.setText(job.getContent());
 
         viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,8 +242,16 @@ public class CampusAdapter extends BaseAdapter {
         public TextView tv_content, tv_gender_limit;
         //操作栏
         private View layout_help_jishi, layout_jishi_like, layout_jishi_comment, layout_jishi_help;
-        public TextView tv_jishi_like, tv_jishi_comment, tv_jishi_help;
+        private CheckBox cb_jishi_like, cb_jishi_comment, cb_jishi_help;
         private View layout_help_wenda, layout_wenda_like, layout_wenda_comment, layout_wenda_help;
-        public TextView tv_wenda_like, tv_wenda_comment, tv_wenda_help, tv_wenda_help_my;
+        private CheckBox cb_wenda_like, cb_wenda_comment, cb_wenda_help, cb_wenda_help_my;
+    }
+
+    public interface Callback{
+        void jishi_like(CheckBox cb_jishi_like, Partjob11Response.Parttimejob job);
+        void wenda_like();
+        void jishi_help();
+        void wenda_help();
+        void wenda_help_my();
     }
 }
