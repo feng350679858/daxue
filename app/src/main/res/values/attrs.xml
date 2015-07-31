@@ -16,4 +16,9 @@
         <attr name="allowSingleTap" format="boolean" />
         <attr name="animateOnClick" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="LevelTextView">
+        <attr name="level" format="integer" />
+    </declare-styleable>
 </resources>

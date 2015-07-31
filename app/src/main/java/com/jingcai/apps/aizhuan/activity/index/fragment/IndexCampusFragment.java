@@ -20,8 +20,9 @@ import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -30,6 +31,7 @@ import com.markmao.pulltorefresh.widget.XListView;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class IndexCampusFragment extends BaseFragment {
     private View mBaseView;
@@ -75,10 +77,10 @@ public class IndexCampusFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //TODO 上下线
-                if(!"1".equals(ivFunc.getTag())) {
+                if (!"1".equals(ivFunc.getTag())) {
                     ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
                     ivFunc.setTag("1");
-                }else{
+                } else {
                     ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
                     ivFunc.setTag("0");
                 }
@@ -137,40 +139,56 @@ public class IndexCampusFragment extends BaseFragment {
                 @Override
                 public void run() {
                     if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
+                        Random random = new Random();
+                        List<Partjob11Response.Parttimejob> jobList = new ArrayList<Partjob11Response.Parttimejob>();
                         for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            region.setRegionname("浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
+                            Partjob11Response.Parttimejob job = new Partjob11Response.Parttimejob();
+                            job.setHelpid(String.valueOf(i));
+                            job.setType(String.valueOf(random.nextInt(3) + 1));
+                            job.setTitle("title------" + i);
+                            job.setCommentcount(String.valueOf(i));
+                            job.setCommentcount("22");
+                            job.setGenderlimit(String.valueOf(random.nextInt(3)));
+                            job.setMoney(String.valueOf(random.nextDouble()));
+                            job.setContent("内容xxx的范德萨发到付浙江打发士大夫大学" + (i + mCurrentStart));
+                            job.setSourceid(String.valueOf(random.nextInt(10000)));
+                            job.setSourcename("花几支" + i);
+                            job.setSourceschool("浙江理工大学");
+                            job.setSourcecollege("计算机学院");
+                            job.setOptime("2011-08-10 10:01:23");
+                            job.setPraisecount("112");
+                            job.setCommentcount("10");
+                            job.setStatus("1");
+                            jobList.add(job);
                         }
-                        messageHandler.postMessage(0, regionList);
+                        messageHandler.postMessage(0, jobList);
                     } else {
                         final AzService azService = new AzService(baseActivity);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
+                        final Partjob11Request req = new Partjob11Request();
+                        final Partjob11Request.Parttimejob job = req.new Parttimejob();
+                        job.setStudentid(UserSubject.getStudentid());
+                        job.setGisx(GlobalConstant.gis.getGisx());
+                        job.setGisy(GlobalConstant.gis.getGisy());
+                        job.setStart(String.valueOf(mCurrentStart));
+                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                        req.setParttimejob(job);
+
+                        azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
                             @Override
-                            public void success(Base04Response response) {
+                            public void success(Partjob11Response response) {
                                 ResponseResult result = response.getResult();
                                 if (!"0".equals(result.getCode())) {
                                     messageHandler.postMessage(1, result.getMessage());
                                 } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //    messageHandler.postMessage(2);
-                                    //} else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //}
+                                    Partjob11Response.Body body = response.getBody();
+                                    List<Partjob11Response.Parttimejob> regionList = body.getParttimejob_list();
+                                    if (regionList.size() < 1 && 0 == mCurrentStart) {
+                                        messageHandler.postMessage(2);
+                                    } else {
+                                        messageHandler.postMessage(0, regionList);
+                                    }
                                 }
                             }
-
                             @Override
                             public void fail(AzException e) {
                                 messageHandler.postException(e);
@@ -201,7 +219,7 @@ public class IndexCampusFragment extends BaseFragment {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+                        List<Partjob11Response.Parttimejob> list = (List<Partjob11Response.Parttimejob>) msg.obj;
                         campusAdapter.addData(list);
                         campusAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();

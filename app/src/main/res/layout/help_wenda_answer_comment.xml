@@ -18,7 +18,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_like"
+            android:id="@+id/tv_wenda_answer_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_like"
@@ -39,7 +39,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_wenda_answer_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_jishi_comment"
@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/layout_reward"
+        android:id="@+id/layout_wenda_answer_reward"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -59,7 +59,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_reward"
+            android:id="@+id/tv_wenda_answer_reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -71,7 +71,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tv_reedit"
+            android:id="@+id/tv_wenda_answer_reedit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

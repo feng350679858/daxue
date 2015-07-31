@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob11Response extends BaseResponse<Partjob11Response.BOdy> {
+public class Partjob11Response extends BaseResponse<Partjob11Response.Body> {
 
-    public class BOdy {
+    public class Body {
         private List<Parttimejob> parttimejob_list;
 
         public List<Parttimejob> getParttimejob_list() {
@@ -20,124 +20,142 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.BOdy> {
             this.parttimejob_list = parttimejob_list;
         }
 
-        public class Parttimejob {
-            private String helpid;
-            private String type;
-            private String money;
-            private String content;
-            private String genderlimit;
-            private String sourceid;
-            private String sourcename;
-            private String sourceschool;
-            private String sourcecollege;
-            private String optime;
-            private String praisecount;
-            private String commentcount;
-            private String status;
+    }
+    public static class Parttimejob {
+        private String helpid;
+        private String type;
+        private String money;
+        private String title;
+        private String content;
+        private String genderlimit;
+        private String sourceid;
+        private String sourcename;
+        private String sourceimgurl;
+        private String sourceschool;
+        private String sourcecollege;
+        private String optime;
+        private String praisecount;
+        private String commentcount;
+        private String status;
 
-            public String getHelpid() {
-                return helpid;
-            }
+        public String getSourceimgurl() {
+            return sourceimgurl;
+        }
 
-            public void setHelpid(String helpid) {
-                this.helpid = helpid;
-            }
+        public void setSourceimgurl(String sourceimgurl) {
+            this.sourceimgurl = sourceimgurl;
+        }
 
-            public String getType() {
-                return type;
-            }
+        public String getHelpid() {
+            return helpid;
+        }
 
-            public void setType(String type) {
-                this.type = type;
-            }
+        public void setHelpid(String helpid) {
+            this.helpid = helpid;
+        }
 
-            public String getContent() {
-                return content;
-            }
+        public String getType() {
+            return type;
+        }
 
-            public void setContent(String content) {
-                this.content = content;
-            }
+        public void setType(String type) {
+            this.type = type;
+        }
 
-            public String getSourceid() {
-                return sourceid;
-            }
+        public String getTitle() {
+            return title;
+        }
 
-            public void setSourceid(String sourceid) {
-                this.sourceid = sourceid;
-            }
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-            public String getSourcename() {
-                return sourcename;
-            }
+        public String getContent() {
+            return content;
+        }
 
-            public void setSourcename(String sourcename) {
-                this.sourcename = sourcename;
-            }
+        public void setContent(String content) {
+            this.content = content;
+        }
 
-            public String getSourceschool() {
-                return sourceschool;
-            }
+        public String getSourceid() {
+            return sourceid;
+        }
 
-            public void setSourceschool(String sourceschool) {
-                this.sourceschool = sourceschool;
-            }
+        public void setSourceid(String sourceid) {
+            this.sourceid = sourceid;
+        }
 
-            public String getSourcecollege() {
-                return sourcecollege;
-            }
+        public String getSourcename() {
+            return sourcename;
+        }
 
-            public void setSourcecollege(String sourcecollege) {
-                this.sourcecollege = sourcecollege;
-            }
+        public void setSourcename(String sourcename) {
+            this.sourcename = sourcename;
+        }
 
-            public String getOptime() {
-                return optime;
-            }
+        public String getSourceschool() {
+            return sourceschool;
+        }
 
-            public void setOptime(String optime) {
-                this.optime = optime;
-            }
+        public void setSourceschool(String sourceschool) {
+            this.sourceschool = sourceschool;
+        }
 
-            public String getCommentcount() {
-                return commentcount;
-            }
+        public String getSourcecollege() {
+            return sourcecollege;
+        }
 
-            public void setCommentcount(String commentcount) {
-                this.commentcount = commentcount;
-            }
+        public void setSourcecollege(String sourcecollege) {
+            this.sourcecollege = sourcecollege;
+        }
 
-            public String getGenderlimit() {
-                return genderlimit;
-            }
+        public String getOptime() {
+            return optime;
+        }
 
-            public void setGenderlimit(String genderlimit) {
-                this.genderlimit = genderlimit;
-            }
+        public void setOptime(String optime) {
+            this.optime = optime;
+        }
 
-            public String getMoney() {
-                return money;
-            }
+        public String getCommentcount() {
+            return commentcount;
+        }
 
-            public void setMoney(String money) {
-                this.money = money;
-            }
+        public void setCommentcount(String commentcount) {
+            this.commentcount = commentcount;
+        }
 
-            public String getPraisecount() {
-                return praisecount;
-            }
+        public String getGenderlimit() {
+            return genderlimit;
+        }
 
-            public void setPraisecount(String praisecount) {
-                this.praisecount = praisecount;
-            }
+        public void setGenderlimit(String genderlimit) {
+            this.genderlimit = genderlimit;
+        }
 
-            public String getStatus() {
-                return status;
-            }
+        public String getMoney() {
+            return money;
+        }
 
-            public void setStatus(String status) {
-                this.status = status;
-            }
+        public void setMoney(String money) {
+            this.money = money;
+        }
+
+        public String getPraisecount() {
+            return praisecount;
+        }
+
+        public void setPraisecount(String praisecount) {
+            this.praisecount = praisecount;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
     }
 }

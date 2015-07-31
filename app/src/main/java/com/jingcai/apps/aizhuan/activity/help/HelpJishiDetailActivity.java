@@ -45,7 +45,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_help;
+    private TextView tv_jishi_help;
     private EditText et_reploy_comment;
 
 
@@ -135,9 +135,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
 
-        tv_help = (TextView) findViewById(R.id.tv_help);
-        tv_help.setVisibility(View.VISIBLE);//帮TA
-        findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+        tv_jishi_help = (TextView) findViewById(R.id.tv_jishi_help);
+        tv_jishi_help.setVisibility(View.VISIBLE);//帮TA
+        findViewById(R.id.layout_jishi_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showToast("显示帮助确认弹窗");

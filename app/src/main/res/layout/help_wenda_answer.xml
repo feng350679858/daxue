@@ -36,7 +36,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="bottom|right"
-                    android:background="@drawable/help_grade"
+                    android:background="@drawable/level_bg_1_5"
                     android:gravity="center"
                     android:text="V1"
                     android:textColor="#FFF"
@@ -118,7 +118,7 @@
 
         <include
             android:id="@+id/layout_help_wenda"
-            layout="@layout/index_campus_list_item_wenda_comment"
+            layout="@layout/help_wenda_answer_comment"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
     </LinearLayout>

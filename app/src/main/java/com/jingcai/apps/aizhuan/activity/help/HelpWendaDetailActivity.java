@@ -41,7 +41,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_help, tv_my_help, tv_comment, tv_like;
+    private TextView tv_wenda_help, tv_wenda_help_my, tv_wenda_comment, tv_wenda_like;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,25 +111,25 @@ public class HelpWendaDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_like = (TextView) findViewById(R.id.tv_like);
-        tv_comment = (TextView) findViewById(R.id.tv_comment);
-        tv_help = (TextView) findViewById(R.id.tv_help);
-        tv_my_help = (TextView) findViewById(R.id.tv_my_help);
+        tv_wenda_like = (TextView) findViewById(R.id.tv_wenda_like);
+        tv_wenda_comment = (TextView) findViewById(R.id.tv_wenda_comment);
+        tv_wenda_help = (TextView) findViewById(R.id.tv_wenda_help);
+        tv_wenda_help_my = (TextView) findViewById(R.id.tv_wenda_help_my);
 
         boolean myHelpFlag = 0 == System.currentTimeMillis() % 2;
         if (myHelpFlag) {
-            tv_help.setVisibility(View.GONE);
-            tv_my_help.setVisibility(View.VISIBLE);//我的答案
-            findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+            tv_wenda_help.setVisibility(View.GONE);
+            tv_wenda_help_my.setVisibility(View.VISIBLE);//我的答案
+            findViewById(R.id.layout_wenda_help).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class));
                 }
             });
         } else {
-            tv_my_help.setVisibility(View.GONE);
-            tv_help.setVisibility(View.VISIBLE);//撰写
-            findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+            tv_wenda_help_my.setVisibility(View.GONE);
+            tv_wenda_help.setVisibility(View.VISIBLE);//撰写
+            findViewById(R.id.layout_wenda_help).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HelpWendaDetailActivity.this, HelpWendaEditActivity.class));

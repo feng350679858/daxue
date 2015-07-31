@@ -10,6 +10,7 @@
     android:showDividers="middle">
 
     <LinearLayout
+        android:id="@+id/layout_jishi_like"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,7 +19,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_like"
+            android:id="@+id/tv_jishi_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_like"
@@ -30,6 +31,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_jishi_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -38,7 +40,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_jishi_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_jishi_comment"
@@ -50,7 +52,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/layout_help"
+        android:id="@+id/layout_jishi_help"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -58,7 +60,7 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_help"
+            android:id="@+id/tv_jishi_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -68,31 +70,5 @@
             android:text="帮TA"
             android:textColor="@color/normal_grey"
             android:textSize="14sp" />
-<!--
-        <TextView
-            android:id="@+id/tv_reward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/help_item_reward"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="打赏"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_reedit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/help_item_wenda_help"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="编辑"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp"
-            android:visibility="gone" />-->
     </FrameLayout>
 </LinearLayout>

@@ -29,6 +29,7 @@ public interface BizConstant {
     String BTZ_STU_11 = "stu11";//个人信用分查询
     String BTZ_STU_12 = "stu12";//我的评语列表查询
     String BTZ_STU_13 = "stu13";//评价
+    String BTZ_STU_15 = "stu15";//添加老友
 
     /**
      * partjob
@@ -62,6 +63,7 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_29 = "partjob29";//评论列表查询
     String BIZ_PARTTIME_JOB_31 = "partjob31";//打赏
     String BIZ_PARTTIME_JOB_33 = "partjob33";//完成帮助
+    String BIZ_PARTTIME_JOB_34 = "partjob34";//匿名和非匿名切换
 
     /**
      * school

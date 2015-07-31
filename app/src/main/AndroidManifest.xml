@@ -157,7 +157,6 @@
         <activity android:name=".activity.mine.MineResetpaypswActivity"/>
         <activity android:name=".activity.mine.MyPartjobListActivity"/>
         <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
-        <activity android:name=".activity.mine.MineHelpActivity"/>
         <activity android:name=".activity.mine.MineCreditActivity"/>
         <activity android:name=".activity.mine.MinePersonalDataActivity"/>
         <activity android:name=".activity.mine.MineGoldExpenseActivity"/>

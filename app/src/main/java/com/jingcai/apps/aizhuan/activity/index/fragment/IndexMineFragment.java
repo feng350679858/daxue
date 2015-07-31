@@ -2,7 +2,6 @@ package com.jingcai.apps.aizhuan.activity.index.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,11 @@ import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
-import com.jingcai.apps.aizhuan.activity.mine.MineHelpActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
-import com.jingcai.apps.aizhuan.activity.mine.MineResetpaypswActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
 import com.jingcai.apps.aizhuan.activity.mine.SettingsActivity;
+import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
 import com.jingcai.apps.aizhuan.service.AzService;
 
 /**
@@ -94,10 +92,19 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        mainView.findViewById(R.id.ll_mine_help_req).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
+                intent.putExtra("provideFlag", true);
+                startActivity(intent);
+            }
+        });
         mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineHelpActivity.class);
+                Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
+                intent.putExtra("provideFlag", false);
                 startActivity(intent);
             }
         });

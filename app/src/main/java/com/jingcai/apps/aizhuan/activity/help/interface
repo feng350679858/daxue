@@ -1,7 +1,7 @@
 index_campus 			partjob11			上下线stu08
 jishi_deploy			partjob16			圈子base04
 											老友列表stu10
-									添加老友？？？
+											添加老友stu15
 wenda_deploy			partjob17			圈子base04
 											话题partjob28
 
@@ -10,10 +10,11 @@ wenda_deploy			partjob17			圈子base04
 
 jishi_detail 			partjob19			立即帮助partjob13
 
-wenda_detail		问题详情？？？				答案列表partjob15
+wenda_detail			partjob34			答案列表partjob15
 									答案详情？？？
 											打赏partjob31
 											撰写答案partjob14
+											匿名或取消匿名接口partjob35
 
 评价						stu13
 
