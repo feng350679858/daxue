@@ -106,6 +106,19 @@ public class CampusAdapter extends BaseAdapter {
 
             viewHolder.tv_jishi_like.setText(region.getPraisecount());
             viewHolder.tv_jishi_comment.setText(region.getCommentcount());
+
+            viewHolder.layout_jishi_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
             viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
@@ -116,6 +129,19 @@ public class CampusAdapter extends BaseAdapter {
 
             viewHolder.tv_wenda_like.setText(region.getPraisecount());
             viewHolder.tv_wenda_comment.setText(region.getCommentcount());
+
+            viewHolder.layout_wenda_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
         viewHolder.tv_title.setText(region.getTitle());
