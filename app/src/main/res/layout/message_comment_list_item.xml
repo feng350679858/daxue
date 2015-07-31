@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="horizontal"
     android:padding="@dimen/list_item_padding">
@@ -10,7 +11,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="@dimen/avatar_diameter"
         android:layout_height="@dimen/avatar_diameter"
-        android:src="@drawable/icon_index_message_list_item_comment" />
+        android:src="@drawable/default_image" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,19 +24,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_name"
+            <LinearLayout
+                android:id="@+id/ll_name_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="夏一"
-                android:drawablePadding="3dp"
-                style="@style/title" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="夏一"
+                    style="@style/title" />
+                <com.jingcai.apps.aizhuan.activity.util.LevelTextView
+                    android:id="@+id/tv_level"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="@dimen/level_circle_diameter"
+                    android:layout_height="@dimen/level_circle_diameter"
+                    app:level="11"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_name"
+                android:layout_below="@id/ll_name_level"
                 android:layout_marginTop="5dp"
                 android:text="一个月前"
                 style="@style/time"/>
@@ -67,8 +80,10 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:text="回复琳珊：我不管，我最美！我不管，我最美我不管，我最美！我不管，我最美！"
-                style="@style/content" />
+                style="@style/content"
+                android:background="@drawable/list_item_bg"/>
 
             <!-- 替代布局 有回复的布局 -->
             <ViewStub

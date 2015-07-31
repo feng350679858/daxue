@@ -24,6 +24,7 @@ import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import java.util.List;
  * Created by Json Ding on 2015/7/14.
  */
 public class MessageCommendActivity extends BaseActivity {
+
 
     private static final String TAG = "MessageCommendActivity";
     private XListView mLvComments;
@@ -60,42 +62,76 @@ public class MessageCommendActivity extends BaseActivity {
     }
 
     private void loadCommend() {
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                final Partjob29Request req = new Partjob29Request();
-                Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
+        if(GlobalConstant.debugFlag){
+            //测试数据
+            List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = new ArrayList<>();
+            Partjob29Response.Partjob29Body.Parttimejob parttimejob = null;
 
-                parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                parttimejob.setStart(String.valueOf(mCurrentStart));
-                parttimejob.setReceiverid(UserSubject.getStudentid());
+            for(int i = 0 ; i < 10; i++){
+                parttimejob = new Partjob29Response.Partjob29Body.Parttimejob();
+                parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
+                parttimejob.setOptime("20150731111111");
+                parttimejob.setSourceid("sourceid:" + i);
+                parttimejob.setSourcename("丁" + i);
+                parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
+                parttimejob.setSourcelevel(String.valueOf(i));
+                if(i%3==0) {
+                    Partjob29Response.Partjob29Body.Parttimejob.Refcomment refcomment = new Partjob29Response.Partjob29Body.Parttimejob.Refcomment();
+                    refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
+                    refcomment.setRefid("studentid:" + i);
+                    parttimejob.setRefcomment(refcomment);
+                }
+                Partjob29Response.Partjob29Body.Parttimejob.Reftarget reftarget = new Partjob29Response.Partjob29Body.Parttimejob.Reftarget();
+                reftarget.setImgurl("http://img0.imgtn.bdimg.com/it/u=3201629386,3592649916&fm=11&gp=0.jpg");
+                reftarget.setPubliccontent("我是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容内容");
+                reftarget.setStudentname("林" + i);
+                reftarget.setTargetid("targetid:" + i);
+                reftarget.setTargettype("targettpye:" + i);
+                parttimejob.setReftarget(reftarget);
 
-                req.setParttimejob(parttimejob);
-                azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {
-                    @Override
-                    public void success(Partjob29Response resp) {
-                        ResponseResult result = resp.getResult();
-                        if ("0".equals(result.getCode())) {
-                            Partjob29Response.Partjob29Body body = resp.getBody();
-                            List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = body.getParttimejob_list();
-                            if(0 == mCurrentStart && parttimejob_list.size()<1){
-                                messageHandler.postMessage(2);
-                            }else {
-                                messageHandler.postMessage(0, parttimejob_list);
-                            }
-                        } else {
-                            messageHandler.postMessage(1, result.getMessage());
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-
-                    }
-                });
-
+                parttimejob_list.add(parttimejob);
+                if(mCurrentStart >= 30 && i==5){
+                    break;
+                }
             }
-        });
+            messageHandler.postMessage(0, parttimejob_list);
+        }else{
+            new AzExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    final Partjob29Request req = new Partjob29Request();
+                    Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
+
+                    parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    parttimejob.setStart(String.valueOf(mCurrentStart));
+                    parttimejob.setReceiverid(UserSubject.getStudentid());
+
+                    req.setParttimejob(parttimejob);
+                    azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {
+                        @Override
+                        public void success(Partjob29Response resp) {
+                            ResponseResult result = resp.getResult();
+                            if ("0".equals(result.getCode())) {
+                                Partjob29Response.Partjob29Body body = resp.getBody();
+                                List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = body.getParttimejob_list();
+                                if(0 == mCurrentStart && parttimejob_list.size()<1){
+                                    messageHandler.postMessage(2);
+                                }else {
+                                    messageHandler.postMessage(0, parttimejob_list);
+                                }
+                            } else {
+                                messageHandler.postMessage(1, result.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void fail(AzException e) {
+
+                        }
+                    });
+                }
+            });
+        }
     }
 
     private void initHeader() {
