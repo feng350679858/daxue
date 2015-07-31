@@ -86,7 +86,7 @@ public class SafeCheckActivity extends BaseActivity {
         });
     }
     private void resetPayPsw(){
-        Intent intent=new Intent(this,ResetPayPsdActivity.class);
+        Intent intent=new Intent(this,MineResetpaypswActivity.class);
         startActivity(intent);
         finish();
     }
