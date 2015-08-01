@@ -144,7 +144,8 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             bean.setName(c.getName());
             bean.setLogourl(c.getLogourl());
             //如果超时
-            if ((System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
+            if (StringUtil.isNotEmpty(c.getLogourl())
+                    && (System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
                 return;
             }
         }
@@ -207,7 +208,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String to = "fc0fdc3a872146bd8ab5e4d3c3b95c34";
+                    String to = "7a82a05512bf411c9dd2f318f8798a3e";
                     EMConversation conversation = EMChatManager.getInstance().getConversation(to);
                     EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
                     message.setReceipt(to);

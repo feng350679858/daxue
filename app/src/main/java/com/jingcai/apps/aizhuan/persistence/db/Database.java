@@ -38,7 +38,7 @@ public class Database {
             + RECEIVER_ID + " TEXT NOT NULL ,"
 			+ NAME + " TEXT NOT NULL , "
 			+ LAST_UPDATE + " LONG NOT NULL , "
-			+ LOGO_URL + " TEXT NOT NULL)";
+			+ LOGO_URL + " TEXT)";
 
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
