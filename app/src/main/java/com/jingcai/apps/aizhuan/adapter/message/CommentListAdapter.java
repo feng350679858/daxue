@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.adapter.message;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.message.CommentReplyActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Partjob29Body.Parttimejob;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -146,7 +148,7 @@ public class CommentListAdapter extends BaseAdapter {
      * @param holder holder
      * @param position 点击的位置
      */
-    private void registerEvents(ViewHolder holder, int position) {
+    private void registerEvents(ViewHolder holder, final int position) {
         View.OnClickListener mClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +159,7 @@ public class CommentListAdapter extends BaseAdapter {
                         break;
                     case R.id.tv_reply:
                         str = "回复按钮 click";
+                        handleReply(position);
                         break;
                     case R.id.tv_content:
                         str = "内容 click";
@@ -173,6 +176,19 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mBtnReply.setOnClickListener(mClickListener);
         holder.mTvContent.setOnClickListener(mClickListener);
         holder.mLlRefContainer.setOnClickListener(mClickListener);
+    }
+
+    /**
+     * 回复
+     * @param position list index
+     */
+    private void handleReply(int position) {
+        Intent intent = new Intent(mContext, CommentReplyActivity.class);
+        final Parttimejob parttimejob = mComments.get(position);
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_STUDENT_ID, parttimejob.getSourceid());
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_STUDENT_NAME, parttimejob.getSourcename());
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_TARGET_ID, parttimejob.getContentid());
+        mContext.startActivity(intent);
     }
 
     public void clearData() {

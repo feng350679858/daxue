@@ -74,6 +74,7 @@ public class MessageCommendActivity extends BaseActivity {
                 parttimejob.setSourceid("sourceid:" + i);
                 parttimejob.setSourcename("丁" + i);
                 parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
+                parttimejob.setContentid(String.valueOf(i));
                 parttimejob.setSourcelevel(String.valueOf(i));
                 if(i%3==0) {
                     Partjob29Response.Partjob29Body.Parttimejob.Refcomment refcomment = new Partjob29Response.Partjob29Body.Parttimejob.Refcomment();
@@ -140,7 +141,7 @@ public class MessageCommendActivity extends BaseActivity {
         //需要用到再findViewById，不要需则不调用，提高效率
 //        ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
 //        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
-
+        // TODO: 2015/8/1 加入未读赞数统计
         tvTitle.setText("赞");
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
