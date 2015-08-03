@@ -15,6 +15,8 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="30dp"
+
+
         android:orientation="vertical">
 
 
@@ -26,6 +28,8 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:hintTextAppearance="@style/text_input_layout">
+
+            <requestFocus />
 
             <com.jingcai.apps.aizhuan.view.ClearableEditText
                 android:id="@+id/profile_improve_name_input"
@@ -63,9 +67,9 @@
                 android:layout_marginTop="5dp"
                 android:background="@null"
                 android:editable="false"
-                android:hint="性别"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="性别"
                 android:paddingTop="10dp"
                 android:textColor="@color/important_dark"
                 android:textColorHint="@color/important_dark"
@@ -91,11 +95,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
-                android:hint="地区"
                 android:editable="false"
-                android:paddingTop="10dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
+                android:hint="地区"
+                android:paddingTop="10dp"
                 android:textColor="@color/important_dark"
                 android:textColorHint="@color/important_dark"
                 android:textSize="16sp" />

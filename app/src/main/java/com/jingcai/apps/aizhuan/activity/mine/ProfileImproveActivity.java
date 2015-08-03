@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Message;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.Spannable;
@@ -17,10 +15,7 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,19 +25,11 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.mine.wheel.AreaAdapter;
-import com.jingcai.apps.aizhuan.adapter.mine.wheel.CityAdapter;
-import com.jingcai.apps.aizhuan.adapter.mine.wheel.ProvinceAdapter;
-import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.school.school01.School01Request;
-import com.jingcai.apps.aizhuan.service.business.school.school01.School01Response;
-import com.jingcai.apps.aizhuan.service.business.school.school02.School02Request;
-import com.jingcai.apps.aizhuan.service.business.school.school02.School02Response;
 import com.jingcai.apps.aizhuan.service.business.school.school03.School03Request;
 import com.jingcai.apps.aizhuan.service.business.school.school03.School03Response;
-import com.jingcai.apps.aizhuan.service.business.stu.stu01.Stu01Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu03.Stu03Request;
@@ -52,11 +39,8 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.view.ClearableEditText;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import kankan.wheel.widget.OnWheelScrollListener;
@@ -74,8 +58,8 @@ public class ProfileImproveActivity extends BaseActivity {
     private AzService azService;
     private MessageHandler messageHandler;
 
-    private List<School03Response.Body.Areainfo> provinceList,cityList,areaList;
-    private AreaAdapter provinceAdapter,cityAdapter,areaAdapter;
+    private List<School03Response.Body.Areainfo> provinceList, cityList, areaList;
+    private AreaAdapter provinceAdapter, cityAdapter, areaAdapter;
 
     private String cityCode, areaCode;
     private boolean provinceScrolling = false, cityScrolling = false;
@@ -146,6 +130,16 @@ public class ProfileImproveActivity extends BaseActivity {
     private void initView() {
         name = (TextInputLayout) findViewById(R.id.profile_improve_name);
         name_input = (ClearableEditText) name.getEditText();
+        name_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus && !"".equals(name_input.getText().toString())) {
+                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
+                } else {
+                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                }
+            }
+        });
         name_input.addTextChangedListener(myTextWatcher);
         gender = (TextInputLayout) findViewById(R.id.profile_improve_gender);
         gender_input = gender.getEditText();
@@ -153,7 +147,8 @@ public class ProfileImproveActivity extends BaseActivity {
         gender_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                clearAllFocus();
+                gender_input.requestFocus();
                 if (null == genderWin) {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("0", "男");
@@ -178,7 +173,7 @@ public class ProfileImproveActivity extends BaseActivity {
 
                         @Override
                         public void onDimiss() {
-                            gender_input.clearFocus();
+                            clearAllFocus();
                         }
                     });
 
@@ -195,6 +190,8 @@ public class ProfileImproveActivity extends BaseActivity {
         location_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearAllFocus();
+                location_input.requestFocus();
                 areaWin.show();
             }
         });
@@ -204,10 +201,10 @@ public class ProfileImproveActivity extends BaseActivity {
         spreading_code_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
+                if (hasFocus && !"".equals(spreading_code_input.getText().toString())) {
+                    spreading_code_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
                 } else {
-                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                    spreading_code_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                 }
             }
         });
@@ -219,10 +216,10 @@ public class ProfileImproveActivity extends BaseActivity {
                 Intent intent = new Intent(ProfileImproveActivity.this, ProfileImprove2Activity.class);
                 intent.putExtra("name", name_input.getText().toString());
                 intent.putExtra("gender", gender_input.getTag().toString());
-                //  if (location_input.isEnabled())
-                //  intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
-                //  else
-                //     intent.putExtra("areacode", "");
+                if (location_input.isEnabled())
+                    intent.putExtra("areacode", areaAdapter.getItemText(areas.getCurrentItem()).toString());
+                else
+                    intent.putExtra("areacode", "");
                 intent.putExtra("promotioncode", spreading_code_input.getText().toString());
                 intent.putExtra("joindate", joindate);
                 intent.putExtra("school", school);
@@ -242,6 +239,13 @@ public class ProfileImproveActivity extends BaseActivity {
         spanString.setSpan(imgSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         warning.setText(spanString);
         warning.append(getResources().getString(R.string.profile_improve_warning));
+    }
+
+    private void clearAllFocus() {
+        name_input.clearFocus();
+        gender_input.clearFocus();
+        location_input.clearFocus();
+        spreading_code_input.clearFocus();
     }
 
     protected class MyTextWatcher implements TextWatcher {
@@ -310,6 +314,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 public void onDimiss() {
                     location_input.setText(areaname_string);
                     location_input.setTag(areacode_string);
+                    clearAllFocus();
                 }
             });
 
@@ -320,7 +325,7 @@ public class ProfileImproveActivity extends BaseActivity {
             areas = (WheelView) contentView.findViewById(R.id.area_popupwin_area);
             areas.setVisibleItems(5);
 
-            provinceAdapter = new AreaAdapter(this,provinceList);
+            provinceAdapter = new AreaAdapter(this, provinceList);
             provinces.setViewAdapter(provinceAdapter);
             ((ImageView) contentView.findViewById(R.id.area_popupwin_cancel)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -457,6 +462,7 @@ public class ProfileImproveActivity extends BaseActivity {
                                 }
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -470,7 +476,7 @@ public class ProfileImproveActivity extends BaseActivity {
         showProgressDialog("数据加载中...");
         areaCode = "100000";
         getAreaInfo(1);
-        //     loadProfileData();
+   //     loadProfileData();
     }
 
     private void loadProfileData() {
@@ -564,6 +570,7 @@ public class ProfileImproveActivity extends BaseActivity {
         if (null != student.getName() && !"".equals(student.getName())) {
             name_input.setText(student.getName());
             name_input.setEnabled(false);
+            name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
         if (null != student.getGender() && !"".equals((student.getGender()))) {
             if ("0".equals(student.getGender()))
@@ -580,14 +587,16 @@ public class ProfileImproveActivity extends BaseActivity {
         if (null != student.getPromotioncode() && !"".equals(student.getPromotioncode())) {
             spreading_code_input.setText(student.getPromotioncode());
             spreading_code_input.setEnabled(false);
+            spreading_code_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
         joindate = student.getJoindate();
         college = student.getCollege();
-        college = student.getCollegename();
+        collegename = student.getCollegename();
         school = student.getSchoolname();
         schoolname = student.getSchoolname();
         professional = student.getProfessional();
         email = student.getEmail();
         qq = student.getQq();
+        clearAllFocus();
     }
 }

@@ -359,7 +359,7 @@ public class WheelView extends View {
 				}
 				index %= itemCount;
 			} else{
-				return; // throw?
+				currentItem=0; //改（原来是return;）
 			}
 		}
 		if (index != currentItem) {

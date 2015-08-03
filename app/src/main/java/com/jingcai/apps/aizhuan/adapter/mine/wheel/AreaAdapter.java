@@ -25,6 +25,7 @@ public class AreaAdapter extends AbstractWheelTextAdapter {
      */
     public AreaAdapter(Context context,List<School03Response.Body.Areainfo> areaList) {
         super(context, R.layout.area_adapter_item,NO_RESOURCE);
+        setItemTextResource(R.id.area_name);
         areaArrayList=areaList;
     }
 

@@ -116,7 +116,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                     //title
                     ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("联系人");
                     //phone
-                    final TextView phone=(TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
+                    final TextView phone = (TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
                     phone.setText("15712345678");
                     //2 button
                     contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
@@ -184,6 +184,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                 mSchoolSelected = true;
                 mSchoolSearchKey = name;
                 school_input.setText(name);
+                clearAllFocus();
             }
         });
         school_input.addTextChangedListener(new TextWatcher() {
@@ -229,16 +230,26 @@ public class ProfileImprove2Activity extends BaseActivity {
 
 
         });
-
-        college_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && !"".equals(school_input.getText().toString())) {
-                    initCollegePopupWin();
-
-                }
+    college_input.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            clearAllFocus();
+            college_input.requestFocus();
+            if (!"".equals(school_input.getText().toString())) {
+                college_input.requestFocus();
+                initCollegePopupWin();
             }
-        });
+        }
+    });
+//        college_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus && !"".equals(school_input.getText().toString())) {
+//                    initCollegePopupWin();
+//
+//                }
+//            }
+//        });
         //专业列表
         mListProfessional = (XListView) findViewById(R.id.lv_mine_profile_improve_professional);
         mListProfessional.setPullRefreshEnable(false);
@@ -267,6 +278,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                 mProfessionalSelected = true;
                 mProfessionalSearchKey = name;
                 professional_input.setText(name);
+                clearAllFocus();
             }
         });
         professional_input.addTextChangedListener(new TextWatcher() {
@@ -309,49 +321,94 @@ public class ProfileImprove2Activity extends BaseActivity {
                 }
             }
         });
-        joindate_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        joindate_input.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (joindate_popupWin == null) {
-                        View parentView = ProfileImprove2Activity.this.getWindow().getDecorView();
-                        View contentView = LayoutInflater.from(ProfileImprove2Activity.this).inflate(R.layout.mine_profile_improve_joindate_dialog, null);
+            public void onClick(View v) {
+                clearAllFocus();
+                joindate_input.requestFocus();
+                if (joindate_popupWin == null) {
+                    View parentView = ProfileImprove2Activity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(ProfileImprove2Activity.this).inflate(R.layout.mine_profile_improve_joindate_dialog, null);
 
-                        joindate_popupWin = PopupWin.Builder.create(ProfileImprove2Activity.this)
-                                .setParentView(parentView)
-                                .setContentView(contentView)
-                                .build();
-                        ListView listView = (ListView) contentView.findViewById(R.id.lv_mine_profile_improve_joindate);
-                        SchoolListAdapter adapter = new SchoolListAdapter(ProfileImprove2Activity.this);
-                        adapter.isShowIndicator(false);
-                        adapter.setTextGravity(Gravity.CENTER);
+                    joindate_popupWin = PopupWin.Builder.create(ProfileImprove2Activity.this)
+                            .setParentView(parentView)
+                            .setContentView(contentView)
+                            .build();
+                    ListView listView = (ListView) contentView.findViewById(R.id.lv_mine_profile_improve_joindate);
+                    SchoolListAdapter adapter = new SchoolListAdapter(ProfileImprove2Activity.this);
+                    adapter.isShowIndicator(false);
+                    adapter.setTextGravity(Gravity.CENTER);
 
-                        final List<Map<String, String>> years = new ArrayList<>();
-                        for (int i = Calendar.getInstance().get(Calendar.YEAR); i >= 2000; i--) {
-                            Map<String, String> year = new HashMap<>();
-                            year.put("code", String.valueOf(i));
-                            year.put("name", String.valueOf(i));
-                            years.add(year);
-                        }
-
-                        adapter.setListData(years);
-                        listView.setAdapter(adapter);
-
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String selected = years.get(position).get("name");
-                                joindate_input.setText(selected);
-                                joindate_popupWin.dismiss();
-                            }
-                        });
-
+                    final List<Map<String, String>> years = new ArrayList<>();
+                    for (int i = Calendar.getInstance().get(Calendar.YEAR); i >= 2000; i--) {
+                        Map<String, String> year = new HashMap<>();
+                        year.put("code", String.valueOf(i));
+                        year.put("name", String.valueOf(i));
+                        years.add(year);
+                        clearAllFocus();
                     }
-                    joindate_popupWin.show();
-                }
-            }
 
+                    adapter.setListData(years);
+                    listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String selected = years.get(position).get("name");
+                            joindate_input.setText(selected);
+                            joindate_popupWin.dismiss();
+                            clearAllFocus();
+                        }
+                    });
+
+                }
+                joindate_popupWin.show();
+
+            }
         });
+//        joindate_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    if (joindate_popupWin == null) {
+//                        View parentView = ProfileImprove2Activity.this.getWindow().getDecorView();
+//                        View contentView = LayoutInflater.from(ProfileImprove2Activity.this).inflate(R.layout.mine_profile_improve_joindate_dialog, null);
+//
+//                        joindate_popupWin = PopupWin.Builder.create(ProfileImprove2Activity.this)
+//                                .setParentView(parentView)
+//                                .setContentView(contentView)
+//                                .build();
+//                        ListView listView = (ListView) contentView.findViewById(R.id.lv_mine_profile_improve_joindate);
+//                        SchoolListAdapter adapter = new SchoolListAdapter(ProfileImprove2Activity.this);
+//                        adapter.isShowIndicator(false);
+//                        adapter.setTextGravity(Gravity.CENTER);
+//
+//                        final List<Map<String, String>> years = new ArrayList<>();
+//                        for (int i = Calendar.getInstance().get(Calendar.YEAR); i >= 2000; i--) {
+//                            Map<String, String> year = new HashMap<>();
+//                            year.put("code", String.valueOf(i));
+//                            year.put("name", String.valueOf(i));
+//                            years.add(year);
+//                        }
+//
+//                        adapter.setListData(years);
+//                        listView.setAdapter(adapter);
+//
+//                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                String selected = years.get(position).get("name");
+//                                joindate_input.setText(selected);
+//                                joindate_popupWin.dismiss();
+//                            }
+//                        });
+//
+//                    }
+//                    joindate_popupWin.show();
+//                }
+//            }
+//
+//        });
         next = (Button) findViewById(R.id.profile_improve_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,15 +417,22 @@ public class ProfileImprove2Activity extends BaseActivity {
             }
         });
     }
-
+private void clearAllFocus(){
+    school_input.clearFocus();
+    college_input.clearFocus();
+    professional_input.clearFocus();
+    joindate_input.clearFocus();
+}
     private void initDate() {
         if (null != getIntent().getStringExtra("school") && !"".equals(getIntent().getStringExtra("school"))) {
             school_input.setTag(getIntent().getStringExtra("school"));
             school_input.setEnabled(false);
+            mListSchool.setVisibility(View.GONE);
         }
         if (null != getIntent().getStringExtra("schoolname") && !"".equals(getIntent().getStringExtra("schoolname"))) {
             school_input.setText(getIntent().getStringExtra("schoolname"));
             school_input.setEnabled(false);
+            mListSchool.setVisibility(View.GONE);
         }
         if (null != getIntent().getStringExtra("college") && !"".equals(getIntent().getStringExtra("college"))) {
             college_input.setTag(getIntent().getStringExtra("college"));
@@ -381,11 +445,13 @@ public class ProfileImprove2Activity extends BaseActivity {
         if (null != getIntent().getStringExtra("professional") && !"".equals(getIntent().getStringExtra("professional"))) {
             professional_input.setText(getIntent().getStringExtra("professional"));
             professional_input.setEnabled(false);
+            mListProfessional.setVisibility(View.GONE);
         }
         if (null != getIntent().getStringExtra("joindate") && !"".equals(getIntent().getStringExtra("joindate"))) {
             joindate_input.setText(getIntent().getStringExtra("joindate"));
             joindate_input.setEnabled(false);
         }
+        clearAllFocus();
     }
 
     private void complete() {
@@ -662,6 +728,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                     public void select(String key, String val) {
                         college_input.setTag(key);
                         college_input.setText(val);
+                        clearAllFocus();
                     }
                 })
                 .build();
@@ -673,7 +740,7 @@ public class ProfileImprove2Activity extends BaseActivity {
 
             @Override
             public void onDimiss() {
-                college_input.clearFocus();
+                clearAllFocus();
             }
         });
         college_popupWin.show();
