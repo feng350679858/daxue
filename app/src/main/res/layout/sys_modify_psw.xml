@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:divider="@drawable/field_divider_grey"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:showDividers="middle">
+
+        <EditText
+            android:id="@+id/et_sys_modify_psw_old_psw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawablePadding="10dp"
+            android:hint="旧密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:minLines="6"
+            android:padding="10dp"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/assist_grey"
+            android:textSize="16sp" />
+
+
+        <EditText
+            android:id="@+id/et_sys_modify_psw_new_psw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawablePadding="10dp"
+            android:hint="新密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:minLines="6"
+            android:padding="10dp"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/assist_grey"
+            android:textSize="16sp" />
+
+
+        <EditText
+            android:id="@+id/et_sys_modify_psw_new_psw_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawablePadding="10dp"
+            android:hint="确认密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:minLines="6"
+            android:padding="10dp"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/assist_grey"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sys_modify_psw_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/yellow_btn_bg_selector"
+        android:text="确认并保存"
+        android:textColor="@color/important_dark"
+        android:textSize="18sp" />
+
+</LinearLayout>
