@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/include_header" />
+
+    <RelativeLayout
+        android:id="@+id/name_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="姓名"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:text="张三"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/id_card_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_title"
+        android:padding="10dp"
+        android:text="@string/mine_reset_pay_psw_card_number_tip"
+        android:textColor="@color/normal_grey"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/id_card_number_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_card_tip"
+        android:background="@color/white"
+        android:hint="身份证号"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textSize="16sp" />
+<Button
+    android:layout_below="@+id/id_card_number_input"
+    android:id="@+id/next"
+    android:layout_width="match_parent"
+    android:layout_margin="20dp"
+    android:layout_height="wrap_content"
+    android:text="下一步"
+    android:textSize="16sp"
+    android:enabled="false"
+    android:background="@drawable/btn_yellow_boarded_bg_selector"/>
+
+
+</RelativeLayout>

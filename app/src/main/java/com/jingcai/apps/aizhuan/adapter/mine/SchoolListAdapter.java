@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by CFY on 2015/4/29.
+ * Created by Administrator on 2015/7/29.
  */
-public class LocationListAdapter extends BaseAdapter {
+public class SchoolListAdapter  extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
     private List<Map<String, String>> list;
     private boolean showIndicator;
     private int mTextGravity;
 
-    public LocationListAdapter(Context context) {
+    public SchoolListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         showIndicator = true;
@@ -76,7 +76,7 @@ public class LocationListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.location_item, null);
+            convertView = inflater.inflate(R.layout.school_item, null);
             viewHolder = new ViewHolder();
             viewHolder.item_tv_text = (TextView) convertView.findViewById(R.id.tv_city);
             if(!showIndicator){

@@ -9,6 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@color/main_yellow">
 
         <ImageButton
@@ -22,6 +24,7 @@
 
         <com.jingcai.apps.aizhuan.view.ClearableEditText
             android:id="@+id/index_pj_search_content"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

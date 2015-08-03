@@ -21,6 +21,8 @@ import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexPartjobListByLabelActivity;
+import com.jingcai.apps.aizhuan.activity.mine.ProfileImprove2Activity;
+import com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobSearchActivity;
@@ -126,9 +128,10 @@ public class IndexMoneyFragment extends BaseFragment {
         ((ImageView)mainView.findViewById(R.id.iv_func)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                intent.putExtra("address",tv_address.getTag().toString());
-                intent.putExtra("cancel","visible");
+   //             Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+    //            intent.putExtra("address",tv_address.getTag().toString());
+    //            intent.putExtra("cancel","visible");
+                Intent intent=new Intent(getActivity(), ProfileImproveActivity.class);
                 startActivity(intent);
             }
         });
