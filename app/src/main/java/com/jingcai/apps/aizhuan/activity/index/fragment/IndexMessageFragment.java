@@ -97,7 +97,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
                 loadConversations();  //加载所有的会话
             }
         };
-        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver,3);
+        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver, 3);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             EMConversation con = allConversations.get(s);
             bean = new ConversationBean(con);
             //环信管理端发过来的信息
-            if(StringUtil.isEmpty(bean.getName())){
+            if (StringUtil.isEmpty(bean.getName())) {
                 assembleBean(bean);
             }
             beans.add(bean);
