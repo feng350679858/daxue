@@ -12,30 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/index_index_recommend_bg"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_launcher" />
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_head_logo"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/icon_share_qq" />
+
+            <com.jingcai.apps.aizhuan.activity.util.LevelTextView
+                xmlns:app="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
+                android:id="@+id/ltv_level"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="47dip"
-                android:layout_marginTop="47dip"
-                android:src="@drawable/icon__hollow_disabled" />
-        </RelativeLayout>
+                android:layout_gravity="bottom|right"
+                app:level="16"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/index_index_recommend_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -122,12 +122,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_credit"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:drawableStart="@drawable/icon_index_tab_mine_credit"
                     android:gravity="center_vertical"
                     android:text="我的信用"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -141,7 +141,7 @@
                     android:drawableRight="@drawable/icon_right_triangle"
                     android:gravity="center_vertical"
                     android:text="4.7分"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
             </RelativeLayout>
         </LinearLayout>
@@ -151,7 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/index_index_recommend_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -171,12 +171,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawableLeft="@drawable/icon_index_tab_student_certification"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:drawableStart="@drawable/icon_index_tab_student_certification"
                     android:gravity="center_vertical"
                     android:text="学生认证"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -185,10 +185,14 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:background="@drawable/tv_yellow_rectangle_bg"
                     android:gravity="center_vertical"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="3dp"
                     android:text="已认证"
-
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
             </RelativeLayout>
         </LinearLayout>
@@ -199,15 +203,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_mine_help_req"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/index_index_recommend_bg"
             android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="10dp">
 
             <RelativeLayout
@@ -224,7 +229,7 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_question"
                     android:gravity="center_vertical"
                     android:text="我的求助"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -238,7 +243,7 @@
                     android:drawableRight="@drawable/icon_right_triangle"
                     android:gravity="center_vertical"
                     android:text="10"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
             </RelativeLayout>
@@ -247,14 +252,18 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_mine_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/index_index_recommend_bg"
             android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="10dp">
 
             <RelativeLayout
@@ -271,7 +280,7 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_help"
                     android:gravity="center_vertical"
                     android:text="我的帮助"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -294,14 +303,18 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_mine_partjob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/index_index_recommend_bg"
             android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="10dp">
 
             <RelativeLayout
@@ -319,7 +332,7 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_partjob"
                     android:gravity="center_vertical"
                     android:text="我的兼职"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -337,7 +350,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/index_index_recommend_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -362,7 +375,7 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_account"
                     android:gravity="center_vertical"
                     android:text="我的金库"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -380,7 +393,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/index_index_recommend_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -405,7 +418,7 @@
                     android:drawableStart="@drawable/icon_index_tab_mine_customer_service"
                     android:gravity="center_vertical"
                     android:text="联系客服"
-                    android:textColor="#000000"
+                    android:textColor="@color/important_dark"
                     android:textSize="18sp" />
 
                 <ImageView
