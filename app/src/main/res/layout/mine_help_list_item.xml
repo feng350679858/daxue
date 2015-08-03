@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/content_background"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -33,14 +33,17 @@
                     android:layout_height="wrap_content"
                     android:text="2015-06-28"
                     android:textColor="@color/normal_grey"
-                    android:textSize="14sp" />
+                    android:gravity="center_vertical"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:background="@color/main_yellow"
+                    android:padding="3dp"
+                    android:background="@drawable/tv_yellow_rectangle_bg"
                     android:text="2.5元"
+                    android:gravity="center_vertical"
                     android:textColor="@color/important_dark"
                     android:textSize="14sp" />
 
@@ -53,7 +56,7 @@
                     android:id="@+id/tv_jishi_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="5dp"
                     android:text="已结算"
                     android:textColor="@color/red"
@@ -88,7 +91,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="-5dp"
                     android:text="不限性别"
-                    android:textColor="@color/normal_grey"
+                    android:textColor="@color/important_dark"
                     android:textSize="14sp" />
             </RelativeLayout>
 
@@ -125,6 +128,7 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toLeftOf="@+id/btn_evaluate"
+                android:textColor="@color/important_dark"
                 android:background="@drawable/btn_white_boarded_bg_selector"
                 android:text="查看评论"
                 android:textSize="14sp" />
@@ -134,6 +138,7 @@
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
+                android:textColor="@color/important_dark"
                 android:background="@drawable/btn_white_boarded_bg_selector"
                 android:text="立即评价"
                 android:textSize="14sp" />
@@ -143,6 +148,7 @@
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="10dp"
+                android:textColor="@color/important_dark"
                 android:background="@drawable/btn_white_boarded_bg_selector"
                 android:text="确认打赏"
                 android:textSize="14sp" />
@@ -174,10 +180,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="2015-06-28"
+                    android:gravity="center_vertical"
                     android:textColor="@color/normal_grey"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -187,10 +194,10 @@
                 <TextView
                     android:id="@+id/tv_wenda_income_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="收入:"
-                    android:textColor="@color/normal_grey"
+                    android:textColor="@color/important_dark"
                     android:textSize="14sp" />
 
                 <TextView
@@ -198,7 +205,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:background="@color/main_yellow"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/tv_yellow_rectangle_bg"
+                    android:padding="2dp"
                     android:text="2.5元"
                     android:textColor="@color/important_dark"
                     android:textSize="14sp" />
@@ -207,9 +216,9 @@
                     android:id="@+id/tv_wenda_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:layout_marginRight="5dp"
                     android:text="已关闭"
+                    android:gravity="center_vertical"
                     android:textColor="@color/normal_grey"
                     android:textSize="14sp" />
             </LinearLayout>

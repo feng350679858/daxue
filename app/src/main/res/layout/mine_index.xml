@@ -196,7 +196,7 @@
                     android:paddingTop="3dp"
                     android:text="已认证"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -321,7 +321,6 @@
             android:paddingTop="10dp">
 
             <RelativeLayout
-                android:id="@+id/my_partjob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -350,6 +349,8 @@
     </LinearLayout>
 
     <LinearLayout
+
+        android:id="@+id/ll_mine_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -358,7 +359,6 @@
         android:paddingRight="10dp">
 
         <LinearLayout
-            android:id="@+id/ll_mine_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
@@ -393,6 +393,8 @@
     </LinearLayout>
 
     <LinearLayout
+
+        android:id="@+id/ll_mine_contact_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -401,7 +403,6 @@
         android:paddingRight="10dp">
 
         <LinearLayout
-            android:id="@+id/ll_mine_contact_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"

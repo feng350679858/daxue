@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/include_header" />
@@ -10,38 +11,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:clickable="true"
         android:background="@drawable/list_item_bg"
+        android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_launcher"
-                android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_launcher"
-                android:text="QQ客服"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_yellow"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="4dp"
+                    android:text="QQ客服"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:paddingRight="12dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/mine_contact_service_qq" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,9 +79,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/icon_arrow_right" />
+                android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/rl_mine_contact_service_tel"
         android:layout_width="match_parent"
@@ -79,34 +92,43 @@
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_yellow"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_launcher"
+                android:layout_marginLeft="10dp"
                 android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_launcher"
                 android:text="电话客服"
                 android:textColor="@color/important_dark"
                 android:textSize="18sp" />
-
+</LinearLayout>
             <LinearLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:paddingRight="12dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/mine_contact_service_phone" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,46 +154,56 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/icon_arrow_right" />
+                android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/rl_mine_contact_service_wechat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:clickable="true"
         android:background="@drawable/list_item_bg"
+        android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_yellow"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_launcher"
+                android:layout_marginLeft="10dp"
                 android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_launcher"
                 android:text="微信客服"
                 android:textColor="@color/important_dark"
                 android:textSize="18sp" />
-
+</LinearLayout>
             <LinearLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:paddingRight="12dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/mine_contact_service_weixin" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -197,7 +229,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/icon_arrow_right" />
+                android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
