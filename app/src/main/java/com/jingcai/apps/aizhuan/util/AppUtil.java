@@ -93,4 +93,13 @@ public class AppUtil {
         return Uri.fromFile(new File(Environment.getExternalStorageDirectory(), UserSubject.getStudentid()));
 
     }
+
+    public static boolean isApkInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 }
