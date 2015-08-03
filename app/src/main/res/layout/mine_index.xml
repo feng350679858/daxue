@@ -93,7 +93,10 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="26sp" />
+                android:progress="80"
+                android:progressDrawable="@drawable/index_mine_progress_bar"
+                android:background="@drawable/index_mine_progress_bar_bg"
+                 />
 
         </LinearLayout>
     </LinearLayout>
