@@ -21,7 +21,6 @@ import com.easemob.exceptions.EaseMobException;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageConversationActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
@@ -143,7 +142,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             c = contactInfos.get(0);
             bean.setName(c.getName());
             bean.setLogourl(c.getLogourl());
-            //如果超时
+            //如果超时 或 头像为空
             if (StringUtil.isNotEmpty(c.getLogourl())
                     && (System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
                 return;
@@ -251,9 +250,11 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             switch (position) {
                 case MessageListAdapter.ITEM_POSITION_COMMENT:
                     intent = new Intent(baseActivity, MessageCommentActivity.class);
+                    intent.putExtra(MessageCommentActivity.INTENT_NAME_ACTIVITY_FLAG, MessageCommentActivity.INTENT_VALUE_ACTIVITY_FLAG_COMMENT);
                     break;
                 case MessageListAdapter.ITEM_POSITION_RECOMMEND:
-                    intent = new Intent(baseActivity, MessageCommendActivity.class);
+                    intent = new Intent(baseActivity, MessageCommentActivity.class);
+                    intent.putExtra(MessageCommentActivity.INTENT_NAME_ACTIVITY_FLAG, MessageCommentActivity.INTENT_VALUE_ACTIVITY_FLAG_COMMEND);
                     break;
                 case MessageListAdapter.ITEM_POSITION_MERCHANT:
                     intent = new Intent(baseActivity, MessageMerchantActivity.class);

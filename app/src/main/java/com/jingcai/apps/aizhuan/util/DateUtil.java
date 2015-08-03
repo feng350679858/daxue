@@ -48,7 +48,15 @@ public class DateUtil {
         }
     }
 
-    public static String formatDate(Date date, String format){
+    public static Date parseDate(String dateStr){
+        try {
+            return dateFormat14.parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public static String formatDate(Date date, String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         try {
             return dateFormat.format(date);
