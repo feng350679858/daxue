@@ -31,9 +31,18 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
             private String logopath;
             private String isvisiable;
             private String level;
+            private String onlineflag;
             //adationnal
             private String studentid;
             private String password;
+
+            public String getOnlineflag() {
+                return onlineflag;
+            }
+
+            public void setOnlineflag(String onlineflag) {
+                this.onlineflag = onlineflag;
+            }
 
             public String getName() {
                 return name;

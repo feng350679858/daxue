@@ -22,6 +22,7 @@
                 android:id="@+id/header_hint_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:text="@string/header_hint_refresh_normal" />
 
             <LinearLayout
@@ -33,13 +34,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/header_hint_refresh_time"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/header_hint_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -50,8 +51,7 @@
             android:layout_toLeftOf="@id/header_text_layout"
             android:layout_marginRight="30dp"
             android:layout_centerVertical="true"
-            android:visibility="gone" />
-
+            android:visibility="gone" /><!--
         <ImageView
             android:id="@+id/header_arrow"
             android:layout_width="wrap_content"
@@ -60,7 +60,16 @@
             android:layout_marginRight="30dp"
             android:layout_centerVertical="true"
             android:contentDescription="@null"
-            android:src="@drawable/arrow_down" />
+            android:src="@drawable/arrow_down" />-->
+        <ImageView
+            android:id="@+id/header_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/header_text_layout"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/animation1" />
 
     </RelativeLayout>
 

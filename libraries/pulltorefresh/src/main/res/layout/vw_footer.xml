@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/footer_height"
-    android:padding="@dimen/footer_padding" >
+    android:padding="@dimen/footer_padding">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <ProgressBar
             android:id="@+id/footer_progressbar"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/footer_hint_load_normal"
-            android:textColor="@color/title_color" />
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/footer_arrow"

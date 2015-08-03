@@ -25,6 +25,7 @@ import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -115,6 +116,9 @@ public class MessageNotificationActivity extends BaseActivity implements XListVi
                             } else {
                                 Advice01Response.Advice01Body advice01Body = response.getBody();
                                 List<Advice01Response.Advice01Body.Message> messageList = advice01Body.getMessage_list();
+                                if(null == messageList){
+                                    messageList = new ArrayList<>();
+                                }
                                 if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);  //本次加载的长度
                                 } else {
@@ -140,12 +144,12 @@ public class MessageNotificationActivity extends BaseActivity implements XListVi
 
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
                     try {
                         List<Advice01Response.Advice01Body.Message> list = (List<Advice01Response.Advice01Body.Message>) msg.obj;
+
                         mMessageListAdapter.addData(list);
                         mMessageListAdapter.notifyDataSetChanged();
 
@@ -237,8 +241,8 @@ public class MessageNotificationActivity extends BaseActivity implements XListVi
     private void displayEmptyView() {
         ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
         TextView tvEmpty = (TextView) findViewById(R.id.tv_empty_text);
-        tvEmpty.setText(getString(R.string.empty_notification_list_tip) );
-        tvEmpty.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.empty_list_message_notification,0,0);
+        tvEmpty.setText(getString(R.string.tip_no_data));
+        tvEmpty.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.common_no_data,0,0);
 
     }
 }

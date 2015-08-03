@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/content_background"
-    android:divider="@drawable/fieldset_divider"
+    android:divider="@drawable/field_divider_grey"
     android:orientation="vertical"
     android:showDividers="middle">
 

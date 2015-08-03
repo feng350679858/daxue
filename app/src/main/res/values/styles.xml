@@ -101,6 +101,16 @@
         <item name="android:textColor">@color/assist_grey</item>
     </style>
 
+    <!-- 帮助模块，工具条checkbox样式 -->
+    <style name="help_checkbox_item">
+        <item name="android:button">@null</item>
+        <item name="android:enabled">false</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textColor">@color/normal_grey</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
     <!-- 支付密码弹出框密码样式样式 -->
     <style name="pop_pay_text">
         <item name="android:gravity">center</item>

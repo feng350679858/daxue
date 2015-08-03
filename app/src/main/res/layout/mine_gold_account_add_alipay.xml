@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手机"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <EditText
@@ -44,7 +44,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="请输入手机号码"
-                android:textColorHint="@color/font_assistant"
+                android:textColorHint="@color/assist_grey"
                 android:paddingLeft="10dp"
                 android:lines="1"
                 android:maxLength="11"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="姓名"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <TextView
@@ -82,7 +82,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColorHint="@color/font_assistant"
+                android:textColorHint="@color/assist_grey"
                 android:lines="1"
                 android:hint="手机所关联的姓名"
                 android:paddingLeft="10dp"

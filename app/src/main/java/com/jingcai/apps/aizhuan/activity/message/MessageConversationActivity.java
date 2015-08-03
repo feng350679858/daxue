@@ -421,7 +421,7 @@ public class MessageConversationActivity extends BaseActivity{
 //        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
         final ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
         ivFunc.setVisibility(View.VISIBLE);
-        ivFunc.setImageResource(R.drawable.icon_message_conversation_3_point);
+        ivFunc.setImageResource(R.drawable.icon__header_more);
         ivFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

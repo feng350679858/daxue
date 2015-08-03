@@ -44,14 +44,14 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:text="￥"
-                            android:textColor="@color/red_normal"
+                            android:textColor="@color/red"
                             android:textSize="16sp" />
                         <TextView
                             android:id="@+id/partjob_detail_popup_salary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:textColor="@color/red_normal"
+                            android:textColor="@color/red"
                             android:textSize="16sp" />
 
                         <TextView
@@ -71,7 +71,7 @@
 
                             android:layout_marginLeft="15dp"
                             android:padding="2dp"
-                            android:textColor="@color/font_important"
+                            android:textColor="@color/important_dark"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -132,7 +132,7 @@
                 android:drawableLeft="@drawable/partjob_detail_popup_tip"
                 android:text="温馨提示"
                 android:drawablePadding="5dp"
-                android:textColor="@color/font_red"
+                android:textColor="@color/red"
                 android:textSize="14sp" />
 
             <TextView

@@ -33,6 +33,7 @@ public class Preferences {
     protected static final String PARAM_SCHOOL_NAME = "schoolname";
     protected static final String PARAM_CITY_NAME = "cityname";
     protected static final String PARAM_LOGIN_FLAG = "loginflag";
+    protected static final String PARAM_ONLINE_FLAG = "onlineflag";
     protected static final String PARAM_ISVISIABLE = "isvisiable";
     protected static final String PARAM_LEVEL = "level";
 

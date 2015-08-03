@@ -24,6 +24,7 @@ import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import java.util.List;
  * Created by Json Ding on 2015/7/14.
  */
 public class MessageCommendActivity extends BaseActivity {
+
 
     private static final String TAG = "MessageCommendActivity";
     private XListView mLvComments;
@@ -55,6 +57,46 @@ public class MessageCommendActivity extends BaseActivity {
     private void initData() {
         if(actionLock.tryLock()) {
             showProgressDialog("评论努力加载中...");
+            loadCommend();
+        }
+    }
+
+    private void loadCommend() {
+        if(GlobalConstant.debugFlag){
+            //测试数据
+            List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = new ArrayList<>();
+            Partjob29Response.Partjob29Body.Parttimejob parttimejob = null;
+
+            for(int i = 0 ; i < 10; i++){
+                parttimejob = new Partjob29Response.Partjob29Body.Parttimejob();
+                parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
+                parttimejob.setOptime("20150731111111");
+                parttimejob.setSourceid("sourceid:" + i);
+                parttimejob.setSourcename("丁" + i);
+                parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
+                parttimejob.setContentid(String.valueOf(i));
+                parttimejob.setSourcelevel(String.valueOf(i));
+                if(i%3==0) {
+                    Partjob29Response.Partjob29Body.Parttimejob.Refcomment refcomment = new Partjob29Response.Partjob29Body.Parttimejob.Refcomment();
+                    refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
+                    refcomment.setRefid("studentid:" + i);
+                    parttimejob.setRefcomment(refcomment);
+                }
+                Partjob29Response.Partjob29Body.Parttimejob.Reftarget reftarget = new Partjob29Response.Partjob29Body.Parttimejob.Reftarget();
+                reftarget.setImgurl("http://img0.imgtn.bdimg.com/it/u=3201629386,3592649916&fm=11&gp=0.jpg");
+                reftarget.setPubliccontent("我是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容内容");
+                reftarget.setStudentname("林" + i);
+                reftarget.setTargetid("targetid:" + i);
+                reftarget.setTargettype("targettpye:" + i);
+                parttimejob.setReftarget(reftarget);
+
+                parttimejob_list.add(parttimejob);
+                if(mCurrentStart >= 30 && i==5){
+                    break;
+                }
+            }
+            messageHandler.postMessage(0, parttimejob_list);
+        }else{
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -88,7 +130,6 @@ public class MessageCommendActivity extends BaseActivity {
 
                         }
                     });
-
                 }
             });
         }
@@ -100,7 +141,7 @@ public class MessageCommendActivity extends BaseActivity {
         //需要用到再findViewById，不要需则不调用，提高效率
 //        ImageView ivFunc = (ImageView) findViewById(R.id.iv_func);
 //        TextView tvFunc = (TextView) findViewById(R.id.tv_func);
-
+        // TODO: 2015/8/1 加入未读赞数统计
         tvTitle.setText("赞");
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

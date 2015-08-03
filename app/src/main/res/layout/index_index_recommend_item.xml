@@ -60,7 +60,7 @@
                     android:gravity="center"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/font_red"
+                    android:textColor="@color/red"
                     android:textSize="14dp" />
                 <TextView
                     android:id="@+id/tv_salary"
@@ -71,7 +71,7 @@
                     android:gravity="center"
                     android:layout_toRightOf="@+id/salary_sign"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/font_red"
+                    android:textColor="@color/red"
                     android:textSize="12dp" />
                 <TextView
                     android:id="@+id/tv_salary_unit"

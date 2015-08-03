@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29Body> {
 
-    public class Partjob29Body {
+    public static class Partjob29Body {
 
         private List<Parttimejob> parttimejob_list;
 
@@ -21,7 +21,7 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
             this.parttimejob_list = parttimejob_list;
         }
 
-        public class Parttimejob {
+        public static class Parttimejob {
             private String sourceid;
             private String sourceimgurl;
             private String sourcelevel;
@@ -29,12 +29,13 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
             private String sourceschool;
             private String sourcecollege;
             private String optime;
+            private String contentid;
             private String content;
             private String praisecount;
             private Refcomment refcomment;
             private Reftarget reftarget;
 
-            public class Refcomment{
+            public static class Refcomment{
                 private String refid;
                 private String refcontent;
 
@@ -55,7 +56,7 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
                 }
             }
 
-            public class Reftarget{
+            public static class Reftarget{
                 private String targetid;
                 private String targettype;
                 private String imgurl;
@@ -101,6 +102,14 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
                 public void setPubliccontent(String publiccontent) {
                     this.publiccontent = publiccontent;
                 }
+            }
+
+            public String getContentid() {
+                return contentid;
+            }
+
+            public void setContentid(String contentid) {
+                this.contentid = contentid;
             }
 
             public Refcomment getRefcomment() {

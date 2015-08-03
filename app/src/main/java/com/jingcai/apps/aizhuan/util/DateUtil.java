@@ -10,7 +10,8 @@ import java.util.Date;
  * Created by Json Ding on 2015/4/29.
  */
 public class DateUtil {
-    public static Calendar calendar = Calendar.getInstance();
+    public static final Calendar calendar = Calendar.getInstance();
+    public static final SimpleDateFormat dateFormat14 = new SimpleDateFormat("yyyyMMddHHmmss");
     /**
      * 将时间从旧的格式转换为新的格式,任何异常的发生，均会返回空串
      * @param dateStr 时间字符串
@@ -115,6 +116,25 @@ public class DateUtil {
         return formatDate(calendar.getTime(), "yyyy-M-d");
     }
 
+    /**
+     * 根据传入的时间，得出距离传入时间的中文表示
+     * 例如：
+     *      今天 -> HH:mm
+     *      昨天 -> 昨天
+     *      三天前 -> 3天前
+     *      五个月前 ->5个月前
+     *      四年前 ->4年前
+     * @param dateStr 指定的时间
+     * @return 中文表示的时间距离
+     */
+    public static String getHumanlityDateString(String dateStr){
+        try {
+            Date date = dateFormat14.parse(dateStr);
+            return getHumanlityDateString(date);
+        } catch (Exception e) {
+            return "";
+        }
+    }
     /**
      * 根据传入的时间，得出距离传入时间的中文表示
      * 例如：

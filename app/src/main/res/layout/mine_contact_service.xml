@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:orientation="horizontal"
         android:padding="10dp">
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:drawablePadding="4dp"
                 android:drawableStart="@drawable/ic_launcher"
                 android:text="QQ客服"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -49,7 +49,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_qq"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -92,7 +92,7 @@
                 android:drawablePadding="4dp"
                 android:drawableStart="@drawable/ic_launcher"
                 android:text="电话客服"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -114,7 +114,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_tel"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:orientation="horizontal"
         android:padding="10dp">
         <LinearLayout
@@ -157,7 +157,7 @@
                 android:drawablePadding="4dp"
                 android:drawableStart="@drawable/ic_launcher"
                 android:text="微信客服"
-                android:textColor="@color/font_important"
+                android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -179,7 +179,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_wechat"
-                    android:textColor="@color/font_assistant"
+                    android:textColor="@color/assist_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>

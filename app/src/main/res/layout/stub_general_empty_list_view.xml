@@ -6,14 +6,14 @@
 
         <TextView
             android:id="@+id/tv_empty_text"
-            android:drawableTop="@drawable/empty_list_message_merchant"
-            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/common_no_data"
+            android:drawablePadding="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="123123"
+            android:layout_marginBottom="50dp"
+            android:text="@string/tip_no_data"
             android:gravity="center_horizontal"
-            android:textColor="@color/assist_grey"
-            android:textSize="16sp" />
+            android:textColor="@color/important_dark"
+            android:textSize="14sp" />
 
 </LinearLayout>

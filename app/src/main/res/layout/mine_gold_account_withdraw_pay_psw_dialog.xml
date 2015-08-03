@@ -18,7 +18,7 @@
             android:gravity="center_horizontal"
             android:text="title"
             android:textSize="16sp"
-            android:textColor="@color/font_important"
+            android:textColor="@color/important_dark"
             android:padding="10dp"/>
         <EditText
 
@@ -31,7 +31,7 @@
             android:textSize="16sp"
             android:background="@drawable/img_border_gray"
             android:inputType="textPassword"
-            android:textColor="@color/font_normal"
+            android:textColor="@color/normal_grey"
             android:padding="10dp"
             android:layout_marginBottom="10dp"/>
 
@@ -44,7 +44,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/field_divider"
+            android:divider="@drawable/field_divider_grey"
             android:showDividers="middle">
 
             <Button

@@ -24,15 +24,33 @@ public class Stu08Request extends BaseRequest {
     }
 
     public class Student {
-        private String checkstr;
-        private String optype;
+        private String studentid;
+        private String optype;//1上线 2下线
+        private String gisx;
+        private String gisy;
 
-        public String getCheckstr() {
-            return checkstr;
+        public String getGisx() {
+            return gisx;
         }
 
-        public void setCheckstr(String checkstr) {
-            this.checkstr = checkstr;
+        public void setGisx(String gisx) {
+            this.gisx = gisx;
+        }
+
+        public String getGisy() {
+            return gisy;
+        }
+
+        public void setGisy(String gisy) {
+            this.gisy = gisy;
+        }
+
+        public String getStudentid() {
+            return studentid;
+        }
+
+        public void setStudentid(String studentid) {
+            this.studentid = studentid;
         }
 
         public String getOptype() {

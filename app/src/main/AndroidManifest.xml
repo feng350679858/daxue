@@ -171,12 +171,9 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!-- 隐藏键盘 -->
-        <activity
-            android:name="com.jingcai.apps.qrcode.zxing.activity.CaptureActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:configChanges="orientation|keyboardHidden" android:name=".activity.help.CaptureActivity"
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
+
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
@@ -185,6 +182,7 @@
         <activity android:name=".activity.message.MessageNotificationActivity" />
         <activity android:name=".activity.message.NotificationDetailActivity" />
         <activity android:name=".activity.message.MessageConversationActivity" />
+        <activity android:name=".activity.message.CommentReplyActivity" />
 
         <!-- partjob -->
         <activity android:name=".activity.mine.PartjobCancelActivity" />
@@ -201,32 +199,35 @@
         <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
-        <activity android:name=".activity.mine.MineAccountActivity" />
-        <activity android:name=".activity.mine.MineStudentCertificationActivity" />
-        <activity android:name=".activity.mine.SettingsActivity" />
-        <activity android:name=".activity.mine.MineGoldTopupActivity" />
-        <activity android:name=".activity.mine.MineSuggestionActivity" />
-        <activity android:name=".activity.mine.MineGoldWithdrawActivity" />
-        <activity android:name=".activity.mine.MineResetPasswordActivity" />
-        <activity android:name=".activity.mine.MineResetpaypswActivity" />
-        <activity android:name=".activity.mine.MyPartjobListActivity" />
-        <activity android:name=".activity.mine.MyPartjobDetailActivity" />
-        <activity android:name=".activity.mine.MineHelpActivity" />
-        <activity android:name=".activity.mine.MineCreditActivity" />
-        <activity android:name=".activity.mine.MinePersonalDataActivity" />
-        <activity android:name=".activity.mine.MineGoldExpenseActivity" />
-        <activity android:name=".activity.mine.MineGoldIncomeActivity" />
-        <activity android:name=".activity.mine.MineContactServiceActivity" />
-        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity" />
-        <activity android:name=".activity.mine.WeixinNumberActivity" />
-        <activity android:name=".activity.mine.ComplainActivity" />
+        <activity android:name=".activity.mine.MineAccountActivity"/>
+        <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
+        <activity android:name=".activity.mine.SettingsActivity"/>
+        <activity android:name=".activity.mine.MineGoldTopupActivity"/>
+        <activity android:name=".activity.mine.MineSuggestionActivity"/>
+        <activity android:name=".activity.mine.MineGoldWithdrawActivity"/>
+        <activity android:name=".activity.mine.MineResetPasswordActivity"/>
+        <activity android:name=".activity.mine.MineResetpaypswActivity"/>
+        <activity android:name=".activity.mine.MyPartjobListActivity"/>
+        <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
+        <activity android:name=".activity.mine.MineCreditActivity"/>
+        <activity android:name=".activity.mine.MinePersonalDataActivity"/>
+        <activity android:name=".activity.mine.MineGoldExpenseActivity"/>
+        <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
+        <activity android:name=".activity.mine.MineContactServiceActivity"/>
+        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
+        <activity android:name=".activity.mine.WeixinNumberActivity"/>
+        <activity android:name=".activity.mine.ComplainActivity"/>
         <activity android:name=".activity.mine.SafeCheckActivity" />
         <activity android:name=".activity.mine.ProfileImproveActivity" />
         <activity android:name=".activity.mine.ProfileImprove2Activity" />
-        <!-- User defined.  For test only  用户自定义的广播接收器 -->
-        <receiver
-            android:name=".jpush.AzJpushReceiver"
-            android:enabled="true">
+
+
+
+
+
+
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver android:name=".jpush.AzJpushReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />

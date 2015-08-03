@@ -52,6 +52,7 @@
     <string name="mine_contact_service_tel_num">057122956566</string>
     <!--完善资料-->
     <string name="profile_improve_warning">请填写真实资料，否则会影响后期认证导致部分功能无法正常使用</string>
+    <string name="tip_no_data">什么都木有，你走吧~走吧~吧~</string>
 
     <!--重置支付密码-->
 <string name="mine_reset_pay_psw_card_number_tip">请输入与帐号验证一致的证件号码</string>

@@ -27,7 +27,9 @@ public interface BizConstant {
     String BTZ_STU_08 = "stu08";//上下线
     String BTZ_STU_10 = "stu10";//老友列表
     String BTZ_STU_11 = "stu11";//个人信用分查询
-    String BTZ_STU_12 = "stu12";
+    String BTZ_STU_12 = "stu12";//我的评语列表查询
+    String BTZ_STU_13 = "stu13";//评价
+    String BTZ_STU_15 = "stu15";//添加老友
 
     /**
      * partjob
@@ -43,13 +45,26 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_09 = "partjob09";//手机端兼职列表查询（包含特殊搜索）
     String BIZ_PARTTIME_JOB_10 = "partjob10";//兼职标签详情列表查询
     String BIZ_PARTTIME_JOB_11 = "partjob11";//帮助列表查询
+    String BIZ_PARTTIME_JOB_12 = "partjob12";//评论
+    String BIZ_PARTTIME_JOB_13 = "partjob13";//立即帮助
+    String BIZ_PARTTIME_JOB_14 = "partjob14";//提问回答
+    String BIZ_PARTTIME_JOB_15 = "partjob15";//答案列表查询
     String BIZ_PARTTIME_JOB_16 = "partjob16";//发布即时型求助
     String BIZ_PARTTIME_JOB_17 = "partjob17";//发布问答型求助
+    String BIZ_PARTTIME_JOB_18 = "partjob18";//我的求助列表
+    String BIZ_PARTTIME_JOB_19 = "partjob19";//求助详情
+    String BIZ_PARTTIME_JOB_20 = "partjob20";//取消求助
     String BIZ_PARTTIME_JOB_21 = "partjob21";//举报
-    String BIZ_PARTTIME_JOB_24 = "partjob24";
+    String BIZ_PARTTIME_JOB_22 = "partjob22";//确认付款
+    String BIZ_PARTTIME_JOB_23 = "partjob23";//我的提问列表
+    String BIZ_PARTTIME_JOB_24 = "partjob24";//我的帮助列表
     String BIZ_PARTTIME_JOB_27 = "partjob27";
     String BIZ_PARTTIME_JOB_28 = "partjob28";//问答型求助发布
     String BIZ_PARTTIME_JOB_29 = "partjob29";//评论列表查询
+    String BIZ_PARTTIME_JOB_30 = "partjob30";//取消评论、取消赞
+    String BIZ_PARTTIME_JOB_31 = "partjob31";//打赏
+    String BIZ_PARTTIME_JOB_33 = "partjob33";//完成帮助
+    String BIZ_PARTTIME_JOB_34 = "partjob34";//匿名和非匿名切换
 
     /**
      * school

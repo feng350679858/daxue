@@ -3,7 +3,7 @@
     android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_more_pop"
-    android:divider="@drawable/pop_divider"
+    android:divider="@drawable/field_divider_dark"
     android:dividerPadding="5dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"

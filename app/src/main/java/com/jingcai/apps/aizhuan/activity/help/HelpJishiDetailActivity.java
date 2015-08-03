@@ -7,13 +7,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -31,8 +30,6 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.markmao.pulltorefresh.widget.XListView;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +42,8 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
-    private TextView tv_help;
+    private CheckBox cb_jishi_help;
     private EditText et_reploy_comment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +64,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
         final ImageView iv_func = (ImageView) findViewById(R.id.iv_func);
         iv_func.setVisibility(View.VISIBLE);
-        iv_func.setImageResource(R.drawable.icon_more1);
+        iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,9 +131,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
 
-        tv_help = (TextView) findViewById(R.id.tv_help);
-        tv_help.setVisibility(View.VISIBLE);//帮TA
-        findViewById(R.id.layout_help).setOnClickListener(new View.OnClickListener() {
+        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
+        cb_jishi_help.setVisibility(View.VISIBLE);//帮TA
+        findViewById(R.id.layout_jishi_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showToast("显示帮助确认弹窗");

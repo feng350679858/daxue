@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:clickable="true">
 
         <RelativeLayout
@@ -34,7 +34,7 @@
                 android:drawableStart="@drawable/ic_launcher"
                 android:gravity="center_horizontal"
                 android:text="当前无可用账户 立即绑定"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:textSize="18sp" />
 
             <ImageView
@@ -49,7 +49,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:layout_marginTop="10dp"
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
@@ -69,7 +69,7 @@
             android:hint="当前可用金币22,134金币"
             android:layout_marginLeft="30dp"
             android:textColorHint="@color/normal_grey"
-            android:textColor="@color/font_red"
+            android:textColor="@color/red"
             android:textSize="16sp"
             android:layout_weight="1"
             android:background="@null"
@@ -78,7 +78,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:layout_marginTop="10dp"
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
@@ -103,7 +103,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/sys_setting_field_bg"
+        android:background="@drawable/list_item_bg"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -126,7 +126,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:background="@color/red_normal"
+        android:background="@color/red"
         android:text="提现"
         android:textSize="20sp"
         android:textColor="#FFFFFF"/>

@@ -19,7 +19,7 @@
                 android:id="@+id/tv_financial_terms_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/font_normal"
+                android:textColor="@color/normal_grey"
                 android:lineSpacingMultiplier="1.2"/>
         </LinearLayout>
     </ScrollView>

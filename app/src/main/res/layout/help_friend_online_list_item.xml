@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:background="@drawable/help_grade"
+                    android:background="@drawable/level_bg_1_5"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
                     android:text="V1"
@@ -65,5 +65,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/field_divider" />
+        android:background="@drawable/field_divider_grey" />
 </LinearLayout>

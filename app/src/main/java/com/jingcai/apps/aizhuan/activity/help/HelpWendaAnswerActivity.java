@@ -43,7 +43,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
 
         final ImageView iv_func = (ImageView) findViewById(R.id.iv_func);
         iv_func.setVisibility(View.VISIBLE);
-        iv_func.setImageResource(R.drawable.icon_more1);
+        iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,29 +112,29 @@ public class HelpWendaAnswerActivity extends BaseActivity {
 
     private void initView() {
         boolean flag = System.currentTimeMillis() % 2 == 0;
-        if (flag) {
-            (tv_reward = findViewById(R.id.tv_reward)).setVisibility(View.VISIBLE);
-            (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.GONE);
-
-            //打赏
-            findViewById(R.id.layout_reward).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class));
-                }
-            });
-        } else {
-            (tv_reward = findViewById(R.id.tv_reward)).setVisibility(View.GONE);
-            (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.VISIBLE);
-
-            //重新编辑
-            findViewById(R.id.layout_reward).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaEditActivity.class));
-                }
-            });
-        }
+//        if (flag) {
+//            (tv_reward = findViewById(R.id.tv_reward)).setVisibility(View.VISIBLE);
+//            (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.GONE);
+//
+//            //打赏
+//            findViewById(R.id.layout_wenda_answer_reward).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class));
+//                }
+//            });
+//        } else {
+//            (tv_reward = findViewById(R.id.tv_reward)).setVisibility(View.GONE);
+//            (tv_reedit = findViewById(R.id.tv_reedit)).setVisibility(View.VISIBLE);
+//
+//            //重新编辑
+//            findViewById(R.id.layout_wenda_answer_reward).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(new Intent(HelpWendaAnswerActivity.this, HelpWendaEditActivity.class));
+//                }
+//            });
+//        }
 
         findViewById(R.id.layout_comment).setOnClickListener(new View.OnClickListener() {
             @Override

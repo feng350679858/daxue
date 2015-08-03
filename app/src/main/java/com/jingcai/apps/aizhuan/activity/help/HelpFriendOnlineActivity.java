@@ -23,7 +23,6 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.qrcode.zxing.activity.CaptureActivity;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
