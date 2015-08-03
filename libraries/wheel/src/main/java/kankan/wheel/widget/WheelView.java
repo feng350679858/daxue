@@ -359,7 +359,8 @@ public class WheelView extends View {
 				}
 				index %= itemCount;
 			} else{
-				currentItem=0; //改（原来是return;）
+				currentItem=0; //增
+				return;
 			}
 		}
 		if (index != currentItem) {
@@ -519,8 +520,8 @@ public class WheelView extends View {
 			return itemHeight;
 		}
 
-		if (itemsLayout != null && itemsLayout.getChildAt(0) != null) {
-			itemHeight = itemsLayout.getChildAt(0).getHeight();
+		if (itemsLayout != null && itemsLayout.getChildAt(currentItem) != null) {//改
+			itemHeight = itemsLayout.getChildAt(currentItem).getHeight();//改
 			return itemHeight;
 		}
 

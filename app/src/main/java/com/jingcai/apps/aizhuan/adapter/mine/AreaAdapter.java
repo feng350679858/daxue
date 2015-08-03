@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.adapter.mine.wheel;
+package com.jingcai.apps.aizhuan.adapter.mine;
 
 import android.content.Context;
 import android.view.View;
