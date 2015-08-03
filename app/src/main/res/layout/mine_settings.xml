@@ -10,10 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:divider="@drawable/field_divider_grey"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:showDividers="middle">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/layout_isvisiable"
@@ -38,43 +35,26 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp" />
-            <!--
-            <Switch
-                android:id="@+id/switch_setting_isvisiable"
-                android:layout_width="120dip"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:maxHeight="40dp"
-                android:minWidth="120dp"
-                android:switchMinWidth="56dp"
-                android:textOff=""
-                android:textOn=""
-                android:thumb="@drawable/switch_thumb"
-                android:thumbTextPadding="16dp"
-                android:track="@drawable/track" />
-
-
-                android:thumb="@drawable/thumb"
-                android:track="@drawable/track"
-                android:thumb="@drawable/icon_switch_thumb"
-                android:track="@drawable/switch_bg"
-            -->
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="@dimen/list_item_padding"
+            android:background="@color/divider_color"/>
+
         <LinearLayout
+            android:id="@+id/ll_sys_setting_invite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:background="@drawable/list_item_bg"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_sys_setting_invite"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/list_item_bg"
-                android:clickable="true"
                 android:padding="10dp"
                 android:text="朋友邀请"
                 android:textColor="@color/important_dark"
@@ -88,18 +68,24 @@
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="@dimen/list_item_padding"
+            android:background="@color/divider_color"/>
+
         <LinearLayout
+            android:id="@+id/ll_sys_setting_suggestion"
+            android:background="@drawable/list_item_bg"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_sys_setting_suggestion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/list_item_bg"
-                android:clickable="true"
                 android:padding="10dp"
                 android:text="我有话说"
                 android:textColor="@color/important_dark"
@@ -119,24 +105,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:divider="@drawable/field_divider_grey"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:showDividers="middle">
+        android:orientation="vertical">
 
 
         <LinearLayout
+            android:id="@+id/ll_sys_setting_modify_psw"
+            android:clickable="true"
+            android:background="@drawable/list_item_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_sys_setting_modify_psw"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/list_item_bg"
-                android:clickable="true"
                 android:padding="10dp"
                 android:text="修改密码"
                 android:textColor="@color/important_dark"
@@ -150,18 +133,24 @@
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="@dimen/list_item_padding"
+            android:background="@color/divider_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_sys_setting_update"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:background="@drawable/list_item_bg"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_sys_setting_update"
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/list_item_bg"
-                android:clickable="true"
                 android:padding="10dp"
                 android:text="版本更新"
                 android:textColor="@color/important_dark"
@@ -175,29 +164,25 @@
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:divider="@drawable/field_divider_grey"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:showDividers="middle">
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginLeft="@dimen/list_item_padding"
+        android:background="@color/divider_color"/>
 
         <LinearLayout
+            android:id="@+id/ll_sys_setting_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:background="@drawable/list_item_bg"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_sys_setting_about_us"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/list_item_bg"
-                android:clickable="true"
                 android:padding="10dp"
                 android:text="关于我们"
                 android:textColor="@color/important_dark"
@@ -210,7 +195,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
-    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_sys_setting_logout"
@@ -219,6 +204,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/list_item_bg"
         android:text="退出登录"
-        android:textColor="@color/red"
-        android:textSize="18sp" />
+        android:textColor="@color/main_yellow"
+        android:textSize="18sp"/>
+
 </LinearLayout>

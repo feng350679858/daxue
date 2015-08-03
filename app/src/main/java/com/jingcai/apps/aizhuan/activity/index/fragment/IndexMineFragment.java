@@ -25,7 +25,6 @@ import com.jingcai.apps.aizhuan.service.AzService;
  */
 public class IndexMineFragment extends BaseFragment {
 
-    private View lastPerformItem;
     private View mainView;
     private AzService azService;
     @Override

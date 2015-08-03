@@ -46,21 +46,9 @@ public class SlideButton extends View{
     }
 
     private void initBitmap() {
-        slideButtonBG = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        switchBG_on = BitmapFactory.decodeResource(getResources(), R.drawable.abc_btn_switch_to_on_mtrl_00001);
-        switchBG_off = BitmapFactory.decodeResource(getResources(), R.drawable.abc_btn_switch_to_on_mtrl_00012);
-//        setClickable(true);
-//
-//        setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                currentState = !currentState;
-//                invalidate();
-//                if (null != mListener) {
-//                    mListener.onToggleStateChange(currentState);
-//                }
-//            }
-//        });
+        slideButtonBG = BitmapFactory.decodeResource(getResources(), R.drawable.switch_thumb);
+        switchBG_on = BitmapFactory.decodeResource(getResources(), R.drawable.switch_bg_on);
+        switchBG_off = BitmapFactory.decodeResource(getResources(), R.drawable.switch_bg_off);
     }
 
     int startX = 0;

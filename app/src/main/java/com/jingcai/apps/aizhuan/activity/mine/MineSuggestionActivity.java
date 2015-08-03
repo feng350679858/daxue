@@ -36,10 +36,13 @@ public class MineSuggestionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_suggestion);
         messageHandler = new MessageHandler(this);
+        initHeader();
+        initView();
+    }
+
+    private void initHeader() {
         ((TextView)findViewById(R.id.tv_content)).setText("我有话说");
-        ((TextView)findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.tv_content)).setText("提交");
-       // findViewById(R.id.tv_info).setVisibility(View.GONE);
+        findViewById(R.id.tv_func).setVisibility(View.VISIBLE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,11 +50,6 @@ public class MineSuggestionActivity extends BaseActivity {
                 finish();
             }
         });
-        if(UserSubject.isLogin()){
-            initView();  //初始化控件
-        }else{
-            startActivityForLogin();
-        }
     }
 
     /**
@@ -63,37 +61,41 @@ public class MineSuggestionActivity extends BaseActivity {
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AzExecutor().execute(new Runnable() {
+                submitSuggestion();
+            }
+        });
+
+    }
+
+    private void submitSuggestion() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                final AzService azService = new AzService(MineSuggestionActivity.this);
+                Advice03Request req = new Advice03Request();
+                Advice03Request.Suggestion suggestion = req.new Suggestion();
+                suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //安卓端
+                suggestion.setContent(mTxtContent.getText().toString());
+                suggestion.setType("2"); //建议
+                suggestion.setStudentid(UserSubject.getStudentid());
+                req.setSuggestion(suggestion);
+                azService.doTrans(req, Advice03Response.class,new AzService.Callback<Advice03Response>() {
                     @Override
-                    public void run() {
-                        final AzService azService = new AzService(MineSuggestionActivity.this);
-                        Advice03Request req = new Advice03Request();
-                        Advice03Request.Suggestion suggestion = req.new Suggestion();
-                        suggestion.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID); //安卓端
-                        suggestion.setContent(mTxtContent.getText().toString());
-                        suggestion.setType("2"); //建议
-                        suggestion.setStudentid(UserSubject.getStudentid());
-                        req.setSuggestion(suggestion);
-                        azService.doTrans(req, Advice03Response.class,new AzService.Callback<Advice03Response>() {
-                            @Override
-                            public void success(Advice03Response resp) {
-                                ResponseResult result = resp.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
-                                } else {
-                                    messageHandler.postMessage(0);
-                                }
-                            }
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
+                    public void success(Advice03Response resp) {
+                        ResponseResult result = resp.getResult();
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(1, result.getMessage());
+                        } else {
+                            messageHandler.postMessage(0);
+                        }
+                    }
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
                     }
                 });
             }
         });
-
     }
 
 
