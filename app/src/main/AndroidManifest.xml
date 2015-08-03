@@ -123,7 +123,6 @@
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
-        <activity android:name=".activity.message.MessageCommendActivity" />
         <activity android:name=".activity.message.MessageMerchantActivity" />
         <activity android:name=".activity.message.MessageNotificationActivity" />
         <activity android:name=".activity.message.NotificationDetailActivity" />
