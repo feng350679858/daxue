@@ -55,5 +55,7 @@
     <string name="tip_no_data">什么都木有，你走吧~走吧~吧~</string>
 
     <!--重置支付密码-->
-<string name="mine_reset_pay_psw_card_number_tip">请输入与帐号验证一致的证件号码</string>
+    <string name="mine_reset_pay_psw_card_number_tip">请输入与帐号验证一致的证件号码</string>
+    <!-- 联系客服-QQ -->
+    <string name="support_staff_qq_url"><![CDATA[mqqwpa://im/chat?chat_type=wpa&uin=2841329585]]></string>
 </resources>
