@@ -1,377 +1,457 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
     android:orientation="vertical">
-    <include layout="@layout/include_header"/>
+
+    <include layout="@layout/include_header" />
+
     <LinearLayout
         android:id="@+id/ll_mine_profile_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp">
+        android:background="@drawable/index_index_recommend_bg"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_logopath"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_launcher"
-            />
+            android:src="@drawable/icon_share_qq" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_right_triangle"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/icon_right_triangle" />
     </LinearLayout>
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
-    >
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="姓名"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_index_tab_mine_account"
-            android:drawableStart="@drawable/icon_index_tab_mine_account"
-            android:drawablePadding="10dp"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <TextView
-            android:id="@+id/tv_profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="无所谓"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="性别"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_index_tab_mine_account"
-            android:drawableStart="@drawable/icon_index_tab_mine_account"
-            android:drawablePadding="10dp"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <TextView
-            android:id="@+id/tv_profile_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="男"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="所在地"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_index_tab_mine_account"
-            android:drawableStart="@drawable/icon_index_tab_mine_account"
-            android:drawablePadding="10dp"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <TextView
-            android:id="@+id/tv_profile_areaname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="浙江 杭州 西湖区"/>
-    </LinearLayout>
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:paddingRight="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
-        >
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_person_info_name"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_person_info_name"
+                android:gravity="center_vertical"
+                android:text="姓名"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="无所谓"
+                android:textColor="@color/assist_grey" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_person_info_gender"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_person_info_gender"
+                android:gravity="center_vertical"
+                android:text="性别"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_profile_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:textColor="@color/assist_grey" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_person_info_location"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_person_info_location"
+                android:gravity="center_vertical"
+                android:text="所在地"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_profile_areaname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="浙江 杭州 西湖区"
+                android:textColor="@color/assist_grey" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/ll_mine_profile_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:background="@drawable/index_index_recommend_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="手机"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_phone"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_phone"
+                android:gravity="center_vertical"
+                android:text="手机"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15897854687"
-                android:drawableRight="@drawable/icon_right_triangle"
                 android:drawableEnd="@drawable/icon_right_triangle"
-                android:drawablePadding="10dp"/>
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/icon_right_triangle"
+                android:text="15897854687"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/divider_color" />
+
         <LinearLayout
             android:id="@+id/ll_mine_profile_qq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:background="@drawable/index_index_recommend_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="QQ"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_qq"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_qq"
+                android:gravity="center_vertical"
+                android:text="QQ"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_qq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="295476218"
-                android:drawableRight="@drawable/icon_right_triangle"
                 android:drawableEnd="@drawable/icon_right_triangle"
-                android:drawablePadding="10dp"/>
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/icon_right_triangle"
+                android:text="295476218"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/divider_color" />
+
         <LinearLayout
             android:id="@+id/ll_mine_profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:background="@drawable/index_index_recommend_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp">
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="邮箱"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_email"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_email"
+                android:gravity="center_vertical"
+                android:text="邮箱"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="njjgdi@163.com"
-                android:drawableRight="@drawable/icon_right_triangle"
                 android:drawableEnd="@drawable/icon_right_triangle"
-                android:drawablePadding="10dp"/>
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/icon_right_triangle"
+                android:text="njjgdi@163.com"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:paddingRight="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
-        >
+        android:paddingRight="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="学校"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_school"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_school"
+                android:gravity="center_vertical"
+                android:text="学校"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_schoolname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="浙江工业大学"/>
+                android:text="浙江工业大学"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="入学年份"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_joindate"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_joindate"
+                android:gravity="center_vertical"
+                android:text="入学年份"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_joindate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2012"/>
+                android:text="2012"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="院系"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
-                android:drawablePadding="10dp"
-                />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <TextView
-                android:id="@+id/tv_profile_collegename"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="艺术与设计"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="所在专业"
-                android:textSize="18sp"
                 android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                android:drawableStart="@drawable/icon_index_tab_mine_account"
+                android:drawableLeft="@drawable/icon_person_info_college"
                 android:drawablePadding="10dp"
-                />
+                android:drawableStart="@drawable/icon_person_info_college"
+                android:gravity="center_vertical"
+                android:text="院系"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_profile_collegename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="艺术与设计"
+                android:textColor="@color/assist_grey" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_person_info_professional"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_person_info_professional"
+                android:gravity="center_vertical"
+                android:text="专业"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_profile_professional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="视觉传达"/>
+                android:text="视觉传达"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -27,9 +27,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_share_qq"
-            app:border_color="@color/white"
-            app:border_width="2dp" />
+            android:src="@drawable/icon_share_qq" />
     </FrameLayout>
 
     <LinearLayout
@@ -61,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="浙江理工大学"
-                android:textColor="@color/normal_grey"
+                android:textColor="@color/important_dark"
                 android:textSize="14sp" />
 
             <TextView
@@ -69,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="人文学院"
-                android:textColor="@color/normal_grey"
+                android:textColor="@color/important_dark"
                 android:textSize="14sp" />
         </LinearLayout>
 
