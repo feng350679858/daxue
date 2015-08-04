@@ -96,6 +96,16 @@ public class StringUtil {
      * 规范公式查看
      * @see java.text.DecimalFormat
      * @param value 浮点数
+     * @return 格式化字符串
+     */
+    public static String getFormatFloat(float value){
+        return getFormatFloat(value, "#,###.00");
+    }
+    /**
+     * 根据传入的浮点数和规范公式返回格式化的数字字符串
+     * 规范公式查看
+     * @see java.text.DecimalFormat
+     * @param value 浮点数
      * @param formater 规范公式
      * @return 格式化字符串
      */

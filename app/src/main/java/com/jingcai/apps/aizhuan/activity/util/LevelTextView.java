@@ -31,10 +31,10 @@ public class LevelTextView extends TextView {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LevelTextView, defStyleAttr, 0);
-        int level = a.getInt(R.styleable.LevelTextView_level, 0);
+        int level = a.getInt(R.styleable.LevelTextView_level, -1);
         a.recycle();
 
-        if (0 != level) {
+        if (-1 != level) {
             setText("V" + level);
             setBackgroundResource(getColor(level));
         }
@@ -54,7 +54,7 @@ public class LevelTextView extends TextView {
     }
 
     private int getColor(int level) {
-        if (level >= 1 && level <= 5) {
+        if (level >= 0 && level <= 5) {
             return R.drawable.level_bg_1_5;
         } else if (level >= 6 && level <= 10) {
             return R.drawable.level_bg_6_10;

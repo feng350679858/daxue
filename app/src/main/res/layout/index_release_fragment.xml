@@ -5,42 +5,6 @@
     android:background="@color/content_background"
     android:orientation="vertical">
 
-    <!--<Button
-        android:id="@+id/button_start_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="开始计数" />
-
-    <Button
-        android:id="@+id/button_show_unread"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="显示未读" />
-
-    <Button
-        android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="重置计数" />
-
-    <Button
-        android:id="@+id/button_jishi_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="及时求助" />
-
-    <Button
-        android:id="@+id/button_wenda_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="问答求助" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
