@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
-import com.jingcai.apps.aizhuan.activity.mine.MineAccountActivity;
+import com.jingcai.apps.aizhuan.activity.mine.gold.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;

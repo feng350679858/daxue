@@ -48,12 +48,9 @@ public class ComplainActivity extends BaseActivity {
         setContentView(R.layout.mine_partjob_complain);
 
         ((TextView)findViewById(R.id.tv_content)).setText("投诉");
-        findViewById(R.id.iv_func).setVisibility(View.GONE);
-        findViewById(R.id.iv_bird_badge).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
                 finish();
             }
         });

@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,20 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldExpenseActivity;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldIncomeActivity;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldTopupActivity;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldWithdrawActivity;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineResetpaypswActivity;
+import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -32,7 +25,6 @@ import com.jingcai.apps.aizhuan.service.business.game.game10.Game10Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -49,7 +41,9 @@ public class MineAccountActivity extends BaseActivity {
     private TextView mTvIncome;
     private TextView mTvBalance;
     private TextView mTvFreeze;
-    private PopupWin mTipWin;
+
+    private IOSPopWin mTipWin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +51,7 @@ public class MineAccountActivity extends BaseActivity {
         setContentView(R.layout.mine_gold_index);
         azService = new AzService(this);
         messageHandler = new MessageHandler(this);
+        mTipWin = new IOSPopWin(this);
         initHeader();
         initView();
     }
@@ -78,11 +73,8 @@ public class MineAccountActivity extends BaseActivity {
     }
 
     private void initView() {
-
-
         initComponent();
         initEvents();
-
     }
 
     /**
@@ -114,43 +106,7 @@ public class MineAccountActivity extends BaseActivity {
         });
     }
 
-    private void showWindow(String... args) {
-        if(null == mTipWin) {
-            final View decorView = MineAccountActivity.this.getWindow().getDecorView();
-            View contentView = LayoutInflater.from(MineAccountActivity.this).inflate(R.layout.pop_withdraw_validate_tip, null);
-            mTipWin = PopupWin.Builder.create(this)
-                    .setParentView(decorView)
-                    .setContentView(contentView)
-                    .build();
-            TextView tipText = (TextView) contentView.findViewById(R.id.tv_tip_text);
-            Button cancelBtn = (Button) contentView.findViewById(R.id.btn_account_withdraw_cancel);
-            Button confirmBtn = (Button) contentView.findViewById(R.id.btn_account_withdraw_confirm);
-            if(args.length >= 2){
-                tipText.setText(args[0]);
-                cancelBtn.setText(args[1]);
-                if(args.length ==2){
-                    confirmBtn.setVisibility(View.GONE);
-                }
-                if(args.length == 3){
-                    confirmBtn.setText(args[2]);
-                }
-            }
 
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mTipWin.dismiss();
-                }
-            });
-            confirmBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO 跳入验证页 本 页面也finish
-                }
-            });
-        }
-        mTipWin.show(Gravity.CENTER, 0, 0);
-    }
 
     private void initComponent() {
         mTvIncome = (TextView) findViewById(R.id.tv_mine_gold_index_income);
@@ -177,7 +133,7 @@ public class MineAccountActivity extends BaseActivity {
                         intent = new Intent(thisActivity, MineResetpaypswActivity.class);
                         break;
                     case R.id.rl_manage_financial_account://管理金融账号
-                        //TODO 跳入金融账号
+                        intent = new Intent(thisActivity,AccountFinancialActivity.class);
                         break;
                     case R.id.btn_mine_gold_account_withdraw://取款
                         checkIdentity();
@@ -198,6 +154,14 @@ public class MineAccountActivity extends BaseActivity {
         findViewById(R.id.rl_manage_financial_account).setOnClickListener(activityChangeListener);
         findViewById(R.id.btn_mine_gold_account_withdraw).setOnClickListener(activityChangeListener);
         findViewById(R.id.btn_mine_gold_account_topup).setOnClickListener(activityChangeListener);
+
+        mTipWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
+            @Override
+            public void onConfirmButtonClick() {
+                // TODO: 2015/8/4  
+                showToast("进入身份验证Activity");
+            }
+        });
     }
 
     private void initData() {
@@ -282,11 +246,11 @@ public class MineAccountActivity extends BaseActivity {
                         case "0":
                         case "3":
                             tip = getString(R.string.gold_withdraw_validate_identity_not_pass);
-                            showWindow(tip,"下次再说","去吧去吧");
+                            mTipWin.showWindow("身份验证",tip,"下次再说","去吧去吧");
                             break;
                         case "1":
                             tip = getString(R.string.gold_withdraw_validate_identity_wait);
-                            showWindow(tip,"我知道了");
+                            mTipWin.showWindow("身份验证", tip,"我知道了");
                             break;
                         case "2":
                             Intent intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);

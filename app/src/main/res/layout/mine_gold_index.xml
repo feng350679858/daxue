@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:text="近一周收入（金币）"
+            android:text="近一周收入（元）"
             android:textColor="@color/important_dark" />
 
         <LinearLayout
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/divider_height"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/divider_color" />
+            android:background="@color/lighter_yellow" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,8 +86,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总金额(金币)"
-                    android:textColor="@color/normal_grey"
+                    android:text="总金额(元)"
+                    android:textColor="@color/golden"
                     android:textSize="14dp" />
 
                 <TextView
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/important_dark"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <View
@@ -112,8 +112,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="冻结中(金币)"
-                    android:textColor="@color/normal_grey"
+                    android:text="冻结中(元)"
+                    android:textColor="@color/golden"
                     android:textSize="14dp" />
 
                 <TextView
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/important_dark"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -208,13 +208,13 @@
             android:clickable="true"
             android:padding="@dimen/list_item_padding">
 
-            <TextView
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:text="管理提现账号"
+                android:text="管理金融账号"
                 style="@style/title"/>
 
             <ImageView
@@ -247,7 +247,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:text="修改提现密码"
+                android:text="修改支付密码"
                 style="@style/title" />
 
             <ImageView

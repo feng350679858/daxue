@@ -12,6 +12,7 @@
         android:background="@drawable/white_radius_bg"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_ios_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -21,7 +22,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_tip_text"
+            android:id="@+id/tv_ios_dialog_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -42,7 +43,7 @@
             android:showDividers="middle">
 
             <Button
-                android:id="@+id/btn_account_withdraw_cancel"
+                android:id="@+id/btn_ios_dialog_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -52,7 +53,7 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btn_account_withdraw_confirm"
+                android:id="@+id/btn_ios_dialog_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

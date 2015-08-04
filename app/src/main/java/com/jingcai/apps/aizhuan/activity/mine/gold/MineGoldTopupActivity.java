@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountChoiceListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountChoiceListAdapter;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -212,7 +212,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                 final PopupWindow popupWindow = new PopupWindow(dialogView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 final EditText txtPassword = (EditText) dialogView.findViewById(R.id.et_account_withdraw_pay_psw);
                 final View decorView =  MineGoldTopupActivity.this.getWindow().getDecorView();
-                dialogView.findViewById(R.id.btn_account_withdraw_cancel).setOnClickListener(new View.OnClickListener() {
+                dialogView.findViewById(R.id.btn_ios_dialog_cancel).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ObjectAnimator.ofFloat(decorView, "alpha", 0.5f, 1.0f).setDuration(500).start();
@@ -220,7 +220,7 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
 
                     }
                 });
-                dialogView.findViewById(R.id.btn_account_withdraw_confirm).setOnClickListener(new View.OnClickListener() {
+                dialogView.findViewById(R.id.btn_ios_dialog_confirm).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String payPsw = txtPassword.getText().toString();

@@ -48,7 +48,7 @@
             android:showDividers="middle">
 
             <Button
-                android:id="@+id/btn_account_withdraw_cancel"
+                android:id="@+id/btn_ios_dialog_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,7 +58,7 @@
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btn_account_withdraw_confirm"
+                android:id="@+id/btn_ios_dialog_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
