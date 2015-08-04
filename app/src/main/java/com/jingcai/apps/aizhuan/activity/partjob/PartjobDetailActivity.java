@@ -45,6 +45,7 @@ import java.util.Date;
  * Created by chenchao on 15/7/14.
  */
 public class PartjobDetailActivity extends BaseActivity {
+    private final String TAG="PartjobDetailActivity";
     private String partjobid, logopath;
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
@@ -185,11 +186,13 @@ public class PartjobDetailActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("获取报名详情出错：" + msg.obj);
+                    showToast("获取报名详情出错");
+                    Log.i(TAG,"获取报名详情出错：" + msg.obj);
                     break;
                 }
                 case 2: {
-                    showToast("报名出错：" + msg.obj);
+                    showToast("报名出错");
+                    Log.i(TAG, "报名出错：" + msg.obj);
                     break;
                 }
                 case 3: {

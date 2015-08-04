@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="@color/content_background"
     android:orientation="vertical">
+
     <include layout="@layout/include_header" />
 
     <LinearLayout
@@ -41,14 +44,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="@dimen/list_item_padding"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_sys_setting_invite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:background="@drawable/list_item_bg"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -72,14 +75,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="@dimen/list_item_padding"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_sys_setting_suggestion"
-            android:background="@drawable/list_item_bg"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/list_item_bg"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -110,10 +113,10 @@
 
         <LinearLayout
             android:id="@+id/ll_sys_setting_modify_psw"
-            android:clickable="true"
-            android:background="@drawable/list_item_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/list_item_bg"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -137,14 +140,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="@dimen/list_item_padding"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_sys_setting_update"
-            android:clickable="true"
             android:layout_width="match_parent"
-            android:background="@drawable/list_item_bg"
             android:layout_height="wrap_content"
+            android:background="@drawable/list_item_bg"
+            android:clickable="true"
             android:gravity="center_vertical">
 
             <TextView
@@ -164,37 +167,38 @@
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:layout_marginLeft="@dimen/list_item_padding"
-        android:background="@color/divider_color"/>
+        android:background="@color/divider_color" />
 
-        <LinearLayout
-            android:id="@+id/ll_sys_setting_about_us"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/ll_sys_setting_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/list_item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:background="@drawable/list_item_bg"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="关于我们"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:text="关于我们"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/icon_right_triangle" />
-        </LinearLayout>
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_right_triangle" />
+    </LinearLayout>
 
 
     <Button
@@ -205,6 +209,6 @@
         android:background="@drawable/list_item_bg"
         android:text="退出登录"
         android:textColor="@color/main_yellow"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
 </LinearLayout>

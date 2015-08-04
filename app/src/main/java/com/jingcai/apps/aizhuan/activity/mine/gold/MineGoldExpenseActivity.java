@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.mine.gold;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import java.util.List;
  * Created by Administrator on 2015/7/18.
  */
 public class MineGoldExpenseActivity extends BaseActivity implements XListView.IXListViewListener{
+    private final String TAG="MineGoldExpenseActivity";
     private XListView mListView;
     private MessageHandler messageHandler;
     private AccountStreamOutputListAdapter mListAdapter;
@@ -194,7 +196,8 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
                 case 1 : {
                     try {
                         finishLoading();
-                        showToast("获取流水失败:" + msg.obj);
+                        showToast("获取流水失败");
+                        Log.i(TAG,"获取流水失败:" + msg.obj);
                     }finally {
                         actionLock.unlock();
                     }

@@ -19,14 +19,12 @@
              android:layout_width="65dp"
              android:layout_height="65dp"
              android:layout_gravity="center"
-             android:src="@drawable/icon_share_qq"
              />
 
          <TextView
              android:id="@+id/tv_mine_credit_name"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="陈秋实"
              android:textColor="@color/important_dark"
              android:textSize="22sp"
              android:layout_marginTop="20dp"/>
@@ -35,7 +33,6 @@
              android:id="@+id/tv_mine_credit_school"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="浙江理工大学 人文学院"
              android:textColor="@color/important_dark"
              android:textSize="20sp"
              android:layout_marginTop="10dp"/>
@@ -46,7 +43,6 @@
               android:layout_height="wrap_content"
               android:background="@drawable/rate_bg"
               android:gravity="center"
-              android:text="5.0"
               android:textColor="@color/important_dark"
               android:textSize="20sp"
               android:layout_marginTop="30dp"/>

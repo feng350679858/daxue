@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:text="冻结中(元)"
                     android:textColor="@color/golden"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_mine_gold_index_freeze"
@@ -277,20 +277,20 @@
                 android:id="@+id/btn_mine_gold_account_withdraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/index_index_recommend_bg"
-                android:text="提现"
                 android:textColor="@color/main_yellow"
+                android:background="@drawable/list_item_bg"
+                android:layout_weight="1"
+                android:text="提现"
                 android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_mine_gold_account_topup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/index_index_recommend_bg"
-                android:text="充值"
                 android:textColor="@color/main_yellow"
+                android:background="@drawable/list_item_bg"
+                android:layout_weight="1"
+                android:text="充值"
                 android:textSize="16sp" />
         </LinearLayout>
 
