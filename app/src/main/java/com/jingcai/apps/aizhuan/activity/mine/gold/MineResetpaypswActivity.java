@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
 import android.os.Bundle;

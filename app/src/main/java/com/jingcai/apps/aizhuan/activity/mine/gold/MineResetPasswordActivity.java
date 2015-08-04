@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.mine.SafeCheckActivity;
 
 /**
  * Created by Administrator on 2015/7/16.

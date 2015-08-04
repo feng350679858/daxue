@@ -1,47 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        >
-
-
+        android:background="@drawable/white_radius_bg"
+        android:orientation="vertical">
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:padding="10dp"
             android:text="身份验证"
-            android:textSize="22sp"
             android:textColor="@color/important_dark"
-            android:padding="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp">
-            <TextView
+            android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/tv_tip_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="您的身份还没有验证，还不能提现哦！赶快去验证吧~"
-            android:textSize="20sp"
-            android:textColor="@color/important_dark"
             android:layout_marginBottom="10dp"
-            />
-        </LinearLayout>
+            android:padding="15dp"
+            android:textColor="@color/important_dark"
+            android:textSize="16sp" />
+
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="1px"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/divider_color" />
 
         <LinearLayout
@@ -71,5 +62,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
+
 
