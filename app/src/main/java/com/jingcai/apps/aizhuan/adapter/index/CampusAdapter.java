@@ -123,27 +123,33 @@ public class CampusAdapter extends BaseAdapter {
 
             //点赞
             viewHolder.cb_jishi_like.setText(job.getPraisecount());
-            viewHolder.cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));
-            final CheckBox cb_jishi_like = viewHolder.cb_jishi_like;
+            viewHolder.cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
 
+            final CheckBox cb_jishi_like = viewHolder.cb_jishi_like;
             viewHolder.layout_jishi_like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     callback.jishi_like(cb_jishi_like, job);
                 }
             });
+
             //评论
             viewHolder.cb_jishi_comment.setText(job.getCommentcount());
-            if("1".equals(job.getStatus())){//即时帮助-求助中
-                viewHolder.cb_jishi_help.setText("帮TA");
+
+            //即时帮助-求助中,helperid为空表示有还未有人请求帮助
+            if("1".equals(job.getType()) && "1".equals(job.getStatus())
+                    && StringUtil.isEmpty(job.getHelperid())) {
+                final CheckBox cb_jishi_help = viewHolder.cb_jishi_help;
+                cb_jishi_help.setText("帮TA");
                 viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO 检查是否可以帮助，可以帮助显示确认对话框
+                        callback.jishi_help(cb_jishi_help, job);
                     }
                 });
-            }else{//显示状态
+            } else {//显示状态
                 viewHolder.cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+                viewHolder.layout_jishi_help.setOnClickListener(null);
             }
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
@@ -154,17 +160,16 @@ public class CampusAdapter extends BaseAdapter {
 
             //点赞
             viewHolder.cb_wenda_like.setText(job.getPraisecount());
-            //本人是否已经点赞
-            viewHolder.cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));
+            viewHolder.cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
+
             final CheckBox cb_wenda_like = viewHolder.cb_wenda_like;
             viewHolder.layout_wenda_like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean checked = cb_wenda_like.isChecked();
-                    cb_wenda_like.setChecked(!checked);
-                    Log.d("==", "-----------checked--" + !checked);
+                    callback.wenda_like(cb_wenda_like, job);
                 }
             });
+
             //评论
             viewHolder.cb_wenda_comment.setText(job.getCommentcount());
 
@@ -177,28 +182,34 @@ public class CampusAdapter extends BaseAdapter {
                 viewHolder.cb_wenda_help.setVisibility(View.VISIBLE);
                 viewHolder.cb_wenda_help_my.setVisibility(View.GONE);
             }
+            final CheckBox cb_wenda_help = viewHolder.cb_wenda_help;
+            final CheckBox cb_wenda_help_my = viewHolder.cb_wenda_help_my;
             viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(selfFlag){
-                        //TODO 我的帮助
+                        callback.wenda_help_my(cb_wenda_help_my, job);// 查看我的帮助
                     }else{
-                        //TODO 撰写
+                        callback.wenda_help(cb_wenda_help, job);// 撰写
                     }
                 }
             });
         }
 
-        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_image);
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_head_img);
         if(StringUtil.isNotEmpty(job.getSourcelevel())) {
             viewHolder.ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
         }else{
             viewHolder.ltv_level.setLevel(1);
         }
         viewHolder.tv_stu_name.setText(job.getSourcename());
-        viewHolder.tv_stu_college.setText(job.getSourcecollege());
+        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {//同校的显示学院信息
+            viewHolder.tv_stu_college.setText(job.getSourcecollege());
+        }else{
+            viewHolder.tv_stu_college.setText(job.getSourceschool());
+        }
         viewHolder.tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
-        viewHolder.tv_money.setText(job.getMoney());
+        viewHolder.tv_money.setText(StringUtil.getPrintMoney(job.getMoney()));
         viewHolder.tv_content.setText(job.getContent());
 
         viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
@@ -223,13 +234,6 @@ public class CampusAdapter extends BaseAdapter {
         regionList.addAll(list);
     }
 
-    public Partjob11Response.Parttimejob getMerchant(int position) {
-        if (position >= regionList.size()) {
-            return null;
-        }
-        return regionList.get(position);
-    }
-
     public class ViewHolder {
         public Partjob11Response.Parttimejob region;
         public View layout_help_content;
@@ -249,9 +253,9 @@ public class CampusAdapter extends BaseAdapter {
 
     public interface Callback{
         void jishi_like(CheckBox cb_jishi_like, Partjob11Response.Parttimejob job);
-        void wenda_like();
-        void jishi_help();
-        void wenda_help();
-        void wenda_help_my();
+        void wenda_like(CheckBox cb_wenda_like, Partjob11Response.Parttimejob job);
+        void jishi_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
+        void wenda_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
+        void wenda_help_my(CheckBox cb_wenda_help_my, Partjob11Response.Parttimejob job);
     }
 }

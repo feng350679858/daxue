@@ -20,7 +20,7 @@ public class TopToast2 {
 
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, height);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(view);
         toast.show();
     }

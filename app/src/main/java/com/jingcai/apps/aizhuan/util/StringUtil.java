@@ -92,6 +92,26 @@ public class StringUtil {
     }
 
     /**
+     * 格式化金额字符串
+     * @param moneyStr 金额字符串
+     * @return 格式化字符串
+     */
+    public static String getPrintMoney(String moneyStr){
+        float money = 0;
+        try {
+            money = Float.parseFloat(moneyStr);
+        }catch (Exception e){}
+        return getPrintMoney(money);
+    }
+    /**
+     * 格式化金额字符串
+     * @param money 金额
+     * @return 格式化字符串
+     */
+    public static String getPrintMoney(float money){
+        return getFormatFloat(money, "#,###.00");
+    }
+    /**
      * 根据传入的浮点数和规范公式返回格式化的数字字符串
      * 规范公式查看
      * @see java.text.DecimalFormat

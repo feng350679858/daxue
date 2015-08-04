@@ -104,7 +104,7 @@
     <!-- 帮助模块，工具条checkbox样式 -->
     <style name="help_checkbox_item">
         <item name="android:button">@null</item>
-        <item name="android:enabled">false</item>
+        <item name="android:clickable">false</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:textColor">@color/normal_grey</item>
         <item name="android:textSize">14sp</item>

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_help_jishi"
+    android:id="@+id/layout_help_wenda"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -10,6 +10,7 @@
     android:showDividers="middle">
 
     <LinearLayout
+        android:id="@+id/layout_wenda_like"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -17,20 +18,17 @@
         android:gravity="center"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/tv_wenda_answer_like"
+        <CheckBox
+            android:id="@+id/cb_wenda_like"
+            style="@style/help_checkbox_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_like"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="12"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
+            android:text="12" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_comment"
+        android:id="@+id/layout_wenda_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -38,49 +36,41 @@
         android:gravity="center"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/tv_wenda_answer_comment"
+        <CheckBox
+            android:id="@+id/cb_wenda_comment"
+            style="@style/help_checkbox_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_jishi_comment"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="256"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
+            android:text="256" />
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/layout_wenda_answer_reward"
+        android:id="@+id/layout_wenda_help"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:clickable="true"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/tv_wenda_answer_reward"
+        <CheckBox
+            android:id="@+id/cb_wenda_reward"
+            style="@style/help_checkbox_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawableLeft="@drawable/help_item_reward"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:text="打赏"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
+            android:text="打赏" />
 
-        <TextView
-            android:id="@+id/tv_wenda_answer_reedit"
+        <CheckBox
+            android:id="@+id/cb_wenda_reedit"
+            style="@style/help_checkbox_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawableLeft="@drawable/help_item_wenda_help"
-            android:drawablePadding="5dp"
-            android:gravity="center"
             android:text="编辑"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp"
             android:visibility="gone" />
+
     </FrameLayout>
 </LinearLayout>
