@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +47,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="2014-4-13 08:21" />
+                    android:text="2014-4-13 08:21"
+                    android:textColor="@color/assist_grey" />
 
 
             </LinearLayout>
@@ -78,10 +82,9 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <ImageView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/white"
-        android:src="@color/divider_color"
-        android:paddingLeft="75dp"/>
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"
+        android:layout_marginLeft="15dp" />
 </LinearLayout>

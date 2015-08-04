@@ -114,5 +114,5 @@ public interface BizConstant {
      * game
      */
     String BTZ_GAME_09 = "game09";//身份信息验证
-
+    String BTZ_GAME_13 = "game13";//校验身份证号
 }

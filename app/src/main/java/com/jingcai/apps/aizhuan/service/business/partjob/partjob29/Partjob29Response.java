@@ -29,6 +29,8 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
             private String sourceschool;
             private String sourcecollege;
             private String optime;
+            private String optype;
+            private String contentid;
             private String content;
             private String praisecount;
             private Refcomment refcomment;
@@ -101,6 +103,22 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
                 public void setPubliccontent(String publiccontent) {
                     this.publiccontent = publiccontent;
                 }
+            }
+
+            public String getOptype() {
+                return optype;
+            }
+
+            public void setOptype(String optype) {
+                this.optype = optype;
+            }
+
+            public String getContentid() {
+                return contentid;
+            }
+
+            public void setContentid(String contentid) {
+                this.contentid = contentid;
             }
 
             public Refcomment getRefcomment() {

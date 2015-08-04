@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+
     <include layout="@layout/include_header" />
 
     <LinearLayout
@@ -17,31 +19,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:gravity="center"
             android:text="近一周收入（金币）"
-            android:textColor="@color/important_dark"
-            android:gravity="center"/>
+            android:textColor="@color/important_dark" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:orientation="horizontal">
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_mine_gold_index_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:text="3,600"
                 android:textColor="@color/important_dark"
-                android:textSize="60sp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_vertical"/>
+                android:textSize="60sp" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -57,241 +61,267 @@
         android:background="@color/main_yellow"
         android:orientation="vertical"
         android:padding="10dp"
-        android:paddingBottom="10dp"
-        >
+        android:paddingBottom="10dp">
+
         <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/normal_grey" />
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-                <LinearLayout
+                android:orientation="vertical">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="总金额(金币)"
-                        android:textColor="@color/normal_grey"
-                        android:textSize="14dp"/>
-                    <TextView
-                        android:id="@+id/tv_mine_gold_index_balance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="12,234"
-                        android:textColor="@color/important_dark"
-                        android:textSize="18dp"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <LinearLayout
+                    android:text="总金额(金币)"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_mine_gold_index_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="冻结中(金币)"
-                        android:textColor="@color/normal_grey"
-                        android:textSize="14dp"/>
-                    <TextView
-                        android:id="@+id/tv_mine_gold_index_freeze"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="12,234"
-                        android:textColor="@color/important_dark"
-                        android:textSize="18dp"/>
-                </LinearLayout>
+                    android:text="12,234"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18dp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="冻结中(金币)"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_mine_gold_index_freeze"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12,234"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@color/content_background"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:background="@color/white"
+        android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/ll_mine_gold_account_income"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:background="@drawable/index_index_recommend_bg"
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="收入记录"
-                    android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical"
-
                     android:drawablePadding="10dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="收入记录"
+                    android:textColor="#000000"
+
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
             </RelativeLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/divider_color" />
+
         <LinearLayout
             android:id="@+id/ll_gold_account_expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:background="@drawable/index_index_recommend_bg"
+
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="支出记录"
-                    android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical"
-
                     android:drawablePadding="10dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="支出记录"
+                    android:textColor="#000000"
+
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
             </RelativeLayout>
         </LinearLayout>
 
         <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:background="@drawable/index_index_recommend_bg"
+
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="管理提现账号"
-                    android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical"
-
                     android:drawablePadding="10dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="管理提现账号"
+                    android:textColor="#000000"
+
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
             </RelativeLayout>
         </LinearLayout>
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
+
         <LinearLayout
             android:id="@+id/ll_account_reset_pay_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:background="@drawable/index_index_recommend_bg"
+
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="修改提现密码"
-                    android:textSize="18sp"
                     android:layout_centerVertical="true"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical"
-
                     android:drawablePadding="10dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="修改提现密码"
+                    android:textColor="#000000"
+
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_triangle"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:gravity="bottom"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal">
-         <Button
-             android:id="@+id/btn_mine_gold_account_withdraw"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:background="@color/white"
-             android:text="提现"/>
-         <Button
-             android:id="@+id/btn_mine_gold_account_topup"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:background="@color/white"
-             android:text="充值"/>
-     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_mine_gold_account_withdraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_yellow"
+                android:background="@drawable/index_index_recommend_bg"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:text="提现" />
+
+            <Button
+                android:id="@+id/btn_mine_gold_account_topup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_yellow"
+                android:background="@drawable/index_index_recommend_bg"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:text="充值" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

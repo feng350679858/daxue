@@ -25,7 +25,6 @@ import com.jingcai.apps.aizhuan.service.AzService;
  */
 public class IndexMineFragment extends BaseFragment {
 
-    private View lastPerformItem;
     private View mainView;
     private AzService azService;
     @Override
@@ -64,7 +63,7 @@ public class IndexMineFragment extends BaseFragment {
     }
 
     private void initView(){
-        mainView.findViewById(R.id.my_partjob).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.ll_mine_partjob).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity,MyPartjobListActivity.class);

@@ -322,8 +322,6 @@ public class PartjobDetailActivity extends BaseActivity {
             partjob_isjoin.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View v) {
-                                                      //           if("1".equals(UserSubject.getLevel()))
-                                                      //              fullfillProfile();
                                                       if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
                                                           Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
                                                           toast.show();
@@ -466,14 +464,6 @@ public class PartjobDetailActivity extends BaseActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
-    }
-
-    /**
-     * 完善资料
-     */
-    public void fullfillProfile() {
-        // Intent intent = new Intent(PartjobDetailActivity.this, ProfileImproveActivity.class);
-        //   startActivity(intent);
     }
 
     /**

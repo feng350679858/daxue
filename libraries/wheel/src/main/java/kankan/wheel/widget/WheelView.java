@@ -359,7 +359,8 @@ public class WheelView extends View {
 				}
 				index %= itemCount;
 			} else{
-				return; // throw?
+				currentItem=0; //增
+				return;
 			}
 		}
 		if (index != currentItem) {
@@ -519,8 +520,8 @@ public class WheelView extends View {
 			return itemHeight;
 		}
 
-		if (itemsLayout != null && itemsLayout.getChildAt(0) != null) {
-			itemHeight = itemsLayout.getChildAt(0).getHeight();
+		if (itemsLayout != null && itemsLayout.getChildAt(currentItem) != null) {//改
+			itemHeight = itemsLayout.getChildAt(currentItem).getHeight();//改
 			return itemHeight;
 		}
 
@@ -754,7 +755,7 @@ public class WheelView extends View {
 
 	/**
 	 * Scroll the wheel
-	 * @param itemsToSkip items to scroll
+	 * @param itemsToScroll items to scroll
 	 * @param time scrolling duration
 	 */
 	public void scroll(int itemsToScroll, int time) {

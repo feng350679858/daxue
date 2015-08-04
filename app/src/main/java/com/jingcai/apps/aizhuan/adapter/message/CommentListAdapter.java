@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.adapter.message;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.message.CommentReplyActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Partjob29Body.Parttimejob;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -23,6 +25,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ * 此Adapter为赞与消息共用
  * Created by Json Ding on 2015/7/14.
  */
 public class CommentListAdapter extends BaseAdapter {
@@ -103,7 +106,6 @@ public class CommentListAdapter extends BaseAdapter {
             holder.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
             holder.mTvTime = (TextView) convertView.findViewById(R.id.tv_time);
             holder.mIvLogo = (CircleImageView) convertView.findViewById(R.id.iv_logo);
-
             holder.mRefname = (TextView) convertView.findViewById(R.id.tv_reference_name);
             holder.mRefcontent = (TextView) convertView.findViewById(R.id.tv_reference_content);
             holder.mReflogo = (ImageView) convertView.findViewById(R.id.iv_reference_logo);
@@ -121,8 +123,26 @@ public class CommentListAdapter extends BaseAdapter {
         registerEvents(holder, position);  //注册各种事件
 
         holder.mTvName.setText(comment.getSourcename());
-        holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime(), "yyyyMMddHHmmss")));
-        holder.mTvContent.setText(comment.getContent());
+        holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime())));
+
+        if("2".equals(comment.getOptype())){
+            String targetName;
+            if(itemType == ITEM_TYPE_NO_REPLY){
+                final String targettype = comment.getReftarget().getTargettype();
+                switch (targettype) {
+                    case "1": targetName = "求助";break;
+                    case "2": targetName = "答案";break;
+                    default: targetName = "内容";break;
+                }
+            }else{
+                targetName = "评论";
+            }
+            holder.mTvContent.setText("赞了这个"+targetName);
+            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
+        }else{
+            holder.mTvContent.setText(comment.getContent());
+            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
 
         if (null != holder.mTvReply) {
             holder.mTvReply.setText(comment.getRefcomment().getRefcontent());
@@ -146,7 +166,7 @@ public class CommentListAdapter extends BaseAdapter {
      * @param holder holder
      * @param position 点击的位置
      */
-    private void registerEvents(ViewHolder holder, int position) {
+    private void registerEvents(ViewHolder holder, final int position) {
         View.OnClickListener mClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +177,7 @@ public class CommentListAdapter extends BaseAdapter {
                         break;
                     case R.id.tv_reply:
                         str = "回复按钮 click";
+                        handleReply(position);
                         break;
                     case R.id.tv_content:
                         str = "内容 click";
@@ -173,6 +194,19 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mBtnReply.setOnClickListener(mClickListener);
         holder.mTvContent.setOnClickListener(mClickListener);
         holder.mLlRefContainer.setOnClickListener(mClickListener);
+    }
+
+    /**
+     * 回复
+     * @param position list index
+     */
+    private void handleReply(int position) {
+        Intent intent = new Intent(mContext, CommentReplyActivity.class);
+        final Parttimejob parttimejob = mComments.get(position);
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_STUDENT_ID, parttimejob.getSourceid());
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_STUDENT_NAME, parttimejob.getSourcename());
+        intent.putExtra(CommentReplyActivity.INTENT_NAME_TARGET_ID, parttimejob.getContentid());
+        mContext.startActivity(intent);
     }
 
     public void clearData() {

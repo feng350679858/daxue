@@ -1,39 +1,16 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
-import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.persistence.Preferences;
-import com.jingcai.apps.aizhuan.persistence.UserSubject;
-import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.BaseResponse;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
-import com.jingcai.apps.aizhuan.service.business.stu.stu03.Stu03Request;
-import com.jingcai.apps.aizhuan.service.upload.AzUploadService;
 import com.jingcai.apps.aizhuan.util.AppUtil;
-import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
-import com.jingcai.apps.aizhuan.util.StringUtil;
-
-import org.bouncycastle.jce.provider.symmetric.ARC4;
 
 /**
  * Created by Administrator on 2015/7/18.
@@ -99,16 +76,13 @@ public class MineContactServiceActivity extends BaseActivity {
         findViewById(R.id.rl_mine_contact_service_qq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    PackageManager packageManager = MineContactServiceActivity.this.getPackageManager();
-                    packageManager.getApplicationInfo("QQ",packageManager.GET_UNINSTALLED_PACKAGES);
-                    String url = "mqqwpa://im/chat?chat_type=wpa&uin=2841329585";
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-
-                }
-                catch (PackageManager.NameNotFoundException e){
-                    showToast("请先安装QQ哦亲");
-                }
+                    final String qqPackageName = "com.tencent.mobileqq";
+                    if (AppUtil.isApkInstalled(MineContactServiceActivity.this, qqPackageName)) {
+                        String url = getString(R.string.support_staff_qq_url);
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    }else{
+                        showToast("您的手机未安装QQ");
+                    }
             }
         });
 

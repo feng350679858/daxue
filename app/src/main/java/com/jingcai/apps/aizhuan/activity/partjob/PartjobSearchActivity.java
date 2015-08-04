@@ -70,7 +70,8 @@ public class PartjobSearchActivity extends BaseActivity {
     private String lastSelectedWayFlag = null;
     private String currentAreacode;
     private String cancel_visiblity;
-    private boolean ishistory_gone=true;
+    private boolean ishistory_gone = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +88,7 @@ public class PartjobSearchActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (ll_index_pj_search_history.getVisibility()==View.VISIBLE) {
+            if (ll_index_pj_search_history.getVisibility() == View.VISIBLE) {
                 ll_index_pj_search_history.setVisibility(View.GONE);
             } else {
                 finish();
@@ -96,6 +97,7 @@ public class PartjobSearchActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     private ClearableEditText mTxtSearchKey;
 
     private void initHeader() {
@@ -109,14 +111,26 @@ public class PartjobSearchActivity extends BaseActivity {
         cancel_visiblity = getIntent().getStringExtra("cancel");
         //将搜索关键字输入editText中
         mTxtSearchKey = (ClearableEditText) findViewById(R.id.index_pj_search_content);
+        mTxtSearchKey.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.VISIBLE);
+                    initHistoryData();
+                    ll_index_pj_search_history.setVisibility(View.VISIBLE);
+                } else {
+                    ll_index_pj_search_history.setVisibility(View.GONE);
+                    if ("gone".equals(cancel_visiblity))
+                        ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
+                }
+
+            }
+        });
         mTxtSearchKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initHistoryData();
-                if(ishistory_gone)
                     ll_index_pj_search_history.setVisibility(View.VISIBLE);
-                else
-                    ishistory_gone=true;
             }
         });
         mTxtSearchKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -130,8 +144,6 @@ public class PartjobSearchActivity extends BaseActivity {
                         pref.update(Preferences.Partjob.SEARCH_KEY_PREFIX + index, mSearchKey);
                         pref.update(Preferences.Partjob.SEARCH_INDEX, ++index);
                         hideInputMethodDialog(PartjobSearchActivity.this);
-                        ll_index_pj_search_history.setVisibility(View.GONE);
-                        ishistory_gone=false;
                         doReSearch();
                     }
                     if (mDrawer.isOpened()) {
@@ -144,38 +156,19 @@ public class PartjobSearchActivity extends BaseActivity {
                 return false;
             }
         });
-        mTxtSearchKey.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (mTxtSearchKey.getText().toString().equals("") && cancel_visiblity.equals("gone"))
-                    ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
-                else
-                    ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.VISIBLE);
-            }
-        });
         //判断进入方式
         if (cancel_visiblity.equals("gone"))
             ((TextView) findViewById(R.id.tv_cancel)).setVisibility(View.GONE);
         ((TextView) findViewById(R.id.tv_cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ll_index_pj_search_history.setVisibility(View.GONE);
                 mTxtSearchKey.setText("");
                 if (mDrawer.isOpened()) {
                     mDrawer.animateClose();
                 }
                 doReSearch();
                 ll_index_pj_search_history.setVisibility(View.GONE);
+                hideInputMethodDialog(PartjobSearchActivity.this);
             }
         });
     }
@@ -204,7 +197,7 @@ public class PartjobSearchActivity extends BaseActivity {
             public void onClick(View v) {
                 Preferences pref = Preferences.getInstance(Preferences.TYPE.partjob);
                 int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
-                for(int i=index-1;i>=0;i--){
+                for (int i = index - 1; i >= 0; i--) {
                     pref.delete(Preferences.Partjob.SEARCH_KEY_PREFIX + i);
                     pref.update(Preferences.Partjob.SEARCH_INDEX, --index);
                 }
@@ -324,7 +317,7 @@ public class PartjobSearchActivity extends BaseActivity {
         List<String> historyList = new ArrayList<String>();
         Preferences pref = Preferences.getInstance(Preferences.TYPE.partjob);
         int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
-        for(int i=0;i<index;i++){
+        for (int i = 0; i < index; i++) {
             historyList.add(pref.getString(Preferences.Partjob.SEARCH_KEY_PREFIX + i));
         }
         List<Map<String, String>> list = new ArrayList<>();

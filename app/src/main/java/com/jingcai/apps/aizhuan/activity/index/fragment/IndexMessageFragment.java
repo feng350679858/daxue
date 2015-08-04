@@ -21,7 +21,6 @@ import com.easemob.exceptions.EaseMobException;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.activity.message.MessageCommendActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageConversationActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageMerchantActivity;
@@ -98,7 +97,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
                 loadConversations();  //加载所有的会话
             }
         };
-        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver,3);
+        HXHelper.getInstance().regNewMessageReceiver(baseActivity, mNewMessageReceiver, 3);
     }
 
     @Override
@@ -119,7 +118,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             EMConversation con = allConversations.get(s);
             bean = new ConversationBean(con);
             //环信管理端发过来的信息
-            if(StringUtil.isEmpty(bean.getName())){
+            if (StringUtil.isEmpty(bean.getName())) {
                 assembleBean(bean);
             }
             beans.add(bean);
@@ -143,8 +142,9 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             c = contactInfos.get(0);
             bean.setName(c.getName());
             bean.setLogourl(c.getLogourl());
-            //如果超时
-            if ((System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
+            //如果超时 或 头像为空
+            if (StringUtil.isNotEmpty(c.getLogourl())
+                    && (System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
                 return;
             }
         }
@@ -207,7 +207,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String to = "fc0fdc3a872146bd8ab5e4d3c3b95c34";
+                    String to = "7a82a05512bf411c9dd2f318f8798a3e";
                     EMConversation conversation = EMChatManager.getInstance().getConversation(to);
                     EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
                     message.setReceipt(to);
@@ -250,9 +250,11 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             switch (position) {
                 case MessageListAdapter.ITEM_POSITION_COMMENT:
                     intent = new Intent(baseActivity, MessageCommentActivity.class);
+                    intent.putExtra(MessageCommentActivity.INTENT_NAME_ACTIVITY_FLAG, MessageCommentActivity.INTENT_VALUE_ACTIVITY_FLAG_COMMENT);
                     break;
                 case MessageListAdapter.ITEM_POSITION_RECOMMEND:
-                    intent = new Intent(baseActivity, MessageCommendActivity.class);
+                    intent = new Intent(baseActivity, MessageCommentActivity.class);
+                    intent.putExtra(MessageCommentActivity.INTENT_NAME_ACTIVITY_FLAG, MessageCommentActivity.INTENT_VALUE_ACTIVITY_FLAG_COMMEND);
                     break;
                 case MessageListAdapter.ITEM_POSITION_MERCHANT:
                     intent = new Intent(baseActivity, MessageMerchantActivity.class);

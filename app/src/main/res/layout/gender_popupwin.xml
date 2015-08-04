@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+<TextView
+    android:id="@+id/gender_popupwin_male"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="男"
+    android:padding="10dp"
+    android:gravity="center"
+    android:textSize="16sp"
+    android:textColor="@color/important_dark"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/gender_popupwin_female"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="女"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/important_dark"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/gender_popupwin_cancel"
+        android:layout_marginTop="5dp"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:src="@drawable/icon_cancel"
+        android:scaleType="fitCenter"
+        android:background="@color/white"/>
+</LinearLayout>

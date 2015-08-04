@@ -22,9 +22,9 @@ public class School02Response extends BaseResponse<School02Response.Body> {
         }
 
         public class Areainfo {
+
             private String code;
             private String name;
-
             public String getCode() {
                 return code;
             }

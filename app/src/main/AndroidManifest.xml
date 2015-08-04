@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 操作外部存储设备文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -51,7 +51,9 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <!-- JPush -->
-    <permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
 
     <uses-permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -60,21 +62,21 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- since 1.6.0 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- <uses-permission android:name="android.permission.VIBRATE" />  震动权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />        <!-- 使用照相机权限 -->
-    <uses-feature android:name="android.hardware.camera.autofocus" />   <!-- 自动聚焦权限 -->
 
+    <uses-feature android:name="android.hardware.camera" />
+    <!-- 使用照相机权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <!-- 自动聚焦权限 -->
     <application
         android:name=".util.ApplicationEx"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- sys -->
         <activity
@@ -88,63 +90,114 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.index.IndexPartjobListByLabelActivity"></activity>
-        <activity android:name=".activity.sys.IntroActivity"/>
-        <activity android:name=".activity.sys.LoginActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.sys.RegistActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.sys.ErrorActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.index.MainActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.index.IndexBannerDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan"/>
-
+        <activity android:name=".activity.index.IndexPartjobListByLabelActivity" />
+        <activity android:name=".activity.sys.IntroActivity" />
+        <activity
+            android:name=".activity.sys.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.sys.RegistActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.sys.ErrorActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.index.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.index.IndexBannerDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.sys.AboutUsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.sys.ModifyPswActivity" android:screenOrientation="portrait" />
 
         <!-- help -->
-        <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpFriendOnlineActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpJishiDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaAnswerActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaCommentActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.help.HelpEvaluateActivity" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
+        <activity
+            android:name=".activity.help.HelpJishiDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpFriendOnlineActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpJishiDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDeployActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaAnswerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpWendaRewardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.help.HelpEvaluateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="aizhuan.activity.help.HelpEvaluateActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="aizhuan.activity.help.HelpEvaluateActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.mine.help.MineHelpListActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.mine.help.MineHelpJishiActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.mine.help.MineHelpListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.mine.help.MineHelpJishiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- 隐藏键盘 -->
         <activity android:configChanges="orientation|keyboardHidden" android:name=".activity.help.CaptureActivity"
             android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
-   
+
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
-        <activity android:name=".activity.message.MessageCommendActivity" />
         <activity android:name=".activity.message.MessageMerchantActivity" />
         <activity android:name=".activity.message.MessageNotificationActivity" />
         <activity android:name=".activity.message.NotificationDetailActivity" />
         <activity android:name=".activity.message.MessageConversationActivity" />
-
+        <activity android:name=".activity.message.CommentReplyActivity" />
 
         <!-- partjob -->
-        <activity android:name=".activity.mine.PartjobCancelActivity"/>
-        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity"/>
-        <activity android:name=".activity.partjob.LocationCityActivity"/>
-        <activity android:name=".activity.partjob.PartjobDetailActivity"/>
-        <activity android:name=".activity.partjob.PartjobDetailMapActivity"/>
-        <activity android:name=".activity.partjob.PartjobSearchActivity"/>
+        <activity android:name=".activity.mine.PartjobCancelActivity" />
+        <activity android:name=".activity.partjob.PartjobJoinSuccessActivity" />
+        <activity android:name=".activity.partjob.LocationCityActivity" />
+        <activity android:name=".activity.partjob.PartjobDetailActivity" />
+        <activity android:name=".activity.partjob.PartjobDetailMapActivity" />
+        <activity android:name=".activity.partjob.PartjobSearchActivity" />
 
         <!-- common -->
-        <activity android:name=".activity.common.ShowBigImage"/>
-
+        <activity android:name=".activity.common.ShowBigImage" />
 
         <!-- service -->
         <service android:name=".service.local.UnreadMsgService" />
-
 
         <!-- mine -->
         <activity android:name=".activity.mine.MineAccountActivity"/>
@@ -165,7 +218,9 @@
         <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
         <activity android:name=".activity.mine.WeixinNumberActivity"/>
         <activity android:name=".activity.mine.ComplainActivity"/>
-
+        <activity android:name=".activity.mine.SafeCheckActivity" />
+        <activity android:name=".activity.mine.ProfileImproveActivity" />
+        <activity android:name=".activity.mine.ProfileImprove2Activity" />
 
 
 
@@ -182,11 +237,15 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
+
                 <category android:name="com.jingcai.apps.aizhuan" />
             </intent-filter>
         </receiver>
         <!-- Required -->
-        <service android:name="cn.jpush.android.service.PushService" android:enabled="true" android:exported="false" >
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -195,9 +254,12 @@
             </intent-filter>
         </service>
         <!-- Required -->
-        <receiver android:name="cn.jpush.android.service.PushReceiver" android:enabled="true" >
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
                 <category android:name="com.jingcai.apps.aizhuan" />
             </intent-filter>
             <intent-filter>
@@ -207,32 +269,48 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <!-- Required SDK核心功能-->
-        <activity android:name="cn.jpush.android.ui.PushActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="orientation|keyboardHidden" >
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.jingcai.apps.aizhuan" />
             </intent-filter>
         </activity>
-        <!-- Required SDK核心功能-->
-        <service android:name="cn.jpush.android.service.DownloadService" android:enabled="true" android:exported="false" />
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
-
-
         <!-- meta-data -->
-        <meta-data android:name="SECRET_KEY" android:value="123" />
-        <meta-data android:name="EASEMOB_APPKEY" android:value="lee513579#izhuanc2ctest" />
+        <meta-data
+            android:name="SECRET_KEY"
+            android:value="123" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="lee513579#izhuanc2ctest" />
 
-        <!-- jpush dev   203cf5c6a5b762b4d5ff6349-->
-        <!-- jpush pro   a18858d0c3a777745fbc99f7-->
-        <meta-data android:name="JPUSH_APPKEY" android:value="203cf5c6a5b762b4d5ff6349"/>
-        <meta-data android:name="JPUSH_CHANNEL" android:value="A000"/>
+        <!-- jpush dev   203cf5c6a5b762b4d5ff6349 -->
+        <!-- jpush pro   a18858d0c3a777745fbc99f7 -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="203cf5c6a5b762b4d5ff6349" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="A000" />
+
+
     </application>
 
 </manifest>

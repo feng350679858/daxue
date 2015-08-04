@@ -185,13 +185,15 @@ private void initHeader(){
 
     private void fillListData(List<School02Response.Body.Areainfo> obj) {
         List<Map<String, String>> citys = new ArrayList<>();
-        for (int i = 0; i < obj.size(); i++) {
-            Map<String, String> item = new HashMap<>();
-            item.put("code", obj.get(i).getCode());
-            item.put("name", obj.get(i).getName());
-            citys.add(item);
+        if(null!=obj) {
+            for (int i = 0; i < obj.size(); i++) {
+                Map<String, String> item = new HashMap<>();
+                item.put("code", obj.get(i).getCode());
+                item.put("name", obj.get(i).getName());
+                citys.add(item);
+            }
+            mListAdapter.setListData(citys);
+            mListAdapter.notifyDataSetChanged();
         }
-        mListAdapter.setListData(citys);
-        mListAdapter.notifyDataSetChanged();
     }
 }

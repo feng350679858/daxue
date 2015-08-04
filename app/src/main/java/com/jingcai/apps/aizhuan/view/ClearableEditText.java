@@ -44,7 +44,7 @@ public class ClearableEditText extends EditText implements View.OnFocusChangeLis
     private void init(Context context) {
         mContext = context;
         //删除按钮的图片资源
-
+        setOnFocusChangeListener(this);
         addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,7 +72,7 @@ public class ClearableEditText extends EditText implements View.OnFocusChangeLis
     }
 
     private void setDrawable() {
-        if (length() == 0) {
+        if (length() == 0 ) {
             setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft, mDrawableUp, null, mDrawableDown);
         } else {
             setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft, mDrawableUp, mDrawableRight, mDrawableDown);
@@ -132,5 +132,6 @@ public class ClearableEditText extends EditText implements View.OnFocusChangeLis
         }else {
             setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft, mDrawableUp, null, mDrawableDown);
         }
+        invalidate();
     }
 }

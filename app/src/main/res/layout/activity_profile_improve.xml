@@ -1,0 +1,162 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
+    android:orientation="vertical"
+    tools:context="com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity">
+
+    <include layout="@layout/include_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="30dp"
+
+
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/profile_improve_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <requestFocus />
+
+            <com.jingcai.apps.aizhuan.view.ClearableEditText
+                android:id="@+id/profile_improve_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="真实姓名"
+                android:inputType="text"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textCursorDrawable="@drawable/yellow_cursor"
+                android:textSize="16sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <EditText
+                android:id="@+id/profile_improve_gender_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="性别"
+                android:paddingTop="10dp"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <EditText
+                android:id="@+id/profile_improve_location_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="地区"
+                android:paddingTop="10dp"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/profile_improve_spreading_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/text_input_layout">
+
+            <com.jingcai.apps.aizhuan.view.ClearableEditText
+                android:id="@+id/profile_improve_spreading_code_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:hint="推广码"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textColorHint="@color/important_dark"
+                android:textCursorDrawable="@drawable/yellow_cursor"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:id="@+id/profile_improve_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/important_dark"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/profile_improve_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_yellow_boarded_bg_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="下一步"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>
