@@ -216,7 +216,7 @@ public class MineAccountActivity extends BaseActivity {
             }
         }
 
-        mTvIncome.setText(StringUtil.getFormatFloat(incomeThisWeek, "#,###"));// TODO: 2015/8/4 换一个显示方式
+        mTvIncome.setText(StringUtil.getPrintMoney(incomeThisWeek));
     }
 
     private void initBalanceData() {
@@ -310,9 +310,9 @@ public class MineAccountActivity extends BaseActivity {
         if (null != wallets) {
             for (int i = 0; i < wallets.size(); i++) {
                 if ("freeze".equals(wallets.get(i).getCode())) {
-                    mTvFreeze.setText(StringUtil.getFormatFloat(Float.parseFloat(wallets.get(i).getCredit()), "#,###"));// TODO: 2015/8/4 换一个显示方式
+                    mTvFreeze.setText(StringUtil.getPrintMoney(wallets.get(i).getCredit()));
                 } else if ("gold".equals(wallets.get(i).getCode())) {
-                    mTvBalance.setText(StringUtil.getFormatFloat(Float.parseFloat(wallets.get(i).getCredit()), "#,###"));// TODO: 2015/8/4 换一个显示方式
+                    mTvBalance.setText(StringUtil.getPrintMoney(wallets.get(i).getCredit()));
                 }
             }
         }

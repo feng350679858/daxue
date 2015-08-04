@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/btn_white_left_bottom_radius_bg"
                 android:text="下次再说"
                 android:textColor="@color/main_yellow"
                 android:textSize="18sp" />
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/btn_white_right_bottom_radius_bg"
                 android:text="去吧去吧"
                 android:textColor="@color/main_yellow"
                 android:textSize="18sp" />
