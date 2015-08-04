@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -67,6 +68,11 @@ public class PopupWin {
 
         public Builder setContentView(View view) {
             this.contentView = view;
+            return this;
+        }
+
+        public Builder setContentViewLayout(int layoutId) {
+            this.contentView = layoutInflater.inflate(layoutId, null);
             return this;
         }
 
@@ -272,6 +278,16 @@ public class PopupWin {
     public View findViewById(@IdRes int viewId) {
         check();
         return mContentView.findViewById(viewId);
+    }
+
+    public TextView findTextViewById(@IdRes int viewId) {
+        check();
+        return (TextView) mContentView.findViewById(viewId);
+    }
+
+    public Button findButtonById(@IdRes int viewId) {
+        check();
+        return (Button) mContentView.findViewById(viewId);
     }
 
     private void check() {

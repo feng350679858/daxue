@@ -136,18 +136,20 @@ public class CampusAdapter extends BaseAdapter {
             //评论
             viewHolder.cb_jishi_comment.setText(job.getCommentcount());
 
-            if("1".equals(job.getType()) && "1".equals(job.getStatus())){//即时帮助-求助中
+            //即时帮助-求助中,helperid为空表示有还未有人请求帮助
+            if("1".equals(job.getType()) && "1".equals(job.getStatus())
+                    && StringUtil.isEmpty(job.getHelperid())) {
                 final CheckBox cb_jishi_help = viewHolder.cb_jishi_help;
                 cb_jishi_help.setText("帮TA");
                 viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO 检查是否可以帮助，可以帮助显示确认对话框
                         callback.jishi_help(cb_jishi_help, job);
                     }
                 });
-            }else{//显示状态
+            } else {//显示状态
                 viewHolder.cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+                viewHolder.layout_jishi_help.setOnClickListener(null);
             }
         } else {
             viewHolder.layout_help_jishi.setVisibility(View.GONE);
@@ -186,7 +188,7 @@ public class CampusAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if(selfFlag){
-                        callback.wenda_help_my(cb_wenda_help_my, job);// 我的帮助
+                        callback.wenda_help_my(cb_wenda_help_my, job);// 查看我的帮助
                     }else{
                         callback.wenda_help(cb_wenda_help, job);// 撰写
                     }
@@ -207,7 +209,7 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_stu_college.setText(job.getSourceschool());
         }
         viewHolder.tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
-        viewHolder.tv_money.setText(StringUtil.getFormatFloat()job.getMoney());
+        viewHolder.tv_money.setText(StringUtil.getPrintMoney(job.getMoney()));
         viewHolder.tv_content.setText(job.getContent());
 
         viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
@@ -230,13 +232,6 @@ public class CampusAdapter extends BaseAdapter {
 
     public void addData(List<Partjob11Response.Parttimejob> list) {
         regionList.addAll(list);
-    }
-
-    public Partjob11Response.Parttimejob getMerchant(int position) {
-        if (position >= regionList.size()) {
-            return null;
-        }
-        return regionList.get(position);
     }
 
     public class ViewHolder {

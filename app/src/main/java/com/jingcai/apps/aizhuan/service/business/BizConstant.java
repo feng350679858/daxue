@@ -65,6 +65,7 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_31 = "partjob31";//打赏
     String BIZ_PARTTIME_JOB_33 = "partjob33";//完成帮助
     String BIZ_PARTTIME_JOB_34 = "partjob34";//匿名和非匿名切换
+    String BIZ_PARTTIME_JOB_36 = "partjob36";//答案详情
 
     /**
      * school

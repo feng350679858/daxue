@@ -21,6 +21,7 @@ public class Base01Request extends BaseRequest {
 
     public class Banner {
         private String platform;
+        private String type;
 
         public String getPlatform() {
             return platform;
@@ -28,6 +29,14 @@ public class Base01Request extends BaseRequest {
 
         public void setPlatform(String platform) {
             this.platform = platform;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
 }
