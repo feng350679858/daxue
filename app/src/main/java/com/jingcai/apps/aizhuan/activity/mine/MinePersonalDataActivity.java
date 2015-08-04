@@ -163,6 +163,7 @@ public class MinePersonalDataActivity extends BaseActivity {
     }
 
     private void initData() {
+        showProgressDialog("数据加载中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {

@@ -45,55 +45,90 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/16.
  */
-public class MineGoldTopupActivity extends BaseActivity implements ListView.OnItemClickListener{
-    private final String TAG="MineGoldTopupActivity";
+public class MineGoldTopupActivity extends BaseActivity {
+    private final String TAG = "MineGoldTopupActivity";
     private static final int REQUEST_CODE_CHOICE_ACCOUNT = 1;
     private MessageHandler messageHandler;
 
     private TextView mWithDrawRMB;
     private EditText mInputCount;
     private Button mWithdrawSubmit;
-    private TextView mNotEnoughText;
 
     private AzService azService;
     private ListView mListView;
-
+    private Account04Response.Account04Body.Bank selectedBank;
     private AccountChoiceListAdapter mListAdapter;
 
-    private Account04Response.Account04Body.Bank mCurrentBank;
-
     private float mEnableGoldCount;
-    private boolean isResultResume;
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_account_topup);
-        initHeader();
-
-
         messageHandler = new MessageHandler(this);
         azService = new AzService(this);
         initHeader();
-
         initView();
+        initData();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Account04Response.Account04Body.Bank selectedBank = (Account04Response.Account04Body.Bank) mListAdapter.getItem(position);
-        MineGoldTopupActivity.this.setResult(RESULT_OK, new Intent());
-        LocalValUtil.setVal(selectedBank);
-    }
-    @Override
-    protected void onResume() {
-        if(!isResultResume){
-            initData();
-        }
-        isResultResume = false;
-        super.onResume();
+
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("充值");
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
+    private void initView() {
+        mInputCount = (EditText) findViewById(R.id.et_mine_gold_topup_count);
+        mWithdrawSubmit = (Button) findViewById(R.id.btn_mine_gold_topup_submit);
+        mWithDrawRMB = (TextView) findViewById(R.id.tv_mine_gold_topup_money);
+
+        mInputCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String inputCount = s.toString();
+                if (StringUtil.isNotEmpty(inputCount) && !"0.0".equals(StringUtil.money(inputCount))) {
+                    mWithDrawRMB.setText(StringUtil.money(inputCount)+"元");
+                    mWithdrawSubmit.setEnabled(true);
+                } else {
+                    mWithdrawSubmit.setEnabled(false);
+                }
+            }
+
+        });
+
+        mWithdrawSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputCountStr = mInputCount.getText().toString();
+                if (selectedBank == null) {
+                    showToast("请选择账户");
+                    return;
+                }
+                if (Integer.parseInt(inputCountStr) < 10) {
+                    showToast("至少充值10元");
+                    return;
+                }
+            }
+        });
+
+
+    }
 
     private void initData() {
         showProgressDialog("数据加载中...");
@@ -129,16 +164,15 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
             }
         });
     }
+
     private void initBankData() {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                azService = new AzService( MineGoldTopupActivity.this);
+                azService = new AzService(MineGoldTopupActivity.this);
 
                 Account04Request request = new Account04Request();
                 Account04Request.Student student = request.new Student();
-                student.setStudentid(UserSubject.getStudentid());
-                request.setStudent(student);
 
                 azService.doTrans(request, Account04Response.class, new AzService.Callback<Account04Response>() {
                     @Override
@@ -161,150 +195,8 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
     }
 
 
-    private void initView()
-    {
-        mInputCount = (EditText)findViewById(R.id.et_mine_gold_topup_count);
-        mWithdrawSubmit = (Button) findViewById(R.id.btn_mine_gold_topup_submit);
-        mWithDrawRMB = (TextView) findViewById(R.id.tv_mine_gold_topup_money);
-        mListView = (ListView)findViewById(R.id.lv_mine_account_topup_choice_list);
-        mListAdapter = new AccountChoiceListAdapter(this,mCurrentBank);
-        mListAdapter.setFooterDividerEnabel(false);
-        mInputCount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String inputCount = s.toString();
-                if (StringUtil.isNotEmpty(inputCount)) {
-                    int count = Integer.parseInt(inputCount);
-                    float rmb = count / 10.0f;
-                        mWithDrawRMB.setText(String.valueOf(rmb));
-                        mWithDrawRMB.setTextColor( MineGoldTopupActivity.this.getResources().getColor(R.color.important_dark));
-                } else {
-                    mWithDrawRMB.setText("0");
-                    mWithDrawRMB.setTextColor( MineGoldTopupActivity.this.getResources().getColor(R.color.important_dark));
-                    mNotEnoughText.setVisibility(View.GONE);
-                    mWithdrawSubmit.setEnabled(false);
-                }
-            }
-
-        });
-
-        mWithdrawSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String inputCountStr = mInputCount.getText().toString();
-                if (mCurrentBank == null) {
-                    showToast("请选择账户");
-                    return;
-                }
-                if (StringUtil.isEmpty(inputCountStr) || ("0".equals(inputCountStr))) {
-                    showToast("请输入金额");
-                    return;
-                }
-                View dialogView = LayoutInflater.from( MineGoldTopupActivity.this).inflate(R.layout.mine_gold_account_withdraw_pay_psw_dialog, null);
-                final PopupWindow popupWindow = new PopupWindow(dialogView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                final EditText txtPassword = (EditText) dialogView.findViewById(R.id.et_account_withdraw_pay_psw);
-                final View decorView =  MineGoldTopupActivity.this.getWindow().getDecorView();
-                dialogView.findViewById(R.id.btn_account_withdraw_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ObjectAnimator.ofFloat(decorView, "alpha", 0.5f, 1.0f).setDuration(500).start();
-                        popupWindow.dismiss();
-
-                    }
-                });
-                dialogView.findViewById(R.id.btn_account_withdraw_confirm).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String payPsw = txtPassword.getText().toString();
-                        withdrawProcess(DES3Util.encrypt(payPsw));
-                        ObjectAnimator.ofFloat(decorView, "alpha", 0.5f, 1.0f).setDuration(500).start();
-                        popupWindow.dismiss();
-                    }
-                });
-                dialogView.findViewById(R.id.et_account_withdraw_pay_psw).setFocusable(true);
-                ((TextView) dialogView.findViewById(R.id.tv_account_withdraw_title)).setText("请输入支付密码");
-                popupWindow.setFocusable(true);
-                popupWindow.setAnimationStyle(R.style.main_menu_animstyle);
-                popupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL, 0, PixelUtil.px2dip( MineGoldTopupActivity.this, 200f));
-
-                ObjectAnimator.ofFloat(decorView, "alpha", 1.0f, 0.5f).setDuration(500).start();
-            }
-        });
 
 
-    }
-
-    private void withdrawProcess(final String payPsw) {
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Account03Request acr = new Account03Request();
-
-                Account03Request.Wallet wallet = acr.new Wallet();
-                wallet.setCode("gold");
-                wallet.setOpmoney(mInputCount.getText().toString());
-                acr.setWallet(wallet);
-
-                Account03Request.Bank bank = acr.new Bank();
-                bank.setBanktype(mCurrentBank.getType());
-                bank.setCardno(mCurrentBank.getCardno());
-                bank.setCardtype(mCurrentBank.getCode());
-                acr.setBank(bank);
-
-                Account03Request.Student student = acr.new Student();
-                student.setPaypassword(payPsw);
-                student.setStudentid(UserSubject.getStudentid());
-                acr.setStudent(student);
-
-                azService.doTrans(acr, Account03Response.class, new AzService.Callback<Account03Response>() {
-                    @Override
-                    public void success(Account03Response resp) {
-                        ResponseResult result = resp.getResult();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(5, result.getMessage());
-                        } else {
-                            messageHandler.postMessage(4);
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        });
-    }
-
-    private void initHeader()
-    {
-        ((TextView)findViewById(R.id.tv_content)).setText("充值");
-        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-    private void fillBalance(ArrayList<Account01Response.Account01Body.Wallet> wallets) {
-        for (int i = 0; i < wallets.size(); i++) {
-            if ("gold".equals(wallets.get(i).getCode())) {
-                mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
-                String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
-                ((TextView) findViewById(R.id.tv_mine_gold_topup_rest)).setText(gold + "金");
-            }
-        }
-    }
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
@@ -319,59 +211,63 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 1: {
-                    showToast("获取账户失败");
-                    Log.i(TAG,"获取账户失败："+msg.obj);
+                    showToast("第三方金融渠道列表失败");
+                    Log.i(TAG, "第三方金融渠道列表失败：" + msg.obj);
                     break;
                 }
-                case 2:{
-                    fillBalance((ArrayList<Account01Response.Account01Body.Wallet>)msg.obj);
+                case 2: {
+                    fillBalance((ArrayList<Account01Response.Account01Body.Wallet>) msg.obj);
                     break;
                 }
-                case 3:{
+                case 3: {
                     showToast("获取余额失败");
-                    Log.i(TAG,"获取余额失败："+msg.obj);
+                    Log.i(TAG, "获取余额失败：" + msg.obj);
                     break;
                 }
-                case 4:{
-                    showToast("请求已提交，等待审核！");
-                    MineGoldTopupActivity.this.finish();
-                    break;
-                }
-                case 5:{
-                    showToast("提现失败");
-                    Log.i(TAG,"提现失败："+msg.obj);
-                    break;
-                }
+//                case 4: {
+//                    showToast("请求已提交，等待审核！");
+//                    MineGoldTopupActivity.this.finish();
+//                    break;
+//                }
+//                case 5: {
+//                    showToast("提现失败");
+//                    Log.i(TAG, "提现失败：" + msg.obj);
+//                    break;
+//                }
                 default:
                     super.handleMessage(msg);
                     break;
             }
         }
     }
+
     private void fillBankInfo(List<Account04Response.Account04Body.Bank> banks) {
-
-        if(banks.size() > 0){
-            mCurrentBank = banks.get(0);
-            initBankInfo();
-        }else{
-
+        if (null == banks || 0 == banks.size()) {
+            return;
         }
+        selectedBank=banks.get(0);
+        mListAdapter = new AccountChoiceListAdapter(this, 0);
+        mListView = (ListView) findViewById(R.id.lv_mine_account_topup_choice_list);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListAdapter.setSelectednum(position);
+                selectedBank=(Account04Response.Account04Body.Bank)mListAdapter.getItem(position);
+                mListAdapter.notifyDataSetChanged();
+            }
+        });
+        mListView.setAdapter(mListAdapter);
+        mListAdapter.setData(banks);
+        mListAdapter.notifyDataSetChanged();
     }
-    private void initBankInfo() {
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case REQUEST_CODE_CHOICE_ACCOUNT:
-                if(resultCode == RESULT_OK){
-                    isResultResume = true;
-                    mCurrentBank = (Account04Response.Account04Body.Bank) LocalValUtil.getVal();
-                    initBankInfo();
-                }
-                break;
+    private void fillBalance(ArrayList<Account01Response.Account01Body.Wallet> wallets) {
+        for (int i = 0; i < wallets.size(); i++) {
+            if ("gold".equals(wallets.get(i).getCode())) {
+                mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
+                String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
+                ((TextView) findViewById(R.id.tv_mine_gold_topup_rest)).setText(gold + "金");
+            }
         }
     }
 }

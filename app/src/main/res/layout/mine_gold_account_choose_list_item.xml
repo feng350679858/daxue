@@ -1,65 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include layout="@layout/include_header" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_bg">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_item_bg"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp">
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_mine_account_choose_list_item_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_mine_gold_zhifubao" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_mine_account_choose_list_item_logo"
+            <TextView
+                android:id="@+id/tv_mine_account_choose_list_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_mine_gold_zhifubao" />
+                android:text="支付宝"
+                android:textSize="16sp"
+                android:textColor="@color/important_dark" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_mine_account_choose_list_item_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
                 android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_mine_account_choose_list_item_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="支付宝"
-                    android:textColor="@color/important_dark" />
-
-                <TextView
-                    android:id="@+id/tv_mine_account_choose_list_item_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="账号：188****2005" />
-            </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_mine_account_choose_list_item_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/icon_mine_gold_sure"/>
+                android:textColor="@color/normal_grey"
+                android:text="账号：188****2005" />
         </LinearLayout>
     </LinearLayout>
+
     <ImageView
-        android:id="@+id/iv_mine_account_choose_list_item_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:id="@+id/iv_mine_account_choose_list_item_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:background="@color/white"
-        android:src="@drawable/icon_mine_gold_sure"
-        android:paddingLeft="75dp"/>
-</LinearLayout>
+        android:layout_marginRight="20dp" />
+
+
+</RelativeLayout>
