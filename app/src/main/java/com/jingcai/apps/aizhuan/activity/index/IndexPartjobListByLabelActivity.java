@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class IndexPartjobListByLabelActivity extends BaseActivity {
+    private final String TAG="IndexPartjobListByLabel";
     private MessageHandler messageHandler;
     private AzService azService;
     private int mCurrentStart = 0;
@@ -210,7 +212,8 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                 }
                 case 1: {
                     try {
-                        showToast("获取消息失败:" + msg.obj);
+                        showToast("获取消息失败");
+                        Log.i(TAG,"获取消息失败:" + msg.obj);
                     }finally {
                         actionLock.unlock();
                     }

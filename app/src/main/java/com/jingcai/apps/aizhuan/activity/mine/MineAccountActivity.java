@@ -195,6 +195,7 @@ public class MineAccountActivity extends BaseActivity {
     }
 
     private void initBalanceData() {
+        showProgressDialog("数据加载中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {

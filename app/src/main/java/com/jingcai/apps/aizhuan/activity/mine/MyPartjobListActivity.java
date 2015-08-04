@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -30,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MyPartjobListActivity extends BaseActivity implements AdapterView.OnItemClickListener,XListView.IXListViewListener {
-
+    private final String TAG="MyPartjobListActivity";
     private MessageHandler messageHandler;
     private PartjobListAdapter partjobListAdapter;
     private XListView mListMinePartjob;
@@ -209,7 +210,8 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
                 case 1 : {
                     try {
                         finishLoading();
-                        showToast("获取兼职失败:" + msg.obj);
+                        showToast("获取兼职失败");
+                        Log.i(TAG,"获取兼职失败:" + msg.obj);
                     }finally {
                         actionLock.unlock();
                     }

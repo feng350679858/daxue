@@ -58,4 +58,6 @@
     <string name="mine_reset_pay_psw_card_number_tip">请输入与帐号验证一致的证件号码</string>
     <!-- 联系客服-QQ -->
     <string name="support_staff_qq_url"><![CDATA[mqqwpa://im/chat?chat_type=wpa&uin=2841329585]]></string>
+    <!--提现-->
+    <string name="gold_withdraw_tip">提现每天最多提三次，1-2个工作日到账，30.0元起提！</string>
 </resources>

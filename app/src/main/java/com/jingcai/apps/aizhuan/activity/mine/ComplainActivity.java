@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.mine;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by Json Ding on 2015/5/3.
  */
 public class ComplainActivity extends BaseActivity {
+    private final String TAG="ComplainActivity";
     private MessageHandler messageHandler;
     private String jobid, joinid;
 
@@ -135,7 +137,8 @@ public class ComplainActivity extends BaseActivity {
                     break;
                 }
                 case 1:{
-                    showToast("投诉信息提交失败："+ msg.obj);
+                    showToast("投诉信息提交失败");
+                    Log.i(TAG,"投诉信息提交失败："+ msg.obj);
                     break;
                 }
 

@@ -633,7 +633,8 @@ private void clearAllFocus(){
                     break;
                 }
                 case 1: {
-                    showToast("学校读取失败:" + msg.obj);
+                    showToast("学校读取失败");
+                    Log.i(TAG,"学校读取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -641,7 +642,8 @@ private void clearAllFocus(){
                     break;
                 }
                 case 3: {
-                    showToast("院系读取失败:" + msg.obj);
+                    showToast("院系读取失败");
+                    Log.i(TAG,"院系读取失败:" + msg.obj);
                     break;
                 }
                 case 4: {
@@ -666,14 +668,16 @@ private void clearAllFocus(){
                 }
                 case 5: {
                     try {
-                        showToast("专业读取失败:" + msg.obj);
+                        showToast("专业读取失败");
+                        Log.i(TAG,"专业读取失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
                 case 6: {
-                    showToast("完善资料失败：" + msg.obj);
+                    showToast("完善资料失败");
+                    Log.i(TAG,"完善资料失败：" + msg.obj);
                     break;
                 }
                 case 7: {

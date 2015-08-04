@@ -25,18 +25,14 @@ public class AccountChoiceListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private BitmapUtil mBitmapUtil;
-    private Account04Response.Account04Body.Bank mCurrentBank;
+    private int selectednum;
 
-    private boolean mIsFooterDividerEnable;
 
-    public AccountChoiceListAdapter(Context context,Account04Response.Account04Body.Bank selectedBank){
+    public AccountChoiceListAdapter(Context context,int num){
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mCurrentBank = selectedBank;
+        selectednum=num;
         mBitmapUtil = new BitmapUtil(context);
-    }
-    public void setFooterDividerEnabel(boolean enable){
-        mIsFooterDividerEnable = enable;
     }
 
     public void setData(List<Account04Response.Account04Body.Bank> list){
@@ -46,6 +42,9 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         }
     }
 
+    public void setSelectednum(int num){
+        selectednum=num;
+    }
 
     @Override
     public int getCount() {
@@ -72,20 +71,13 @@ public class AccountChoiceListAdapter extends BaseAdapter {
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_logo);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_title);
             viewHolder.tv_code = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_code);
-            viewHolder.iv_divider = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_divider);
             viewHolder.iv_select = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_select);
 
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(!mIsFooterDividerEnable){
-            if(position == mBankList.size()-1){
-                viewHolder.iv_divider.setVisibility(View.GONE);
-            }else{
-                viewHolder.iv_divider.setVisibility(View.VISIBLE);
-            }
-        }
+
         Account04Response.Account04Body.Bank bank = mBankList.get(position);
         mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(),R.drawable.ic_launcher);
         viewHolder.tv_title.setText(bank.getName());
@@ -93,13 +85,10 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
         viewHolder.tv_code.setText(cardno);
 
-        if(mCurrentBank != null && mCurrentBank.getName().equals(bank.getName())
-                &&mCurrentBank.getType().equals(bank.getType())
-                &&mCurrentBank.getCode().equals(bank.getCode())
-                &&mCurrentBank.getCardno().equals(bank.getCardno())){
-            viewHolder.iv_select.setVisibility(View.VISIBLE);
+        if(position==selectednum){
+            viewHolder.iv_select.setImageDrawable(mContext.getResources().getDrawable(R.drawable.help_wenda_hidden_checked));
         }else{
-            viewHolder.iv_select.setVisibility(View.GONE);
+            viewHolder.iv_select.setImageDrawable(mContext.getResources().getDrawable(R.drawable.help_wenda_hidden_uncheck));
         }
         return convertView;
     }
@@ -110,6 +99,5 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         protected TextView tv_title;
         protected TextView tv_code;
         protected ImageView iv_select;
-        protected ImageView iv_divider;
     }
 }

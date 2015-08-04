@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:text="近一周收入（金币）"
+            android:text="近一周收入（元）"
             android:textColor="@color/important_dark" />
 
         <LinearLayout
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/divider_height"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/divider_color" />
+            android:background="#e0c233" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总金额(金币)"
+                    android:text="总金额(元)"
                     android:textColor="@color/normal_grey"
                     android:textSize="14dp" />
 
@@ -112,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="冻结中(金币)"
+                    android:text="冻结中(元)"
                     android:textColor="@color/normal_grey"
                     android:textSize="14dp" />
 
@@ -138,7 +138,7 @@
             android:id="@+id/ll_mine_gold_account_income"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
             android:padding="10dp">
 
             <RelativeLayout
@@ -171,14 +171,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_gold_account_expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
 
             android:padding="10dp">
 
@@ -212,13 +211,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
 
             android:padding="10dp">
 
@@ -233,7 +231,7 @@
                     android:layout_centerVertical="true"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:text="管理提现账号"
+                    android:text="管理金融账号"
                     android:textColor="#000000"
 
                     android:textSize="18sp" />
@@ -252,14 +250,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/ll_account_reset_pay_psw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
 
             android:padding="10dp">
 
@@ -274,7 +271,7 @@
                     android:layout_centerVertical="true"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:text="修改提现密码"
+                    android:text="修改支付密码"
                     android:textColor="#000000"
 
                     android:textSize="18sp" />
@@ -307,7 +304,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_yellow"
-                android:background="@drawable/index_index_recommend_bg"
+                android:background="@drawable/list_item_bg"
                 android:layout_weight="1"
                 android:textSize="16sp"
                 android:text="提现" />
@@ -317,7 +314,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_yellow"
-                android:background="@drawable/index_index_recommend_bg"
+                android:background="@drawable/list_item_bg"
                 android:layout_weight="1"
                 android:textSize="16sp"
                 android:text="充值" />

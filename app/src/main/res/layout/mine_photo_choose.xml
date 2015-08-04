@@ -5,44 +5,20 @@
     android:gravity="bottom"
     android:background="@color/content_background"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/ll_mine_photo_pai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
-
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_mine_photo_pai"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
             android:text="拍摄"
             android:textColor="@color/important_dark"
             android:textSize="18sp" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
-    </LinearLayout>
-
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
         android:background="@color/divider_color" />
 
 
@@ -65,10 +41,7 @@
         android:id="@+id/btn_pick_photo_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
