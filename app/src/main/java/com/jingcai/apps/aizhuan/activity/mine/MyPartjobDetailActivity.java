@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,7 @@ import java.util.List;
  * Created by Json Ding on 2015/4/30.
  */
 public class MyPartjobDetailActivity extends BaseActivity {
+    private final String TAG="MyPartjobDetailActivity";
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
     private String mId;  //列表传过来的id
@@ -374,7 +376,8 @@ public class MyPartjobDetailActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("获取报名详情出错：" + msg.obj);
+                    showToast("获取报名详情出错");
+                    Log.i(TAG,"获取报名详情出错：" + msg.obj);
                     break;
                 }
                 case 3: {

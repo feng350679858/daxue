@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ import java.util.List;
  * Created by Administrator on 2015/7/16.
  */
 public class MineGoldTopupActivity extends BaseActivity implements ListView.OnItemClickListener{
+    private final String TAG="MineGoldTopupActivity";
     private static final int REQUEST_CODE_CHOICE_ACCOUNT = 1;
     private MessageHandler messageHandler;
 
@@ -317,7 +319,8 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 1: {
-                    showToast("获取账户失败："+msg.obj);
+                    showToast("获取账户失败");
+                    Log.i(TAG,"获取账户失败："+msg.obj);
                     break;
                 }
                 case 2:{
@@ -325,7 +328,8 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 3:{
-                    showToast("获取余额失败："+msg.obj);
+                    showToast("获取余额失败");
+                    Log.i(TAG,"获取余额失败："+msg.obj);
                     break;
                 }
                 case 4:{
@@ -334,7 +338,8 @@ public class MineGoldTopupActivity extends BaseActivity implements ListView.OnIt
                     break;
                 }
                 case 5:{
-                    showToast("提现失败："+msg.obj);
+                    showToast("提现失败");
+                    Log.i(TAG,"提现失败："+msg.obj);
                     break;
                 }
                 default:

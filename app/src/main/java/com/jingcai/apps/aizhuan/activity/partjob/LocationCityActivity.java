@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class LocationCityActivity extends BaseActivity {
     public static final String KEY_CODE = "code";
     public static final String KEY_NAME = "name";
+    private final String TAG="LocationCityActivity";
     private MessageHandler messageHandler;
 
     private TextView tv_index_partjob_change_city;
@@ -173,7 +175,8 @@ private void initHeader(){
                     break;
                 }
                 case 1: {
-                    showToast("已开通城市读取失败:" + msg.obj);
+                    showToast("已开通城市读取失败");
+                    Log.i(TAG,"已开通城市读取失败:" + msg.obj);
                     break;
                 }
                 default: {

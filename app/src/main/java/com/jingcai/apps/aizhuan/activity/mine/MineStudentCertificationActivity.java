@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.jingcai.apps.aizhuan.util.PopupDialog;
  * Created by Administrator on 2015/7/16.
  */
 public class MineStudentCertificationActivity extends BaseActivity {
+    private final String TAG="MineStuCertification";
     private static final int REQUEST_CODE_IMAGE             = 0;
     private static final int REQUEST_CODE_CAMERA            = 1;//相机
     private static final int REQUEST_CODE_RESIZE            = 2;//截图
@@ -118,7 +120,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                             startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
                             dialog.dismiss();
                         } else {
-                            showToast("δ�ҵ�SD��");
+                            showToast("未找到SD卡");
                             dialog.dismiss();
                         }
                       //  dialog.dismiss();
@@ -175,7 +177,8 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("获取失败:" + msg.obj);
+                    showToast("获取失败");
+                    Log.i(TAG,"获取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -208,7 +211,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
         new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
             @Override
             public void success(String logopath) {
-                showToast("上传头像成功");
+                showToast("上传图片成功");
               //  mStudent.setLogopath(logopath);
             }
 

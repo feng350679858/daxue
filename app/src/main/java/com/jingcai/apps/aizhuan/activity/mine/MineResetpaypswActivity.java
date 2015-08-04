@@ -200,7 +200,8 @@ public class MineResetpaypswActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("修改支付密码失败：" + msg.obj);
+                    showToast("修改支付密码失败");
+                    Log.i(TAG,"修改支付密码失败：" + msg.obj);
                     break;
                 }
                 default:

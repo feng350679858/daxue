@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="cccccc"
                     android:textColor="#000000"
-                    android:textSize="28sp" />
+                    android:textSize="26sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -102,15 +102,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_mine_credit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
         <LinearLayout
-            android:id="@+id/ll_mine_credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
@@ -131,7 +131,7 @@
                     android:gravity="center_vertical"
                     android:text="我的信用"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                     android:gravity="center_vertical"
                     android:text="4.7分"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -154,7 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -162,6 +162,7 @@
             android:id="@+id/ll_mine_student_certification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/list_item_bg"
             android:paddingBottom="10dp"
             android:paddingTop="10dp">
 
@@ -180,7 +181,7 @@
                     android:gravity="center_vertical"
                     android:text="学生认证"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,13 +191,10 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/tv_yellow_rectangle_bg"
                     android:gravity="center_vertical"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="3dp"
+                    android:padding="2dp"
                     android:text="已认证"
                     android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -212,7 +210,7 @@
             android:id="@+id/ll_mine_help_req"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -233,7 +231,7 @@
                     android:gravity="center_vertical"
                     android:text="我的求助"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -247,7 +245,7 @@
                     android:gravity="center_vertical"
                     android:text="10"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -263,7 +261,7 @@
             android:id="@+id/ll_mine_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -284,7 +282,7 @@
                     android:gravity="center_vertical"
                     android:text="我的帮助"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -298,7 +296,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -314,7 +312,7 @@
             android:id="@+id/ll_mine_partjob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/index_index_recommend_bg"
+            android:background="@drawable/list_item_bg"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -335,7 +333,7 @@
                     android:gravity="center_vertical"
                     android:text="我的兼职"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -354,7 +352,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -379,7 +377,7 @@
                     android:gravity="center_vertical"
                     android:text="我的金库"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -398,7 +396,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -423,7 +421,7 @@
                     android:gravity="center_vertical"
                     android:text="联系客服"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"

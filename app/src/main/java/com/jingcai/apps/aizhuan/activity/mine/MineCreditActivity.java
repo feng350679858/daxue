@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by Administrator on 2015/7/20.
  */
 public class MineCreditActivity extends BaseActivity {
-
+    private final String TAG="MineCreditActivity";
     private MessageHandler messageHandler;
     private AzService azService;
     private TextView mTextName;
@@ -160,7 +161,8 @@ public class MineCreditActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("获取失败:" + msg.obj);
+                    showToast("获取失败");
+                    Log.i(TAG,"获取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
