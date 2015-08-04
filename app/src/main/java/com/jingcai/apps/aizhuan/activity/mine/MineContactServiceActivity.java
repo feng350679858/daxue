@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -77,10 +76,9 @@ public class MineContactServiceActivity extends BaseActivity {
         findViewById(R.id.rl_mine_contact_service_qq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    PackageManager packageManager = MineContactServiceActivity.this.getPackageManager();
                     final String qqPackageName = "com.tencent.mobileqq";
                     if (AppUtil.isApkInstalled(MineContactServiceActivity.this, qqPackageName)) {
-                        String url = "mqqwpa://im/chat?chat_type=wpa&uin=2841329585";
+                        String url = getString(R.string.support_staff_qq_url);
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     }else{
                         showToast("您的手机未安装QQ");
