@@ -288,7 +288,7 @@ public class IndexCampusFragment extends BaseFragment {
                             job.setOptime("20150731100123");
                             job.setPraisecount("112");
                             job.setCommentcount("10");
-                            job.setStatus("1");
+                            job.setStatus(String.valueOf(random.nextInt(6) + 1));
                             job.setPraiseflag(String.valueOf(random.nextInt(2)));
                             jobList.add(job);
                         }
