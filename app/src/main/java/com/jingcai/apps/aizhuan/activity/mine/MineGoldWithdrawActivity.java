@@ -60,8 +60,9 @@ public class MineGoldWithdrawActivity extends BaseActivity{
     private AzService azService;
     private BitmapUtil mBitmapUtil;
     private Account04Response.Account04Body.Bank mCurrentBank;
+    private int selectednum;
     private float mEnableGoldCount;
-
+    private boolean isResume=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +139,33 @@ public class MineGoldWithdrawActivity extends BaseActivity{
 
             }
         });
-
-
+        empty_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+     //           Intent intent=new Intent(this,金融账号管理.class);
+//                startActivity(intent);
+//                isResume=true;
+            }
+        });
+//        bank_item.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(this,BankSelectActivity.class);
+//                intent.putExtra("",mCurrentBank);
+//            }
+//        });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (isResume) {
+            showProgressDialog("数据加载中...");
+            initBankData();
+            isResume=true;
+        }
+
+    }
     private void initData() {
         showProgressDialog("数据加载中...");
         initBankData();
