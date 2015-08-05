@@ -1,42 +1,45 @@
-package com.jingcai.apps.aizhuan.adapter.gold;
+package com.jingcai.apps.aizhuan.adapter.mine.gold;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.service.business.account.account04.Account04Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/7/16.
+ * Created by Json Ding on 2015/6/9.
  */
-public class AccountChoiceListAdapter extends BaseAdapter {
+public class AccountBankListAdapter extends BaseAdapter {
 
     private List<Account04Response.Account04Body.Bank> mBankList;
     private LayoutInflater mInflater;
     private Context mContext;
     private BitmapUtil mBitmapUtil;
-    private Account04Response.Account04Body.Bank mCurrentBank;
 
     private boolean mIsFooterDividerEnable;
+    private OnSwipeButtonClickListener clickListener;
 
-    public AccountChoiceListAdapter(Context context,Account04Response.Account04Body.Bank selectedBank){
+    public AccountBankListAdapter(Context context){
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mCurrentBank = selectedBank;
         mBitmapUtil = new BitmapUtil(context);
     }
     public void setFooterDividerEnabel(boolean enable){
         mIsFooterDividerEnable = enable;
+    }
+
+    public void setOnSwipeButtonClickListener(OnSwipeButtonClickListener listener){
+        this.clickListener = listener;
     }
 
     public void setData(List<Account04Response.Account04Body.Bank> list){
@@ -45,7 +48,6 @@ public class AccountChoiceListAdapter extends BaseAdapter {
             mBankList = new ArrayList<>();
         }
     }
-
 
     @Override
     public int getCount() {
@@ -68,12 +70,12 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         if(convertView == null){
             viewHolder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.mine_gold_account_choose_list_item,null);
-            viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_logo);
-            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_title);
-            viewHolder.tv_code = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_code);
-            viewHolder.iv_divider = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_divider);
-            viewHolder.iv_select = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_select);
+            convertView = mInflater.inflate(R.layout.gold_account_financial_list_item,null);
+            viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_account_list_logo);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_account_list_title);
+            viewHolder.tv_code = (TextView) convertView.findViewById(R.id.tv_account_list_code);
+            viewHolder.btn_unbind = (Button) convertView.findViewById(R.id.btn_account_list_unbind);
+            viewHolder.iv_divider = (ImageView) convertView.findViewById(R.id.iv_account_list_divider);
 
             convertView.setTag(viewHolder);
         }else{
@@ -86,30 +88,38 @@ public class AccountChoiceListAdapter extends BaseAdapter {
                 viewHolder.iv_divider.setVisibility(View.VISIBLE);
             }
         }
-        Account04Response.Account04Body.Bank bank = mBankList.get(position);
-        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(),R.drawable.ic_launcher);
-        viewHolder.tv_title.setText(bank.getName());
-        String cardno = bank.getCardno();
-        cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
-        viewHolder.tv_code.setText(cardno);
+        mBitmapUtil.getImage(viewHolder.iv_logo,mBankList.get(position).getImgurl(), R.drawable.logo_merchant_default);
+        viewHolder.tv_title.setText(mBankList.get(position).getName());
+        String cardno = mBankList.get(position).getCardno();
 
-        if(mCurrentBank != null && mCurrentBank.getName().equals(bank.getName())
-                &&mCurrentBank.getType().equals(bank.getType())
-                &&mCurrentBank.getCode().equals(bank.getCode())
-                &&mCurrentBank.getCardno().equals(bank.getCardno())){
-            viewHolder.iv_select.setVisibility(View.VISIBLE);
-        }else{
-            viewHolder.iv_select.setVisibility(View.GONE);
+        char[] chars = cardno.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if(i>=3 && i<=6){
+                chars[i] = '*';
+            }
         }
+        viewHolder.tv_code.setText(new String(chars));
+
+        final View v = convertView;
+        viewHolder.btn_unbind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.OnSwipeListButtonClick(position, v);
+            }
+        });
+
         return convertView;
     }
 
+    public interface OnSwipeButtonClickListener{
+        void OnSwipeListButtonClick(int position, View view);
+    }
 
     protected class ViewHolder{
         protected ImageView iv_logo;
         protected TextView tv_title;
         protected TextView tv_code;
-        protected ImageView iv_select;
+        protected Button btn_unbind;
         protected ImageView iv_divider;
     }
 }

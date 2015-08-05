@@ -6,6 +6,7 @@ import android.os.Message;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.mine.gold.MineResetPayPasswordActivity;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -24,6 +26,7 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 public class SafeCheckActivity extends BaseActivity {
+    private final String TAG="SafeCheckActivity";
     private AzExecutor azExecutor;
     private AzService azService;
     private MessageHandler messageHandler;
@@ -86,7 +89,7 @@ public class SafeCheckActivity extends BaseActivity {
         });
     }
     private void resetPayPsw(){
-        Intent intent=new Intent(this,MineResetpaypswActivity.class);
+        Intent intent=new Intent(this,MineResetPayPasswordActivity.class);
         startActivity(intent);
         finish();
     }
@@ -129,7 +132,8 @@ public class SafeCheckActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
-                    showToast("安全验证失败:" + msg.obj);
+                    showToast("安全验证失败");
+                    Log.i(TAG,"安全验证失败:" + msg.obj);
                     break;
                 }
                 case 1: {

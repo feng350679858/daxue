@@ -15,8 +15,12 @@
     <color name="item_selected_color">#D7D7D7</color>
     <!-- 本APP主色  -->
     <color name="main_yellow">#f9d632</color>
-    <!-- 稍暗的红色 -->
+    <!-- 稍暗的黄色 -->
     <color name="darker_yellow">#F3C801</color>
+    <!-- 稍浅的黄色 -->
+    <color name="lighter_yellow">#e0c233</color>
+    <!-- 金色 -->
+    <color name="golden">#a48e27</color>
     <!-- 用于内容区域底色 -->
     <color name="content_background">#f3f5f7</color>
     <!--partjob-->

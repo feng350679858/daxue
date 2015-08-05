@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import java.util.Date;
  * Created by chenchao on 2015/7/13.
  */
 public class PartjobCancelActivity extends BaseActivity{
+    private final String TAG="PartjobCancelActivity";
     private MessageHandler messageHandler;
 
     private TextView mTxtMention;
@@ -167,11 +169,13 @@ public class PartjobCancelActivity extends BaseActivity{
                     break;
                 }
                 case 1:{
-                    showToast("数据读取失败：" + msg.obj);
+                    showToast("数据读取失败");
+                    Log.i(TAG,"数据读取失败：" + msg.obj);
                     break;
                 }
                 case 2:{
-                    showToast("提交失败：" + msg.obj);
+                    showToast("提交失败");
+                    Log.i(TAG,"提交失败：" + msg.obj);
                     break;
                 }
                 case 3:{

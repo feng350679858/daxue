@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -503,7 +504,8 @@ public class PartjobSearchActivity extends BaseActivity {
                 }
                 case 1: {
                     try {
-                        showToast("获取消息失败:" + msg.obj);
+                        showToast("获取消息失败");
+                        Log.i(TAG,"获取消息失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }

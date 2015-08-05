@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
 /**
  * Created by Administrator on 2015/7/20.
  */
-public class MineResetpaypswActivity extends BaseActivity {
+public class MineResetPayPasswordActivity extends BaseActivity {
     private static final String TAG = "MineResetpaypswActivity";
 
     private StringBuilder mPayPsw;
@@ -97,8 +97,8 @@ public class MineResetpaypswActivity extends BaseActivity {
                 for (int i = 1; i <= 6; i++) {
                     //showToast("123456");
                     try {
-                        int viewId = MineResetpaypswActivity.this.getResources().getIdentifier("tv_mine_psw_length_" + i, "id",MineResetpaypswActivity.this.getPackageName());
-                        MineResetpaypswActivity.this.findViewById(viewId).setVisibility(i <= mPayPsw.length() ? View.VISIBLE : View.INVISIBLE);
+                        int viewId = MineResetPayPasswordActivity.this.getResources().getIdentifier("tv_mine_psw_length_" + i, "id",MineResetPayPasswordActivity.this.getPackageName());
+                        MineResetPayPasswordActivity.this.findViewById(viewId).setVisibility(i <= mPayPsw.length() ? View.VISIBLE : View.INVISIBLE);
                     } catch (Exception e) {
                         Log.e(TAG, "Couldn't find tv_psw_length_" + i + " ,Did you remove it?");
                     }
@@ -187,12 +187,12 @@ public class MineResetpaypswActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     showToast("修改支付密码成功");
-                    MineResetpaypswActivity.this.finish();
+                    MineResetPayPasswordActivity.this.finish();
                     View toastRoot = getLayoutInflater().inflate(R.layout.mine_reset_pay_psw_toast, null);
                     // TextView message = (TextView) toastRoot.findViewById(R.id.tv_reset_pay_psw_toast);
                     // message.setText("My Toast");
 
-                    Toast toastStart = new Toast(MineResetpaypswActivity.this);
+                    Toast toastStart = new Toast(MineResetPayPasswordActivity.this);
                     toastStart.setGravity(Gravity.TOP, 0, 10);
                     toastStart.setDuration(Toast.LENGTH_LONG);
                     toastStart.setView(toastRoot);
@@ -200,7 +200,8 @@ public class MineResetpaypswActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("修改支付密码失败：" + msg.obj);
+                    showToast("修改支付密码失败");
+                    Log.i(TAG,"修改支付密码失败：" + msg.obj);
                     break;
                 }
                 default:

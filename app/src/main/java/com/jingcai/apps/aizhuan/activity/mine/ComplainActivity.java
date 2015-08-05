@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.mine;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by Json Ding on 2015/5/3.
  */
 public class ComplainActivity extends BaseActivity {
+    private final String TAG="ComplainActivity";
     private MessageHandler messageHandler;
     private String jobid, joinid;
 
@@ -48,12 +50,9 @@ public class ComplainActivity extends BaseActivity {
         setContentView(R.layout.mine_partjob_complain);
 
         ((TextView)findViewById(R.id.tv_content)).setText("投诉");
-        findViewById(R.id.iv_func).setVisibility(View.GONE);
-        findViewById(R.id.iv_bird_badge).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
                 finish();
             }
         });
@@ -135,7 +134,8 @@ public class ComplainActivity extends BaseActivity {
                     break;
                 }
                 case 1:{
-                    showToast("投诉信息提交失败："+ msg.obj);
+                    showToast("投诉信息提交失败");
+                    Log.i(TAG,"投诉信息提交失败："+ msg.obj);
                     break;
                 }
 

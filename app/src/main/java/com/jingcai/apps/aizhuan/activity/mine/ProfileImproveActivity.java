@@ -520,7 +520,8 @@ public class ProfileImproveActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
-                    showToast("获取失败:" + msg.obj);
+                    showToast("获取失败");
+                    Log.i(TAG,"获取失败:" + msg.obj);
                     break;
                 }
                 case 1: {
@@ -529,7 +530,8 @@ public class ProfileImproveActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
-                    showToast("已开通省份获取失败:" + msg.obj);
+                    showToast("已开通省份获取失败");
+                    Log.i(TAG,"已开通省份获取失败:" + msg.obj);
                     break;
                 }
                 case 3: {
@@ -539,7 +541,8 @@ public class ProfileImproveActivity extends BaseActivity {
                     break;
                 }
                 case 4: {
-                    showToast("已开通城市获取失败:" + msg.obj);
+                    showToast("已开通城市获取失败");
+                    Log.i(TAG,"已开通城市获取失败:" + msg.obj);
                     break;
                 }
                 case 5: {
@@ -549,7 +552,8 @@ public class ProfileImproveActivity extends BaseActivity {
                     break;
                 }
                 case 6: {
-                    showToast("已开通地区获取失败:" + msg.obj);
+                    showToast("已开通地区获取失败");
+                    Log.i(TAG,"已开通地区获取失败:" + msg.obj);
                     break;
                 }
                 case 7: {

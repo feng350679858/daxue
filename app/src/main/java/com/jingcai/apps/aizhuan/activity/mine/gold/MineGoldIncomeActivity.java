@@ -1,8 +1,9 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,8 +11,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountStreamInputListAdapter;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountStreamOutputListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamInputListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -30,10 +30,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class MineGoldExpenseActivity extends BaseActivity implements XListView.IXListViewListener{
+public class MineGoldIncomeActivity extends BaseActivity implements XListView.IXListViewListener{
+    private final String TAG="MineGoldIncomeActivity";
     private XListView mListView;
     private MessageHandler messageHandler;
-    private AccountStreamOutputListAdapter mListAdapter;
+    private AccountStreamInputListAdapter mListAdapter;
     private View layout_empty;  //列表为空,显示这个view
     private int mCurrentStart = 0;  //当前的开始
 
@@ -50,7 +51,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
 
     private void initHeader()
     {
-        ((TextView)findViewById(R.id.tv_content)).setText("支出记录");
+        ((TextView)findViewById(R.id.tv_content)).setText("收入记录");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
     private void initView() {
         layout_empty = findViewById(R.id.layout_empty);
         ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
-        ((TextView)findViewById(R.id.tv_empty)).setText("没获取支出数据！");
+        ((TextView)findViewById(R.id.tv_empty)).setText("还木有流水，还不快去赚起来！");
 
         mListView = (XListView) findViewById(R.id.lv_account_stream_detail_list);
         mListView.setPullRefreshEnable(true);
@@ -70,7 +71,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
         mListView.setAutoLoadEnable(true);
         mListView.setXListViewListener(this);
 
-        mListAdapter = new AccountStreamOutputListAdapter(this);
+        mListAdapter = new AccountStreamInputListAdapter(this);
         mListView.setAdapter(mListAdapter);
     }
 
@@ -192,7 +193,8 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
                 case 1 : {
                     try {
                         finishLoading();
-                        showToast("获取流水失败:" + msg.obj);
+                        showToast("获取流水失败");
+                        Log.i(TAG,"获取流水失败:" + msg.obj);
                     }finally {
                         actionLock.unlock();
                     }

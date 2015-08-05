@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by Administrator on 2015/7/18.
  */
 public class MinePersonalDataActivity extends BaseActivity {
+    private final String TAG="MinePersonalData";
     private static final int EMAIL_REQUEST_CODE = 1;//邮箱
     private static final int QQ_REQUEST_CODE = 2;//QQ
     private static final int PHONE_REQUEST_CODE=6;//手机
@@ -161,6 +163,7 @@ public class MinePersonalDataActivity extends BaseActivity {
     }
 
     private void initData() {
+        showProgressDialog("数据加载中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -227,7 +230,8 @@ public class MinePersonalDataActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("获取失败:" + msg.obj);
+                    showToast("获取失败");
+                    Log.i(TAG,"获取失败:" + msg.obj);
                     break;
                 }
                 case 2:
@@ -235,7 +239,8 @@ public class MinePersonalDataActivity extends BaseActivity {
                     showToast("更新成功");
                     break;
                 case 3:
-                    showToast("更新失败" + msg.obj);
+                    showToast("更新失败");
+                    Log.i(TAG,"更新失败:" + msg.obj);
                     break;
                 case 4: {
                     if(null != msg.obj ){

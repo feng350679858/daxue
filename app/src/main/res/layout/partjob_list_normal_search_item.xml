@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/index_index_recommend_bg"
+        android:background="@drawable/list_item_bg"
         android:padding="10dp">
 
         <View

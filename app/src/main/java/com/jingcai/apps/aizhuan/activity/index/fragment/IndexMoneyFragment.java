@@ -304,11 +304,9 @@ public class IndexMoneyFragment extends BaseFragment {
                     break;
                 }
                 case 4: {
-                    if (null != msg.obj) {
-                        showToast("获取标签信息出错:" + msg.obj);
-                    } else {
-                        showToast("获取标签信息出错");
-                    }
+                    showToast("获取标签信息出错");
+                    if (null != msg.obj)
+                        Log.i(TAG,"获取标签信息出错:" + msg.obj);
                     break;
                 }
                 case 5: {
@@ -317,11 +315,9 @@ public class IndexMoneyFragment extends BaseFragment {
                     break;
                 }
                 case 6: {
-                    if (null != msg.obj) {
-                        showToast("获取推荐位信息出错:" + msg.obj);
-                    } else {
-                        showToast("获取推荐位信息出错");
-                    }
+                    showToast("获取推荐位信息出错");
+                    if (null != msg.obj)
+                        Log.i(TAG,"获取推荐位信息出错:" + msg.obj);
                     break;
                 }
                 case 7: {
@@ -330,11 +326,9 @@ public class IndexMoneyFragment extends BaseFragment {
                     break;
                 }
                 case 8: {
-                    if (null != msg.obj) {
-                        showToast("获取广播信息出错:" + msg.obj);
-                    } else {
-                        showToast("获取广播信息出错");
-                    }
+                    showToast("获取广播信息出错");
+                    if (null != msg.obj)
+                        Log.i(TAG,"获取广播信息出错:" + msg.obj);
                     break;
                 }
                 default: {

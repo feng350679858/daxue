@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.sys;
 
 
 import android.app.ProgressDialog;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -14,8 +15,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.activity.sys.AboutUsActivity;
-import com.jingcai.apps.aizhuan.activity.sys.ModifyPswActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineSuggestionActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -36,7 +36,7 @@ import com.jingcai.apps.aizhuan.view.SlideButton;
  * Created by xiangqili on 2015/7/14.
  */
 public class SettingsActivity extends BaseActivity {
-
+    private final String TAG="SettingsActivity";
     private AzService azService;
     private ProgressDialog progressDialog = null;
     private MessageHandler messageHandler;
@@ -247,7 +247,8 @@ public class SettingsActivity extends BaseActivity {
                     break;
                 }
                 case 1: {
-                    showToast("设置失败:" + msg.obj);
+                    showToast("设置失败");
+                    Log.i(TAG,"设置失败:" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -263,7 +264,8 @@ public class SettingsActivity extends BaseActivity {
                     break;
                 }
                 case 3: {
-                    showToast("xczxczx" + msg.obj);
+                    showToast("退出登录失败");
+                    Log.i(TAG,"退出登录失败:" + msg.obj);
                     break;
                 }
                 default: {

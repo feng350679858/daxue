@@ -51,9 +51,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <!-- JPush -->
-    <permission
-        android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
+    <permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
 
     <uses-permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -141,20 +139,14 @@
         <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
-        <activity android:name=".activity.mine.MineAccountActivity"/>
+        <activity android:name=".activity.mine.gold.MineAccountActivity"/>
         <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
-        <activity android:name=".activity.mine.SettingsActivity"/>
-        <activity android:name=".activity.mine.MineGoldTopupActivity"/>
+        <activity android:name=".activity.sys.SettingsActivity"/>
         <activity android:name=".activity.mine.MineSuggestionActivity"/>
-        <activity android:name=".activity.mine.MineGoldWithdrawActivity"/>
-        <activity android:name=".activity.mine.MineResetPasswordActivity"/>
-        <activity android:name=".activity.mine.MineResetpaypswActivity"/>
         <activity android:name=".activity.mine.MyPartjobListActivity"/>
         <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
         <activity android:name=".activity.mine.MineCreditActivity"/>
         <activity android:name=".activity.mine.MinePersonalDataActivity"/>
-        <activity android:name=".activity.mine.MineGoldExpenseActivity"/>
-        <activity android:name=".activity.mine.MineGoldIncomeActivity"/>
         <activity android:name=".activity.mine.MineContactServiceActivity"/>
         <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
         <activity android:name=".activity.mine.WeixinNumberActivity"/>
@@ -163,6 +155,16 @@
         <activity android:name=".activity.mine.ProfileImproveActivity" />
         <activity android:name=".activity.mine.ProfileImprove2Activity" />
 
+        <!-- mine ==> gold -->
+        <activity android:name=".activity.mine.gold.MineGoldTopupActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity"/>
+        <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity"/>
+        <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldExpenseActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldIncomeActivity"/>
+        <activity android:name=".activity.mine.gold.AccountFinancialActivity"/>
+        <activity android:name=".activity.mine.gold.AccountTypeActivity"/>
+        <activity android:name=".activity.mine.gold.BindAlipayActivity"/>
 
 
 
