@@ -42,12 +42,12 @@ public class MineGoldWithdrawActivity extends BaseActivity{
     private final String TAG = "MineGoldWithdraw";
     private static final int REQUEST_CODE_CHOICE_ACCOUNT = 1;
     private MessageHandler messageHandler;
-
+    private AzService azService;
     private EditText mInputCount;
     private Button mWithdrawSubmit;
     private TextView mNotEnoughText;
     private RelativeLayout empty_item,bank_item;
-    private AzService azService;
+
     private BitmapUtil mBitmapUtil;
     private Account04Response.Account04Body.Bank mCurrentBank;
     private int selectednum;
@@ -132,18 +132,19 @@ public class MineGoldWithdrawActivity extends BaseActivity{
         empty_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-     //           Intent intent=new Intent(this,金融账号管理.class);
-//                startActivity(intent);
-//                isResume=true;
+                Intent intent=new Intent(MineGoldWithdrawActivity.this,AccountTypeActivity.class);
+                startActivity(intent);
+                isResume=true;
             }
         });
-//        bank_item.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(this,BankSelectActivity.class);
-//                intent.putExtra("",mCurrentBank);
-//            }
-//        });
+        bank_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MineGoldWithdrawActivity.this,BankSelectActivity.class);
+                LocalValUtil.setVal(mCurrentBank);
+                startActivityForResult(intent, REQUEST_CODE_CHOICE_ACCOUNT);
+            }
+        });
     }
 
     @Override
@@ -314,6 +315,7 @@ public class MineGoldWithdrawActivity extends BaseActivity{
     private void fillBankInfo(List<Account04Response.Account04Body.Bank> banks) {
 
         if (null!= banks && banks.size() > 0) {
+            selectednum=0;
             mCurrentBank = banks.get(0);
             initBankInfo();
         }
@@ -327,7 +329,7 @@ public class MineGoldWithdrawActivity extends BaseActivity{
         ((TextView) findViewById(R.id.tv_mine_account_choose_list_item_title)).setText(mCurrentBank.getName());
         String cardno = mCurrentBank.getCardno();
         cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
-        ((TextView) findViewById(R.id.tv_mine_account_choose_list_item_code)).setText(cardno);
+        ((TextView) findViewById(R.id.tv_mine_account_choose_list_item_code)).setText("帐号:"+cardno);
         ((ImageView)findViewById(R.id.iv_mine_account_choose_list_item_select)).setImageDrawable(getResources().getDrawable(R.drawable.icon_right_triangle));
     }
     @Override

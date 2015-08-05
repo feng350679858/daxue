@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jingcai.apps.aizhuan">
+    package="com.jingcai.apps.aizhuan" >
 
     <!-- 添加WiFi以及访问网络的权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -76,14 +76,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <!-- sys -->
         <activity
             android:name=".activity.sys.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -112,8 +112,12 @@
             android:name=".activity.index.IndexBannerDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.sys.AboutUsActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activity.sys.ModifyPswActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.sys.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.sys.ModifyPswActivity"
+            android:screenOrientation="portrait" />
 
         <!-- help -->
         <activity
@@ -156,7 +160,7 @@
             android:name=".activity.help.HelpEvaluateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="aizhuan.activity.help.HelpEvaluateActivity" />
 
@@ -173,9 +177,11 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!-- 隐藏键盘 -->
-        <activity android:configChanges="orientation|keyboardHidden" android:name=".activity.help.CaptureActivity"
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateAlwaysHidden"/>
-
+        <activity
+            android:name=".activity.help.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- Message -->
         <activity android:name=".activity.message.MessageCommentActivity" />
@@ -200,39 +206,37 @@
         <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
-        <activity android:name=".activity.mine.gold.MineAccountActivity"/>
-        <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
-        <activity android:name=".activity.sys.SettingsActivity"/>
-        <activity android:name=".activity.mine.MineSuggestionActivity"/>
-        <activity android:name=".activity.mine.MyPartjobListActivity"/>
-        <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
-        <activity android:name=".activity.mine.MineCreditActivity"/>
-        <activity android:name=".activity.mine.MinePersonalDataActivity"/>
-        <activity android:name=".activity.mine.MineContactServiceActivity"/>
-        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
-        <activity android:name=".activity.mine.WeixinNumberActivity"/>
-        <activity android:name=".activity.mine.ComplainActivity"/>
+        <activity android:name=".activity.mine.gold.MineAccountActivity" />
+        <activity android:name=".activity.mine.MineStudentCertificationActivity" />
+        <activity android:name=".activity.sys.SettingsActivity" />
+        <activity android:name=".activity.mine.MineSuggestionActivity" />
+        <activity android:name=".activity.mine.MyPartjobListActivity" />
+        <activity android:name=".activity.mine.MyPartjobDetailActivity" />
+        <activity android:name=".activity.mine.MineCreditActivity" />
+        <activity android:name=".activity.mine.MinePersonalDataActivity" />
+        <activity android:name=".activity.mine.MineContactServiceActivity" />
+        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity" />
+        <activity android:name=".activity.mine.WeixinNumberActivity" />
+        <activity android:name=".activity.mine.ComplainActivity" />
         <activity android:name=".activity.mine.SafeCheckActivity" />
         <activity android:name=".activity.mine.ProfileImproveActivity" />
         <activity android:name=".activity.mine.ProfileImprove2Activity" />
 
         <!-- mine ==> gold -->
-        <activity android:name=".activity.mine.gold.MineGoldTopupActivity"/>
-        <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity"/>
-        <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity"/>
-        <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity"/>
-        <activity android:name=".activity.mine.gold.MineGoldExpenseActivity"/>
-        <activity android:name=".activity.mine.gold.MineGoldIncomeActivity"/>
-        <activity android:name=".activity.mine.gold.AccountFinancialActivity"/>
-        <activity android:name=".activity.mine.gold.AccountTypeActivity"/>
-        <activity android:name=".activity.mine.gold.BindAlipayActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldTopupActivity" />
+        <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity" />
+        <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity" />
+        <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity" />
+        <activity android:name=".activity.mine.gold.MineGoldExpenseActivity" />
+        <activity android:name=".activity.mine.gold.MineGoldIncomeActivity" />
+        <activity android:name=".activity.mine.gold.AccountFinancialActivity" />
+        <activity android:name=".activity.mine.gold.AccountTypeActivity" />
+        <activity android:name=".activity.mine.gold.BindAlipayActivity" />
 
-
-
-
-
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
-        <receiver android:name=".jpush.AzJpushReceiver" android:enabled="true">
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        <receiver
+            android:name=".jpush.AzJpushReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
@@ -249,7 +253,7 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -260,8 +264,8 @@
         <!-- Required -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true">
-            <intent-filter android:priority="1000">
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
                 <category android:name="com.jingcai.apps.aizhuan" />
@@ -281,7 +285,7 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
@@ -314,7 +318,10 @@
             android:name="JPUSH_CHANNEL"
             android:value="A000" />
 
-
+        <activity
+            android:name=".activity.mine.gold.BankSelectActivity"
+            android:label="@string/title_activity_bank_select" >
+        </activity>
     </application>
 
 </manifest>

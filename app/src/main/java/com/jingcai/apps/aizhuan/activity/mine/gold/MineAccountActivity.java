@@ -136,7 +136,8 @@ public class MineAccountActivity extends BaseActivity {
                         intent = new Intent(thisActivity,AccountFinancialActivity.class);
                         break;
                     case R.id.btn_mine_gold_account_withdraw://取款
-                        checkIdentity();
+                        intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
+//                        checkIdentity();
                         break;
                     case R.id.btn_mine_gold_account_topup://充值
                         intent = new Intent(thisActivity, MineGoldTopupActivity.class);
