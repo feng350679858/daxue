@@ -27,7 +27,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  */
 public class HelpWendaEditActivity extends BaseActivity {
     private static final String TAG = "HelpWendaCommnet";
-    private String helpid;
+    private String helpid, answerid;
     private MessageHandler messageHandler;
     private TextView tv_func;
     private TextView et_help_content;
@@ -36,7 +36,8 @@ public class HelpWendaEditActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helpid = getIntent().getStringExtra("answerid");
+        helpid = getIntent().getStringExtra("helpid");
+        answerid = getIntent().getStringExtra("answerid");
         if(StringUtil.isEmpty(helpid)){
             finish();
         } else {

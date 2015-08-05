@@ -37,9 +37,6 @@ public class AccountChoiceListAdapter extends BaseAdapter {
 
     public void setData(List<Account04Response.Account04Body.Bank> list){
         mBankList = list;
-        if(mBankList == null){
-            mBankList = new ArrayList<>();
-        }
     }
 
     public void setSelectednum(int num){
@@ -48,7 +45,7 @@ public class AccountChoiceListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mBankList.size();
+        return null == mBankList?0:mBankList.size();
     }
 
     @Override

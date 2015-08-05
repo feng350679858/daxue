@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.message.CommentReplyActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Partjob29Body.Parttimejob;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Parttimejob;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 

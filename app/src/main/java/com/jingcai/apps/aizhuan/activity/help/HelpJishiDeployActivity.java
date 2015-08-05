@@ -15,7 +15,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.common.GoldWatcher;
+import com.jingcai.apps.aizhuan.activity.common.MoneyWatcher;
+import com.jingcai.apps.aizhuan.activity.common.NumberWatcher;
 import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -96,7 +97,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
         tv_end_time = (TextView) findViewById(R.id.tv_end_time);
 
-        et_pay_money.addTextChangedListener(new GoldWatcher(et_pay_money));
+        et_pay_money.addTextChangedListener(new MoneyWatcher());
 
         btn_jishi_help = (Button) findViewById(R.id.btn_jishi_help);
 
@@ -268,7 +269,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
             View parentView = this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(this).inflate(R.layout.help_jishi_deploy_endtime_pop, null);
             et_end_time = (EditText) contentView.findViewById(R.id.et_end_time);
-            et_end_time.addTextChangedListener(new GoldWatcher(et_end_time));
+            et_end_time.addTextChangedListener(new NumberWatcher());
 
             selfdeftimeWin = PopupWin.Builder.create(this)
                     .setParentView(parentView)

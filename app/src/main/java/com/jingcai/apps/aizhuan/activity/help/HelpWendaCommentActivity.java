@@ -1,10 +1,10 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,7 +12,10 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
+import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
+import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -22,6 +25,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ import java.util.List;
  * Created by lejing on 15/7/16.
  */
 public class HelpWendaCommentActivity extends BaseActivity {
-    private static final String TAG = "HelpWendaComment";
+    private String answerid;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
@@ -42,13 +46,18 @@ public class HelpWendaCommentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageHandler = new MessageHandler(this);
-        setContentView(R.layout.help_wenda_comment);
+        answerid = getIntent().getStringExtra("answerid");
+        if(StringUtil.isEmpty(answerid)){
+            finish();
+        } else {
+            messageHandler = new MessageHandler(this);
+            setContentView(R.layout.help_wenda_comment);
 
-        initHeader();
+            initHeader();
 
-        initView();
-        initGroupData();
+            initView();
+            initGroupData();
+        }
     }
 
     private void initHeader() {
@@ -65,14 +74,13 @@ public class HelpWendaCommentActivity extends BaseActivity {
     }
 
     private void initView() {
-        et_reploy_comment = (EditText)findViewById(R.id.et_reploy_comment);
+        et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
         groupListView.setPullRefreshEnable(true);
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
-
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
@@ -81,7 +89,6 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 groupListView.setPullLoadEnable(true);
                 initGroupData();
             }
-
             @Override
             public void onLoadMore() {
                 initGroupData();
@@ -90,16 +97,46 @@ public class HelpWendaCommentActivity extends BaseActivity {
 
         commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
             @Override
-            public void click(View view, HelpCommentAdapter.ViewHolder holder) {
-                boolean selected = holder.region.isSelected();
+            public void click(View view, CommentItem region) {
+                boolean selected = region.isSelected();
                 commentAdapter.clearSelected();
-                if(!selected) {
-                    holder.region.setSelected(!selected);
-                    et_reploy_comment.setHint("回复：" + holder.region.getRegionname());
-                }else{
+                if (!selected) {
+                    region.setSelected(!selected);
+                    et_reploy_comment.setHint("回复：" + region.getContent());
+                } else {
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void like(CheckBox checkBox, final CommentItem region) {
+                new LikeHandler(HelpWendaCommentActivity.this).setCallback(new LikeHandler.Callback() {
+                    @Override
+                    public void like(String praiseid, CheckBox checkBox) {
+                        region.setPraiseflag("1");
+                        region.setPraiseid(praiseid);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+
+                    @Override
+                    public void unlike(CheckBox checkBox) {
+                        region.setPraiseflag("0");
+                        region.setPraiseid(null);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+                }).click("4", region.getContentid(), region.getPraiseid(), checkBox);//评论
+            }
+
+            @Override
+            public void abuse(CommentItem region) {
+                //举报答案
+                new AbuseReportHandler(HelpWendaCommentActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                    @Override
+                    public void call() {
+                        showToast("举报成功");
+                    }
+                }).click("", "2", region.getContentid());
             }
         });
     }
@@ -121,7 +158,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+                        List<CommentItem> list = (List<CommentItem>) msg.obj;
                         commentAdapter.addData(list);
                         commentAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();

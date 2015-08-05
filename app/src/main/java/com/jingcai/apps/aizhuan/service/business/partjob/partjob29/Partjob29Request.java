@@ -26,11 +26,21 @@ public class Partjob29Request extends BaseRequest {
 
     public class Parttimejob {
         private String sourceid;
+        private String receiverid;
         private String targettype;
         private String targetid;
+        private String commenttype;
+        private String readflag;
         private String start;
         private String pagesize;
-        private String receiverid;
+
+        public String getCommenttype() {
+            return commenttype;
+        }
+
+        public void setCommenttype(String commenttype) {
+            this.commenttype = commenttype;
+        }
 
         public String getReceiverid() {
             return receiverid;
@@ -70,6 +80,14 @@ public class Partjob29Request extends BaseRequest {
 
         public void setStart(String start) {
             this.start = start;
+        }
+
+        public String getReadflag() {
+            return readflag;
+        }
+
+        public void setReadflag(String readflag) {
+            this.readflag = readflag;
         }
 
         public String getPagesize() {

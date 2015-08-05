@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.service.business.partjob.partjob29;
 
+import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 /**
  * Created by Json Ding on 2015/4/29.
  */
-public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29Body> {
+public class Partjob29Response extends BaseResponse<Partjob29Response.Body> {
 
-    public static class Partjob29Body {
+    public static class Body {
 
         private List<Parttimejob> parttimejob_list;
 
@@ -20,194 +21,235 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Partjob29B
         public void setParttimejob_list(List<Parttimejob> parttimejob_list) {
             this.parttimejob_list = parttimejob_list;
         }
+    }
 
-        public static class Parttimejob {
-            private String sourceid;
-            private String sourceimgurl;
-            private String sourcelevel;
-            private String sourcename;
-            private String sourceschool;
-            private String sourcecollege;
-            private String optime;
-            private String optype;
-            private String contentid;
-            private String content;
-            private String praisecount;
-            private Refcomment refcomment;
-            private Reftarget reftarget;
+    public static class Parttimejob extends CommentItem {
+        private String contentid;
+        private String sourceid;
+        private String sourceimgurl;
+        private String sourcelevel;
+        private String sourcename;
+        private String sourceschool;
+        private String sourcecollege;
+        private String optime;
+        private String content;
+        private String praisecount;
+        private String praiseflag;
+        private String praiseid;
+        private String readflag;
+        private Refcomment refcomment;
+        private Reftarget reftarget;
 
-            public static class Refcomment{
-                private String refid;
-                private String refcontent;
+        public String getContentid() {
+            return contentid;
+        }
 
-                public String getRefid() {
-                    return refid;
-                }
+        public void setContentid(String contentid) {
+            this.contentid = contentid;
+        }
 
-                public void setRefid(String refid) {
-                    this.refid = refid;
-                }
+        public String getContent() {
+            return content;
+        }
 
-                public String getRefcontent() {
-                    return refcontent;
-                }
+        public String getOptime() {
+            return optime;
+        }
 
-                public void setRefcontent(String refcontent) {
-                    this.refcontent = refcontent;
-                }
+        public String getPraisecount() {
+            return praisecount;
+        }
+
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public String getReadflag() {
+            return readflag;
+        }
+
+        public Refcomment getRefcomment() {
+            return refcomment;
+        }
+
+        public Reftarget getReftarget() {
+            return reftarget;
+        }
+
+        public String getSourcecollege() {
+            return sourcecollege;
+        }
+
+        public String getSourceid() {
+            return sourceid;
+        }
+
+        public String getSourceimgurl() {
+            return sourceimgurl;
+        }
+
+        public String getSourcelevel() {
+            return sourcelevel;
+        }
+
+        public String getSourcename() {
+            return sourcename;
+        }
+
+        public String getSourceschool() {
+            return sourceschool;
+        }
+
+        public String getRefname(){
+            if(null != refcomment){
+                return refcomment.getRefname();
             }
+            return null;
+        }
 
-            public static class Reftarget{
-                private String targetid;
-                private String targettype;
-                private String imgurl;
-                private String studentname;
-                private String publiccontent;
-
-                public String getTargetid() {
-                    return targetid;
-                }
-
-                public void setTargetid(String targetid) {
-                    this.targetid = targetid;
-                }
-
-                public String getTargettype() {
-                    return targettype;
-                }
-
-                public void setTargettype(String targettype) {
-                    this.targettype = targettype;
-                }
-
-                public String getImgurl() {
-                    return imgurl;
-                }
-
-                public void setImgurl(String imgurl) {
-                    this.imgurl = imgurl;
-                }
-
-                public String getStudentname() {
-                    return studentname;
-                }
-
-                public void setStudentname(String studentname) {
-                    this.studentname = studentname;
-                }
-
-                public String getPubliccontent() {
-                    return publiccontent;
-                }
-
-                public void setPubliccontent(String publiccontent) {
-                    this.publiccontent = publiccontent;
-                }
+        public String getRefcontent(){
+            if(null != refcomment){
+                return refcomment.getRefcontent();
             }
+            return null;
+        }
 
-            public String getOptype() {
-                return optype;
-            }
+        public void setContent(String content) {
+            this.content = content;
+        }
 
-            public void setOptype(String optype) {
-                this.optype = optype;
-            }
+        public void setOptime(String optime) {
+            this.optime = optime;
+        }
 
-            public String getContentid() {
-                return contentid;
-            }
+        public void setPraisecount(String praisecount) {
+            this.praisecount = praisecount;
+        }
 
-            public void setContentid(String contentid) {
-                this.contentid = contentid;
-            }
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
 
-            public Refcomment getRefcomment() {
-                return refcomment;
-            }
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
 
-            public void setRefcomment(Refcomment refcomment) {
-                this.refcomment = refcomment;
-            }
+        public void setReadflag(String readflag) {
+            this.readflag = readflag;
+        }
 
-            public Reftarget getReftarget() {
-                return reftarget;
-            }
+        public void setRefcomment(Refcomment refcomment) {
+            this.refcomment = refcomment;
+        }
 
-            public void setReftarget(Reftarget reftarget) {
-                this.reftarget = reftarget;
-            }
+        public void setReftarget(Reftarget reftarget) {
+            this.reftarget = reftarget;
+        }
 
-            public String getSourceid() {
-                return sourceid;
-            }
+        public void setSourcecollege(String sourcecollege) {
+            this.sourcecollege = sourcecollege;
+        }
 
-            public void setSourceid(String sourceid) {
-                this.sourceid = sourceid;
-            }
+        public void setSourceid(String sourceid) {
+            this.sourceid = sourceid;
+        }
 
-            public String getSourceimgurl() {
-                return sourceimgurl;
-            }
+        public void setSourceimgurl(String sourceimgurl) {
+            this.sourceimgurl = sourceimgurl;
+        }
 
-            public void setSourceimgurl(String sourceimgurl) {
-                this.sourceimgurl = sourceimgurl;
-            }
+        public void setSourcelevel(String sourcelevel) {
+            this.sourcelevel = sourcelevel;
+        }
 
-            public String getSourcelevel() {
-                return sourcelevel;
-            }
+        public void setSourcename(String sourcename) {
+            this.sourcename = sourcename;
+        }
 
-            public void setSourcelevel(String sourcelevel) {
-                this.sourcelevel = sourcelevel;
-            }
+        public void setSourceschool(String sourceschool) {
+            this.sourceschool = sourceschool;
+        }
+    }
 
-            public String getSourcename() {
-                return sourcename;
-            }
+    public static class Refcomment{
+        private String refid;
+        private String refname;
+        private String refcontent;
 
-            public void setSourcename(String sourcename) {
-                this.sourcename = sourcename;
-            }
+        public String getRefname() {
+            return refname;
+        }
 
-            public String getSourceschool() {
-                return sourceschool;
-            }
+        public void setRefname(String refname) {
+            this.refname = refname;
+        }
 
-            public void setSourceschool(String sourceschool) {
-                this.sourceschool = sourceschool;
-            }
+        public String getRefid() {
+            return refid;
+        }
 
-            public String getSourcecollege() {
-                return sourcecollege;
-            }
+        public void setRefid(String refid) {
+            this.refid = refid;
+        }
 
-            public void setSourcecollege(String sourcecollege) {
-                this.sourcecollege = sourcecollege;
-            }
+        public String getRefcontent() {
+            return refcontent;
+        }
 
-            public String getOptime() {
-                return optime;
-            }
+        public void setRefcontent(String refcontent) {
+            this.refcontent = refcontent;
+        }
+    }
 
-            public void setOptime(String optime) {
-                this.optime = optime;
-            }
+    public static class Reftarget{
+        private String targetid;
+        private String targettype;
+        private String imgurl;
+        private String studentname;
+        private String publiccontent;
 
-            public String getContent() {
-                return content;
-            }
+        public String getTargetid() {
+            return targetid;
+        }
 
-            public void setContent(String content) {
-                this.content = content;
-            }
+        public void setTargetid(String targetid) {
+            this.targetid = targetid;
+        }
 
-            public String getPraisecount() {
-                return praisecount;
-            }
+        public String getTargettype() {
+            return targettype;
+        }
 
-            public void setPraisecount(String praisecount) {
-                this.praisecount = praisecount;
-            }
+        public void setTargettype(String targettype) {
+            this.targettype = targettype;
+        }
+
+        public String getImgurl() {
+            return imgurl;
+        }
+
+        public void setImgurl(String imgurl) {
+            this.imgurl = imgurl;
+        }
+
+        public String getStudentname() {
+            return studentname;
+        }
+
+        public void setStudentname(String studentname) {
+            this.studentname = studentname;
+        }
+
+        public String getPubliccontent() {
+            return publiccontent;
+        }
+
+        public void setPubliccontent(String publiccontent) {
+            this.publiccontent = publiccontent;
         }
     }
 }

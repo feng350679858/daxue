@@ -90,11 +90,11 @@ public class MessageCommentActivity extends BaseActivity {
     private void loadCommend() {
         if(GlobalConstant.debugFlag){
             //测试数据
-            List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = new ArrayList<>();
-            Partjob29Response.Partjob29Body.Parttimejob parttimejob = null;
+            List<Partjob29Response.Parttimejob> parttimejob_list = new ArrayList<>();
+            Partjob29Response.Parttimejob parttimejob = null;
 
             for(int i = 0 ; i < 10; i++){
-                parttimejob = new Partjob29Response.Partjob29Body.Parttimejob();
+                parttimejob = new Partjob29Response.Parttimejob();
                 if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMENT){
                     parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
                     parttimejob.setOptype("1");
@@ -108,12 +108,12 @@ public class MessageCommentActivity extends BaseActivity {
                 parttimejob.setContentid(String.valueOf(i));
                 parttimejob.setSourcelevel(String.valueOf(i));
                 if(i%3==0) {
-                    Partjob29Response.Partjob29Body.Parttimejob.Refcomment refcomment = new Partjob29Response.Partjob29Body.Parttimejob.Refcomment();
+                    Partjob29Response.Refcomment refcomment = new Partjob29Response.Refcomment();
                     refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
                     refcomment.setRefid("studentid:" + i);
                     parttimejob.setRefcomment(refcomment);
                 }
-                Partjob29Response.Partjob29Body.Parttimejob.Reftarget reftarget = new Partjob29Response.Partjob29Body.Parttimejob.Reftarget();
+                Partjob29Response.Reftarget reftarget = new Partjob29Response.Reftarget();
                 reftarget.setImgurl("http://img0.imgtn.bdimg.com/it/u=3201629386,3592649916&fm=11&gp=0.jpg");
                 reftarget.setPubliccontent("我是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容内容");
                 reftarget.setStudentname("林" + i);
@@ -144,8 +144,8 @@ public class MessageCommentActivity extends BaseActivity {
                         public void success(Partjob29Response resp) {
                             ResponseResult result = resp.getResult();
                             if ("0".equals(result.getCode())) {
-                                Partjob29Response.Partjob29Body body = resp.getBody();
-                                List<Partjob29Response.Partjob29Body.Parttimejob> parttimejob_list = body.getParttimejob_list();
+                                Partjob29Response.Body body = resp.getBody();
+                                List<Partjob29Response.Parttimejob> parttimejob_list = body.getParttimejob_list();
                                 if(0 == mCurrentStart && parttimejob_list.size()<1){
                                     messageHandler.postMessage(2);
                                 }else {
@@ -220,7 +220,7 @@ public class MessageCommentActivity extends BaseActivity {
             switch (msg.what){
                 case 0: {
                     try {
-                        List<Partjob29Response.Partjob29Body.Parttimejob> list = (List<Partjob29Response.Partjob29Body.Parttimejob>) msg.obj;
+                        List<Partjob29Response.Parttimejob> list = (List<Partjob29Response.Parttimejob>) msg.obj;
                         if(list == null){
                             Log.w(TAG,"the response list of Partjob29Response.Partjob29Body.Parttimejob is null.");
                             return;
