@@ -144,7 +144,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             bean.setLogourl(c.getLogourl());
             //如果超时 或 头像为空
             if (StringUtil.isNotEmpty(c.getLogourl())
-                    && (System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SENCODE) {
+                    && (System.currentTimeMillis() - c.getLastUpdate())/1000 < GlobalConstant.CONTACT_INFO_UPDATE_TIME_OUT_SECOND) {
                 return;
             }
         }

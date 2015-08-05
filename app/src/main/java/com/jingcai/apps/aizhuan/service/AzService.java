@@ -125,10 +125,10 @@ public class AzService {
         reqHead.setTradecode(reqBody.getTranscode());
         reqHead.setTraceno(String.valueOf(System.currentTimeMillis()));
         reqHead.setChannel(GlobalConstant.TERMINAL_TYPE_ANDROID);
+        reqHead.setVersion(GlobalConstant.SDK_VERSION);
         reqHead.setRequesttime(sdf.format(new Date()));
         StringBuffer buff = new StringBuffer(new Gson().toJson(reqBody)).append(reqHead.getChannel()).append(GlobalConstant.SECRET_KEY);
         reqHead.setSign(Md5.encode(buff.toString()));
-
         RequestData requestData = new RequestData();
         requestData.setHead(reqHead);
         requestData.setBody(reqBody);
