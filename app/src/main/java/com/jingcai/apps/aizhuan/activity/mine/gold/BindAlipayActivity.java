@@ -3,11 +3,12 @@ package com.jingcai.apps.aizhuan.activity.mine.gold;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -75,8 +76,8 @@ public class BindAlipayActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (checkAndInitDialog()) {
-                    String content = "账号：" + mEtPhone.getText().toString() + "\n姓名："+mEtName.getText().toString();
-                    mConfirmWin.showWindow("绑定账号", content,"取消","确定");
+                    String content = "账号：" + mEtPhone.getText().toString() + "\n姓名：" + mEtName.getText().toString();
+                    mConfirmWin.showWindow("绑定账号", content, "取消", "确定");
                     mConfirmWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
                         @Override
                         public void onConfirmButtonClick() {
@@ -88,13 +89,24 @@ public class BindAlipayActivity extends BaseActivity {
             }
         });
 
-        mCbTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mEtPhone.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mBtnBind.setEnabled(isChecked);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mCbTerms.isChecked() && s.length()==11){
+                    mBtnBind.setEnabled(true);
+                    mBtnBind.setTextColor(getResources().getColor(R.color.important_dark));
+                }else{
+                    mBtnBind.setEnabled(false);
+                    mBtnBind.setTextColor(getResources().getColor(R.color.assist_grey));
+                }
             }
         });
-
     }
 
     /**
@@ -147,7 +159,7 @@ public class BindAlipayActivity extends BaseActivity {
             return false;
         }
 
-        if(StringUtil.isNumber(phone)
+        if(!StringUtil.isNumber(phone)
                 || phone.length() != 11){
             showToast("手机号码格式不正确");
             return false;

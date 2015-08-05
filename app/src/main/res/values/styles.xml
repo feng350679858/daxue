@@ -108,7 +108,6 @@
         <item name="android:drawablePadding">5dp</item>
         <item name="android:textColor">@color/normal_grey</item>
         <item name="android:textSize">14sp</item>
-
     </style>
 
     <!-- 支付密码弹出框密码样式样式 -->
@@ -138,5 +137,8 @@
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/main_yellow</item>
         <item name="colorAccent">@color/main_yellow</item>
+    </style>
+    <style name="checkbox_style">
+        <item name="android:button">@drawable/help_wenda_hidden</item>
     </style>
 </resources>
