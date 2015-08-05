@@ -1,7 +1,5 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
