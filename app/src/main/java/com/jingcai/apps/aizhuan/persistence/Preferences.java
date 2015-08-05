@@ -36,6 +36,7 @@ public class Preferences {
     protected static final String PARAM_ONLINE_FLAG = "onlineflag";
     protected static final String PARAM_ISVISIABLE = "isvisiable";
     protected static final String PARAM_LEVEL = "level";
+    protected static final String PARAM_HASPAYPASSWORDSET = "ispaypasswordset";
 
     //系统管理模块
     public interface Sys {

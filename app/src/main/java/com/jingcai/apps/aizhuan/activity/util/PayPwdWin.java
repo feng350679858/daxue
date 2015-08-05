@@ -61,7 +61,7 @@ public class PayPwdWin {
     }
 
     public void setTitle(String title) {
-        ((TextView) mPopWin.findViewById(R.id.tv_title)).setText(title);
+        ((TextView) mPopWin.findViewById(R.id.tv_main_tip)).setText(title);
     }
 
     public void show() {

@@ -103,7 +103,7 @@ public class SafeCheckActivity extends BaseActivity {
                 Game13Request.Student student=req.new Student();
                 student.setId(UserSubject.getStudentid());
                 student.setIdno(id_crad_number_input.getText().toString());
-                req.setStudnet(student);
+                req.setStudent(student);
                 azService.doTrans(req, Game13Response.class, new AzService.Callback<Game13Response>() {
                     @Override
                     public void success(Game13Response response) {

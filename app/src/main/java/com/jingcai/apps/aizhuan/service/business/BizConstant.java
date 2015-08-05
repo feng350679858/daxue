@@ -117,4 +117,5 @@ public interface BizConstant {
     String BTZ_GAME_09 = "game09";//身份信息验证
     String BTZ_GAME_10 = "game10";//身份信息查询
     String BTZ_GAME_13 = "game13";//校验身份证号
+    String BTZ_GAME_14 = "game14";//校验支付密码
 }

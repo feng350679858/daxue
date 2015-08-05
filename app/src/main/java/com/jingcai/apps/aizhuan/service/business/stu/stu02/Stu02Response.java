@@ -35,6 +35,7 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
             //adationnal
             private String studentid;
             private String password;
+            private String haspaypasswordset;
 
             public String getOnlineflag() {
                 return onlineflag;
@@ -178,6 +179,14 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
 
             public void setPassword(String password) {
                 this.password = password;
+            }
+
+            public String getHaspaypasswordset() {
+                return haspaypasswordset;
+            }
+
+            public void setHaspaypasswordset(String haspaypasswordset) {
+                this.haspaypasswordset = haspaypasswordset;
             }
         }
     }

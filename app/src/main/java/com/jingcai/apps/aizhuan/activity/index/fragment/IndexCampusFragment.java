@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v7.internal.widget.DrawableUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaEditActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
-import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -548,7 +545,7 @@ public class IndexCampusFragment extends BaseFragment {
                                 .setContentViewLayout(R.layout.pop_confirm)
                                 .setParentView(parentView)
                                 .build();
-                        helpConfirmWin.findTextViewById(R.id.tv_title).setText("确认？");
+                        helpConfirmWin.findTextViewById(R.id.tv_main_tip).setText("确认？");
                         helpConfirmWin.findTextViewById(R.id.tv_content).setText("确认立即帮助？");
 
                         helpConfirmWin.setAction(R.id.tv_cancel, new View.OnClickListener() {

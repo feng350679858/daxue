@@ -17,6 +17,7 @@ public class UserSubject {
     private static String cityname;
     private static String isvisiable;
     private static String level;
+    private static String haspaypasswordset;
     private static boolean loginFlag = false;
     private static boolean onlineFlag = false;
 
@@ -112,6 +113,14 @@ public class UserSubject {
         return onlineFlag;
     }
 
+    public static String getHaspaypasswordset() {
+        return haspaypasswordset;
+    }
+
+    private static void setHaspaypasswordset(String haspaypasswordset) {
+        UserSubject.haspaypasswordset = haspaypasswordset;
+    }
+
     public static void init(Preferences instance) {
         loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
         if(!loginFlag){
@@ -133,6 +142,7 @@ public class UserSubject {
         gender = instance.getString(Preferences.PARAM_GENDER, "");
         cityname = instance.getString(Preferences.PARAM_CITY_NAME, "");
         isvisiable = instance.getString(Preferences.PARAM_ISVISIABLE, "");
+        haspaypasswordset = instance.getString(Preferences.PARAM_HASPAYPASSWORDSET, "");
     }
 
 
@@ -150,6 +160,7 @@ public class UserSubject {
         level = stu.getLevel();
         loginFlag = true;
         onlineFlag = "1".equals(stu.getOnlineflag());
+        haspaypasswordset = stu.getHaspaypasswordset();
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -164,6 +175,7 @@ public class UserSubject {
         pref.update(Preferences.PARAM_LEVEL, level);
         pref.update(Preferences.PARAM_LOGIN_FLAG, loginFlag);
         pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
+        pref.update(Preferences.PARAM_HASPAYPASSWORDSET, haspaypasswordset);
     }
 
     public static void loginFail() {
