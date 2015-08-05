@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:background="@drawable/help_item_content_bg"
             android:elegantTextHeight="true"
             android:lineSpacingMultiplier="1.2"

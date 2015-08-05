@@ -97,6 +97,8 @@
             android:textColor="@color/important_dark"
             android:textSize="14sp" />
     </LinearLayout>
-
+<!--
+android:background="@drawable/mine_help_text_yellow_bg"
+-->
 </merge>
 

@@ -132,6 +132,7 @@ public class HelpCommentAdapter extends BaseAdapter {
                                         // 得到剪贴板管理器
                                         ClipboardManager cmb = (ClipboardManager)baseActivity.getSystemService(Context.CLIPBOARD_SERVICE);
                                         cmb.setPrimaryClip(ClipData.newPlainText(null, region.getContent()));
+                                        baseActivity.showToast("已复制到剪贴板");
                                     } else if ("1".equals(key)) {
                                         callback.abuse(region);
                                     }

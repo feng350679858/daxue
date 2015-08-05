@@ -36,6 +36,7 @@ public class HelpWendaRewardActivity extends BaseActivity {
     private PayPwdWin payPwdWin;
     private PayInsufficientWin payInsufficientWin;
     private EditText et_reward_money;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class HelpWendaRewardActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        TextView tvTitle = (TextView) findViewById(R.id.tv_content);
+        tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("打赏");
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);

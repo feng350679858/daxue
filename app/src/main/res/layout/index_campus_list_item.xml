@@ -29,7 +29,7 @@
                 android:layout_height="70dp"
                 android:layout_centerInParent="true"
                 android:elegantTextHeight="true"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:lineSpacingMultiplier="1.2"
                 android:maxLines="3"
                 android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob14.Partjob14Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob14.Partjob14Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.StringUtil;
@@ -32,6 +35,7 @@ public class HelpWendaEditActivity extends BaseActivity {
     private TextView tv_func;
     private TextView et_help_content;
     private CheckBox cb_anonymous;
+    private boolean updateFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         helpid = getIntent().getStringExtra("helpid");
         answerid = getIntent().getStringExtra("answerid");
         if(StringUtil.isEmpty(helpid)){
-            finish();
+            finishWithResult();
         } else {
             messageHandler = new MessageHandler(this);
             setContentView(R.layout.help_wenda_edit);
@@ -47,7 +51,47 @@ public class HelpWendaEditActivity extends BaseActivity {
             initHeader();
 
             initView();
+
+            initData();
         }
+    }
+
+    private void finishWithResult() {
+        if(updateFlag) {
+            Intent intent = new Intent();
+            intent.putExtra("answerid", answerid);
+            intent.putExtra("helpContent", et_help_content.getText().toString());
+            intent.putExtra("anonFlag", cb_anonymous.isChecked());
+            setResult(RESULT_OK, intent);
+        }else{
+            setResult(RESULT_CANCELED);
+        }
+    }
+
+    private void initData() {
+        if(StringUtil.isEmpty(answerid))    return;
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob36Request req = new Partjob36Request(answerid, UserSubject.getStudentid());
+                new AzService().doTrans(req, Partjob36Response.class, new AzService.Callback<Partjob36Response>() {
+                    @Override
+                    public void success(Partjob36Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            Partjob36Response.Parttimejob job = resp.getBody().getParttimejob();
+                            messageHandler.postMessage(2, job);
+                        } else {
+                            messageHandler.postMessage(3);
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
 
@@ -70,7 +114,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         tv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult();
             }
         });
     }
@@ -94,10 +138,9 @@ public class HelpWendaEditActivity extends BaseActivity {
                 case 0: {
                     try {
                         showToast("发布成功");
-                        Intent intent = new Intent();
-                        intent.putExtra("answerid", String.valueOf(msg.obj));
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        answerid = String.valueOf(msg.obj);
+                        updateFlag = true;
+                        finishWithResult();
                     } finally {
                         actionLock.unlock();
                     }
@@ -106,6 +149,24 @@ public class HelpWendaEditActivity extends BaseActivity {
                 case 1: {
                     try {
                         showToast("发布失败：" + msg.obj.toString());
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 2: {
+                    try {
+                        Partjob36Response.Parttimejob job = (Partjob36Response.Parttimejob) msg.obj;
+                        et_help_content.setText(job.getContent());
+                        cb_anonymous.setChecked("1".equals(job.getAnonflag()));
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 3: {
+                    try {
+                        showToast("获取答案详情失败：" + msg.obj.toString());
                     } finally {
                         actionLock.unlock();
                     }
@@ -149,5 +210,13 @@ public class HelpWendaEditActivity extends BaseActivity {
                 });
             }
         });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithResult();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

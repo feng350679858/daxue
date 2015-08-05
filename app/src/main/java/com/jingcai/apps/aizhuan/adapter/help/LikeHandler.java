@@ -65,10 +65,11 @@ public class LikeHandler {
                     azService.doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
                         @Override
                         public void success(Partjob12Response resp) {
-                            ResponseResult result = resp.getResult();
-                            if ("0".equals(result.getCode())) {
-                                String praiseid = resp.getBody().getParttimejob().getCommentid();
-                                Object[] objs = new Object[]{checkBox, true, String.valueOf(count + 1), praiseid};
+                            if ("0".equals(resp.getResultCode())) {
+                                Partjob12Response.Parttimejob parttimejob = resp.getBody().getParttimejob();
+                                String praiseid = parttimejob.getCommentid();
+                                String praisecount = parttimejob.getPraisecount();
+                                Object[] objs = new Object[]{checkBox, true, praisecount, praiseid};
                                 messageHandler.postMessage(3, objs);
                             } else {
                                 messageHandler.postMessage(4, "点赞失败");
@@ -94,9 +95,9 @@ public class LikeHandler {
                     azService.doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
                         @Override
                         public void success(Partjob12Response resp) {
-                            ResponseResult result = resp.getResult();
-                            if ("0".equals(result.getCode())) {
-                                Object[] objs = new Object[]{checkBox, false, String.valueOf(count - 1), null};
+                            if ("0".equals(resp.getResultCode())) {
+                                String praisecount = resp.getBody().getParttimejob().getPraisecount();
+                                Object[] objs = new Object[]{checkBox, false, praisecount, null};
                                 messageHandler.postMessage(3, objs);
                             } else {
                                 messageHandler.postMessage(4, "取消赞失败");

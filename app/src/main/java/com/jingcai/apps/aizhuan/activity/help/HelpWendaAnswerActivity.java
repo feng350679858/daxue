@@ -318,8 +318,9 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                 break;
             }
             case REQUEST_CODE_ANSWER_COMMENT:{
-                if(Activity.RESULT_OK == resultCode){
-                    //TODO
+                if(Activity.RESULT_OK == resultCode){//更新评论数量
+                    String commentCount = data.getStringExtra("commentCount");
+                    cb_wenda_comment.setText(commentCount);
                 }
                 break;
             }

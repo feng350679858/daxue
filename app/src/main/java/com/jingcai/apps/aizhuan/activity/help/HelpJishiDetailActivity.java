@@ -1,7 +1,5 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
@@ -19,6 +17,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
@@ -215,7 +214,13 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
             @Override
             public void abuse(CommentItem region) {
-
+                //举报答案
+                new AbuseReportHandler(HelpJishiDetailActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                    @Override
+                    public void call() {
+                        showToast("举报成功");
+                    }
+                }).click(region.getSourceid(), "2", region.getContentid());
             }
         });
     }
@@ -320,7 +325,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     });
                 }
             });
-            //获取答案列表
+            //获取评论列表
             azExecutor.execute(new Runnable() {
                 @Override
                 public void run() {

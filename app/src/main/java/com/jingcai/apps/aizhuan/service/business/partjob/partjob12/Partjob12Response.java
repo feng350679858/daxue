@@ -21,6 +21,15 @@ public class Partjob12Response extends BaseResponse<Partjob12Response.Body> {
 
     public static class Parttimejob {
         private String commentid;
+        private String praisecount;
+
+        public String getPraisecount() {
+            return praisecount;
+        }
+
+        public void setPraisecount(String praisecount) {
+            this.praisecount = praisecount;
+        }
 
         public String getCommentid() {
             return commentid;
