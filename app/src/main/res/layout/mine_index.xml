@@ -91,6 +91,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/exp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -159,6 +160,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_mine_student_certification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -167,10 +169,9 @@
                 android:paddingRight="10dp">
 
                 <LinearLayout
-                    android:id="@+id/ll_mine_student_certification"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/list_item_bg"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp">
 

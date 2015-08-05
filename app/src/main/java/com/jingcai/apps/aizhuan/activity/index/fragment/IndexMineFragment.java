@@ -18,13 +18,17 @@ import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
 import com.jingcai.apps.aizhuan.activity.sys.SettingsActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
+import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 /**
  * Created by Json Ding on 2015/7/10.
  */
 public class IndexMineFragment extends BaseFragment {
 
+    private LevelTextView level;
+    private TextView exp;
     private View mainView;
     private AzService azService;
     @Override
@@ -35,8 +39,8 @@ public class IndexMineFragment extends BaseFragment {
             mainView = inflater.inflate(R.layout.mine_index, null);
             azService = new AzService(baseActivity);
             initHeader();
-
             initView();
+  //          initDate();
         }
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (parent != null) {
@@ -63,6 +67,8 @@ public class IndexMineFragment extends BaseFragment {
     }
 
     private void initView(){
+        level=(LevelTextView)mainView.findViewById(R.id.ltv_level);
+        exp=(TextView)mainView.findViewById(R.id.exp);
         mainView.findViewById(R.id.ll_mine_partjob).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,14 +90,14 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_student_certification).setOnClickListener(new View.OnClickListener(){
+        mainView.findViewById(R.id.ll_mine_student_certification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineStudentCertificationActivity.class);
+                Intent intent = new Intent(baseActivity, MineStudentCertificationActivity.class);
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_help_req).setOnClickListener(new View.OnClickListener(){
+        mainView.findViewById(R.id.ll_mine_help_req).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
@@ -99,7 +105,7 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener(){
+        mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
@@ -108,22 +114,55 @@ public class IndexMineFragment extends BaseFragment {
             }
         });
 
-        mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener(){
+        mainView.findViewById(R.id.ll_mine_data).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MinePersonalDataActivity.class);
+                Intent intent = new Intent(baseActivity, MinePersonalDataActivity.class);
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_credit).setOnClickListener(new View.OnClickListener(){
+        mainView.findViewById(R.id.ll_mine_credit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity,MineCreditActivity.class);
+                Intent intent = new Intent(baseActivity, MineCreditActivity.class);
                 startActivity(intent);
             }
         });
     }
-
-
+    private void initDate(){
+        showProgressDialog("数据加载中...");
+        initExp();
+    }
+    private void initExp(){
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                azService = new AzService(getActivity());
+//                Stu14Request req=new Stu14Request();
+//                Account04Request request = new Account04Request();
+//                Account04Request.Student student = request.new Student();
+//                student.setStudentid(UserSubject.getStudentid());
+//                request.setStudent(student);
+//
+//                azService.doTrans(request, Account04Response.class, new AzService.Callback<Account04Response>() {
+//                    @Override
+//                    public void success(Account04Response resp) {
+//                        ResponseResult result = resp.getResult();
+//                        if (!"0".equals(result.getCode())) {
+//                            messageHandler.postMessage(7, result.getMessage());
+//                        } else {
+//
+//                            messageHandler.postMessage(6, resp.getBody().getBank_list());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void fail(AzException e) {
+//                        messageHandler.postException(e);
+//                    }
+//                });
+            }
+        });
+    }
 
 }

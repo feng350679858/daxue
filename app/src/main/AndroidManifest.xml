@@ -166,11 +166,8 @@
         <activity android:name=".activity.mine.gold.AccountTypeActivity"/>
         <activity android:name=".activity.mine.gold.BindAlipayActivity"/>
         <activity android:name=".activity.mine.gold.IdentityAuthenticationActivity"/>
-
-
-
-
-
+        <activity android:name=".activity.mine.gold.BankSelectActivity"/>
+        
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver android:name=".jpush.AzJpushReceiver" android:enabled="true">
             <intent-filter>
@@ -235,8 +232,7 @@
         <!-- jpush pro   a18858d0c3a777745fbc99f7 -->
         <meta-data android:name="JPUSH_APPKEY" android:value="203cf5c6a5b762b4d5ff6349" />
         <meta-data android:name="JPUSH_CHANNEL" android:value="A000" />
-
-
+        
     </application>
 
 </manifest>
