@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -47,12 +48,13 @@ public class MineGoldWithdrawActivity extends BaseActivity{
     private Button mWithdrawSubmit;
     private TextView mNotEnoughText;
     private RelativeLayout empty_item,bank_item;
+    private PayPwdWin payPwdWin;
 
     private BitmapUtil mBitmapUtil;
     private Account04Response.Account04Body.Bank mCurrentBank;
-    private int selectednum;
     private float mEnableGoldCount;
     private boolean isResume=false;
+    private String paypwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,8 @@ public class MineGoldWithdrawActivity extends BaseActivity{
             @Override
             public void afterTextChanged(Editable s) {
                 String inputCount = s.toString();
-                if (StringUtil.isNotEmpty(inputCount) && !"0.0".equals(StringUtil.money(inputCount))) {
+           //     mWithdrawSubmit.setEnabled(true);
+                if (StringUtil.isNotEmpty(inputCount) && !".0".equals(StringUtil.money(inputCount))) {
                     if (Float.parseFloat(StringUtil.money(inputCount)) > mEnableGoldCount) {
                         mNotEnoughText.setVisibility(View.VISIBLE);
                         mWithdrawSubmit.setEnabled(false);
@@ -122,25 +125,25 @@ public class MineGoldWithdrawActivity extends BaseActivity{
                     showToast("请选择账户");
                     return;
                 }
-                if (Integer.parseInt(inputCountStr) < 300) {
-                    showToast("至少提现300金");
+                if (Integer.parseInt(inputCountStr) < 30) {
+                    showToast("至少提现30金");
                     return;
                 }
-
+                initPaypwdWin();
             }
         });
         empty_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MineGoldWithdrawActivity.this,AccountTypeActivity.class);
+                Intent intent = new Intent(MineGoldWithdrawActivity.this, AccountTypeActivity.class);
                 startActivity(intent);
-                isResume=true;
+                isResume = true;
             }
         });
         bank_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MineGoldWithdrawActivity.this,BankSelectActivity.class);
+                Intent intent = new Intent(MineGoldWithdrawActivity.this, BankSelectActivity.class);
                 LocalValUtil.setVal(mCurrentBank);
                 startActivityForResult(intent, REQUEST_CODE_CHOICE_ACCOUNT);
             }
@@ -156,6 +159,23 @@ public class MineGoldWithdrawActivity extends BaseActivity{
             isResume=true;
         }
 
+    }
+    private void initFirstPaypwdWin(){
+        payPwdWin=new PayPwdWin(this);
+        payPwdWin.setTitle("设置支付密码");
+        payPwdWin.show();
+    }
+    private void initPaypwdWin(){
+        payPwdWin=new PayPwdWin(this);
+        payPwdWin.setTitle("确认提现");
+        payPwdWin.showPay(mInputCount.getText().toString() + "元");
+        payPwdWin.setCallback(new PayPwdWin.Callback() {
+            @Override
+            public void finishInput(String pwd) {
+                withdrawProcess(pwd);
+//                Log.i("提现",pwd);
+            }
+        });
     }
     private void initData() {
         showProgressDialog("数据加载中...");
@@ -211,6 +231,7 @@ public class MineGoldWithdrawActivity extends BaseActivity{
                         if (!"0".equals(result.getCode())) {
                             messageHandler.postMessage(7, result.getMessage());
                         } else {
+
                             messageHandler.postMessage(6, resp.getBody().getBank_list());
                         }
                     }
@@ -313,9 +334,8 @@ public class MineGoldWithdrawActivity extends BaseActivity{
     }
 
     private void fillBankInfo(List<Account04Response.Account04Body.Bank> banks) {
-
+    Log.i(TAG,banks.toString());
         if (null!= banks && banks.size() > 0) {
-            selectednum=0;
             mCurrentBank = banks.get(0);
             initBankInfo();
         }
