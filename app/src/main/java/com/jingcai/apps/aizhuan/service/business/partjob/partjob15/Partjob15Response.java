@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.service.business.partjob.partjob15;
 
+import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
 import java.util.List;
@@ -21,17 +22,29 @@ public class Partjob15Response extends BaseResponse<Partjob15Response.Body> {
         }
     }
 
-    public static class Parttimejob {
+    public static class Parttimejob extends CommentItem {
+        private String contentid;
         private String sourceid;
-        private String sourcelevel;
         private String sourceimgurl;
+        private String sourcelevel;
         private String sourcename;
         private String sourceschool;
         private String sourcecollege;
-        private String content;
         private String optime;
+        private String content;
         private String praisecount;
+        private String praiseflag;
+        private String praiseid;
         private String anonflag;
+
+        @Override
+        public String getContentid() {
+            return contentid;
+        }
+
+        public void setContentid(String contentid) {
+            this.contentid = contentid;
+        }
 
         public String getAnonflag() {
             return anonflag;
@@ -111,6 +124,34 @@ public class Partjob15Response extends BaseResponse<Partjob15Response.Body> {
 
         public void setSourceschool(String sourceschool) {
             this.sourceschool = sourceschool;
+        }
+
+        @Override
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
+
+        @Override
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
+
+        @Override
+        public String getRefname() {
+            return null;
+        }
+
+        @Override
+        public String getRefcontent() {
+            return null;
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
@@ -17,17 +19,22 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
+import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -38,6 +45,9 @@ import java.util.List;
  * Created by lejing on 15/7/21.
  */
 public class HelpJishiDetailActivity extends BaseActivity {
+    private String helpid, type;
+    private AzExecutor azExecutor = new AzExecutor();
+    private AzService azService = new AzService();
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
@@ -48,14 +58,23 @@ public class HelpJishiDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageHandler = new MessageHandler(this);
-        setContentView(R.layout.help_jishi_detail);
+        helpid = getIntent().getStringExtra("helpid");
+        type = getIntent().getStringExtra("type");//1立即帮助 3公告
+        if(StringUtil.isEmpty(helpid)){
+            finish();
+        } else {
+            if(StringUtil.isEmpty(type)){
+                type = "1";
+            }
+            messageHandler = new MessageHandler(this);
+            setContentView(R.layout.help_jishi_detail);
 
-        initHeader();
+            initHeader();
 
-        initView();
+            initView();
 
-        initGroupData();
+            initGroupData();
+        }
     }
 
     private void initHeader() {
@@ -118,15 +137,14 @@ public class HelpJishiDetailActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "提交成功，请继续！";
-                showToast(message);
-//                finish();
+                setResult(RESULT_CANCELED);
+                finish();
             }
         });
     }
 
     private void initView() {
-        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) findViewById(R.id.tv_main_tip);
         tv_title.setText("跑腿");
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
@@ -164,16 +182,40 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
         commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
             @Override
-            public void click(View view, HelpCommentAdapter.ViewHolder holder) {
-                boolean selected = holder.region.isSelected();
+            public void click(View view, CommentItem region) {
+                boolean selected = region.isSelected();
                 commentAdapter.clearSelected();
                 if(!selected) {
-                    holder.region.setSelected(!selected);
-                    et_reploy_comment.setHint("回复：" + holder.region.getRegionname());
+                    region.setSelected(!selected);
+                    et_reploy_comment.setHint("回复：" + region.getSourcename());
                 }else{
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void like(CheckBox checkBox, final CommentItem region) {
+                new LikeHandler(HelpJishiDetailActivity.this).setCallback(new LikeHandler.Callback() {
+                    @Override
+                    public void like(String praiseid, CheckBox checkBox) {
+                        region.setPraiseflag("1");
+                        region.setPraiseid(praiseid);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+
+                    @Override
+                    public void unlike(CheckBox checkBox) {
+                        region.setPraiseflag("0");
+                        region.setPraiseid(null);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+                }).click("1", helpid, region.getPraiseid(), checkBox);
+            }
+
+            @Override
+            public void abuse(CommentItem region) {
+
             }
         });
     }
@@ -194,7 +236,23 @@ public class HelpJishiDetailActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 1: {
+                    try {
+                        showToast("获取详情失败:" + msg.obj);
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 2: {
+                    try {
+                        List<CommentItem> list = (List<CommentItem>) msg.obj;
                         commentAdapter.addData(list);
                         commentAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();
@@ -207,15 +265,15 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-                case 1: {
+                case 3: {
                     try {
-                        showToast("获取商家失败:" + msg.obj);
+                        showToast("获取评论失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-//                case 2:{
+//                case 3:{
 //                    try {
 //                        groupListView.setVisibility(View.GONE);
 //                    }finally {
@@ -232,42 +290,82 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private void initGroupData() {
         //TODO 接入服务端接口
         if (actionLock.tryLock()) {
-            showProgressDialog("获取圈子中...");
-            new AzExecutor().execute(new Runnable() {
+            //showProgressDialog("获取圈子中...");
+            //获取详情
+            azExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Partjob19Request req = new Partjob19Request();
+                    Partjob19Request.Parttimejob job = req.new Parttimejob();
+                    job.setStudentid(UserSubject.getStudentid());
+                    job.setHelpid(helpid);
+                    req.setParttimejob(job);
+
+                    azService.doTrans(req, Partjob19Response.class, new AzService.Callback<Partjob19Response>() {
+                        @Override
+                        public void success(Partjob19Response response) {
+                            ResponseResult result = response.getResult();
+                            if ("0".equals(result.getCode())) {
+                                Partjob19Response.Parttimejob job = response.getBody().getParttimejob();
+                                messageHandler.postMessage(0, job);
+                            } else {
+                                messageHandler.postMessage(1, result.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
+                }
+            });
+            //获取答案列表
+            azExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
+                        List<CommentItem> regionList = new ArrayList<CommentItem>();
                         for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            region.setRegionname("浙江大学" + (i + mCurrentStart));
+                            Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
+                            region.setSourcename("学生" + (i + mCurrentStart));
+                            region.setSourcelevel("19");
+                            region.setSourceschool("浙江大学");
+                            region.setSourcecollege("计算机学院");
+                            region.setOptime("20150801233341");
+                            if(i%4 == 0) {
+                                region.setRefcomment(new Partjob29Response.Refcomment());
+                                region.getRefcomment().setRefname("花仙子");
+                                region.getRefcomment().setRefcontent("你是一个大SB");
+                            }
+                            if(i%2 == 0) {
+                                region.setPraiseflag("1");
+                                region.setPraiseid("23232332");
+                            }
+                            region.setPraisecount("23");
+                            region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
                             regionList.add(region);
                         }
-                        messageHandler.postMessage(0, regionList);
+                        messageHandler.postMessage(2, regionList);
                     } else {
-                        final AzService azService = new AzService(HelpJishiDetailActivity.this);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
+                        Partjob29Request req = new Partjob29Request();
+                        Partjob29Request.Parttimejob job = req.new Parttimejob();
+                        job.setSourceid(UserSubject.getStudentid());
+                        job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
+                        job.setTargetid(helpid);
+                        job.setCommenttype("1");//1评论
+                        job.setStart("" + mCurrentStart);
+                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                        req.setParttimejob(job);
+                        azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
                             @Override
-                            public void success(Base04Response response) {
+                            public void success(Partjob29Response response) {
                                 ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
+                                if ("0".equals(result.getCode())) {
+                                    List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                    messageHandler.postMessage(2, parttimejob_list);
                                 } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //    messageHandler.postMessage(2);
-                                    //} else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //}
+                                    messageHandler.postMessage(3, result.getMessage());
                                 }
                             }
 

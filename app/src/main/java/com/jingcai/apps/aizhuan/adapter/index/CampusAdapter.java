@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.adapter.index;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
-import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
@@ -70,7 +67,7 @@ public class CampusAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.index_campus_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.layout_help_content = convertView.findViewById(R.id.layout_help_content);
-            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_main_tip);
             viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
             viewHolder.ltv_level = (LevelTextView) convertView.findViewById(R.id.ltv_level);
             viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);
@@ -167,8 +164,8 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.cb_wenda_comment.setText(job.getCommentcount());
 
             //本人问答帮助
-            final boolean selfFlag = "1".equals(job.getHelpflag());
-            if(selfFlag){
+            final boolean selfHelpFlag = "1".equals(job.getHelpflag());
+            if(selfHelpFlag){
                 viewHolder.cb_wenda_help.setVisibility(View.GONE);
                 viewHolder.cb_wenda_help_my.setVisibility(View.VISIBLE);
             } else{
@@ -180,7 +177,7 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(selfFlag){
+                    if(selfHelpFlag){
                         callback.wenda_help_my(cb_wenda_help_my, job);// 查看我的帮助
                     }else{
                         callback.wenda_help(cb_wenda_help, job);// 撰写
@@ -208,11 +205,7 @@ public class CampusAdapter extends BaseAdapter {
         viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (jishiFlag) {
-                    baseActivity.startActivity(new Intent(baseActivity, HelpJishiDetailActivity.class));
-                } else {
-                    baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
-                }
+                callback.help_detail(jishiFlag, job);
             }
         });
 
@@ -250,5 +243,6 @@ public class CampusAdapter extends BaseAdapter {
         void jishi_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
         void wenda_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
         void wenda_help_my(CheckBox cb_wenda_help_my, Partjob11Response.Parttimejob job);
+        void help_detail(boolean jishiFlag, Partjob11Response.Parttimejob job);
     }
 }

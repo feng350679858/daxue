@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/content_background"
-    android:clickable="true"
     android:orientation="horizontal"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_head_logo"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/icon_share_qq"/>
@@ -30,11 +30,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="花几支"
-                android:textColor="@color/important_dark"
+                android:textColor="@color/normal_grey"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_school"
+                android:id="@+id/tv_stu_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tv_stu_name"
@@ -44,15 +44,17 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_stu_college"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tv_stu_name"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/tv_school"
+                android:layout_toRightOf="@+id/tv_stu_school"
                 android:text="计算机学院"
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_stu_name"
@@ -61,8 +63,8 @@
                 android:textSize="12sp" />
 
 
-            <CheckBox
-                android:id="@+id/tv_comment_like"
+         <!--   <CheckBox
+                android:id="@+id/cb_comment_like"
                 android:button="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +78,27 @@
                 android:paddingRight="10dp"
                 android:text="12"
                 android:textColor="@color/normal_grey"
-                android:textSize="14sp" />
+                android:textSize="14sp" />-->
+
+            <LinearLayout
+                android:id="@+id/layout_comment_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <CheckBox
+                    android:id="@+id/cb_comment_like"
+                    style="@style/help_checkbox_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/help_item_like"
+                    android:text="12" />
+            </LinearLayout>
         </RelativeLayout>
 
         <TextView

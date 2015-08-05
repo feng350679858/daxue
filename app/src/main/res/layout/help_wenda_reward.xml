@@ -63,6 +63,7 @@
             android:textSize="14sp" />
 
         <EditText
+            android:id="@+id/et_reward_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -70,6 +71,7 @@
             android:hint="大不大方就看这一次了"
             android:inputType="numberDecimal"
             android:padding="5dp"
+            android:maxLength="6"
             android:textColor="@color/important_dark"
             android:textColorHint="@color/normal_grey"
             android:textSize="14sp" />

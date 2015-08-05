@@ -1,5 +1,7 @@
 package com.jingcai.apps.aizhuan.service;
 
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+
 /**
  * Created by lejing on 15/1/28.
  */
@@ -7,7 +9,7 @@ public class RequestHead {
     private String tradecode;
     private String traceno;
     private String channel;
-    private String version;
+    private String version = GlobalConstant.SDK_VERSION;
     private String requesttime;
     private String sign;
 

@@ -24,9 +24,16 @@ public class Partjob34Request extends BaseRequest {
     }
 
     public class Parttimejob {
+        private String questionid;
         private String studentid;
-        private String targettype;
-        private String targetid;
+
+        public String getQuestionid() {
+            return questionid;
+        }
+
+        public void setQuestionid(String questionid) {
+            this.questionid = questionid;
+        }
 
         public String getStudentid() {
             return studentid;
@@ -34,22 +41,6 @@ public class Partjob34Request extends BaseRequest {
 
         public void setStudentid(String studentid) {
             this.studentid = studentid;
-        }
-
-        public String getTargetid() {
-            return targetid;
-        }
-
-        public void setTargetid(String targetid) {
-            this.targetid = targetid;
-        }
-
-        public String getTargettype() {
-            return targettype;
-        }
-
-        public void setTargettype(String targettype) {
-            this.targettype = targettype;
         }
     }
 }

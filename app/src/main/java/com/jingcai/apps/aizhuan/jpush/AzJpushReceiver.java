@@ -132,7 +132,7 @@ public class AzJpushReceiver extends BroadcastReceiver {
 
 				myRemoteView = new RemoteViews(context.getPackageName(), R.layout.sys_push_message);
 				myRemoteView.setImageViewResource(R.id.iv_icon, R.drawable.ic_launcher);
-				myRemoteView.setTextViewText(R.id.tv_title, title);
+				myRemoteView.setTextViewText(R.id.tv_main_tip, title);
 				//CharSequence cont = Html.fromHtml("<font color='blue'>" + content + "</font>");
 				myRemoteView.setTextViewText(R.id.tv_content, content);
 

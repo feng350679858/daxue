@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v7.internal.widget.DrawableUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +17,12 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaEditActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
-import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
+import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -33,10 +33,9 @@ import com.jingcai.apps.aizhuan.service.business.base.base01.Base01Request;
 import com.jingcai.apps.aizhuan.service.business.base.base01.Base01Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob30.Partjob30Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu08.Stu08Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
@@ -52,9 +51,11 @@ import java.util.List;
 import java.util.Random;
 
 public class IndexCampusFragment extends BaseFragment {
-    private static final int REQUEST_CODE_ANSWER_EDIT = 1101;
-    private static final int REQUEST_CODE_ANSWER = 1102;
-    private AzExecutor azExecutor = new AzExecutor();;
+    private static final int REQUEST_CODE_JISHI_DETAIL = 1101;
+    private static final int REQUEST_CODE_WENDA_DETAIL = 1102;
+    private static final int REQUEST_CODE_ANSWER_EDIT = 1103;
+    private static final int REQUEST_CODE_ANSWER_VIEW = 1104;
+    private AzExecutor azExecutor = new AzExecutor();
     private AzService azService = new AzService();
     private View mBaseView;
     private MessageHandler messageHandler;
@@ -184,41 +185,32 @@ public class IndexCampusFragment extends BaseFragment {
                 azExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
-//                        final Partjob11Request req = new Partjob11Request();
-//                        final Partjob11Request.Parttimejob job = req.new Parttimejob();
-//                        job.setStudentid(UserSubject.getStudentid());
-//                        job.setGisx(GlobalConstant.gis.getGisx());
-//                        job.setGisy(GlobalConstant.gis.getGisy());
-//                        job.setStart(String.valueOf(mCurrentStart));
-//                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-//                        req.setParttimejob(job);
-//
-//                        azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
-//                            @Override
-//                            public void success(Partjob11Response response) {
-//                                ResponseResult result = response.getResult();
-//                                if (!"0".equals(result.getCode())) {
-//                                    messageHandler.postMessage(1, result.getMessage());
-//                                } else {
-//                                    Partjob11Response.Body body = response.getBody();
-//                                    List<Partjob11Response.Parttimejob> regionList = body.getParttimejob_list();
-//                                    if (regionList.size() < 1 && 0 == mCurrentStart) {
-//                                        messageHandler.postMessage(2);
-//                                    } else {
-//                                        messageHandler.postMessage(0, regionList);
-//                                    }
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void fail(AzException e) {
-//                                messageHandler.postException(e);
-//                            }
-//                        });
-                        messageHandler.postMessage(11, job.getHelpid());//检查通过，显示确认对话框
+                        Partjob37Request req = new Partjob37Request(job.getHelpid());
+                        azService.doTrans(req, Partjob37Response.class, new AzService.Callback<Partjob37Response>() {
+                            @Override
+                            public void success(Partjob37Response response) {
+                                ResponseResult result = response.getResult();
+                                if ("0".equals(result.getCode())) {
+                                    String status = response.getBody().getParttimejob().getStatus();
+                                    if ("1".equals(status)) {//求助中
+                                        messageHandler.postMessage(11, job.getHelpid());//检查通过，显示确认对话框
+                                    } else {
+                                        messageHandler.postMessage(12, "此帮助已被其他人认领，请选择其他帮助");
+                                    }
+                                } else {
+                                    messageHandler.postMessage(12, "检查帮助状态失败");
+                                }
+                            }
+
+                            @Override
+                            public void fail(AzException e) {
+                                messageHandler.postException(e);
+                            }
+                        });
                     }
                 });
             }
+
             //撰写新答案
             @Override
             public void wenda_help(CheckBox checkBox, Partjob11Response.Parttimejob job) {
@@ -226,27 +218,53 @@ public class IndexCampusFragment extends BaseFragment {
                 intent.putExtra("helpid", job.getHelpid());
                 baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
             }
+
             //查看我的答案
             @Override
             public void wenda_help_my(CheckBox checkBox, Partjob11Response.Parttimejob job) {
                 Intent intent = new Intent(baseActivity, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", job.getHelperid());
-                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER);
+                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
+            }
+
+            @Override
+            public void help_detail(boolean jishiFlag, Partjob11Response.Parttimejob job) {
+                if (jishiFlag) {
+                    Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
+                    intent.putExtra("helpid", job.getHelpid());
+                    baseActivity.startActivityForResult(intent, REQUEST_CODE_JISHI_DETAIL);
+                } else {
+                    Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);
+                    intent.putExtra("helpid", job.getHelpid());
+                    baseActivity.startActivityForResult(intent, REQUEST_CODE_WENDA_DETAIL);
+                }
             }
         });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case REQUEST_CODE_ANSWER_EDIT:{
-                if(Activity.RESULT_OK == resultCode){
+        switch (requestCode) {
+            case REQUEST_CODE_JISHI_DETAIL: {
+                if (Activity.RESULT_OK == resultCode) {
+                    //TODO 更新点赞、评论数量
+                }
+                break;
+            }
+            case REQUEST_CODE_WENDA_DETAIL: {
+                if (Activity.RESULT_OK == resultCode) {
+                    //TODO 更新点赞、评论数量、我的答案
+                }
+                break;
+            }
+            case REQUEST_CODE_ANSWER_EDIT: {
+                if (Activity.RESULT_OK == resultCode) {
                     //TODO 撰写变为我的答案
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER:{
-                if(Activity.RESULT_OK == resultCode){
+            case REQUEST_CODE_ANSWER_VIEW: {
+                if (Activity.RESULT_OK == resultCode) {
                     //TODO 更新点赞数量
                 }
                 break;
@@ -259,84 +277,34 @@ public class IndexCampusFragment extends BaseFragment {
 
     /**
      * 即时、问答 点赞
+     *
      * @param checkBox
      * @param job
      */
     private void onLickClick(final CheckBox checkBox, final Partjob11Response.Parttimejob job) {
-        if (actionLock.tryLock()) {
-            boolean checked = !checkBox.isChecked();
-            if (checked) {//点赞
-                azExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Partjob12Request req = new Partjob12Request();
-                        Partjob12Request.Parttimejob p = req.new Parttimejob();
-                        p.setSourceid(UserSubject.getStudentid());
-                        if("1".equals(job.getType())) {
-                            p.setTargettype("1");//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
-                        }else if("2".equals(job.getType())){
-                            p.setTargettype("2");
-                        }else if("3".equals(job.getType())){
-                            p.setTargettype("5");
-                        }
-                        p.setTargetid(job.getHelpid());
-                        p.setOptype("2");//1：评论 2：点赞
-                        req.setParttimejob(p);
-                        azService.doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
-                            @Override
-                            public void success(Partjob12Response resp) {
-                                ResponseResult result = resp.getResult();
-                                if ("0".equals(result.getCode())) {
-                                    job.setPraiseflag("1");
-                                    job.setPraiseid(resp.getBody().getParttimejob().getCommentid());
-                                    job.setPraisecount(String.valueOf(Integer.parseInt(job.getPraisecount()) + 1));
-                                    Object[] objs = new Object[]{checkBox, true, job.getPraisecount()};
-                                    messageHandler.postMessage(3, objs);
-                                } else {
-                                    messageHandler.postMessage(4, "点赞失败");
-                                }
-                            }
-
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
-                });
-            } else {//取消赞
-                azExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Partjob30Request req = new Partjob30Request();
-                        Partjob30Request.Parttimejob p = req.new Parttimejob();
-                        p.setCommentid(job.getPraiseid());
-                        p.setType("2");//1：评论 2：点赞
-                        req.setParttimejob(p);
-                        azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
-                            @Override
-                            public void success(BaseResponse resp) {
-                                ResponseResult result = resp.getResult();
-                                if ("0".equals(result.getCode())) {
-                                    job.setPraiseflag("0");
-                                    job.setPraiseid(null);
-                                    job.setPraisecount(String.valueOf(Integer.parseInt(job.getPraisecount()) - 1));
-                                    Object[] objs = new Object[]{checkBox, false, job.getPraisecount()};
-                                    messageHandler.postMessage(3, objs);
-                                } else {
-                                    messageHandler.postMessage(4, "取消点赞失败");
-                                }
-                            }
-
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
-                });
-            }
+        String targettype = null;//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
+        if ("1".equals(job.getType())) {
+            targettype = "1";
+        } else if ("2".equals(job.getType())) {
+            targettype = "2";
+        } else if ("3".equals(job.getType())) {
+            targettype = "5";
         }
+        new LikeHandler(baseActivity).setCallback(new LikeHandler.Callback() {
+            @Override
+            public void like(String praiseid, CheckBox checkBox) {
+                job.setPraiseflag("1");
+                job.setPraiseid(praiseid);
+                job.setPraisecount(checkBox.getText().toString());
+            }
+
+            @Override
+            public void unlike(CheckBox checkBox) {
+                job.setPraiseflag("0");
+                job.setPraiseid(null);
+                job.setPraisecount(checkBox.getText().toString());
+            }
+        }).click(targettype, job.getHelpid(), job.getPraiseid(), checkBox);
     }
 
     private void initGroupData() {
@@ -359,9 +327,9 @@ public class IndexCampusFragment extends BaseFragment {
                             if (!"0".equals(result.getCode())) {
                                 Base01Response.Body body = response.getBody();
                                 List<Base01Response.Body.Banner> regionList = body.getBanner_list();
-                                messageHandler.postMessage(14, regionList);
+                                messageHandler.postMessage(15, regionList);
                             } else {
-                                messageHandler.postMessage(14, null);
+                                messageHandler.postMessage(15, null);
                             }
                         }
 
@@ -539,7 +507,7 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 11: {
                     final String helpid = String.valueOf(msg.obj);
-                    if(null == helpConfirmWin) {
+                    if (null == helpConfirmWin) {
                         //显示立即帮助确认对话框
                         View parentView = baseActivity.getWindow().getDecorView();
                         helpConfirmWin = PopupWin.Builder.create(baseActivity)
@@ -570,7 +538,7 @@ public class IndexCampusFragment extends BaseFragment {
                 case 12: {
                     try {
                         showToast("请求帮助成功");
-                        if(null != helpConfirmWin){
+                        if (null != helpConfirmWin) {
                             helpConfirmWin.dismiss();
                         }
                     } finally {
@@ -580,7 +548,10 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 13: {
                     try {
-                        showToast("请求帮助失败:" + msg.obj);
+                        showToast("请求帮助成功");
+                        if (null != helpConfirmWin) {
+                            helpConfirmWin.dismiss();
+                        }
                     } finally {
                         actionLock.unlock();
                     }
@@ -588,8 +559,16 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 14: {
                     try {
-                        final List<Base01Response.Body.Banner> regionList = (List<Base01Response.Body.Banner>) msg.obj;
-                        if(null != regionList && regionList.size()>0) {
+                        showToast("请求帮助失败:" + msg.obj);
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 15: {
+                    try {
+                        List<Base01Response.Body.Banner> regionList = (List<Base01Response.Body.Banner>) msg.obj;
+                        if (null != regionList && regionList.size() > 0) {
                             iv_banner.setVisibility(View.VISIBLE);
                             final Base01Response.Body.Banner banner = regionList.get(0);
                             new BitmapUtil().getImage(iv_banner, banner.getImgurl(), R.drawable.banner);
@@ -607,7 +586,7 @@ public class IndexCampusFragment extends BaseFragment {
                                     baseActivity.startActivity(intent);
                                 }
                             });
-                        }else{
+                        } else {
                             iv_banner.setVisibility(View.GONE);
                         }
                     } finally {
@@ -615,7 +594,7 @@ public class IndexCampusFragment extends BaseFragment {
                     }
                     break;
                 }
-                case 15: {
+                case 16: {
                     try {
 
                     } finally {
@@ -630,8 +609,8 @@ public class IndexCampusFragment extends BaseFragment {
         }
     }
 
-    private void doJishiHelp(final String helpid){
-        if(actionLock.tryLock()) {
+    private void doJishiHelp(final String helpid) {
+        if (actionLock.tryLock()) {
             azExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -646,9 +625,9 @@ public class IndexCampusFragment extends BaseFragment {
                         public void success(BaseResponse response) {
                             ResponseResult result = response.getResult();
                             if ("0".equals(result.getCode())) {
-                                messageHandler.postMessage(12);
+                                messageHandler.postMessage(13);
                             } else {
-                                messageHandler.postMessage(13, result.getMessage());
+                                messageHandler.postMessage(14, result.getMessage());
                             }
                         }
 

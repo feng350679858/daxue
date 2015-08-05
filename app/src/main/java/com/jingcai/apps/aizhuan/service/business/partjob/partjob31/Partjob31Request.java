@@ -26,9 +26,18 @@ public class Partjob31Request extends BaseRequest {
     public class Parttimejob {
         private String sourceid;
         private String targetid;
-        private String reftype;
+        private String reftype;//1：答案   2：评论
         private String refid;
         private String money;
+        private String paypassword;
+
+        public String getPaypassword() {
+            return paypassword;
+        }
+
+        public void setPaypassword(String paypassword) {
+            this.paypassword = paypassword;
+        }
 
         public String getMoney() {
             return money;

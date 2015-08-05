@@ -178,7 +178,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
         payPwdWin.show();
         payPwdWin.setCallback(new PayPwdWin.Callback() {
             @Override
-            public void finishInput(String pwd) {
+            public void call(String pwd) {
                 paypwd = pwd;
                 initCheckPaypwdWin();
             }
@@ -190,7 +190,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
         payPwdWin.show();
         payPwdWin.setCallback(new PayPwdWin.Callback() {
             @Override
-            public void finishInput(String pwd) {
+            public void call(String pwd) {
                 if(pwd.equals(paypwd)) {
                     isFirstPay=false;
                     initPayPwd();
@@ -237,7 +237,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
         payPwdWin.showPay(mInputCount.getText().toString() + "元");
         payPwdWin.setCallback(new PayPwdWin.Callback() {
             @Override
-            public void finishInput(String pwd) {
+            public void call(String pwd) {
                 withdrawProcess(pwd);
             }
         });

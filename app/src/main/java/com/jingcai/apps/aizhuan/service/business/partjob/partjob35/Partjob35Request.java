@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.partjob36;
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob35;
 
 import com.jingcai.apps.aizhuan.service.base.BaseRequest;
 import com.jingcai.apps.aizhuan.service.business.BizConstant;
@@ -6,17 +6,18 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob36Request extends BaseRequest {
+public class Partjob35Request extends BaseRequest {
 
-    public Partjob36Request(String answerid, String studentid) {
+    public Partjob35Request(String studentid, String targettype, String targetid){
         this.parttimejob = new Parttimejob();
-        this.parttimejob.setAnswerid(answerid);
         this.parttimejob.setStudentid(studentid);
+        this.parttimejob.setTargettype(targettype);
+        this.parttimejob.setTargetid(targetid);
     }
 
     @Override
     public String getTranscode() {
-        return BizConstant.BIZ_PARTTIME_JOB_36;
+        return BizConstant.BIZ_PARTTIME_JOB_35;
     }
 
     private Parttimejob parttimejob;
@@ -29,9 +30,10 @@ public class Partjob36Request extends BaseRequest {
         this.parttimejob = parttimejob;
     }
 
-    class Parttimejob {
-        private String answerid;
+    public class Parttimejob {
         private String studentid;
+        private String targettype;
+        private String targetid;
 
         public String getStudentid() {
             return studentid;
@@ -41,12 +43,20 @@ public class Partjob36Request extends BaseRequest {
             this.studentid = studentid;
         }
 
-        public String getAnswerid() {
-            return answerid;
+        public String getTargetid() {
+            return targetid;
         }
 
-        public void setAnswerid(String answerid) {
-            this.answerid = answerid;
+        public void setTargetid(String targetid) {
+            this.targetid = targetid;
+        }
+
+        public String getTargettype() {
+            return targettype;
+        }
+
+        public void setTargettype(String targettype) {
+            this.targettype = targettype;
         }
     }
 }

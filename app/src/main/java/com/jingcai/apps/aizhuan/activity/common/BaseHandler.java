@@ -117,11 +117,11 @@ public class BaseHandler extends Handler {
         });
     }
 
-    private void showInnerToast(String msg) {
+    protected void showInnerToast(String msg) {
         showInnerToast(msg, title_height);
     }
 
-    private void showInnerToast(String msg, int height) {
+    protected void showInnerToast(String msg, int height) {
 //        TopToast topToast = TopToast.makeText(context, msg, TopToast.LENGTH_LONG);
 //        topToast.setOffsetY(title_height);
 //        topToast.show();

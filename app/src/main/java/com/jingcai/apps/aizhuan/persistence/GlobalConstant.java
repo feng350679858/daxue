@@ -10,6 +10,7 @@ public class GlobalConstant {
     public static final String BUSINESS_TYPE_PARTJOB    = "1";//1兼职
     public static final String AREA_CODE_HANGZHOU       = "330100";//杭州区域编码
     public static final String AREA_NAME_HANGZHOU       = "杭州市";
+    public static final String SDK_VERSION              = "2.0";
 
     public static String SECRET_KEY;
 

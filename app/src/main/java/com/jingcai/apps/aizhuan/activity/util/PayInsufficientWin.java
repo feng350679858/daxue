@@ -1,10 +1,12 @@
 package com.jingcai.apps.aizhuan.activity.util;
 
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldTopupActivity;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 
 /**
@@ -45,8 +47,8 @@ public class PayInsufficientWin {
         mPopWin.setAction(R.id.tv_go, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                baseActivity.showToast("跳转至充值");
+                baseActivity.startActivity(new Intent(baseActivity, MineGoldTopupActivity.class));
+                mPopWin.dismiss();
             }
         });
     }

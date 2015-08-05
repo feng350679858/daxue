@@ -64,7 +64,8 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_30 = "partjob30";//取消评论、取消赞
     String BIZ_PARTTIME_JOB_31 = "partjob31";//打赏
     String BIZ_PARTTIME_JOB_33 = "partjob33";//完成帮助
-    String BIZ_PARTTIME_JOB_34 = "partjob34";//匿名和非匿名切换
+    String BIZ_PARTTIME_JOB_34 = "partjob34";//提问详情
+    String BIZ_PARTTIME_JOB_35 = "partjob35";//匿名和非匿名切换
     String BIZ_PARTTIME_JOB_36 = "partjob36";//答案详情
 
     /**
@@ -117,4 +118,5 @@ public interface BizConstant {
     String BTZ_GAME_09 = "game09";//身份信息验证
     String BTZ_GAME_10 = "game10";//身份信息查询
     String BTZ_GAME_13 = "game13";//校验身份证号
+    String BTZ_GAME_14 = "game14";//校验支付密码
 }
