@@ -93,39 +93,39 @@ public class MessageCommentActivity extends BaseActivity {
             List<Partjob29Response.Parttimejob> parttimejob_list = new ArrayList<>();
             Partjob29Response.Parttimejob parttimejob = null;
 
-            for(int i = 0 ; i < 10; i++){
-                parttimejob = new Partjob29Response.Parttimejob();
-                if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMENT){
-                    parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
-                    parttimejob.setOptype("1");
-                }else if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMEND){
-                    parttimejob.setOptype("2");
-                }
-                parttimejob.setOptime("20150731111111");
-                parttimejob.setSourceid("sourceid:" + i);
-                parttimejob.setSourcename("丁" + i);
-                parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
-                parttimejob.setContentid(String.valueOf(i));
-                parttimejob.setSourcelevel(String.valueOf(i));
-                if(i%3==0) {
-                    Partjob29Response.Refcomment refcomment = new Partjob29Response.Refcomment();
-                    refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
-                    refcomment.setRefid("studentid:" + i);
-                    parttimejob.setRefcomment(refcomment);
-                }
-                Partjob29Response.Reftarget reftarget = new Partjob29Response.Reftarget();
-                reftarget.setImgurl("http://img0.imgtn.bdimg.com/it/u=3201629386,3592649916&fm=11&gp=0.jpg");
-                reftarget.setPubliccontent("我是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容内容");
-                reftarget.setStudentname("林" + i);
-                reftarget.setTargetid("targetid:" + i);
-                reftarget.setTargettype(String.valueOf((i%2+1)));
-                parttimejob.setReftarget(reftarget);
-
-                parttimejob_list.add(parttimejob);
-                if(mCurrentStart >= 30 && i==5){
-                    break;
-                }
-            }
+//            for(int i = 0 ; i < 10; i++){
+//                parttimejob = new Partjob29Response.Parttimejob();
+//                if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMENT){
+//                    parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
+//                    parttimejob.setOptype("1");
+//                }else if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMEND){
+//                    parttimejob.setOptype("2");
+//                }
+//                parttimejob.setOptime("20150731111111");
+//                parttimejob.setSourceid("sourceid:" + i);
+//                parttimejob.setSourcename("丁" + i);
+//                parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
+//                parttimejob.setContentid(String.valueOf(i));
+//                parttimejob.setSourcelevel(String.valueOf(i));
+//                if(i%3==0) {
+//                    Partjob29Response.Refcomment refcomment = new Partjob29Response.Refcomment();
+//                    refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
+//                    refcomment.setRefid("studentid:" + i);
+//                    parttimejob.setRefcomment(refcomment);
+//                }
+//                Partjob29Response.Reftarget reftarget = new Partjob29Response.Reftarget();
+//                reftarget.setImgurl("http://img0.imgtn.bdimg.com/it/u=3201629386,3592649916&fm=11&gp=0.jpg");
+//                reftarget.setPubliccontent("我是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容这是引用的内容内容");
+//                reftarget.setStudentname("林" + i);
+//                reftarget.setTargetid("targetid:" + i);
+//                reftarget.setTargettype(String.valueOf((i%2+1)));
+//                parttimejob.setReftarget(reftarget);
+//
+//                parttimejob_list.add(parttimejob);
+//                if(mCurrentStart >= 30 && i==5){
+//                    break;
+//                }
+//            }
             messageHandler.postMessage(0, parttimejob_list);
         }else{
             new AzExecutor().execute(new Runnable() {

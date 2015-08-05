@@ -263,7 +263,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                     public void call() {
                         showToast("举报成功");
                     }
-                }).click(job.getSourceid(), "3", region.getContentid());
+                }).click(region.getSourceid(), "3", region.getContentid());
             }
         });
     }

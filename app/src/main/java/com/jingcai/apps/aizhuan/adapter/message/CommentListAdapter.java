@@ -125,24 +125,24 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mTvName.setText(comment.getSourcename());
         holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime())));
 
-        if("2".equals(comment.getOptype())){
-            String targetName;
-            if(itemType == ITEM_TYPE_NO_REPLY){
-                final String targettype = comment.getReftarget().getTargettype();
-                switch (targettype) {
-                    case "1": targetName = "求助";break;
-                    case "2": targetName = "答案";break;
-                    default: targetName = "内容";break;
-                }
-            }else{
-                targetName = "评论";
-            }
-            holder.mTvContent.setText("赞了这个"+targetName);
-            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
-        }else{
-            holder.mTvContent.setText(comment.getContent());
-            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
+//        if("2".equals(comment.getOptype())){
+//            String targetName;
+//            if(itemType == ITEM_TYPE_NO_REPLY){
+//                final String targettype = comment.getReftarget().getTargettype();
+//                switch (targettype) {
+//                    case "1": targetName = "求助";break;
+//                    case "2": targetName = "答案";break;
+//                    default: targetName = "内容";break;
+//                }
+//            }else{
+//                targetName = "评论";
+//            }
+//            holder.mTvContent.setText("赞了这个"+targetName);
+//            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
+//        }else{
+//            holder.mTvContent.setText(comment.getContent());
+//            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//        }
 
         if (null != holder.mTvReply) {
             holder.mTvReply.setText(comment.getRefcomment().getRefcontent());

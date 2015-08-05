@@ -27,7 +27,7 @@ public class Partjob29Request extends BaseRequest {
     public class Parttimejob {
         private String sourceid;
         private String receiverid;
-        private String targettype;
+        private String targettype;//1求助 2问题 3答案 4评论本身 5求助公告
         private String targetid;
         private String commenttype;
         private String readflag;

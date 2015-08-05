@@ -65,6 +65,7 @@ public class IndexCampusFragment extends BaseFragment {
     private ImageView ivFunc;
     private PopupWin helpConfirmWin;
     private ImageView iv_banner;
+    private Partjob11Response.Parttimejob selectedJob;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -214,6 +215,7 @@ public class IndexCampusFragment extends BaseFragment {
             //撰写新答案
             @Override
             public void wenda_help(CheckBox checkBox, Partjob11Response.Parttimejob job) {
+                selectedJob = job;
                 Intent intent = new Intent(baseActivity, HelpWendaEditActivity.class);
                 intent.putExtra("helpid", job.getHelpid());
                 baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
@@ -222,6 +224,7 @@ public class IndexCampusFragment extends BaseFragment {
             //查看我的答案
             @Override
             public void wenda_help_my(CheckBox checkBox, Partjob11Response.Parttimejob job) {
+                selectedJob = job;
                 Intent intent = new Intent(baseActivity, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", job.getHelperid());
                 baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
@@ -229,6 +232,7 @@ public class IndexCampusFragment extends BaseFragment {
 
             @Override
             public void help_detail(boolean jishiFlag, Partjob11Response.Parttimejob job) {
+                selectedJob = job;
                 if (jishiFlag) {
                     Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
@@ -260,6 +264,12 @@ public class IndexCampusFragment extends BaseFragment {
             case REQUEST_CODE_ANSWER_EDIT: {
                 if (Activity.RESULT_OK == resultCode) {
                     //TODO 撰写变为我的答案
+                    String answerid = data.getStringExtra("answerid");
+//                    String helpContent = data.getStringExtra("helpContent");
+//                    String anonFlag = data.getStringExtra("anonFlag");
+                    selectedJob.setHelpflag("1");
+                    selectedJob.setHelperid(answerid);
+                    campusAdapter.notifyDataSetChanged();
                 }
                 break;
             }
@@ -356,7 +366,7 @@ public class IndexCampusFragment extends BaseFragment {
                             job.setCommentcount("22");
                             job.setGenderlimit(String.valueOf(random.nextInt(3)));
                             job.setMoney(String.valueOf(random.nextInt(100)) + ".23");
-                            job.setContent("内容xxx的范德萨发到付浙江打发士大夫大学" + (i + mCurrentStart));
+                            job.setContent("内容xxx的范德萨发到付\n浙江打发士大夫大浙江打发士大夫大浙江打发士大夫大学" + (i + mCurrentStart));
                             job.setSourceid(String.valueOf(random.nextInt(10000)));
                             job.setSourcelevel(String.valueOf(random.nextInt(20)));
                             job.setSourcename("花几支" + i);

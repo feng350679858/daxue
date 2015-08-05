@@ -1,9 +1,12 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,8 +23,10 @@ import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -37,18 +42,21 @@ import java.util.List;
  */
 public class HelpWendaCommentActivity extends BaseActivity {
     private String answerid;
+    private String commentCount = null;
+    private String selectCommentId = null;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private EditText et_reploy_comment;
+    private Button btn_wenda_comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         answerid = getIntent().getStringExtra("answerid");
-        if(StringUtil.isEmpty(answerid)){
-            finish();
+        if (StringUtil.isEmpty(answerid)) {
+            finishWithResult();
         } else {
             messageHandler = new MessageHandler(this);
             setContentView(R.layout.help_wenda_comment);
@@ -68,13 +76,31 @@ public class HelpWendaCommentActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult();
             }
         });
     }
 
+    private void finishWithResult() {
+        if (null != commentCount) {
+            Intent intent = new Intent();
+            intent.putExtra("commentCount", commentCount);
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
+    }
+
     private void initView() {
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
+        btn_wenda_comment = (Button) findViewById(R.id.btn_wenda_comment);
+        btn_wenda_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doComment();
+            }
+        });
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
@@ -89,6 +115,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 groupListView.setPullLoadEnable(true);
                 initGroupData();
             }
+
             @Override
             public void onLoadMore() {
                 initGroupData();
@@ -102,8 +129,10 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 commentAdapter.clearSelected();
                 if (!selected) {
                     region.setSelected(!selected);
-                    et_reploy_comment.setHint("回复：" + region.getContent());
+                    selectCommentId = region.getContentid();
+                    et_reploy_comment.setHint("回复：" + region.getSourcename());
                 } else {
+                    selectCommentId = null;
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -136,7 +165,45 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     public void call() {
                         showToast("举报成功");
                     }
-                }).click("", "2", region.getContentid());
+                }).click(region.getSourceid(), "2", region.getContentid());
+            }
+        });
+    }
+
+    private void doComment() {
+        if (!actionLock.tryLock()) return;
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob12Request req = new Partjob12Request();
+                Partjob12Request.Parttimejob job = req.new Parttimejob();
+                job.setSourceid(UserSubject.getStudentid());
+                if (null == selectCommentId) {
+                    job.setTargettype("3");//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
+                    job.setTargetid(answerid);
+                } else {
+                    job.setTargettype("4");
+                    job.setTargetid(selectCommentId);
+                }
+                job.setOptype("1");//评论类型 1：评论 2：点赞
+                job.setContent(et_reploy_comment.getText().toString());
+                req.setParttimejob(job);
+                new AzService().doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
+                    @Override
+                    public void success(Partjob12Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            String praisecount = resp.getBody().getParttimejob().getPraisecount();
+                            messageHandler.postMessage(3, praisecount);
+                        } else {
+                            messageHandler.postMessage(4, "取消赞失败");
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
             }
         });
     }
@@ -171,6 +238,26 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     }
                     break;
                 }
+                case 1: {
+                    try {
+                    } finally {
+                        actionLock.unlock();
+                    }
+                }
+                case 3: {
+                    try {
+                        commentCount = String.valueOf(msg.obj);
+                        groupListView.autoRefresh();
+                    } finally {
+                        actionLock.unlock();
+                    }
+                }
+                case 4: {
+                    try {
+                    } finally {
+                        actionLock.unlock();
+                    }
+                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -179,44 +266,53 @@ public class HelpWendaCommentActivity extends BaseActivity {
     }
 
     private void initGroupData() {
-        //TODO 接入服务端接口
         if (actionLock.tryLock()) {
             showProgressDialog("获取圈子中...");
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
                     if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
-                        for (int i = 0; i < 10 && mCurrentStart < 15; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            region.setRegionname("浙江大学" + (i + mCurrentStart));
+                        List<CommentItem> regionList = new ArrayList<CommentItem>();
+                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
+                            Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
+                            region.setSourcename("学生" + (i + mCurrentStart));
+                            region.setSourcelevel("19");
+                            region.setSourceschool("浙江大学");
+                            region.setSourcecollege("计算机学院");
+                            region.setOptime("20150801233341");
+                            if (i % 4 == 0) {
+                                region.setRefcomment(new Partjob29Response.Refcomment());
+                                region.getRefcomment().setRefname("花仙子");
+                                region.getRefcomment().setRefcontent("你是一个大SB");
+                            }
+                            if (i % 2 == 0) {
+                                region.setPraiseflag("1");
+                                region.setPraiseid("23232332");
+                            }
+                            region.setPraisecount("23");
+                            region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
                             regionList.add(region);
                         }
                         messageHandler.postMessage(0, regionList);
                     } else {
-                        final AzService azService = new AzService(HelpWendaCommentActivity.this);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
+                        Partjob29Request req = new Partjob29Request();
+                        Partjob29Request.Parttimejob job = req.new Parttimejob();
+                        job.setSourceid(UserSubject.getStudentid());
+                        job.setTargettype("3");//3答案
+                        job.setTargetid(answerid);
+                        job.setCommenttype("1");//1评论
+                        job.setStart("" + mCurrentStart);
+                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                        req.setParttimejob(job);
+                        new AzService().doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
                             @Override
-                            public void success(Base04Response response) {
+                            public void success(Partjob29Response response) {
                                 ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
+                                if ("0".equals(result.getCode())) {
+                                    List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                    messageHandler.postMessage(0, parttimejob_list);
                                 } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //    messageHandler.postMessage(2);
-                                    //} else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //}
+                                    messageHandler.postMessage(1, result.getMessage());
                                 }
                             }
 
@@ -229,6 +325,14 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 }
             });
         }
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithResult();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
