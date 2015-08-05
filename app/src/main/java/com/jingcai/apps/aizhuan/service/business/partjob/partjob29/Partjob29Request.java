@@ -30,6 +30,7 @@ public class Partjob29Request extends BaseRequest {
         private String targettype;
         private String targetid;
         private String commenttype;
+        private String readflag;
         private String start;
         private String pagesize;
 
@@ -79,6 +80,14 @@ public class Partjob29Request extends BaseRequest {
 
         public void setStart(String start) {
             this.start = start;
+        }
+
+        public String getReadflag() {
+            return readflag;
+        }
+
+        public void setReadflag(String readflag) {
+            this.readflag = readflag;
         }
 
         public String getPagesize() {
