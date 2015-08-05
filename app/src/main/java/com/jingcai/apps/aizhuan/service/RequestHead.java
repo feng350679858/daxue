@@ -1,5 +1,7 @@
 package com.jingcai.apps.aizhuan.service;
 
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+
 /**
  * Created by lejing on 15/1/28.
  */
@@ -36,7 +38,7 @@ public class RequestHead {
     }
 
     public String getVersion() {
-        return version;
+        return GlobalConstant.SDK_VERSION;
     }
 
     public void setVersion(String version) {

@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.adapter.index;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
-import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
-import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
@@ -167,8 +164,8 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.cb_wenda_comment.setText(job.getCommentcount());
 
             //本人问答帮助
-            final boolean selfFlag = "1".equals(job.getHelpflag());
-            if(selfFlag){
+            final boolean selfHelpFlag = "1".equals(job.getHelpflag());
+            if(selfHelpFlag){
                 viewHolder.cb_wenda_help.setVisibility(View.GONE);
                 viewHolder.cb_wenda_help_my.setVisibility(View.VISIBLE);
             } else{
@@ -180,7 +177,7 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.layout_wenda_help.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(selfFlag){
+                    if(selfHelpFlag){
                         callback.wenda_help_my(cb_wenda_help_my, job);// 查看我的帮助
                     }else{
                         callback.wenda_help(cb_wenda_help, job);// 撰写

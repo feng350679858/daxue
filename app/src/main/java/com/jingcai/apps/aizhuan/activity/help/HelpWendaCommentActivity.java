@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
@@ -24,6 +25,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import java.util.List;
  * Created by lejing on 15/7/16.
  */
 public class HelpWendaCommentActivity extends BaseActivity {
-    private static final String TAG = "HelpWendaComment";
+    private String answerid;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
@@ -44,13 +46,18 @@ public class HelpWendaCommentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageHandler = new MessageHandler(this);
-        setContentView(R.layout.help_wenda_comment);
+        answerid = getIntent().getStringExtra("answerid");
+        if(StringUtil.isEmpty(answerid)){
+            finish();
+        } else {
+            messageHandler = new MessageHandler(this);
+            setContentView(R.layout.help_wenda_comment);
 
-        initHeader();
+            initHeader();
 
-        initView();
-        initGroupData();
+            initView();
+            initGroupData();
+        }
     }
 
     private void initHeader() {
@@ -74,7 +81,6 @@ public class HelpWendaCommentActivity extends BaseActivity {
         groupListView.setPullRefreshEnable(true);
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
-
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +89,6 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 groupListView.setPullLoadEnable(true);
                 initGroupData();
             }
-
             @Override
             public void onLoadMore() {
                 initGroupData();
@@ -91,7 +96,6 @@ public class HelpWendaCommentActivity extends BaseActivity {
         });
 
         commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
-
             @Override
             public void click(View view, CommentItem region) {
                 boolean selected = region.isSelected();
@@ -121,15 +125,19 @@ public class HelpWendaCommentActivity extends BaseActivity {
                         region.setPraiseid(null);
                         region.setPraisecount(checkBox.getText().toString());
                     }
-                }).click("3", "", region.getPraiseid(), checkBox);//答案的评论
-                //TODO helpid
+                }).click("4", region.getContentid(), region.getPraiseid(), checkBox);//评论
             }
 
             @Override
             public void abuse(CommentItem region) {
-
+                //举报答案
+                new AbuseReportHandler(HelpWendaCommentActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                    @Override
+                    public void call() {
+                        showToast("举报成功");
+                    }
+                }).click("", "2", region.getContentid());
             }
-
         });
     }
 

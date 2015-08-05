@@ -91,7 +91,7 @@ public class PayPwdWin {
     }
 
     public interface Callback {
-        void finishInput(String pwd);
+        void call(String pwd);
     }
 
     private void clearAll(){
@@ -123,7 +123,7 @@ public class PayPwdWin {
             if (mPayPsw.length() >= inputTextIdArr.length) {
                 mPopWin.dismiss();
                 if (null != callback) {
-                    callback.finishInput(mPayPsw.toString().trim());
+                    callback.call(mPayPsw.toString().trim());
                 }
             }
 

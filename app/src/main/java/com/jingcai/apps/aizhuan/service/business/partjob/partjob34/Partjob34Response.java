@@ -37,6 +37,24 @@ public class Partjob34Response extends BaseResponse<Partjob34Response.Body> {
         private String anonflag;
         private String helpflag;
         private String helperid;
+        private String praiseflag;
+        private String praiseid;
+
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
+
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
 
         public String getRegionname() {
             return regionname;

@@ -35,6 +35,24 @@ public class Partjob36Response extends BaseResponse<Partjob36Response.Body> {
         private String commentcount;
         private String praisecount;
         private String anonflag;
+        private String praiseflag;
+        private String praiseid;
+
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
+
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
 
         public String getQuestionid() {
             return questionid;

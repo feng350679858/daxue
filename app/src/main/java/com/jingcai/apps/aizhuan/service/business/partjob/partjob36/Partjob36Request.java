@@ -8,9 +8,10 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
  */
 public class Partjob36Request extends BaseRequest {
 
-    public Partjob36Request(String answerid){
+    public Partjob36Request(String answerid, String studentid) {
         this.parttimejob = new Parttimejob();
         this.parttimejob.setAnswerid(answerid);
+        this.parttimejob.setStudentid(studentid);
     }
 
     @Override
@@ -30,6 +31,15 @@ public class Partjob36Request extends BaseRequest {
 
     class Parttimejob {
         private String answerid;
+        private String studentid;
+
+        public String getStudentid() {
+            return studentid;
+        }
+
+        public void setStudentid(String studentid) {
+            this.studentid = studentid;
+        }
 
         public String getAnswerid() {
             return answerid;

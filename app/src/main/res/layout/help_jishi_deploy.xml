@@ -336,9 +336,9 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/help_jishi_content_bg"
                         android:gravity="center"
-                        android:hint="不低于20金"
-                        android:maxLength="5"
-                        android:numeric="integer"
+                        android:hint="不低于2元"
+                        android:maxLength="6"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/important_dark"
                         android:textSize="14sp" />
                 </LinearLayout>

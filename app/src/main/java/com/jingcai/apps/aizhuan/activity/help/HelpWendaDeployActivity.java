@@ -3,9 +3,7 @@ package com.jingcai.apps.aizhuan.activity.help;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -16,25 +14,8 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.common.GoldWatcher;
-import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
-import com.jingcai.apps.aizhuan.persistence.UserSubject;
-import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
-import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.PopupWin;
-import com.markmao.pulltorefresh.widget.XListView;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lejing on 15/7/14.

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,13 +25,11 @@ import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob15.Partjob15Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob15.Partjob15Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob34.Partjob34Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob34.Partjob34Response;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -43,15 +40,14 @@ import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lejing on 15/7/16.
  */
 public class HelpWendaDetailActivity extends BaseActivity {
-    private static final int REQUEST_CODE_ANSWER_VIEW = 1101;
+    private static final int REQUEST_CODE_ANSWER_VIEW1 = 1100;
+    private static final int REQUEST_CODE_ANSWER_VIEW2 = 1101;
     private static final int REQUEST_CODE_ANSWER_EDIT = 1102;
     private String helpid;
     private AzExecutor azExecutor = new AzExecutor();
@@ -118,7 +114,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 TextView tv_pop_anonymous = win.findTextViewById(R.id.tv_pop_anonymous);
                 TextView tv_pop_abuse_report = win.findTextViewById(R.id.tv_pop_abuse_report);
 
-                final boolean selfFlag = GlobalConstant.debugFlag?false:"1".equals(job.getHelpflag());
+                final boolean selfFlag = GlobalConstant.debugFlag?false:UserSubject.getStudentid().equals(job.getSourceid());
                 if (selfFlag) {
                     // 发布作者，使用匿名
                     tv_pop_anonymous.setVisibility(View.VISIBLE);
@@ -133,8 +129,12 @@ public class HelpWendaDetailActivity extends BaseActivity {
                             new AnonHandler(HelpWendaDetailActivity.this).setCallback(new AnonHandler.Callback() {
                                 @Override
                                 public void call() {
-                                    job.setAnonflag("1".equals(job.getAnonflag())?"0":"1");
                                     win.dismiss();
+                                    job.setAnonflag("1".equals(job.getAnonflag()) ? "0" : "1");
+                                    if("1".equals(job.getAnonflag())) {
+
+                                    }
+                                    //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
                                 }
                             }).click("1", helpid);
                         }
@@ -145,7 +145,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
                     tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {//TODO 举报
+                        public void onClick(View v) {
                             win.dismiss();
                             //举报求助
                             new AbuseReportHandler(HelpWendaDetailActivity.this).setCallback(new AbuseReportHandler.Callback() {
@@ -185,7 +185,20 @@ public class HelpWendaDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null != job) {
-                    new LikeHandler(HelpWendaDetailActivity.this).click("2", helpid, job.getHelperid(), cb_wenda_like);
+                    new LikeHandler(HelpWendaDetailActivity.this).setCallback(new LikeHandler.Callback() {
+                        @Override
+                        public void like(String praiseid, CheckBox checkBox) {
+                            job.setPraiseflag("1");
+                            job.setPraiseid(praiseid);
+                            job.setPraisecount(checkBox.getText().toString());
+                        }
+                        @Override
+                        public void unlike(CheckBox checkBox) {
+                            job.setPraiseflag("0");
+                            job.setPraiseid(null);
+                            job.setPraisecount(checkBox.getText().toString());
+                        }
+                    }).click("2", helpid, job.getPraiseid(), cb_wenda_like);
                 }
             }
         });
@@ -220,7 +233,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
             public void click(View view, CommentItem region) {
                 Intent intent = new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", region.getContentid());
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW1);
             }
 
             @Override
@@ -272,15 +285,18 @@ public class HelpWendaDetailActivity extends BaseActivity {
         tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
         tv_content.setText(job.getContent());
 
+        //点赞
         cb_wenda_like.setText(job.getPraisecount());
+        cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
+        //评论
         cb_wenda_comment.setText(job.getCommentcount());
 
         showHelpLayout();
     }
 
     private void showHelpLayout() {
-        final boolean selfFlag = "1".equals(job.getHelpflag());
-        if(selfFlag){
+        final boolean selfHelpFlag = "1".equals(job.getHelpflag());
+        if(selfHelpFlag){
             cb_wenda_help_my.setVisibility(View.VISIBLE);
             cb_wenda_help.setVisibility(View.GONE);
         } else {
@@ -290,10 +306,10 @@ public class HelpWendaDetailActivity extends BaseActivity {
         layout_wenda_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selfFlag){//我的答案
+                if(selfHelpFlag){//我的答案
                     Intent intent = new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class);
                     intent.putExtra("answerid", job.getHelperid());
-                    startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
+                    startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW2);
                 } else {//撰写
                     Intent intent = new Intent(HelpWendaDetailActivity.this, HelpWendaEditActivity.class);
                     intent.putExtra("helpid", helpid);
@@ -307,7 +323,14 @@ public class HelpWendaDetailActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
-            case REQUEST_CODE_ANSWER_VIEW:{
+            case REQUEST_CODE_ANSWER_VIEW1:{
+                if(resultCode == RESULT_OK) {
+                    //答案信息有改动，刷新本页面
+                    groupListView.autoRefresh();
+                }
+                break;
+            }
+            case REQUEST_CODE_ANSWER_VIEW2:{
                 if(resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
                     groupListView.autoRefresh();

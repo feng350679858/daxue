@@ -110,7 +110,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                 payPwdWin.setTitle("确认结算");
                 payPwdWin.setCallback(new PayPwdWin.Callback() {
                     @Override
-                    public void finishInput(String pwd) {
+                    public void call(String pwd) {
                         showToast("----------");
                     }
                 });

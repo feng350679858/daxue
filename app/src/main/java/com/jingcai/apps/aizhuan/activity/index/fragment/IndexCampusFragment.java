@@ -51,10 +51,11 @@ import java.util.List;
 import java.util.Random;
 
 public class IndexCampusFragment extends BaseFragment {
-    private static final int REQUEST_CODE_ANSWER_EDIT = 1101;
-    private static final int REQUEST_CODE_ANSWER = 1102;
+    private static final int REQUEST_CODE_JISHI_DETAIL = 1101;
+    private static final int REQUEST_CODE_WENDA_DETAIL = 1102;
+    private static final int REQUEST_CODE_ANSWER_EDIT = 1103;
+    private static final int REQUEST_CODE_ANSWER_VIEW = 1104;
     private AzExecutor azExecutor = new AzExecutor();
-    ;
     private AzService azService = new AzService();
     private View mBaseView;
     private MessageHandler messageHandler;
@@ -223,7 +224,7 @@ public class IndexCampusFragment extends BaseFragment {
             public void wenda_help_my(CheckBox checkBox, Partjob11Response.Parttimejob job) {
                 Intent intent = new Intent(baseActivity, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", job.getHelperid());
-                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER);
+                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
             }
 
             @Override
@@ -231,11 +232,11 @@ public class IndexCampusFragment extends BaseFragment {
                 if (jishiFlag) {
                     Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
-                    baseActivity.startActivity(intent);
+                    baseActivity.startActivityForResult(intent, REQUEST_CODE_JISHI_DETAIL);
                 } else {
                     Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
-                    baseActivity.startActivity(intent);
+                    baseActivity.startActivityForResult(intent, REQUEST_CODE_WENDA_DETAIL);
                 }
             }
         });
@@ -244,13 +245,25 @@ public class IndexCampusFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            case REQUEST_CODE_JISHI_DETAIL: {
+                if (Activity.RESULT_OK == resultCode) {
+                    //TODO 更新点赞、评论数量
+                }
+                break;
+            }
+            case REQUEST_CODE_WENDA_DETAIL: {
+                if (Activity.RESULT_OK == resultCode) {
+                    //TODO 更新点赞、评论数量、我的答案
+                }
+                break;
+            }
             case REQUEST_CODE_ANSWER_EDIT: {
                 if (Activity.RESULT_OK == resultCode) {
                     //TODO 撰写变为我的答案
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER: {
+            case REQUEST_CODE_ANSWER_VIEW: {
                 if (Activity.RESULT_OK == resultCode) {
                     //TODO 更新点赞数量
                 }
