@@ -44,6 +44,7 @@ public class MineAccountActivity extends BaseActivity {
 
     private IOSPopWin mTipWin;
 
+    private String isFirstPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class MineAccountActivity extends BaseActivity {
                 final Game10Response.Body body = resp.getBody();
                 final Game10Response.Body.Student stu = body.getStudent();
                 final String checkstatus = stu.getCheckstatus();
+                isFirstPay = stu.getHaspaypassword();
                 if (!"0".equals(resp.getResultCode())) {
                     messageHandler.postMessage(5, resp.getResultMessage());
                 } else {
@@ -105,7 +107,6 @@ public class MineAccountActivity extends BaseActivity {
             }
         });
     }
-
 
 
     private void initComponent() {
@@ -131,19 +132,22 @@ public class MineAccountActivity extends BaseActivity {
                         break;
                     case R.id.rl_account_reset_pay_psw: //修改支付密码
                         intent = new Intent(thisActivity, MineModifyPayPasswordActivity.class);
+                        if ("0".equals(isFirstPay))
+                            intent.setClass(thisActivity, MineResetPayPasswordActivity.class);
                         break;
                     case R.id.rl_manage_financial_account://管理金融账号
-                        intent = new Intent(thisActivity,AccountFinancialActivity.class);
+                        intent = new Intent(thisActivity, AccountFinancialActivity.class);
                         break;
                     case R.id.btn_mine_gold_account_withdraw://取款
-                        intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
-//                        checkIdentity();
+//                        intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
+//                        intent.putExtra("isFirstPay",isFirstPay);
+                        checkIdentity();
                         break;
                     case R.id.btn_mine_gold_account_topup://充值
                         intent = new Intent(thisActivity, MineGoldTopupActivity.class);
                         break;
                 }
-                if(null != intent) {
+                if (null != intent) {
                     startActivity(intent);
                 }
             }
@@ -243,18 +247,19 @@ public class MineAccountActivity extends BaseActivity {
                 case 4:
                     String checkStatus = msg.obj.toString();  //审核状态
                     String tip = null;
-                    switch (checkStatus){
+                    switch (checkStatus) {
                         case "0":
                         case "3":
                             tip = getString(R.string.gold_withdraw_validate_identity_not_pass);
-                            mTipWin.showWindow("身份验证",tip,"下次再说","去吧去吧");
+                            mTipWin.showWindow("身份验证", tip, "下次再说", "去吧去吧");
                             break;
                         case "1":
                             tip = getString(R.string.gold_withdraw_validate_identity_wait);
-                            mTipWin.showWindow("身份验证", tip,"我知道了");
+                            mTipWin.showWindow("身份验证", tip, "我知道了");
                             break;
                         case "2":
                             Intent intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
+                            intent.putExtra("isFirstPay", isFirstPay);
                             startActivity(intent);
                             break;
                     }
