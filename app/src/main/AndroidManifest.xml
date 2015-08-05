@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jingcai.apps.aizhuan" >
+    package="com.jingcai.apps.aizhuan">
 
     <!-- 添加WiFi以及访问网络的权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -52,6 +52,7 @@
 
     <!-- JPush -->
     <permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+
     <uses-permission android:name="com.jingcai.apps.aizhuan.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -73,7 +74,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- sys -->
         <activity android:name=".activity.sys.WelcomeActivity" android:label="@string/app_name" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
@@ -91,6 +92,7 @@
         <activity android:name=".activity.index.IndexBannerDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.sys.AboutUsActivity" android:screenOrientation="portrait" />
         <activity android:name=".activity.sys.ModifyPswActivity" android:screenOrientation="portrait" />
+
         <!-- help -->
         <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpFriendOnlineActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
@@ -102,7 +104,6 @@
         <activity android:name=".activity.help.HelpWendaEditActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaRewardActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpEvaluateActivity" android:launchMode="singleTask" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan">
-
             <intent-filter>
                 <action android:name="aizhuan.activity.help.HelpEvaluateActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -138,37 +139,37 @@
         <service android:name=".service.local.UnreadMsgService" />
 
         <!-- mine -->
-        <activity android:name=".activity.mine.gold.MineAccountActivity" />
-        <activity android:name=".activity.mine.MineStudentCertificationActivity" />
-        <activity android:name=".activity.sys.SettingsActivity" />
-        <activity android:name=".activity.mine.MineSuggestionActivity" />
-        <activity android:name=".activity.mine.MyPartjobListActivity" />
-        <activity android:name=".activity.mine.MyPartjobDetailActivity" />
-        <activity android:name=".activity.mine.MineCreditActivity" />
-        <activity android:name=".activity.mine.MinePersonalDataActivity" />
-        <activity android:name=".activity.mine.MineContactServiceActivity" />
-        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity" />
-        <activity android:name=".activity.mine.WeixinNumberActivity" />
-        <activity android:name=".activity.mine.ComplainActivity" />
+        <activity android:name=".activity.mine.gold.MineAccountActivity"/>
+        <activity android:name=".activity.mine.MineStudentCertificationActivity"/>
+        <activity android:name=".activity.sys.SettingsActivity"/>
+        <activity android:name=".activity.mine.MineSuggestionActivity"/>
+        <activity android:name=".activity.mine.MyPartjobListActivity"/>
+        <activity android:name=".activity.mine.MyPartjobDetailActivity"/>
+        <activity android:name=".activity.mine.MineCreditActivity"/>
+        <activity android:name=".activity.mine.MinePersonalDataActivity"/>
+        <activity android:name=".activity.mine.MineContactServiceActivity"/>
+        <activity android:name=".activity.mine.InproveProfileSimpleItemActivity"/>
+        <activity android:name=".activity.mine.WeixinNumberActivity"/>
+        <activity android:name=".activity.mine.ComplainActivity"/>
         <activity android:name=".activity.mine.SafeCheckActivity" />
         <activity android:name=".activity.mine.ProfileImproveActivity" />
         <activity android:name=".activity.mine.ProfileImprove2Activity" />
 
         <!-- mine ==> gold -->
-        <activity android:name=".activity.mine.gold.MineGoldTopupActivity" />
-        <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity" />
-        <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity" />
-        <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity" />
-        <activity android:name=".activity.mine.gold.MineGoldExpenseActivity" />
-        <activity android:name=".activity.mine.gold.MineGoldIncomeActivity" />
-        <activity android:name=".activity.mine.gold.AccountFinancialActivity" />
-        <activity android:name=".activity.mine.gold.AccountTypeActivity" />
-        <activity android:name=".activity.mine.gold.BindAlipayActivity" />
-
-        <!-- User defined.  For test only  用户自定义的广播接收器 -->
-        <receiver
-            android:name=".jpush.AzJpushReceiver"
-            android:enabled="true" >
+        <activity android:name=".activity.mine.gold.MineGoldTopupActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity"/>
+        <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity"/>
+        <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldExpenseActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldIncomeActivity"/>
+        <activity android:name=".activity.mine.gold.AccountFinancialActivity"/>
+        <activity android:name=".activity.mine.gold.AccountTypeActivity"/>
+        <activity android:name=".activity.mine.gold.BindAlipayActivity"/>
+        <activity android:name=".activity.mine.gold.IdentityAuthenticationActivity"/>
+        <activity android:name=".activity.mine.gold.BankSelectActivity"/>
+        
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver android:name=".jpush.AzJpushReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
@@ -192,8 +193,8 @@
         <!-- Required -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >
-            <intent-filter android:priority="1000" >
+            android:enabled="true">
+            <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
                 <category android:name="com.jingcai.apps.aizhuan" />
             </intent-filter>
@@ -211,7 +212,7 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -231,11 +232,7 @@
         <!-- jpush pro   a18858d0c3a777745fbc99f7 -->
         <meta-data android:name="JPUSH_APPKEY" android:value="203cf5c6a5b762b4d5ff6349" />
         <meta-data android:name="JPUSH_CHANNEL" android:value="A000" />
-
-        <activity
-            android:name=".activity.mine.gold.BankSelectActivity"
-            android:label="@string/title_activity_bank_select" >
-        </activity>
+        
     </application>
 
 </manifest>

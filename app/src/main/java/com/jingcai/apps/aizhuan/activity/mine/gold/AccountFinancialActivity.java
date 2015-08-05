@@ -39,7 +39,7 @@ public class AccountFinancialActivity extends BaseActivity implements AccountBan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gold_account_financial);
+        setContentView(R.layout.mine_gold_account_financial);
         messageHandler = new MessageHandler(this);
         mConfirmWin = new IOSPopWin(this);
 

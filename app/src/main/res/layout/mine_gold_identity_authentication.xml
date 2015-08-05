@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/content_background">
+
+    <include layout="@layout/include_header" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/field_divider_grey"
+        android:dividerPadding="@dimen/list_item_padding"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <EditText
+            android:id="@+id/et_authentication_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/icon_gold_authentication_name"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/icon_gold_authentication_name"
+            android:hint="姓名"
+            android:padding="@dimen/list_item_padding"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/hint_grey"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_authentication_idno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/icon_gold_authentication_identity"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/icon_gold_authentication_identity"
+            android:hint="身份证号"
+            android:padding="@dimen/list_item_padding"
+            android:textColor="@color/important_dark"
+            android:textColorHint="@color/hint_grey"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tv_identity_card_front"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/gold_authentication_card_front"
+                android:gravity="center_horizontal"
+                android:text="点击上传身份证正面照"
+                android:textColor="@color/normal_grey" />
+
+            <TextView
+                android:id="@+id/tv_identity_card_behind"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/gold_authentication_card_behind"
+                android:gravity="center_horizontal"
+                android:text="点击上传身份证反面照"
+                android:textColor="@color/normal_grey" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_warn1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="12sp"
+            android:text="@string/identity_authentication_tip"
+            android:textColor="@color/normal_grey" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_authentication_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="提交"
+        android:enabled="false"
+        android:textSize="16sp"
+        android:textColor="@color/assist_grey"
+        android:layout_marginLeft="@dimen/list_item_padding"
+        android:layout_marginRight="@dimen/list_item_padding"
+        android:background="@drawable/btn_yellow_boarded_bg_selector"/>
+</LinearLayout>

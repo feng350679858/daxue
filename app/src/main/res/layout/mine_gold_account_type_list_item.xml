@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,9 +17,9 @@
 
             <ImageView
                 android:id="@+id/iv_account_type_list_item_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_width="@dimen/avatar_diameter"
+                android:layout_height="@dimen/avatar_diameter"
+                android:src="@drawable/default_image" />
 
             <TextView
                 android:id="@+id/tv_account_type_list_item_title"
@@ -28,7 +28,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="支付宝"
                 android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
@@ -44,8 +43,8 @@
     <ImageView
         android:id="@+id/iv_account_type_list_item_divider"
         android:layout_width="match_parent"
-        android:layout_height="1sp"
+        android:layout_height="@dimen/divider_height"
         android:background="@color/white"
-        android:paddingLeft="75dp"
+        android:paddingLeft="10dp"
         android:src="@color/divider_color" />
 </LinearLayout>

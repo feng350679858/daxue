@@ -11,6 +11,8 @@
     <color name="badge_color">#F93240</color>
     <!-- 分割线颜色 -->
     <color name="divider_color">#D7D7D7</color>
+    <!-- hint的颜色 -->
+    <color name="hint_grey">#D7D7D7</color>
     <!-- item选中颜色 -->
     <color name="item_selected_color">#D7D7D7</color>
     <!-- 本APP主色  -->

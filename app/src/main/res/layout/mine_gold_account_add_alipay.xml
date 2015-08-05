@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/content_background"
     android:orientation="vertical">
+
     <include layout="@layout/include_header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_launcher"
+        android:drawableLeft="@drawable/icon_warn1"
         android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_launcher"
+        android:drawableStart="@drawable/icon_warn1"
         android:padding="10dp"
-        android:text="请填写支付宝所绑定号码，手机号登录支付宝查看收款。"
+        android:text="请输入支付宝所绑定的手机号，手机号登陆支付宝查看收款"
         android:textSize="12sp"
 
         />
@@ -33,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="手机"
+                android:text="账号"
                 android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
@@ -43,10 +46,11 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:hint="请输入手机号码"
-                android:textColorHint="@color/assist_grey"
+                android:hint="手机号码"
                 android:paddingLeft="10dp"
                 android:lines="1"
+                android:textColorHint="@color/assist_grey"
+                android:textColor="@color/important_dark"
                 android:maxLength="11"
                 android:inputType="phone"
                 android:textSize="16sp" />
@@ -54,10 +58,10 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="1sp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/white"
             android:paddingLeft="10dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@color/divider_color" />
 
 
         <LinearLayout
@@ -75,50 +79,49 @@
                 android:textColor="@color/important_dark"
                 android:textSize="18sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/et_account_add_alipay_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColorHint="@color/assist_grey"
                 android:lines="1"
-                android:hint="手机所关联的姓名"
+                android:hint="支付宝所关联姓名"
+                android:textColor="@color/normal_grey"
+                android:textColorHint="@color/assist_grey"
                 android:paddingLeft="10dp"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="10dp">
-        <CheckBox
-            android:id="@+id/cb_account_add_alipay_terms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/style_badge"
-            android:checked="true"
-            />
-        <TextView
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我已同意"/>
-        <TextView
-            android:id="@+id/tv_account_add_alipay_term"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="金融服务"
-            android:textColor="@color/important_dark"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="条款" />
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+         android:layout_marginLeft="10dp"
+         >
+         <CheckBox
+             android:id="@+id/cb_account_add_alipay_terms"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:checked="true"
+             style="@style/checkbox_style"
+             />
+         <TextView
+             android:layout_marginLeft="5dp"
+             android:layout_marginStart="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="我已同意 "/>
+         <TextView
+             android:id="@+id/tv_account_add_alipay_term"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="金融服务条款"
+             android:textColor="@color/main_yellow"/>
 
-    </LinearLayout>
+
+         </LinearLayout>
     <Button
         android:id="@+id/btn_gold_account_add_alipay_bind"
         android:layout_width="match_parent"
@@ -128,8 +131,8 @@
         android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btn_red_selector"
-        android:text="绑定"
-        android:textColor="@color/white"
+        android:background="@drawable/btn_yellow_boarded_bg_selector"
+        android:text="确认绑定"
+        android:textColor="@color/important_dark"
         android:textSize="18sp" />
 </LinearLayout>

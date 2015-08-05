@@ -135,6 +135,7 @@ public class MessageCommentActivity extends BaseActivity {
                     parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     parttimejob.setStart(String.valueOf(mCurrentStart));
                     parttimejob.setReceiverid(UserSubject.getStudentid());
+                    parttimejob.setReadflag("1");
 
                     req.setParttimejob(parttimejob);
                     azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {

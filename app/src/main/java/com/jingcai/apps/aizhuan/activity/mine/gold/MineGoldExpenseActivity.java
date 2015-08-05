@@ -49,8 +49,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
         initData();
     }
 
-    private void initHeader()
-    {
+private void initHeader(){
         ((TextView)findViewById(R.id.tv_content)).setText("支出记录");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
