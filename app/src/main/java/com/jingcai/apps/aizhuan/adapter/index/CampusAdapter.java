@@ -2,13 +2,11 @@ package com.jingcai.apps.aizhuan.adapter.index;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -16,12 +14,7 @@ import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
-import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
-import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.DictUtil;

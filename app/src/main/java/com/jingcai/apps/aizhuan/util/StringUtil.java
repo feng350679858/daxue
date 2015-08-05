@@ -109,7 +109,7 @@ public class StringUtil {
      * @return 格式化字符串
      */
     public static String getPrintMoney(float money){
-        return getFormatFloat(money, "#,###.00");
+        return getFormatFloat(money, "#,##0.00");
     }
     /**
      * 根据传入的浮点数和规范公式返回格式化的数字字符串

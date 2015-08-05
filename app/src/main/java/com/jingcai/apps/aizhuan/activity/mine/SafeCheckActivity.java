@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.mine.gold.MineResetPayPasswordActivity;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -88,7 +89,7 @@ public class SafeCheckActivity extends BaseActivity {
         });
     }
     private void resetPayPsw(){
-        Intent intent=new Intent(this,MineResetpaypswActivity.class);
+        Intent intent=new Intent(this,MineResetPayPasswordActivity.class);
         startActivity(intent);
         finish();
     }
