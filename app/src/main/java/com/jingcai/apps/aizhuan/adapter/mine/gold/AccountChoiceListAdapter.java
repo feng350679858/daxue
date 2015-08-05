@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.adapter.gold;
+package com.jingcai.apps.aizhuan.adapter.mine.gold;
 
 import android.content.Context;
 import android.view.LayoutInflater;

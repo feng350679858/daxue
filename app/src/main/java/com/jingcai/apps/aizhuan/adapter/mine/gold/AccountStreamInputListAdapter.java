@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.adapter.gold;
+package com.jingcai.apps.aizhuan.adapter.mine.gold;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,14 +21,13 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/22.
  */
-public class AccountStreamOutputListAdapter extends BaseAdapter {
-
+public class AccountStreamInputListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Account02Response.Account02Body.Account> accountList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public AccountStreamOutputListAdapter( Context ctx){
+    public AccountStreamInputListAdapter( Context ctx){
         this.mContext = ctx;
         this.mInflater = LayoutInflater.from(ctx);
         this.bitmapUtil = new BitmapUtil(ctx);
@@ -67,7 +66,7 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Account02Response.Account02Body.Account account = accountList.get(position);
-        if (!"credit".equals(account.getOptype())) {
+        if ("credit".equals(account.getOptype())) {
 
             String url = account.getImgurl();
             bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
@@ -115,7 +114,7 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
         if("credit".equals(optype)){
             money += "+";
         }else{
-            // money += "-";
+           // money += "-";
             return ;
         }
         try {
@@ -146,3 +145,4 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
     }
 
 }
+

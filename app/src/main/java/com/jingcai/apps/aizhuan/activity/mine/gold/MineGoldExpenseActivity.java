@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountStreamInputListAdapter;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountStreamOutputListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamOutputListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -110,6 +109,9 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
 
                                 Account02Response.Account02Body account02Body = response.getBody();
                                 ArrayList<Account02Response.Account02Body.Account> accountList = account02Body.getAccount_list();
+                                if(null ==accountList){
+                                    accountList = new ArrayList<>();
+                                }
 
                                 if (0 == mCurrentStart && accountList.size() < 1) {
                                     messageHandler.postMessage(2);

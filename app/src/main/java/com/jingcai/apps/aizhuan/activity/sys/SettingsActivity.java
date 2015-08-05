@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.sys;
 
 
 import android.app.ProgressDialog;
@@ -15,8 +15,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.activity.sys.AboutUsActivity;
-import com.jingcai.apps.aizhuan.activity.sys.ModifyPswActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineSuggestionActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;

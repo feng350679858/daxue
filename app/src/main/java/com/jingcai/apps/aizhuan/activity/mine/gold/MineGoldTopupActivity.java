@@ -1,42 +1,31 @@
-package com.jingcai.apps.aizhuan.activity.mine;
+package com.jingcai.apps.aizhuan.activity.mine.gold;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.gold.AccountChoiceListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountChoiceListAdapter;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.account.account01.Account01Request;
 import com.jingcai.apps.aizhuan.service.business.account.account01.Account01Response;
-import com.jingcai.apps.aizhuan.service.business.account.account03.Account03Request;
-import com.jingcai.apps.aizhuan.service.business.account.account03.Account03Response;
 import com.jingcai.apps.aizhuan.service.business.account.account04.Account04Request;
 import com.jingcai.apps.aizhuan.service.business.account.account04.Account04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.aizhuan.util.DES3Util;
-import com.jingcai.apps.aizhuan.util.LocalValUtil;
-import com.jingcai.apps.aizhuan.util.PixelUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
