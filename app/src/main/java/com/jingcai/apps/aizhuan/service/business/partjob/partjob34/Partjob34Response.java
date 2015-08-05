@@ -1,13 +1,11 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.partjob36;
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob34;
 
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
-
-import java.util.List;
 
 /**
  * Created by Json Ding on 2015/4/29.
  */
-public class Partjob36Response extends BaseResponse<Partjob36Response.Body> {
+public class Partjob34Response extends BaseResponse<Partjob34Response.Body> {
 
     public static class Body {
 
@@ -24,7 +22,9 @@ public class Partjob36Response extends BaseResponse<Partjob36Response.Body> {
 
     public static class Parttimejob {
         private String questionid;
+        private String topiccontent;
         private String content;
+        private String regionname;
         private String sourceid;
         private String sourcename;
         private String sourceimgurl;
@@ -32,9 +32,27 @@ public class Partjob36Response extends BaseResponse<Partjob36Response.Body> {
         private String sourceschool;
         private String sourcecollege;
         private String optime;
-        private String commentcount;
         private String praisecount;
+        private String commentcount;
         private String anonflag;
+        private String helpflag;
+        private String helperid;
+
+        public String getRegionname() {
+            return regionname;
+        }
+
+        public void setRegionname(String regionname) {
+            this.regionname = regionname;
+        }
+
+        public String getTopiccontent() {
+            return topiccontent;
+        }
+
+        public void setTopiccontent(String topiccontent) {
+            this.topiccontent = topiccontent;
+        }
 
         public String getQuestionid() {
             return questionid;
@@ -130,6 +148,22 @@ public class Partjob36Response extends BaseResponse<Partjob36Response.Body> {
 
         public void setSourceschool(String sourceschool) {
             this.sourceschool = sourceschool;
+        }
+
+        public String getHelperid() {
+            return helperid;
+        }
+
+        public void setHelperid(String helperid) {
+            this.helperid = helperid;
+        }
+
+        public String getHelpflag() {
+            return helpflag;
+        }
+
+        public void setHelpflag(String helpflag) {
+            this.helpflag = helpflag;
         }
     }
 }

@@ -215,11 +215,7 @@ public class CampusAdapter extends BaseAdapter {
         viewHolder.layout_help_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (jishiFlag) {
-                    baseActivity.startActivity(new Intent(baseActivity, HelpJishiDetailActivity.class));
-                } else {
-                    baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
-                }
+                callback.help_detail(jishiFlag, job);
             }
         });
 
@@ -257,5 +253,6 @@ public class CampusAdapter extends BaseAdapter {
         void jishi_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
         void wenda_help(CheckBox cb_wenda_help, Partjob11Response.Parttimejob job);
         void wenda_help_my(CheckBox cb_wenda_help_my, Partjob11Response.Parttimejob job);
+        void help_detail(boolean jishiFlag, Partjob11Response.Parttimejob job);
     }
 }

@@ -1,10 +1,10 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
+import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -65,7 +67,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
     }
 
     private void initView() {
-        et_reploy_comment = (EditText)findViewById(R.id.et_reploy_comment);
+        et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
@@ -89,18 +91,45 @@ public class HelpWendaCommentActivity extends BaseActivity {
         });
 
         commentAdapter.setCallback(new HelpCommentAdapter.Callback() {
+
             @Override
-            public void click(View view, HelpCommentAdapter.ViewHolder holder) {
-                boolean selected = holder.region.isSelected();
+            public void click(View view, CommentItem region) {
+                boolean selected = region.isSelected();
                 commentAdapter.clearSelected();
-                if(!selected) {
-                    holder.region.setSelected(!selected);
-                    et_reploy_comment.setHint("回复：" + holder.region.getRegionname());
-                }else{
+                if (!selected) {
+                    region.setSelected(!selected);
+                    et_reploy_comment.setHint("回复：" + region.getContent());
+                } else {
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void like(CheckBox checkBox, final CommentItem region) {
+                new LikeHandler(HelpWendaCommentActivity.this).setCallback(new LikeHandler.Callback() {
+                    @Override
+                    public void like(String praiseid, CheckBox checkBox) {
+                        region.setPraiseflag("1");
+                        region.setPraiseid(praiseid);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+
+                    @Override
+                    public void unlike(CheckBox checkBox) {
+                        region.setPraiseflag("0");
+                        region.setPraiseid(null);
+                        region.setPraisecount(checkBox.getText().toString());
+                    }
+                }).click("3", "", region.getPraiseid(), checkBox);//答案的评论
+                //TODO helpid
+            }
+
+            @Override
+            public void abuse(CommentItem region) {
+
+            }
+
         });
     }
 
@@ -121,7 +150,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+                        List<CommentItem> list = (List<CommentItem>) msg.obj;
                         commentAdapter.addData(list);
                         commentAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();
