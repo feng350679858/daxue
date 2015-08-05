@@ -130,7 +130,7 @@ public class MineAccountActivity extends BaseActivity {
                         intent = new Intent(thisActivity, MineGoldIncomeActivity.class);
                         break;
                     case R.id.rl_account_reset_pay_psw: //修改支付密码
-                        intent = new Intent(thisActivity, MineResetpaypswActivity.class);
+                        intent = new Intent(thisActivity, MineModifyPayPasswordActivity.class);
                         break;
                     case R.id.rl_manage_financial_account://管理金融账号
                         intent = new Intent(thisActivity,AccountFinancialActivity.class);
