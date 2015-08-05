@@ -62,6 +62,5 @@
     <string name="gold_withdraw_validate_identity_wait">您的身份验证中，我们将在1&#8211;3个工作日内处理，请耐心等待</string>
     <!--提现-->
     <string name="gold_withdraw_tip">提现每天最多提三次，1-2个工作日到账，30.0元起提！</string>
-    <string name="title_activity_bank_select">BankSelectActivity</string>
     <string name="identity_authentication_tip">账号验证将影响您的账号安全及现金提取，请您尽快验证您的身份证信息。提交审核后将在1-3个工作日时间完成，请您耐心等待。</string>
 </resources>
