@@ -38,12 +38,14 @@ public class CommentListAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     private List<Parttimejob> mComments;
     private BitmapUtil mBitmapUtil;
+    private Optype optype;
 
-    public CommentListAdapter(Context ctx) {
+    public CommentListAdapter(Context ctx,Optype type) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         mComments = new ArrayList<>();
         mBitmapUtil = new BitmapUtil(ctx);
+        optype = type;
     }
 
     public void setListData(List<Parttimejob> comments){
@@ -125,7 +127,7 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mTvName.setText(comment.getSourcename());
         holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime())));
 
-        if("2".equals(comment.getOptype())){
+        if(optype== Optype.COMMEND){
             String targetName;
             if(itemType == ITEM_TYPE_NO_REPLY){
                 final String targettype = comment.getReftarget().getTargettype();
@@ -232,5 +234,10 @@ public class CommentListAdapter extends BaseAdapter {
         private TextView mBtnReply;
         private LevelTextView mTvLevel;
         private LinearLayout mLlRefContainer;
+    }
+
+    public enum Optype {
+        COMMENT,   //评论
+        COMMEND    //赞
     }
 }

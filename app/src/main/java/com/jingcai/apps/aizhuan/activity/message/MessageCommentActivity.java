@@ -97,9 +97,7 @@ public class MessageCommentActivity extends BaseActivity {
                 parttimejob = new Partjob29Response.Parttimejob();
                 if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMENT){
                     parttimejob.setContent("这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容");
-                    parttimejob.setOptype("1");
                 }else if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMEND){
-                    parttimejob.setOptype("2");
                 }
                 parttimejob.setOptime("20150731111111");
                 parttimejob.setSourceid("sourceid:" + i);
@@ -181,7 +179,8 @@ public class MessageCommentActivity extends BaseActivity {
 
     private void initView() {
         mLvComments = (XListView) findViewById(R.id.lv_comments);
-        mListAdapter = new CommentListAdapter(this);
+        mListAdapter = new CommentListAdapter(this,
+                activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMEND ? CommentListAdapter.Optype.COMMEND: CommentListAdapter.Optype.COMMENT);
         mLvComments.setAutoLoadEnable(true);
         mLvComments.setPullLoadEnable(true);
         mLvComments.setPullRefreshEnable(true);

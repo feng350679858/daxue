@@ -144,7 +144,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        TextView tv_title = (TextView) findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) findViewById(R.id.tv_main_tip);
         tv_title.setText("跑腿");
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
