@@ -70,7 +70,7 @@ public class AccountBankListAdapter extends BaseAdapter {
         if(convertView == null){
             viewHolder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.gold_account_financial_list_item,null);
+            convertView = mInflater.inflate(R.layout.mine_gold_account_financial_list_item,null);
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_account_list_logo);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_account_list_title);
             viewHolder.tv_code = (TextView) convertView.findViewById(R.id.tv_account_list_code);

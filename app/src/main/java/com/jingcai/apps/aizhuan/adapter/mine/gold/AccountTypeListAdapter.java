@@ -65,7 +65,7 @@ public class AccountTypeListAdapter extends BaseAdapter {
         if(convertView == null){
             viewHolder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.gold_account_type_list_item,null);
+            convertView = mInflater.inflate(R.layout.mine_gold_account_type_list_item,null);
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_account_type_list_item_logo);
             viewHolder.iv_divider = (ImageView) convertView.findViewById(R.id.iv_account_type_list_item_divider);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_account_type_list_item_title);

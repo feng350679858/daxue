@@ -45,7 +45,7 @@ public class BindAlipayActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gold_account_add_alipay);
+        setContentView(R.layout.mine_gold_account_add_alipay);
         messageHandler = new MessageHandler(this);
         mBank = (Account04Response.Account04Body.Bank) LocalValUtil.getVal();
         mConfirmWin = new IOSPopWin(this);

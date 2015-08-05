@@ -81,27 +81,33 @@ public class MineAccountActivity extends BaseActivity {
      * 检查是否通过身份验证
      */
     private void checkIdentity() {
-        Game10Request req = new Game10Request();
-        Game10Request.Student student = req.new Student();
-        student.setId(UserSubject.getStudentid());
-        req.setStudent(student);
-
-        azService.doTrans(req, Game10Response.class, new AzService.Callback<Game10Response>() {
+        showProgressDialog("检查是否通过身份验证...");
+        new AzExecutor().execute(new Runnable() {
             @Override
-            public void success(Game10Response resp) {
-                final Game10Response.Body body = resp.getBody();
-                final Game10Response.Body.Student stu = body.getStudent();
-                final String checkstatus = stu.getCheckstatus();
-                if (!"0".equals(resp.getResultCode())) {
-                    messageHandler.postMessage(5, resp.getResultMessage());
-                } else {
-                    messageHandler.postMessage(4, checkstatus);
-                }
-            }
+            public void run() {
+                Game10Request req = new Game10Request();
+                Game10Request.Student student = req.new Student();
+                student.setId(UserSubject.getStudentid());
+                req.setStudent(student);
 
-            @Override
-            public void fail(AzException e) {
+                azService.doTrans(req, Game10Response.class, new AzService.Callback<Game10Response>() {
+                    @Override
+                    public void success(Game10Response resp) {
+                        final Game10Response.Body body = resp.getBody();
+                        final Game10Response.Body.Student stu = body.getStudent();
+                        final String checkstatus = stu.getCheckstatus();
+                        if (!"0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(5, resp.getResultMessage());
+                        } else {
+                            messageHandler.postMessage(4, checkstatus);
+                        }
+                    }
 
+                    @Override
+                    public void fail(AzException e) {
+
+                    }
+                });
             }
         });
     }
@@ -158,8 +164,8 @@ public class MineAccountActivity extends BaseActivity {
         mTipWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
             @Override
             public void onConfirmButtonClick() {
-                // TODO: 2015/8/4  
-                showToast("进入身份验证Activity");
+                Intent intent = new Intent(MineAccountActivity.this,IdentityAuthenticationActivity.class);
+                startActivity(intent);
             }
         });
     }

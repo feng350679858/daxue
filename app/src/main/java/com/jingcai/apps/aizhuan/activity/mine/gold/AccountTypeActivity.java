@@ -36,7 +36,7 @@ public class AccountTypeActivity extends BaseActivity implements ListView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gold_account_type);
+        setContentView(R.layout.mine_gold_account_type);
         messageHandler = new MessageHandler(this);
 
         initHeader();

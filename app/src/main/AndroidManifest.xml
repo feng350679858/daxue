@@ -165,6 +165,7 @@
         <activity android:name=".activity.mine.gold.AccountFinancialActivity"/>
         <activity android:name=".activity.mine.gold.AccountTypeActivity"/>
         <activity android:name=".activity.mine.gold.BindAlipayActivity"/>
+        <activity android:name=".activity.mine.gold.IdentityAuthenticationActivity"/>
 
 
 
