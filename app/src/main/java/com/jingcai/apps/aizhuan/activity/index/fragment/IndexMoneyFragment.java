@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +16,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexPartjobListByLabelActivity;
-import com.jingcai.apps.aizhuan.activity.mine.ProfileImprove2Activity;
 import com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.LocationCityActivity;
 import com.jingcai.apps.aizhuan.activity.partjob.PartjobDetailActivity;
@@ -41,14 +36,12 @@ import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.view.AutoMarqueeTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by cfy on 2015/4/17.
- */
 public class IndexMoneyFragment extends BaseFragment {
     private static final String TAG = IndexMoneyFragment.class.getName();
     private ScheduledExecutorService scheduledExecutorService;
@@ -215,7 +208,11 @@ public class IndexMoneyFragment extends BaseFragment {
                     @Override
                     public void success(Advice05Response resp) {
                         if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(7, resp.getBody().getNotice_list());
+                            List<Advice05Response.Body.Notice> notice_list = resp.getBody().getNotice_list();
+                            if (notice_list == null) {
+                                notice_list = new ArrayList<>();
+                            }
+                            messageHandler.postMessage(7, notice_list);
                         } else {
                             messageHandler.postMessage(8, resp.getResultMessage());
                         }
@@ -240,7 +237,11 @@ public class IndexMoneyFragment extends BaseFragment {
                     @Override
                     public void success(Busi01Response resp) {
                         if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(3, resp.getBody().getLabel_list());
+                            List<Busi01Response.Body.Label> label_list = resp.getBody().getLabel_list();
+                            if (label_list == null) {
+                                label_list = new ArrayList<>();
+                            }
+                            messageHandler.postMessage(3, label_list);
                         } else {
                             messageHandler.postMessage(4, resp.getResultMessage());
                         }
