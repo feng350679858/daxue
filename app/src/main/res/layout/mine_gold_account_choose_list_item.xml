@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:background="@drawable/list_item_bg">
 
     <LinearLayout
@@ -13,8 +13,7 @@
         <ImageView
             android:id="@+id/iv_mine_account_choose_list_item_logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_mine_gold_zhifubao" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
                 android:id="@+id/tv_mine_account_choose_list_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="支付宝"
                 android:textSize="16sp"
                 android:textColor="@color/important_dark" />
 
@@ -37,8 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/normal_grey"
-                android:text="账号：188****2005" />
+                android:textColor="@color/normal_grey" />
         </LinearLayout>
     </LinearLayout>
 

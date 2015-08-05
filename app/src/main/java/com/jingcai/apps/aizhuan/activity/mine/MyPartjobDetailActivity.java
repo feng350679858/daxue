@@ -187,7 +187,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
                     //title
                     ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText(mJoininfo.getName());
                     //phone
-                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(mJoininfo.getPhone());
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(StringUtil.hiddenPhone(mJoininfo.getPhone()));
                     //2 button
                     contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
                         @Override

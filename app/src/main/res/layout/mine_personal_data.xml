@@ -171,7 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/list_item_bg"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -198,9 +198,7 @@
                         android:id="@+id/tv_profile_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/icon_right_triangle"
                         android:drawablePadding="10dp"
-                        android:drawableRight="@drawable/icon_right_triangle"
                         android:text=""
                         android:textColor="@color/assist_grey" />
                 </LinearLayout>

@@ -25,27 +25,32 @@ public class AccountChoiceListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private BitmapUtil mBitmapUtil;
-    private int selectednum;
+    private Account04Response.Account04Body.Bank selectedBank;
 
 
-    public AccountChoiceListAdapter(Context context,int num){
+    public AccountChoiceListAdapter(Context context, Account04Response.Account04Body.Bank bank) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        selectednum=num;
+        selectedBank = bank;
         mBitmapUtil = new BitmapUtil(context);
     }
 
-    public void setData(List<Account04Response.Account04Body.Bank> list){
+    public void setData(List<Account04Response.Account04Body.Bank> list) {
         mBankList = list;
+        if (mBankList == null) {
+            mBankList = new ArrayList<>();
+        }
     }
 
-    public void setSelectednum(int num){
-        selectednum=num;
+    public void setSelectednum(Account04Response.Account04Body.Bank bank) {
+        selectedBank = bank;
     }
 
     @Override
     public int getCount() {
-        return null == mBankList?0:mBankList.size();
+        if (mBankList == null)
+            return 0;
+        return mBankList.size();
     }
 
     @Override
@@ -59,39 +64,48 @@ public class AccountChoiceListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position,View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if(convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.mine_gold_account_choose_list_item,null);
+            convertView = mInflater.inflate(R.layout.mine_gold_account_choose_list_item, null);
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_logo);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_title);
             viewHolder.tv_code = (TextView) convertView.findViewById(R.id.tv_mine_account_choose_list_item_code);
             viewHolder.iv_select = (ImageView) convertView.findViewById(R.id.iv_mine_account_choose_list_item_select);
 
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Account04Response.Account04Body.Bank bank = mBankList.get(position);
-        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(),R.drawable.ic_launcher);
+        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(), R.drawable.ic_launcher);
         viewHolder.tv_title.setText(bank.getName());
         String cardno = bank.getCardno();
-        cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
-        viewHolder.tv_code.setText(cardno);
+        if (cardno != null) {
+            cardno = StringUtil.hiddenPhone(cardno);  //隐藏字符串
+            viewHolder.tv_code.setText("帐号" + cardno);
+        } else {
+            viewHolder.tv_code.setText("推荐有" + bank.getName() + "帐号的用户使用");
+        }
 
-        if(position==selectednum){
+        if (selectedBank.getType().equals(mBankList.get(position).getType())
+                && selectedBank.getCode().equals(mBankList.get(position).getCode())
+                && selectedBank.getName().equals(mBankList.get(position).getName())
+                && (selectedBank.getCardno() == null
+                || selectedBank.getCardno().equals(mBankList.get(position).getCardno()))) {
+
             viewHolder.iv_select.setImageDrawable(mContext.getResources().getDrawable(R.drawable.help_wenda_hidden_checked));
-        }else{
+        } else {
             viewHolder.iv_select.setImageDrawable(mContext.getResources().getDrawable(R.drawable.help_wenda_hidden_uncheck));
         }
         return convertView;
     }
 
 
-    protected class ViewHolder{
+    protected class ViewHolder {
         protected ImageView iv_logo;
         protected TextView tv_title;
         protected TextView tv_code;

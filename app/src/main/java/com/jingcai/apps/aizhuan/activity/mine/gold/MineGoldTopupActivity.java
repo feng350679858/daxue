@@ -235,18 +235,18 @@ public class MineGoldTopupActivity extends BaseActivity {
             return;
         }
         selectedBank=banks.get(0);
-        mListAdapter = new AccountChoiceListAdapter(this, 0);
+        mListAdapter = new AccountChoiceListAdapter(this,selectedBank);
         mListView = (ListView) findViewById(R.id.lv_mine_account_topup_choice_list);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mListAdapter.setSelectednum(position);
-                selectedBank=(Account04Response.Account04Body.Bank)mListAdapter.getItem(position);
+                mListAdapter.setSelectednum((Account04Response.Account04Body.Bank) mListAdapter.getItem(position));
+                selectedBank = (Account04Response.Account04Body.Bank) mListAdapter.getItem(position);
                 mListAdapter.notifyDataSetChanged();
             }
         });
-        mListView.setAdapter(mListAdapter);
         mListAdapter.setData(banks);
+        mListView.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
     }
 
