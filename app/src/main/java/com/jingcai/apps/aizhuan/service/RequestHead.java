@@ -9,7 +9,7 @@ public class RequestHead {
     private String tradecode;
     private String traceno;
     private String channel;
-    private String version;
+    private String version = GlobalConstant.SDK_VERSION;
     private String requesttime;
     private String sign;
 
@@ -38,7 +38,7 @@ public class RequestHead {
     }
 
     public String getVersion() {
-        return GlobalConstant.SDK_VERSION;
+        return version;
     }
 
     public void setVersion(String version) {
