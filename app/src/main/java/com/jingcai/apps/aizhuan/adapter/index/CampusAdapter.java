@@ -67,7 +67,7 @@ public class CampusAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.index_campus_list_item, null);
             viewHolder = new ViewHolder();
             viewHolder.layout_help_content = convertView.findViewById(R.id.layout_help_content);
-            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_main_tip);
             viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
             viewHolder.ltv_level = (LevelTextView) convertView.findViewById(R.id.ltv_level);
             viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);

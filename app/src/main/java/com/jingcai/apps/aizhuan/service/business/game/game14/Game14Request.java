@@ -1,12 +1,12 @@
-package com.jingcai.apps.aizhuan.service.business.game.game13;
+package com.jingcai.apps.aizhuan.service.business.game.game14;
 
 import com.jingcai.apps.aizhuan.service.base.BaseRequest;
 import com.jingcai.apps.aizhuan.service.business.BizConstant;
 
 /**
- * Created by Administrator on 2015/7/31.
+ * Created by Json Ding on 2015/8/5.
  */
-public class Game13Request extends BaseRequest {
+public class Game14Request extends BaseRequest {
     private Student student;
 
     public Student getStudent() {
@@ -19,13 +19,12 @@ public class Game13Request extends BaseRequest {
 
     @Override
     public String getTranscode() {
-        return BizConstant.BTZ_GAME_13;
+        return BizConstant.BTZ_GAME_14;
     }
 
-    public class Student
-    {
+    public class Student {
         private String id;
-        private String idno;
+        private String paypassword;
 
         public String getId() {
             return id;
@@ -35,12 +34,12 @@ public class Game13Request extends BaseRequest {
             this.id = id;
         }
 
-        public String getIdno() {
-            return idno;
+        public String getPaypassword() {
+            return paypassword;
         }
 
-        public void setIdno(String idno) {
-            this.idno = idno;
+        public void setPaypassword(String paypassword) {
+            this.paypassword = paypassword;
         }
     }
 }

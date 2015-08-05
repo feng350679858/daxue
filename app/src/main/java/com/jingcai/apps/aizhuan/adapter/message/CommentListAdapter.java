@@ -38,12 +38,14 @@ public class CommentListAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     private List<Parttimejob> mComments;
     private BitmapUtil mBitmapUtil;
+    private Optype optype;
 
-    public CommentListAdapter(Context ctx) {
+    public CommentListAdapter(Context ctx,Optype type) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         mComments = new ArrayList<>();
         mBitmapUtil = new BitmapUtil(ctx);
+        optype = type;
     }
 
     public void setListData(List<Parttimejob> comments){
@@ -125,24 +127,24 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mTvName.setText(comment.getSourcename());
         holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime())));
 
-//        if("2".equals(comment.getOptype())){
-//            String targetName;
-//            if(itemType == ITEM_TYPE_NO_REPLY){
-//                final String targettype = comment.getReftarget().getTargettype();
-//                switch (targettype) {
-//                    case "1": targetName = "求助";break;
-//                    case "2": targetName = "答案";break;
-//                    default: targetName = "内容";break;
-//                }
-//            }else{
-//                targetName = "评论";
-//            }
-//            holder.mTvContent.setText("赞了这个"+targetName);
-//            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
-//        }else{
-//            holder.mTvContent.setText(comment.getContent());
-//            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-//        }
+        if(optype== Optype.COMMEND){
+            String targetName;
+            if(itemType == ITEM_TYPE_NO_REPLY){
+                final String targettype = comment.getReftarget().getTargettype();
+                switch (targettype) {
+                    case "1": targetName = "求助";break;
+                    case "2": targetName = "答案";break;
+                    default: targetName = "内容";break;
+                }
+            }else{
+                targetName = "评论";
+            }
+            holder.mTvContent.setText("赞了这个"+targetName);
+            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
+        }else{
+            holder.mTvContent.setText(comment.getContent());
+            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
 
         if (null != holder.mTvReply) {
             holder.mTvReply.setText(comment.getRefcomment().getRefcontent());
@@ -232,5 +234,10 @@ public class CommentListAdapter extends BaseAdapter {
         private TextView mBtnReply;
         private LevelTextView mTvLevel;
         private LinearLayout mLlRefContainer;
+    }
+
+    public enum Optype {
+        COMMENT,   //评论
+        COMMEND    //赞
     }
 }
