@@ -281,6 +281,7 @@ public class MineResetPayPasswordActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     showToast("修改支付密码成功");
+                    UserSubject.setHasPayPassword();
                     MineResetPayPasswordActivity.this.finish();
                     break;
                 }

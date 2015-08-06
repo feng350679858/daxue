@@ -21,9 +21,15 @@ public class MineModifyPayPasswordActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_account_reset_pay_password);
 
+        if(!UserSubject.getHaspaypasswordset()){
+            showToast("请设置您的支付密码");
+            Intent intent = new Intent(MineModifyPayPasswordActivity.this,MineResetPayPasswordActivity.class);
+            intent.putExtra(MineResetPayPasswordActivity.INTENT_EXTRA_NAME_STAGE,MineResetPayPasswordActivity.RESET_PASSWORD_STAGE_2);
+            startActivity(intent);
+        }
         initHeader();
-
         initView();
+
     }
 
     private void initHeader(){
