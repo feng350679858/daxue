@@ -17,7 +17,7 @@ public class UserSubject {
     private static String cityname;
     private static String isvisiable;
     private static String level;
-    private static String haspaypasswordset;
+    private static boolean haspaypasswordset;
     private static boolean loginFlag = false;
     private static boolean onlineFlag = false;
 
@@ -113,11 +113,11 @@ public class UserSubject {
         return onlineFlag;
     }
 
-    public static String getHaspaypasswordset() {
+    public static boolean getHaspaypasswordset() {
         return haspaypasswordset;
     }
 
-    private static void setHaspaypasswordset(String haspaypasswordset) {
+    private static void setHaspaypasswordset(boolean haspaypasswordset) {
         UserSubject.haspaypasswordset = haspaypasswordset;
     }
 
@@ -142,7 +142,7 @@ public class UserSubject {
         gender = instance.getString(Preferences.PARAM_GENDER, "");
         cityname = instance.getString(Preferences.PARAM_CITY_NAME, "");
         isvisiable = instance.getString(Preferences.PARAM_ISVISIABLE, "");
-        haspaypasswordset = instance.getString(Preferences.PARAM_HASPAYPASSWORDSET, "");
+        haspaypasswordset = instance.getBoolean(Preferences.PARAM_HASPAYPASSWORDSET, false);
     }
 
 
@@ -160,7 +160,7 @@ public class UserSubject {
         level = stu.getLevel();
         loginFlag = true;
         onlineFlag = "1".equals(stu.getOnlineflag());
-        haspaypasswordset = stu.getHaspaypasswordset();
+        haspaypasswordset = "1".equals(stu.getHaspaypasswordset());
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -197,5 +197,11 @@ public class UserSubject {
         UserSubject.onlineFlag = onlineFlag;
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
+    }
+
+    public static void setHasPayPassword(){
+        UserSubject.haspaypasswordset = true;
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_HASPAYPASSWORDSET, true);
     }
 }
