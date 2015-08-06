@@ -317,10 +317,10 @@ public class MyPartjobDetailActivity extends BaseActivity {
             tv_worktimetype_long.setText("长期兼职");
             if (isCancel) {
                 tv_worktimetype_long_status.setText("已取消");
-                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_cancel));
+                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.font_grey));
             } else {
                 tv_worktimetype_long_status.setText("工作中");
-                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.mine_partjob_item_status_working));
+                tv_worktimetype_long_status.setTextColor(getResources().getColor(R.color.font_blue));
             }
         } else {
             layout_worktimetype_long.setVisibility(View.GONE);

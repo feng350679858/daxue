@@ -70,6 +70,15 @@ public class Account02Request extends BaseRequest{
         private String walletcode;
         private String start;
         private String pagesize;
+        private String optype;
+
+        public String getOptype() {
+            return optype;
+        }
+
+        public void setOptype(String optype) {
+            this.optype = optype;
+        }
 
         public String getBegindate() {
             return begindate;

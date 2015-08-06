@@ -36,18 +36,19 @@
                 <TextView
                     android:id="@+id/iv_stream_detail_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="支付宝"
+                    android:textSize="16sp"
                     android:textColor="@color/important_dark" />
 
                 <TextView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/iv_stream_detail_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2014-4-13 08:21"
+                    android:textSize="14sp"
                     android:textColor="@color/assist_grey" />
 
 
@@ -64,21 +65,20 @@
                 <TextView
                     android:id="@+id/iv_stream_detail_money"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:text="+550"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/iv_stream_detail_status"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:text="冻结中"
                     android:textColor="@color/important_dark"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
