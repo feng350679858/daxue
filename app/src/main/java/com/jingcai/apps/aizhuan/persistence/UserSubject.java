@@ -178,6 +178,7 @@ public class UserSubject {
         pref.update(Preferences.PARAM_HASPAYPASSWORDSET, haspaypasswordset);
     }
 
+
     public static void loginFail() {
         name = null;
         level = "0";

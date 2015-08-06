@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 /**
@@ -57,6 +59,7 @@ public class MinePersonalDataActivity extends BaseActivity {
     private TextView mTextJoindate;
     private TextView mTextCollegename;
     private TextView mTextProfessional;
+    private PopupWin popupWin;
     private AzService azService;
     private BitmapUtil bitmapUtil;
 
@@ -126,36 +129,77 @@ public class MinePersonalDataActivity extends BaseActivity {
        findViewById(R.id.ll_mine_profile_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PopupDialog dialog = new PopupDialog(MinePersonalDataActivity.this, R.layout.mine_photo_choose);
-                dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (AppUtil.isSdcardExisting()) {
-                            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
-                            cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-                            // dialog.dismiss();
-                        } else {
-                            showToast("未找到SD卡");
-                            // dialog.dismiss();
+                if (null == popupWin) {
+                    View parentView = MinePersonalDataActivity.this.getWindow().getDecorView();
+                    View contentView = LayoutInflater.from(MinePersonalDataActivity.this).inflate(R.layout.mine_photo_choose, null);
+
+                    popupWin = PopupWin.Builder.create(MinePersonalDataActivity.this)
+                            .setParentView(parentView)
+                            .setContentView(contentView)
+                            .build();
+                    contentView.findViewById(R.id.ll_mine_photo_pai).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (AppUtil.isSdcardExisting()) {
+                                Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
+                                cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                                // dialog.dismiss();
+                            } else {
+                                showToast("未找到SD卡");
+                                // dialog.dismiss();
+                            }
+                            popupWin.dismiss();
                         }
-                        dialog.dismiss();
-                    }
-                }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//相片类型
-                        startActivityForResult(intent,IMAGE_REQUEST_CODE);
-                        dialog.dismiss();
-                    }
-                }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                }).show();
+                    });
+                    contentView.findViewById(R.id.ll_choose_from_album).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");//相片类型
+                            startActivityForResult(intent, IMAGE_REQUEST_CODE);
+                            popupWin.dismiss();
+                        }
+                    });
+                    contentView.findViewById(R.id.btn_pick_photo_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWin.dismiss();
+                        }
+                    });
+                }
+                popupWin.show();
+//                final PopupDialog dialog = new PopupDialog(MinePersonalDataActivity.this, R.layout.mine_photo_choose);
+//                dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (AppUtil.isSdcardExisting()) {
+//                            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
+//                            cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+//                            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+//                            // dialog.dismiss();
+//                        } else {
+//                            showToast("未找到SD卡");
+//                            // dialog.dismiss();
+//                        }
+//                        dialog.dismiss();
+//                    }
+//                }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(Intent.ACTION_PICK);
+//                        intent.setType("image/*");//相片类型
+//                        startActivityForResult(intent,IMAGE_REQUEST_CODE);
+//                        dialog.dismiss();
+//                    }
+//                }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.dismiss();
+//                    }
+//                }).show();
 
             }
         });
@@ -194,6 +238,9 @@ public class MinePersonalDataActivity extends BaseActivity {
     }
 
     private void fillStudentInView(Stu02Response.Stu02Body.Student student) {
+        student.setStudentid(UserSubject.getStudentid());
+        student.setPassword(UserSubject.getPassword());
+        UserSubject.loginSuccess(student);//同步数据
         mTextName.setText(student.getName());
         mTextGender.setText("1".equals(student.getGender())?"女":"男");
         mTextAreaname.setText(student.getAreaname());
@@ -269,6 +316,7 @@ public class MinePersonalDataActivity extends BaseActivity {
             @Override
             public void success(String logopath) {
                 updateLogopath(logopath);  //更新头像地址
+                UserSubject.updateLogourl(logopath);
             }
 
             @Override
@@ -387,7 +435,7 @@ public class MinePersonalDataActivity extends BaseActivity {
          //   new BitmapUtil(MinePersonalDataActivity.this).getImage((MinePersonalDataActivity.this).getResideMenu().getIv_logopath(), UserSubject.getLogourl(), 0);
             //mImageLogopath.setImageDrawable(student.getLogopath());
             new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, 0);
-            UserSubject.updateLogourl(student.getLogopath());
+
         }
     }
 
