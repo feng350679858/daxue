@@ -207,4 +207,13 @@ public class UserSubject {
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_HASPAYPASSWORDSET, true);
     }
+
+    /**
+     * 更改头像
+     */
+    public static void updateLogourl(String logourl){
+        UserSubject.setLogourl(logourl);
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_LOGOURL, logourl);
+    }
 }
