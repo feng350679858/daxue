@@ -113,8 +113,8 @@ public class MineCreditActivity extends BaseActivity {
                     @Override
                     public void success(Stu11Response response) {
                         ResponseResult result = response.getResult();
-                        Stu11Response.Stu11Body stu11Body = response.getBody();
-                        Stu11Response.Stu11Body.Student student = stu11Body.getStudent();
+                        Stu11Response.Body stu11Body = response.getBody();
+                        Stu11Response.Body.Student student = stu11Body.getStudent();
                         if (!"0".equals(result.getCode())) {
                             messageHandler.postMessage(1, result.getMessage());
                         } else {
@@ -139,7 +139,7 @@ public class MineCreditActivity extends BaseActivity {
 
     }
 
-    private void fillCreditInView(Stu11Response.Stu11Body.Student student) {
+    private void fillCreditInView(Stu11Response.Body.Student student) {
        //mTextName.setText(student.getName());
       //  mTextSchoolname.setText(student.getSchoolname()+" "+student.getCollegename());
           mTextCredit.setText(student.getScore());
@@ -168,7 +168,7 @@ public class MineCreditActivity extends BaseActivity {
                 }
                 case 2: {
                    // Stu02Response.Stu02Body.Student student1 = (Stu02Response.Stu02Body.Student) msg.obj;
-                            Stu11Response.Stu11Body.Student student2 = (Stu11Response.Stu11Body.Student) msg.obj;
+                            Stu11Response.Body.Student student2 = (Stu11Response.Body.Student) msg.obj;
                     fillCreditInView(student2);
                     break;
                 }

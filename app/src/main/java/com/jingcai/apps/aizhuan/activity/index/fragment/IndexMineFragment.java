@@ -49,7 +49,7 @@ public class IndexMineFragment extends BaseFragment {
     private final String TAG = "IndexMineFragment";
 
     private LevelTextView level;
-    private TextView exp,name,credit_score;
+    private TextView exp, name, credit_score;
     private ProgressBar progressBar;
     private CircleImageView head_logo;
 
@@ -57,6 +57,7 @@ public class IndexMineFragment extends BaseFragment {
     private AzService azService;
     private MessageHandler messageHandler;
     private BitmapUtil mBitmapUtil;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -64,11 +65,11 @@ public class IndexMineFragment extends BaseFragment {
         if (null == mainView) {
             mainView = inflater.inflate(R.layout.mine_index, null);
             azService = new AzService(baseActivity);
-            messageHandler=new MessageHandler(baseActivity);
-            mBitmapUtil=new BitmapUtil(baseActivity);
+            messageHandler = new MessageHandler(baseActivity);
+            mBitmapUtil = new BitmapUtil(baseActivity);
             initHeader();
             initView();
-                      initDate();
+            initDate();
         }
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (parent != null) {
@@ -79,7 +80,7 @@ public class IndexMineFragment extends BaseFragment {
 
     private void initHeader() {
 
-                ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
+        ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
         ((ImageView) mainView.findViewById(R.id.ib_back)).setImageDrawable(getResources
                 ().getDrawable(R.drawable.icon_index_tab_mine_twodimensioncode));
         ImageView ivFunc = (ImageView) mainView.findViewById(R.id.iv_func);
@@ -96,15 +97,15 @@ public class IndexMineFragment extends BaseFragment {
     }
 
     private void initView() {
-        name=(TextView)mainView.findViewById(R.id.name);
+        name = (TextView) mainView.findViewById(R.id.name);
         name.setText(UserSubject.getName());
-        head_logo=(CircleImageView)mainView.findViewById(R.id.civ_head_logo);
-        mBitmapUtil.getImage(head_logo,UserSubject.getLogourl(), R.drawable.default_head_img);
+        head_logo = (CircleImageView) mainView.findViewById(R.id.civ_head_logo);
+        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(), R.drawable.default_head_img);
         level = (LevelTextView) mainView.findViewById(R.id.ltv_level);
         exp = (TextView) mainView.findViewById(R.id.exp);
-        progressBar=(ProgressBar)mainView.findViewById(R.id.exp_progressBar);
+        progressBar = (ProgressBar) mainView.findViewById(R.id.exp_progressBar);
         progressBar.setMax(100);
-        credit_score=(TextView)mainView.findViewById(R.id.credit_score);
+        credit_score = (TextView) mainView.findViewById(R.id.credit_score);
         mainView.findViewById(R.id.ll_mine_partjob).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +172,8 @@ public class IndexMineFragment extends BaseFragment {
         initExp();
         initCredit();
     }
-    private void initCredit(){
+
+    private void initCredit() {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -200,6 +202,7 @@ public class IndexMineFragment extends BaseFragment {
             }
         });
     }
+
     private void initExp() {
         new AzExecutor().execute(new Runnable() {
             @Override
@@ -240,7 +243,7 @@ public class IndexMineFragment extends BaseFragment {
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
-                    fillExp((Stu14Response.Body.Student)msg.obj);
+                    fillExp((Stu14Response.Body.Student) msg.obj);
                     break;
                 }
                 case 1: {
@@ -249,7 +252,7 @@ public class IndexMineFragment extends BaseFragment {
                     break;
                 }
                 case 2: {
-                    fillCredit((Stu11Response.Stu11Body.Student) msg.obj);
+                    fillCredit((Stu11Response.Body.Student) msg.obj);
                     break;
                 }
                 case 3: {
@@ -263,12 +266,14 @@ public class IndexMineFragment extends BaseFragment {
             }
         }
     }
-    private void fillExp(Stu14Response.Body.Student student){
+
+    private void fillExp(Stu14Response.Body.Student student) {
         level.setLevel(Integer.parseInt(student.getLevel()));
         exp.setText("经验值：" + student.getExp() + "[" + student.getPercent() + "%]");
-        progressBar.setProgress((int)Float.parseFloat(student.getPercent()));
+        progressBar.setProgress((int) Float.parseFloat(student.getPercent()));
     }
-    private void fillCredit(Stu11Response.Stu11Body.Student student){
-        credit_score.setText(student.getScore()+"分");
+
+    private void fillCredit(Stu11Response.Body.Student student) {
+        credit_score.setText(student.getScore() + "分");
     }
 }

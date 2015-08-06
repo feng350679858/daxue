@@ -58,6 +58,7 @@ public class MinePersonalDataActivity extends BaseActivity {
     private TextView mTextCollegename;
     private TextView mTextProfessional;
     private AzService azService;
+    private BitmapUtil bitmapUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -65,7 +66,7 @@ public class MinePersonalDataActivity extends BaseActivity {
         setContentView(R.layout.mine_personal_data);
         messageHandler = new MessageHandler(MinePersonalDataActivity.this);
         azService = new AzService(MinePersonalDataActivity.this);
-
+        bitmapUtil=new BitmapUtil(this);
 
         initHeader();
         initViews();  //初始化Views
