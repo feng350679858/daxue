@@ -47,13 +47,15 @@
             android:src="@drawable/mine_student_certification_bg" />
 
         <Button
+            android:id="@+id/btn_student_certification_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:enabled="false"
             android:background="@drawable/btn_yellow_boarded_bg_selector"
-            android:textColor="@color/important_dark"
-            android:hint="提交审核" />
+            android:textColor="@color/assist_grey"
+            android:text="提交审核"/>
     </LinearLayout>
 </LinearLayout>

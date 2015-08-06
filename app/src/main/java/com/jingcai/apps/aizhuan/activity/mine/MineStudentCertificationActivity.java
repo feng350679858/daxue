@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,8 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
+import com.jingcai.apps.aizhuan.service.business.stu.stu16.Stu16Rquest;
 import com.jingcai.apps.aizhuan.service.upload.AzUploadService;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -39,6 +43,8 @@ public class MineStudentCertificationActivity extends BaseActivity {
     private MessageHandler messageHandler;
     private ImageView mIvFrontSide;
     private ImageView mIvBehindSide;
+    private Button mBtnSubmit;
+
     private AzService azService;
     private PopupWin mMakePicWin;
 
@@ -69,9 +75,50 @@ public class MineStudentCertificationActivity extends BaseActivity {
     private void initView() {
         mIvFrontSide = (ImageView) findViewById(R.id.iv_mine_student_certification_inside);
         mIvBehindSide = (ImageView) findViewById(R.id.iv_mine_student_certification_back);
+        mBtnSubmit = (Button) findViewById(R.id.btn_student_certification_submit);
 
         mIvFrontSide.setOnClickListener(mMakePicOnclickListener);
         mIvBehindSide.setOnClickListener(mMakePicOnclickListener);
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitCertification();
+            }
+        });
+    }
+
+    /**
+     * 提交证书
+     */
+    private void submitCertification() {
+        showProgressDialog("审核提交中...");
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu16Rquest req = new Stu16Rquest();
+                Stu16Rquest.Student student = req.new Student();
+                student.setId(UserSubject.getStudentid());
+                student.setSidingfront(mFrontUrl);
+                student.setSidingback(mBehindUrl);
+                req.setStudent(student);
+
+                azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                    @Override
+                    public void success(BaseResponse resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(2);
+                        } else {
+                            messageHandler.postMessage(3, resp.getResultMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     private View.OnClickListener mMakePicOnclickListener = new View.OnClickListener() {
@@ -133,6 +180,11 @@ public class MineStudentCertificationActivity extends BaseActivity {
                         showToast("反面上传成功");
                         mBehindUrl = url;
                     }
+                    if(StringUtil.isNotEmpty(mFrontUrl) &&
+                            StringUtil.isNotEmpty(mBehindUrl)){
+                        mBtnSubmit.setEnabled(true);
+                        mBtnSubmit.setTextColor(getResources().getColor(R.color.important_dark));
+                    }
                     break;
                 }
                 case 1: {
@@ -152,6 +204,14 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     }
                     break;
                 }
+                case 2:
+                    showToast("提交成功，请耐心等待审核结果");
+                    finish();
+                    break;
+                case 3:
+                    showToast("提交失败，请稍后再试");
+                    Log.w(TAG, "学生证提交失败:" + msg.obj.toString());
+                    break;
                 default: {
                     super.handleMessage(msg);
                 }
@@ -167,7 +227,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                 new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
                     @Override
                     public void success(String logopath) {
-                        messageHandler.postMessage(0,logopath);
+                        messageHandler.postMessage(0, logopath);
                     }
 
                     @Override
@@ -230,7 +290,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
         intent.putExtra("outputX", 300);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
-//        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("outputFormat", "JPEG");
         intent.putExtra("noFaceDetection", true); //关闭人脸检测
 //        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE_RESIZE);

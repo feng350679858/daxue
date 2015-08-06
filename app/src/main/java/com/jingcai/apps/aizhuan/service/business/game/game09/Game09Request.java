@@ -7,14 +7,14 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
  * Created by Administrator on 2015/7/16.
  */
 public class Game09Request extends BaseRequest {
-    private Student studnet;
+    private Student student;
 
-    public Student getStudnet() {
-        return studnet;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudnet(Student studnet) {
-        this.studnet = studnet;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override
@@ -22,53 +22,51 @@ public class Game09Request extends BaseRequest {
         return BizConstant.BTZ_GAME_09;
     }
 
-    public class Student
-    {
-        private String studentid;
-        private String studentname;
-        private String studentidno;
-        private String studentidimg_front;
-        private String studnetidimg_back;
+    public class Student{
+        private String id;
+        private String name;
+        private String idno;
+        private String idimg_front;
+        private String idimg_back;
 
-
-        public String getStudentid() {
-            return studentid;
+        public String getId() {
+            return id;
         }
 
-        public void setStudentid(String studentid) {
-            this.studentid = studentid;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getStudentname() {
-            return studentname;
+        public String getIdimg_back() {
+            return idimg_back;
         }
 
-        public void setStudentname(String studentname) {
-            this.studentname = studentname;
+        public void setIdimg_back(String idimg_back) {
+            this.idimg_back = idimg_back;
         }
 
-        public String getStudentidno() {
-            return studentidno;
+        public String getIdimg_front() {
+            return idimg_front;
         }
 
-        public void setStudentidno(String studentidno) {
-            this.studentidno = studentidno;
+        public void setIdimg_front(String idimg_front) {
+            this.idimg_front = idimg_front;
         }
 
-        public String getStudentidimg_front() {
-            return studentidimg_front;
+        public String getIdno() {
+            return idno;
         }
 
-        public void setStudentidimg_front(String studentidimg_front) {
-            this.studentidimg_front = studentidimg_front;
+        public void setIdno(String idno) {
+            this.idno = idno;
         }
 
-        public String getStudnetidimg_back() {
-            return studnetidimg_back;
+        public String getName() {
+            return name;
         }
 
-        public void setStudnetidimg_back(String studnetidimg_back) {
-            this.studnetidimg_back = studnetidimg_back;
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

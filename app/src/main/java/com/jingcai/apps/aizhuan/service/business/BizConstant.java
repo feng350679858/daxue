@@ -31,6 +31,7 @@ public interface BizConstant {
     String BTZ_STU_13 = "stu13";//评价
     String BTZ_STU_14 = "stu14";//经验等级
     String BTZ_STU_15 = "stu15";//添加老友
+    String BIZ_STU_16 = "stu16";//认证学生信息
 
     /**
      * partjob
@@ -120,4 +121,5 @@ public interface BizConstant {
     String BTZ_GAME_10 = "game10";//身份信息查询
     String BTZ_GAME_13 = "game13";//校验身份证号
     String BTZ_GAME_14 = "game14";//校验支付密码
+
 }

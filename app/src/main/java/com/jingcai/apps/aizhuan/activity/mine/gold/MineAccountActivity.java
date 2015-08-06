@@ -105,7 +105,7 @@ public class MineAccountActivity extends BaseActivity {
 
                     @Override
                     public void fail(AzException e) {
-
+                        messageHandler.postException(e);
                     }
                 });
             }
@@ -166,6 +166,8 @@ public class MineAccountActivity extends BaseActivity {
             public void onConfirmButtonClick() {
                 Intent intent = new Intent(MineAccountActivity.this,IdentityAuthenticationActivity.class);
                 startActivity(intent);
+                mTipWin.dismiss();
+                finish();
             }
         });
     }
