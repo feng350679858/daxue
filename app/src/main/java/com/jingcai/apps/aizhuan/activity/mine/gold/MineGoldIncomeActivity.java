@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamInputListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -30,16 +29,16 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class MineGoldIncomeActivity extends BaseActivity implements XListView.IXListViewListener{
-    private final String TAG="MineGoldIncomeActivity";
+public class MineGoldIncomeActivity extends BaseActivity implements XListView.IXListViewListener {
+    private final String TAG = "MineGoldIncomeActivity";
     private XListView mListView;
     private MessageHandler messageHandler;
-    private AccountStreamInputListAdapter mListAdapter;
+    private AccountStreamListAdapter mListAdapter;
     private View layout_empty;  //列表为空,显示这个view
     private int mCurrentStart = 0;  //当前的开始
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_account_steam_detail);
         messageHandler = new MessageHandler(this);
@@ -49,9 +48,8 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
         initData();
     }
 
-    private void initHeader()
-    {
-        ((TextView)findViewById(R.id.tv_content)).setText("收入记录");
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("收入记录");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +60,8 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
 
     private void initView() {
         layout_empty = findViewById(R.id.layout_empty);
-        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
-        ((TextView)findViewById(R.id.tv_empty)).setText("还木有流水，还不快去赚起来！");
+//        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
+        ((TextView) findViewById(R.id.tv_empty)).setText("还木有流水，还不快去赚起来！");
 
         mListView = (XListView) findViewById(R.id.lv_account_stream_detail_list);
         mListView.setPullRefreshEnable(true);
@@ -71,7 +69,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
         mListView.setAutoLoadEnable(true);
         mListView.setXListViewListener(this);
 
-        mListAdapter = new AccountStreamInputListAdapter(this);
+        mListAdapter = new AccountStreamListAdapter(this);
         mListView.setAdapter(mListAdapter);
     }
 
@@ -80,7 +78,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
      */
     private void initData() {
         final Context context = this;
-        if(actionLock.tryLock()) {
+        if (actionLock.tryLock()) {
             showProgressDialog("流水加载中...");
             new AzExecutor().execute(new Runnable() {
                 @Override
@@ -91,9 +89,10 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
                     student.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
                     req.setStudent(student);
 
-                    Account02Request.Account account = req.new Account();
+                    final Account02Request.Account account = req.new Account();
                     account.setStart(String.valueOf(mCurrentStart));
                     account.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    account.setOptype("credit");
                     account.setWalletcode("gold");
                     account.setEnddate(DateUtil.formatDate(new Date(), "yyyyMMdd"));
                     account.setBegindate(DateUtil.formatDate(DateUtil.getDateMonthsAgo(1), "yyyyMMdd"));
@@ -109,12 +108,14 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
 
                                 Account02Response.Account02Body account02Body = response.getBody();
                                 ArrayList<Account02Response.Account02Body.Account> accountList = account02Body.getAccount_list();
-
-                                if (0 == mCurrentStart && accountList.size() < 1) {
-                                    messageHandler.postMessage(2);
-                                } else {
-                                    messageHandler.postMessage(0, accountList);
+                                if(null ==accountList){
+                                    accountList = new ArrayList<>();
                                 }
+                                    if (0 == mCurrentStart && accountList.size() < 1) {
+                                        messageHandler.postMessage(2);
+                                    } else {
+                                        messageHandler.postMessage(0, accountList);
+                                    }
                             }
                         }
 
@@ -174,7 +175,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-                case 0 : {
+                case 0: {
                     try {
                         //将数据填充到ListView中
                         List<Account02Response.Account02Body.Account> list = (List<Account02Response.Account02Body.Account>) msg.obj;
@@ -185,27 +186,27 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
                         if (list.size() < GlobalConstant.PAGE_SIZE) {
                             mListView.setPullLoadEnable(false);
                         }
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-                case 1 : {
+                case 1: {
                     try {
                         finishLoading();
                         showToast("获取流水失败");
-                        Log.i(TAG,"获取流水失败:" + msg.obj);
-                    }finally {
+                        Log.i(TAG, "获取流水失败:" + msg.obj);
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-                case 2 : {
+                case 2: {
                     try {
                         //列表为空,将列表移除，然后将表示空图加上
                         mListView.setVisibility(View.GONE);
                         layout_empty.setVisibility(View.VISIBLE);
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;

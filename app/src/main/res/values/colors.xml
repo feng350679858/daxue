@@ -34,11 +34,10 @@
     <!-- 带有透明度的红色 -->
     <color name="trans_red">#777d0703</color>
     <!--兼职项-->
-    <color name="mine_partjob_item_status_joined">#3ea2ff</color>
-    <color name="mine_partjob_item_status_working">#3ea2ff</color>
-    <color name="mine_partjob_item_status_resting">#c889d8</color>
-    <color name="mine_partjob_item_status_cancel">#989898</color>
-    <color name="mine_partjob_item_status_finish">#F83240</color>
+    <color name="font_blue">#3ea2ff</color>
+    <color name="font_purple">#c889d8</color>
+    <color name="font_grey">#989898</color>
+    <color name="font_red">#F83240</color>
     <!-- 用户等级背景 -->
     <color name="level_bg_1_5">#ff9c00</color>
     <color name="level_bg_6_10">#ff6c00</color>

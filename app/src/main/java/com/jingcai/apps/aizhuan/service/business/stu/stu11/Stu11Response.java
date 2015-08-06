@@ -5,9 +5,9 @@ import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 /**
  * Created by Administrator on 2015/7/22.
  */
-public class Stu11Response extends BaseResponse<Stu11Response.Stu11Body> {
+public class Stu11Response extends BaseResponse<Stu11Response.Body> {
 
-    public class Stu11Body {
+    public class Body {
         private Student student;
 
         public Student getStudent() {

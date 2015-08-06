@@ -29,7 +29,6 @@
             android:layout_height="80dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
             android:src="@drawable/logo_merchant_default" />
     </RelativeLayout>
 

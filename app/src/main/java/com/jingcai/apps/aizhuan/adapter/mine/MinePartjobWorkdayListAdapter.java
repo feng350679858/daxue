@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
@@ -75,7 +73,7 @@ public class MinePartjobWorkdayListAdapter extends BaseAdapter {
         viewHolder.tv_workday.setText(DateUtil.formatDateString(mWorkdaylist.get(position), "yyyy-MM-dd", "M月d日"));
         if (mIsCancel) {
             viewHolder.tv_status.setText("已取消");
-            viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_cancel));
+            viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.font_grey));
         } else {
             long worktimeTimeMillis = DateUtil.parseDate(mWorkdaylist.get(position), "yyyy-MM-dd").getTime();
             long worktimeAfterDayTimeMillis = DateUtil.parseDate(mWorkdaylist.get(position), "yyyy-MM-dd").getTime() + 24 * 60 * 60 * 1000;
@@ -83,14 +81,14 @@ public class MinePartjobWorkdayListAdapter extends BaseAdapter {
             if (worktimeTimeMillis > System.currentTimeMillis()) {
                 //开没到工作时间
                 viewHolder.tv_status.setText("待工作");
-                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_resting));
+                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.font_purple));
             } else if (System.currentTimeMillis() > worktimeAfterDayTimeMillis) {
                 //过了时间
                 viewHolder.tv_status.setText("已完成");
-                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_finish));
+                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.font_red));
             } else {
                 viewHolder.tv_status.setText("工作中");
-                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_working));
+                viewHolder.tv_status.setTextColor(mContext.getResources().getColor(R.color.font_blue));
             }
         }
         return convertView;

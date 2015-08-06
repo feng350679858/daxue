@@ -60,7 +60,6 @@ public class MineGoldWithdrawActivity extends BaseActivity {
     private float mEnableGoldCount;
     private boolean isResume = false;
     private String paypwd;
-    private boolean isFirstPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +68,6 @@ public class MineGoldWithdrawActivity extends BaseActivity {
         mBitmapUtil = new BitmapUtil(this);
         messageHandler = new MessageHandler(this);
         azService = new AzService(this);
-
-        isFirstPay = "0".equals(getIntent().getStringExtra("isFirstPay"));
-//        isFirstPay=true;
         initHeader();
         initView();
         initData();
@@ -137,7 +133,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
                     showToast("至少提现30金");
                     return;
                 }
-                if (isFirstPay)
+                if (UserSubject.getHaspaypasswordset())
                     initFirstPaypwdWin();
                 else
                     initPaypwdWin();
@@ -192,7 +188,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
             @Override
             public void call(String pwd) {
                 if(pwd.equals(paypwd)) {
-                    isFirstPay=false;
+                    UserSubject.getHaspaypasswordset();
                     initPayPwd();
                 }
                 else
