@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamOutputListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountStreamListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -30,16 +30,16 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class MineGoldExpenseActivity extends BaseActivity implements XListView.IXListViewListener{
-    private final String TAG="MineGoldExpenseActivity";
+public class MineGoldExpenseActivity extends BaseActivity implements XListView.IXListViewListener {
+    private final String TAG = "MineGoldExpenseActivity";
     private XListView mListView;
     private MessageHandler messageHandler;
-    private AccountStreamOutputListAdapter mListAdapter;
+    private AccountStreamListAdapter mListAdapter;
     private View layout_empty;  //列表为空,显示这个view
     private int mCurrentStart = 0;  //当前的开始
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_account_steam_detail);
         messageHandler = new MessageHandler(this);
@@ -49,8 +49,8 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
         initData();
     }
 
-private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("支出记录");
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("支出记录");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +61,8 @@ private void initHeader(){
 
     private void initView() {
         layout_empty = findViewById(R.id.layout_empty);
-        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
-        ((TextView)findViewById(R.id.tv_empty)).setText("没获取支出数据！");
+//        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
+        ((TextView) findViewById(R.id.tv_empty)).setText("没有支出数据！");
 
         mListView = (XListView) findViewById(R.id.lv_account_stream_detail_list);
         mListView.setPullRefreshEnable(true);
@@ -70,7 +70,7 @@ private void initHeader(){
         mListView.setAutoLoadEnable(true);
         mListView.setXListViewListener(this);
 
-        mListAdapter = new AccountStreamOutputListAdapter(this);
+        mListAdapter = new AccountStreamListAdapter(this);
         mListView.setAdapter(mListAdapter);
     }
 
@@ -79,7 +79,7 @@ private void initHeader(){
      */
     private void initData() {
         final Context context = this;
-        if(actionLock.tryLock()) {
+        if (actionLock.tryLock()) {
             showProgressDialog("流水加载中...");
             new AzExecutor().execute(new Runnable() {
                 @Override
@@ -94,6 +94,7 @@ private void initHeader(){
                     account.setStart(String.valueOf(mCurrentStart));
                     account.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     account.setWalletcode("gold");
+                    account.setOptype("debit");
                     account.setEnddate(DateUtil.formatDate(new Date(), "yyyyMMdd"));
                     account.setBegindate(DateUtil.formatDate(DateUtil.getDateMonthsAgo(1), "yyyyMMdd"));
                     req.setAccount(account);
@@ -108,7 +109,7 @@ private void initHeader(){
 
                                 Account02Response.Account02Body account02Body = response.getBody();
                                 ArrayList<Account02Response.Account02Body.Account> accountList = account02Body.getAccount_list();
-                                if(null ==accountList){
+                                if (null == accountList) {
                                     accountList = new ArrayList<>();
                                 }
 
@@ -176,7 +177,7 @@ private void initHeader(){
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-                case 0 : {
+                case 0: {
                     try {
                         //将数据填充到ListView中
                         List<Account02Response.Account02Body.Account> list = (List<Account02Response.Account02Body.Account>) msg.obj;
@@ -187,27 +188,27 @@ private void initHeader(){
                         if (list.size() < GlobalConstant.PAGE_SIZE) {
                             mListView.setPullLoadEnable(false);
                         }
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-                case 1 : {
+                case 1: {
                     try {
                         finishLoading();
                         showToast("获取流水失败");
-                        Log.i(TAG,"获取流水失败:" + msg.obj);
-                    }finally {
+                        Log.i(TAG, "获取流水失败:" + msg.obj);
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-                case 2 : {
+                case 2: {
                     try {
                         //列表为空,将列表移除，然后将表示空图加上
                         mListView.setVisibility(View.GONE);
                         layout_empty.setVisibility(View.VISIBLE);
-                    }finally {
+                    } finally {
                         actionLock.unlock();
                     }
                     break;

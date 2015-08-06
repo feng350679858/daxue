@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/content_background">
+    android:background="@color/content_background"
+    android:orientation="vertical">
 
-    <include layout="@layout/include_header"/>
+    <include layout="@layout/include_header" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,35 +15,48 @@
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_launcher"
-                android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_launcher"
-                android:text="订阅号"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="4dp"
+                    android:text="订阅号"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="每日推送学生党们关注热点话题，精选兼职信息！"/>
+                android:layout_marginTop="10dp"
+                android:text="每日推送学生党们关注热点话题，精选兼职信息！" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,33 +65,45 @@
         android:clickable="true"
         android:orientation="horizontal"
         android:padding="10dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_launcher"
-                android:drawablePadding="4dp"
-                android:drawableStart="@drawable/ic_launcher"
-                android:text="服务号"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="4dp"
+                    android:text="服务号"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="定期活动推送，参与的小伙伴大奖不断哦~"/>
+                android:layout_marginTop="10dp"
+                android:text="定期活动推送，参与的小伙伴大奖不断哦~" />
         </LinearLayout>
 
     </LinearLayout>

@@ -152,27 +152,27 @@ public class PartjobListAdapter extends BaseAdapter{
             if ("1".equals(worktimetype)) {
                 if ("5".equals(label)) {//已取消
                     iv_label.setText("已取消");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_cancel));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_grey));
                 } else {  //其他状态
                     iv_label.setText("工作中");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_working));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
                 }
             } else {
                 if ("1".equals(label)) {//已报名
                     iv_label.setText("已报名");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_joined));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
                 } else if ("2".equals(label)) {//工作中
                     iv_label.setText("工作中");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_working));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
                 } else if ("3".equals(label)) {//休息中
                     iv_label.setText("休息中");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_resting));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_purple));
                 } else if ("4".equals(label)) {//已完成
                     iv_label.setText("已完成");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_finish));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_red));
                 } else if ("5".equals(label)) {//已取消
                     iv_label.setText("已取消");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.mine_partjob_item_status_cancel));
+                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_grey));
                 } else {
                     iv_label.setText("");
                 }

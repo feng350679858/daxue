@@ -30,12 +30,10 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Resp
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
-import com.tencent.open.utils.Global;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

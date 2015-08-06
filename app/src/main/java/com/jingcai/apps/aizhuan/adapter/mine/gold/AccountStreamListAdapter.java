@@ -21,14 +21,13 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/22.
  */
-public class AccountStreamOutputListAdapter extends BaseAdapter {
-
+public class AccountStreamListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Account02Response.Account02Body.Account> accountList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public AccountStreamOutputListAdapter( Context ctx){
+    public AccountStreamListAdapter(Context ctx) {
         this.mContext = ctx;
         this.mInflater = LayoutInflater.from(ctx);
         this.bitmapUtil = new BitmapUtil(ctx);
@@ -53,21 +52,21 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if(convertView == null){
-            convertView = mInflater.inflate(R.layout.mine_gold_account_steam_detail_list_item,null);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.mine_gold_account_steam_detail_list_item, null);
 
             viewHolder = new ViewHolder();
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_stream_detail_logo);
-            viewHolder.tv_title = (TextView)convertView.findViewById(R.id.iv_stream_detail_title);
-            viewHolder.tv_time = (TextView)convertView.findViewById(R.id.iv_stream_detail_time);
-            viewHolder.tv_money = (TextView)convertView.findViewById(R.id.iv_stream_detail_money);
-            viewHolder.tv_status = (TextView)convertView.findViewById(R.id.iv_stream_detail_status);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.iv_stream_detail_title);
+            viewHolder.tv_time = (TextView) convertView.findViewById(R.id.iv_stream_detail_time);
+            viewHolder.tv_money = (TextView) convertView.findViewById(R.id.iv_stream_detail_money);
+            viewHolder.tv_status = (TextView) convertView.findViewById(R.id.iv_stream_detail_status);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Account02Response.Account02Body.Account account = accountList.get(position);
-        if (!"credit".equals(account.getOptype())) {
+        if ("credit".equals(account.getOptype())) {
 
             String url = account.getImgurl();
             bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
@@ -80,30 +79,26 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
 
             return convertView;
         }
-        return  null;
+        return null;
     }
 
     private void setStatus(TextView tv_status, String status) {
-        switch (status){
+        switch (status) {
             case "1":
                 tv_status.setText("进行中");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.red));
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.font_purple));
                 break;
-            case "2" :
+            case "2":
                 tv_status.setText("冻结中");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.important_dark));
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.font_blue));
                 break;
-            case "3" :
+            case "3":
                 tv_status.setText("已完成");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.red));
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.font_red));
                 break;
-            case "4" :
-                tv_status.setText("进失败");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.normal_grey));
-                break;
-            case "5" :
-                tv_status.setText("进关闭");
-                tv_status.setTextColor(mContext.getResources().getColor(R.color.darker_yellow));
+            case "4":
+                tv_status.setText("已取消");
+                tv_status.setTextColor(mContext.getResources().getColor(R.color.font_grey));
                 break;
             default:
                 Log.e(GlobalConstant.packageName, "account02->status has a wrong value.");
@@ -112,19 +107,18 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
 
     private void setMoney(TextView tv_money, String optype, String opmoney) {
         String money = "";
-        if("credit".equals(optype)){
+        if ("credit".equals(optype)) {
             money += "+";
-        }else{
-            // money += "-";
-            return ;
+        } else {
+            money += "-";
+            return;
         }
         try {
             float fMoney = Float.parseFloat(opmoney);
             money += StringUtil.getFormatFloat(fMoney, "#");
-            money += "币";
             tv_money.setText(money);
         } catch (NumberFormatException e) {
-            Log.e(GlobalConstant.packageName,"account02->opmoney has a wrong format.");
+            Log.e(GlobalConstant.packageName, "account02->opmoney has a wrong format.");
             tv_money.setText("0");
         }
     }
@@ -137,7 +131,7 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
         accountList.clear();
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         protected ImageView iv_logo;
         protected TextView tv_title;
         protected TextView tv_time;
@@ -146,3 +140,4 @@ public class AccountStreamOutputListAdapter extends BaseAdapter {
     }
 
 }
+

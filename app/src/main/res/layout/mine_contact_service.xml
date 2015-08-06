@@ -30,7 +30,7 @@
                 <View
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    android:background="@color/main_yellow"/>
+                    android:background="@color/main_yellow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,17 +107,18 @@
                 <View
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    android:background="@color/main_yellow"/>
+                    android:background="@color/main_yellow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:drawablePadding="4dp"
-                android:text="电话客服"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="4dp"
+                    android:text="电话客服"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,6 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -181,17 +184,18 @@
                 <View
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
-                    android:background="@color/main_yellow"/>
+                    android:background="@color/main_yellow" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:drawablePadding="4dp"
-                android:text="微信客服"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawablePadding="4dp"
+                    android:text="微信客服"
+                    android:textColor="@color/important_dark"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
