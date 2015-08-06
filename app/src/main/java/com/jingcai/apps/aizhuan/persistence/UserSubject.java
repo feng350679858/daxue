@@ -199,6 +199,9 @@ public class UserSubject {
         pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
     }
 
+    /**
+     * 已设置支付密码
+     */
     public static void setHasPayPassword(){
         UserSubject.haspaypasswordset = true;
         Preferences pref = Preferences.getInstance();
