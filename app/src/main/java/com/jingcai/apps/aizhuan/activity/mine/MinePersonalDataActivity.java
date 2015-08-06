@@ -211,7 +211,8 @@ public class MinePersonalDataActivity extends BaseActivity {
         mTextCollegename.setText(student.getCollegename());
         mTextProfessional.setText(student.getProfessional());
         if (StringUtil.isNotEmpty(student.getLogopath())) {
-            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), 0);
+            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), R.drawable.default_head_img);
+
         }
     }
 
@@ -282,7 +283,6 @@ public class MinePersonalDataActivity extends BaseActivity {
         Stu03Request req = new Stu03Request();
         Stu03Request.Student student = req.new Student();
         req.setStudent(student);
-
         student.setLogopath(logopath);
         updateStudent(req);
     }
@@ -386,7 +386,8 @@ public class MinePersonalDataActivity extends BaseActivity {
           //  Preferences.setLogopath(MinePersonalDataActivity.this, student.getLogopath());
          //   new BitmapUtil(MinePersonalDataActivity.this).getImage((MinePersonalDataActivity.this).getResideMenu().getIv_logopath(), UserSubject.getLogourl(), 0);
             //mImageLogopath.setImageDrawable(student.getLogopath());
-            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), 0);
+            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, 0);
+            UserSubject.updateLogourl(student.getLogopath());
         }
     }
 

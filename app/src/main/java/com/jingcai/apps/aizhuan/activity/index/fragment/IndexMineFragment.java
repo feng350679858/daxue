@@ -78,6 +78,11 @@ public class IndexMineFragment extends BaseFragment {
         return mainView;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(), R.drawable.default_head_img);
+    }
     private void initHeader() {
 
         ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
