@@ -18,7 +18,7 @@ import java.io.ByteArrayOutputStream;
  * Created by lejing on 15/5/8.
  */
 public class AzUploadService {
-    private final static String url = GlobalConstant.azserverUrl + "/service/json/upload";
+    private final static String url = GlobalConstant.azserverUrl + "/service/json/uploadImg";
     private RequestQueue queue;
 
     public AzUploadService() {
@@ -46,7 +46,7 @@ public class AzUploadService {
                         callback.fail(new AzException(1003, "请求超时"));
                     } else if("0".equals(result.getCode())){
                         try {
-                            callback.success(res.getStudent().getLogopath());
+                            callback.success(res.getBody().getFile().getPath());
                         } catch (Exception e) {//业务未知异常
                             callback.fail(new AzException(1000, e.getMessage()));
                         }
