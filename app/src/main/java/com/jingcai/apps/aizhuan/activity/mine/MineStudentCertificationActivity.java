@@ -3,13 +3,11 @@ package com.jingcai.apps.aizhuan.activity.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,30 +17,33 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.upload.AzUploadService;
 import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.AzException;
-import com.jingcai.apps.aizhuan.util.PopupDialog;
+import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
-/**
- * Created by Administrator on 2015/7/16.
- */
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class MineStudentCertificationActivity extends BaseActivity {
-    private final String TAG="MineStuCertification";
-    private static final int REQUEST_CODE_IMAGE             = 0;
-    private static final int REQUEST_CODE_CAMERA            = 1;//相机
-    private static final int REQUEST_CODE_RESIZE            = 2;//截图
-   boolean PHOTO_INSIDE_OR_OUTSIDE = true;//判断学生证内侧
+    private final String TAG = "MineStuCertification";
+    private static final int REQUEST_CODE_IMAGE = 0;
+    private static final int REQUEST_CODE_CAMERA = 1;//相机
+    private static final int REQUEST_CODE_RESIZE = 2;//截图
+    private boolean mPickFront = true;//判断学生证内侧
+    private String mFrontUrl;   //上传证件正面url
+    private String mBehindUrl;  //上传证件背面url
 
-  //  private static final int IMAGE_REQUEST_CODE = 0;
- //   private static final int RESIZE_REQUEST_CODE = 2;
     private MessageHandler messageHandler;
-    private ImageView mphotoFront;
-    private ImageView mphotoBack;
+    private ImageView mIvFrontSide;
+    private ImageView mIvBehindSide;
     private AzService azService;
+    private PopupWin mMakePicWin;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_student_certification);
 
@@ -54,112 +55,61 @@ public class MineStudentCertificationActivity extends BaseActivity {
         initView();
     }
 
-    private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("学生认证֤");
-
-    }
-
-    private void initView(){
-        mphotoFront = (ImageView)findViewById(R.id.iv_mine_student_certification_inside);
-        mphotoBack  = (ImageView)findViewById(R.id.iv_mine_student_certification_back);
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("学生认证֤");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        findViewById(R.id.iv_mine_student_certification_inside).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PHOTO_INSIDE_OR_OUTSIDE = true;
-                final PopupDialog dialog = new PopupDialog(MineStudentCertificationActivity.this, R.layout.mine_photo_choose);
-                dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (AppUtil.isSdcardExisting()) {
-                            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
-                            cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
-                           // dialog.dismiss();
-                        } else {
-                            showToast("未找到SD卡");
-                           // dialog.dismiss();
-                        }
-                        dialog.dismiss();
-                    }
-                }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//相片类型
-                        startActivityForResult(intent, REQUEST_CODE_IMAGE);
-                        dialog.dismiss();
-                    }
-                }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                }).show();
 
-            }
-        });
-        findViewById(R.id.iv_mine_student_certification_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PHOTO_INSIDE_OR_OUTSIDE = false;
-                final PopupDialog dialog = new PopupDialog(MineStudentCertificationActivity.this, R.layout.mine_photo_choose);
-                dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (AppUtil.isSdcardExisting()) {
-                            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
-                            cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                            startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
-                            dialog.dismiss();
-                        } else {
-                            showToast("未找到SD卡");
-                            dialog.dismiss();
-                        }
-                      //  dialog.dismiss();
-                    }
-                }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");//相片类型
-                        startActivityForResult(intent, REQUEST_CODE_IMAGE);
-                        dialog.dismiss();
-                    }
-                }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                }).show();
-
-            }
-    });
     }
-    /*private void initCamer(){
-        View dialogView = LayoutInflater.from(MineStudentCertificationActivity.this).inflate(R.layout.mine_photo_choose, null);
-        final PopupWindow popupWindow = new PopupWindow(dialogView, WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        final View decorView =MineStudentCertificationActivity.this.getWindow().getDecorView();
-        popupWindow.setFocusable(true);
-        popupWindow.setAnimationStyle(R.style.main_menu_animstyle);
-        popupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL, 0, PixelUtil.px2dip(MineStudentCertificationActivity.this, 200f));
-        dialogView.findViewById(R.id.ll_mine_photo_pai).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                popupWindow.dismiss();
+    private void initView() {
+        mIvFrontSide = (ImageView) findViewById(R.id.iv_mine_student_certification_inside);
+        mIvBehindSide = (ImageView) findViewById(R.id.iv_mine_student_certification_back);
 
+        mIvFrontSide.setOnClickListener(mMakePicOnclickListener);
+        mIvBehindSide.setOnClickListener(mMakePicOnclickListener);
+    }
+
+    private View.OnClickListener mMakePicOnclickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mPickFront = v.getId() == R.id.iv_mine_student_certification_inside;  //是否是点击正面
+
+            if (null == mMakePicWin) {
+                Map<String, String> map = new LinkedHashMap<>();
+                map.put("camera", "拍照");
+                map.put("album", "从相册选择");
+                View parentView = MineStudentCertificationActivity.this.getWindow().getDecorView();
+                mMakePicWin = PopupWin.Builder.create(MineStudentCertificationActivity.this)
+                        .setData(map, new PopupWin.Callback() {
+                            @Override
+                            public void select(String key, String val) {
+                                if ("camera".equals(key)) {
+                                    if (AppUtil.isSdcardExisting()) {
+                                        Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+                                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
+                                        cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                                        startActivityForResult(cameraIntent, REQUEST_CODE_CAMERA);
+                                    } else {
+                                        showToast("未找到SD卡");
+                                    }
+                                }else if("album".equals(key)){
+                                    Intent intent = new Intent(Intent.ACTION_PICK);
+                                    intent.setType("image/*");//相片类型
+                                    startActivityForResult(intent, REQUEST_CODE_IMAGE);
+                                }
+                            }
+                        })
+                        .setParentView(parentView)
+                        .build();
             }
-        });
-
-    }*/
+            mMakePicWin.show();
+        }
+    };
 
 
     class MessageHandler extends BaseHandler {
@@ -171,29 +121,31 @@ public class MineStudentCertificationActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-                case 0: {
-//                    Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
-//                    fillStudentInView(student);
+                case 0:{
+                    String url = msg.obj.toString();
+                    if(StringUtil.isEmpty(url)){
+                        showToast("图片上传异常，请重试");
+                    }
+                    if(mPickFront){
+                        showToast("正面上传成功");
+                        mFrontUrl = url;
+                    }else{
+                        showToast("反面上传成功");
+                        mBehindUrl = url;
+                    }
                     break;
                 }
                 case 1: {
-                    showToast("获取失败");
-                    Log.i(TAG,"获取失败:" + msg.obj);
-                    break;
-                }
-                case 2: {
                     if (null != msg.obj) {
                         //将截取的照片 存入imageView中
-                        if (PHOTO_INSIDE_OR_OUTSIDE == true) {
-                            Bitmap bitmap1 = (Bitmap) msg.obj;
-                            mphotoFront.setImageBitmap(bitmap1);
-                            uploadLogo(bitmap1);
+                        Bitmap bitmap1 = (Bitmap) msg.obj;
+                        if (mPickFront) {
+                            mIvFrontSide.setImageBitmap(bitmap1);
                         }
-                        if (PHOTO_INSIDE_OR_OUTSIDE == false) {
-                            Bitmap bitmap1 = (Bitmap) msg.obj;
-                            mphotoBack.setImageBitmap(bitmap1);
-                            uploadLogo(bitmap1);
+                        if (!mPickFront) {
+                            mIvBehindSide.setImageBitmap(bitmap1);
                         }
+                        uploadLogo(bitmap1);
 
                     } else {
                         showToast("图片获取失败");
@@ -207,24 +159,29 @@ public class MineStudentCertificationActivity extends BaseActivity {
         }
     }
 
-    private void uploadLogo(Bitmap bitmap) {
-        new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
+    private synchronized void uploadLogo(final Bitmap bitmap) {
+        showProgressDialog("图片上传中...");
+        new AzExecutor().execute(new Runnable() {
             @Override
-            public void success(String logopath) {
-                showToast("上传图片成功");
-              //  mStudent.setLogopath(logopath);
-            }
+            public void run() {
+                new AzUploadService().doTrans(UserSubject.getStudentid(), bitmap, new AzUploadService.Callback() {
+                    @Override
+                    public void success(String logopath) {
+                        messageHandler.postMessage(0,logopath);
+                    }
 
-            @Override
-            public void fail(AzException e) {
-                messageHandler.postException(e);
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
             }
         });
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-       // super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
 
             case REQUEST_CODE_IMAGE:
@@ -234,7 +191,6 @@ public class MineStudentCertificationActivity extends BaseActivity {
                 break;
             // 照相机现拍
             case REQUEST_CODE_CAMERA:
-                //showToast("OK");
                 if (resultCode == Activity.RESULT_OK) {
                     if (AppUtil.isSdcardExisting()) {
                         resizeImage(AppUtil.getImageUri());
@@ -250,7 +206,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                     if (null != data.getExtras()) {
                         bitmap = data.getExtras().getParcelable("data");
                     }
-                    messageHandler.postMessage(2, bitmap);
+                    messageHandler.postMessage(1, bitmap);
                 }
                 break;
             default: {
@@ -269,13 +225,13 @@ public class MineStudentCertificationActivity extends BaseActivity {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 150);
-        intent.putExtra("outputY", 150);
+        intent.putExtra("aspectX", 3);
+        intent.putExtra("aspectY", 2);
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
 //        intent.putExtra("outputFormat", "JPEG");
-//        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("noFaceDetection", true); //关闭人脸检测
 //        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, REQUEST_CODE_RESIZE);
     }
