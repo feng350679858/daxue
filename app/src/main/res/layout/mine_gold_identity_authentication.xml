@@ -26,7 +26,9 @@
             android:drawablePadding="10dp"
             android:drawableStart="@drawable/icon_gold_authentication_name"
             android:hint="姓名"
+            android:singleLine="true"
             android:padding="@dimen/list_item_padding"
+            android:imeOptions="actionNext"
             android:textColor="@color/important_dark"
             android:textColorHint="@color/hint_grey"
             android:textSize="16sp" />
@@ -41,6 +43,12 @@
             android:drawableStart="@drawable/icon_gold_authentication_identity"
             android:hint="身份证号"
             android:padding="@dimen/list_item_padding"
+            android:imeOptions="actionDone"
+            android:maxLength="18"
+            android:singleLine="true"
+            android:inputType="number"
+            android:digits="0123456789xX"
+
             android:textColor="@color/important_dark"
             android:textColorHint="@color/hint_grey"
             android:textSize="16sp" />
@@ -100,7 +108,7 @@
         android:id="@+id/btn_authentication_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="提交"
         android:enabled="false"
         android:textSize="16sp"
