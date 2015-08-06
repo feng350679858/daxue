@@ -40,7 +40,6 @@ public class MinePersonalDataActivity extends BaseActivity {
     private final String TAG="MinePersonalData";
     private static final int EMAIL_REQUEST_CODE = 1;//邮箱
     private static final int QQ_REQUEST_CODE = 2;//QQ
-    private static final int PHONE_REQUEST_CODE=6;//手机
     private static final int IMAGE_REQUEST_CODE = 3;//头像的request_code
     private static final int CAMERA_REQUEST_CODE = 4;
     private static final int RESIZE_REQUEST_CODE = 5;
