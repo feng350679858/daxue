@@ -15,20 +15,18 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
-import com.jingcai.apps.aizhuan.activity.sys.SettingsActivity;
+import com.jingcai.apps.aizhuan.activity.mine.gold.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
+import com.jingcai.apps.aizhuan.activity.sys.SettingsActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.account.account01.Account01Response;
-import com.jingcai.apps.aizhuan.service.business.account.account04.Account04Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu14.Stu14Request;
@@ -36,9 +34,6 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu14.Stu14Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -81,7 +76,7 @@ public class IndexMineFragment extends BaseFragment {
     @Override
     public void onResume(){
         super.onResume();
-        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(), R.drawable.default_head_img);
+        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(),true ,R.drawable.default_head_img);
     }
     private void initHeader() {
 
