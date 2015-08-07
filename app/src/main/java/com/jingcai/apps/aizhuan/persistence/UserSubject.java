@@ -22,6 +22,7 @@ public class UserSubject {
     private static boolean onlineFlag = false;
     private static String idnoauthflag;
     private static String scnoauthflag;
+    private static String collegename;
 
     public static boolean isLogin() {
         return loginFlag;
@@ -139,6 +140,14 @@ public class UserSubject {
         UserSubject.scnoauthflag = scnoauthflag;
     }
 
+    public static String getCollegename() {
+        return collegename;
+    }
+
+    private static void setCollegename(String collegename) {
+        UserSubject.collegename = collegename;
+    }
+
     public static void init(Preferences instance) {
         loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
         if(!loginFlag){
@@ -163,6 +172,7 @@ public class UserSubject {
         haspaypasswordset = instance.getBoolean(Preferences.PARAM_HASPAYPASSWORDSET, false);
         idnoauthflag = instance.getString(Preferences.PARAM_IDNOAUTHFLAG, "0");
         scnoauthflag = instance.getString(Preferences.PARAM_SCNOAUTHFLAG, "0");
+        collegename = instance.getString(Preferences.PARAM_COLLEGENAME,"");
     }
 
 
@@ -183,6 +193,7 @@ public class UserSubject {
         haspaypasswordset = "1".equals(stu.getHaspaypasswordset());
         idnoauthflag = stu.getIdnoauthflag()==null?"0":stu.getIdnoauthflag();
         scnoauthflag = stu.getScnoauthflag()==null?"0":stu.getScnoauthflag();
+        collegename = stu.getCollegename();
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -200,6 +211,7 @@ public class UserSubject {
         pref.update(Preferences.PARAM_HASPAYPASSWORDSET, haspaypasswordset);
         pref.update(Preferences.PARAM_IDNOAUTHFLAG,idnoauthflag);
         pref.update(Preferences.PARAM_SCNOAUTHFLAG,scnoauthflag);
+        pref.update(Preferences.PARAM_COLLEGENAME,collegename);
     }
 
 

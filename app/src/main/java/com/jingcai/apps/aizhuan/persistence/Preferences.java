@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public class Preferences {
 
+
     public enum TYPE {
         config, partjob
     }
@@ -39,6 +40,7 @@ public class Preferences {
     protected static final String PARAM_HASPAYPASSWORDSET = "ispaypasswordset";
     protected static final String PARAM_IDNOAUTHFLAG = "idnoauthflag";
     protected static final String PARAM_SCNOAUTHFLAG = "scnoauthflag";
+    public static final java.lang.String PARAM_COLLEGENAME = "collegename";
 
     //系统管理模块
     public interface Sys {

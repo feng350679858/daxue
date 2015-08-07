@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -61,27 +61,26 @@
                             android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="cccccc"
-                            android:textColor="#000000"
-                            android:textSize="26sp" />
+                            android:layout_marginRight="10dp"
+                            style="@style/title" />
 
                         <ImageView
+                            android:id="@+id/iv_auth_stu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/icon_index_tab_mine_question" />
+                            android:visibility="gone"
+                            android:src="@drawable/icon_auth_stu" />
 
                         <ImageView
+                            android:id="@+id/iv_auth_id"
+                            android:layout_marginLeft="2dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/icon_index_tab_mine_question" />
+                            android:visibility="gone"
+                            android:src="@drawable/icon_auth_id" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/icon_index_tab_mine_question" />
 
                         <View
                             android:layout_width="0dp"
@@ -99,8 +98,8 @@
                         android:textSize="12sp" />
 
                     <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
                         android:id="@+id/exp_progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/index_mine_progress_bar_bg"
@@ -110,339 +109,260 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_mine_credit"
+
+            <RelativeLayout
+                android:id="@+id/rl_mine_credit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/list_item_bg"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:clickable="true"
+                android:padding="@dimen/list_item_padding">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_credit"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/icon_index_tab_mine_credit"
+                    android:gravity="center_vertical"
+                    android:text="我的信用"
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/credit_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/icon_right_triangle"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/icon_right_triangle"
+                    android:gravity="center_vertical"
+                    android:text="4.7分"
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_credit"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_credit"
-                            android:gravity="center_vertical"
-                            android:text="我的信用"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/credit_score"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:drawableEnd="@drawable/icon_right_triangle"
-                            android:drawablePadding="10dp"
-                            android:drawableRight="@drawable/icon_right_triangle"
-                            android:gravity="center_vertical"
-                            android:text="4.7分"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_mine_student_certification"
+            <RelativeLayout
+                android:id="@+id/rl_mine_student_certification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/list_item_bg"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:clickable="true"
+                android:padding="@dimen/list_item_padding">
 
-                <LinearLayout
-
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_index_tab_student_certification"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/icon_index_tab_student_certification"
+                    android:gravity="center_vertical"
+                    android:text="学生认证"
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_student_certification"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_student_certification"
-                            android:gravity="center_vertical"
-                            android:text="学生认证"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/tv_yellow_rectangle_bg"
-                            android:gravity="center_vertical"
-                            android:padding="2dp"
-                            android:text="已认证"
-                            android:textColor="@color/important_dark"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_auth_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/yellow"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="已认证"
+                    android:textColor="@color/important_dark"
+                    android:textSize="14sp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:divider="@drawable/field_divider_grey"
+                android:dividerPadding="@dimen/list_item_padding"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
-                <LinearLayout
-                    android:id="@+id/ll_mine_help_req"
+                <RelativeLayout
+                    android:id="@+id/rl_mine_help_req"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/list_item_bg"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
+                    android:clickable="true"
+                    android:padding="@dimen/list_item_padding">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/icon_index_tab_mine_question"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/icon_index_tab_mine_question"
+                        android:gravity="center_vertical"
+                        android:text="我的求助"
+                        android:textColor="@color/important_dark"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_question"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_question"
-                            android:gravity="center_vertical"
-                            android:text="我的求助"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@drawable/icon_right_triangle"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/icon_right_triangle"
+                        android:gravity="center_vertical"
+                        android:text="10"
+                        android:textColor="@color/important_dark"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:drawableEnd="@drawable/icon_right_triangle"
-                            android:drawablePadding="10dp"
-                            android:drawableRight="@drawable/icon_right_triangle"
-                            android:gravity="center_vertical"
-                            android:text="10"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
+                </RelativeLayout>
 
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/divider_color" />
-
-                <LinearLayout
-                    android:id="@+id/ll_mine_help"
+                <RelativeLayout
+                    android:id="@+id/rl_mine_help"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/list_item_bg"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
+                    android:clickable="true"
+                    android:padding="@dimen/list_item_padding">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/icon_index_tab_mine_help"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/icon_index_tab_mine_help"
+                        android:gravity="center_vertical"
+                        android:text="我的帮助"
+                        android:textColor="@color/important_dark"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_help"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_help"
-                            android:gravity="center_vertical"
-                            android:text="我的帮助"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@drawable/icon_right_triangle"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/icon_right_triangle"
+                        android:gravity="center_vertical"
+                        android:text=""
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:drawableEnd="@drawable/icon_right_triangle"
-                            android:drawablePadding="10dp"
-                            android:drawableRight="@drawable/icon_right_triangle"
-                            android:gravity="center_vertical"
-                            android:text=""
-                            android:textColor="#000000"
-                            android:textSize="16sp" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/divider_color" />
-
-                <LinearLayout
-                    android:id="@+id/ll_mine_partjob"
+                <RelativeLayout
+                    android:id="@+id/rl_mine_partjob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/list_item_bg"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
+                    android:clickable="true"
+                    android:padding="@dimen/list_item_padding">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/icon_index_tab_mine_partjob"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/icon_index_tab_mine_partjob"
+                        android:gravity="center_vertical"
+                        android:text="我的兼职"
+                        android:textColor="@color/important_dark"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_partjob"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_partjob"
-                            android:gravity="center_vertical"
-                            android:text="我的兼职"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right_triangle" />
+                </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/icon_right_triangle" />
-                    </RelativeLayout>
-                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-
-                android:id="@+id/ll_mine_account"
+            <RelativeLayout
+                android:id="@+id/rl_mine_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/list_item_bg"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:clickable="true"
+                android:padding="@dimen/list_item_padding">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:gravity="center_vertical"
+                    android:text="我的金库"
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_account"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_account"
-                            android:gravity="center_vertical"
-                            android:text="我的金库"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/icon_right_triangle" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/ll_mine_contact_service"
+            <RelativeLayout
+                android:id="@+id/rl_mine_contact_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/list_item_bg"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:clickable="true"
+                android:padding="@dimen/list_item_padding">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_index_tab_mine_customer_service"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/icon_index_tab_mine_customer_service"
+                    android:gravity="center_vertical"
+                    android:text="联系客服"
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_right_triangle" />
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/icon_index_tab_mine_customer_service"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_index_tab_mine_customer_service"
-                            android:gravity="center_vertical"
-                            android:text="联系客服"
-                            android:textColor="@color/important_dark"
-                            android:textSize="16sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/icon_right_triangle" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
