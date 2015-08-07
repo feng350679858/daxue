@@ -268,9 +268,9 @@ public class MessageCommentActivity extends BaseActivity {
      */
     private void displayEmptyView() {
         ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
-        TextView tvEmpty = (TextView) findViewById(R.id.tv_empty_text);
-        tvEmpty.setText(getString(R.string.empty_merchant_list_tip));
-        tvEmpty.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.empty_list_message_merchant,0,0);
+//        TextView tvEmpty = (TextView) findViewById(R.id.tv_empty_text);
+//        tvEmpty.setText(getString(R.string.empty_merchant_list_tip));
+//        tvEmpty.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.empty_list_message_merchant,0,0);
     }
 
 }

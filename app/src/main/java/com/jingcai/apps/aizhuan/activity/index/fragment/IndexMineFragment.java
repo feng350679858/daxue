@@ -19,6 +19,7 @@ import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineStudentCertificationStateActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MyPartjobListActivity;
 import com.jingcai.apps.aizhuan.activity.mine.gold.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
@@ -44,9 +45,10 @@ public class IndexMineFragment extends BaseFragment {
     private final String TAG = "IndexMineFragment";
 
     private LevelTextView level;
-    private TextView exp, name, credit_score;
+    private TextView exp, name, credit_score,mTvAuthState;
     private ProgressBar progressBar;
     private CircleImageView head_logo;
+    private ImageView mIvAuthId,mIvAuthStu;
 
     private View mainView;
     private AzService azService;
@@ -76,8 +78,34 @@ public class IndexMineFragment extends BaseFragment {
     @Override
     public void onResume(){
         super.onResume();
-        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(),true ,R.drawable.default_head_img);
+        mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
+        initAuthState();
     }
+
+    /**
+     * 认证状态
+     */
+    private void initAuthState() {
+        switch (UserSubject.getScnoauthflag()) {
+            case "0":
+                mTvAuthState.setText("未认证");
+                mTvAuthState.setBackgroundResource(R.drawable.tv_grey_rectangle_bg);
+                break;
+            case "1":
+                mTvAuthState.setText("已认证");
+                mTvAuthState.setBackgroundResource(R.drawable.tv_yellow_rectangle_bg);
+                mIvAuthStu.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                mTvAuthState.setText("认证中");
+                mTvAuthState.setBackgroundResource(R.drawable.tv_yellow_rectangle_bg);
+                break;
+        }
+        if("1".equals(UserSubject.getIdnoauthflag())){
+            mIvAuthId.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void initHeader() {
 
         ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
@@ -104,37 +132,46 @@ public class IndexMineFragment extends BaseFragment {
         level = (LevelTextView) mainView.findViewById(R.id.ltv_level);
         exp = (TextView) mainView.findViewById(R.id.exp);
         progressBar = (ProgressBar) mainView.findViewById(R.id.exp_progressBar);
-        progressBar.setMax(100);
         credit_score = (TextView) mainView.findViewById(R.id.credit_score);
-        mainView.findViewById(R.id.ll_mine_partjob).setOnClickListener(new View.OnClickListener() {
+        mTvAuthState = (TextView) mainView.findViewById(R.id.tv_auth_state);
+        mIvAuthId = (ImageView) mainView.findViewById(R.id.iv_auth_id);
+        mIvAuthStu = (ImageView) mainView.findViewById(R.id.iv_auth_stu);
+
+        mainView.findViewById(R.id.rl_mine_partjob).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MyPartjobListActivity.class);
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_account).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineAccountActivity.class);
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_contact_service).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_contact_service).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineContactServiceActivity.class);
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_student_certification).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_student_certification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(baseActivity, MineStudentCertificationActivity.class);
+                final String scnoauthflag = UserSubject.getScnoauthflag();
+                Intent intent = null;
+                if("1".equals(scnoauthflag) || "2".equals(scnoauthflag)){
+                    intent = new Intent(baseActivity,MineStudentCertificationStateActivity.class);
+                }else{
+                    intent = new Intent(baseActivity, MineStudentCertificationActivity.class);
+                }
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_help_req).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_help_req).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
@@ -142,7 +179,7 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_help).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_help).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineHelpListActivity.class);
@@ -158,7 +195,7 @@ public class IndexMineFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        mainView.findViewById(R.id.ll_mine_credit).setOnClickListener(new View.OnClickListener() {
+        mainView.findViewById(R.id.rl_mine_credit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, MineCreditActivity.class);
