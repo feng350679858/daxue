@@ -27,6 +27,7 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -105,6 +106,8 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
                             } else {
                                 Partjob03Response.Partjob03Body partjob03Body = response.getBody();
                                 List<Partjob01Response.Body.Parttimejob> joininfoList = partjob03Body.getJoininfo_list();
+                                if(joininfoList==null)
+                                    joininfoList=new ArrayList<>();
                                 if (0 == mCurrentStart && joininfoList.size() < 1) {
                                     messageHandler.postMessage(2);
                                 } else {
