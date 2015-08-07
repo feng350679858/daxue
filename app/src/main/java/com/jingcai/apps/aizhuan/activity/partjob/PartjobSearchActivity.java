@@ -410,7 +410,6 @@ public class PartjobSearchActivity extends BaseActivity {
 
 
     private void doReSearch() {
-        mAdapter.clearListData();
         partjobListAdapter.clearData();
         mCurrentStart = 0;
         partjobListView.setPullLoadEnable(true);
