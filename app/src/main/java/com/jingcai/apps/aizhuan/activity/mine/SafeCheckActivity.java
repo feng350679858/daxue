@@ -132,7 +132,7 @@ public class SafeCheckActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what) {
                 case 0: {
-                    showToast("安全验证失败");
+                    showToast("证件号有误");
                     Log.i(TAG,"安全验证失败:" + msg.obj);
                     break;
                 }

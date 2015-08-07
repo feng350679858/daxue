@@ -641,9 +641,7 @@ private void clearAllFocus(){
                 case 4: {
                     try {
                         List<Map<String, String>> list = convertProfessionalListData((List<School06Response.Body.Professional>) msg.obj);
-                        if (null == list) {
-                            return;
-                        }
+
                         mListProfessionalAdapter.addListData(list);
                         mListProfessionalAdapter.notifyDataSetChanged();
 
@@ -699,7 +697,9 @@ private void clearAllFocus(){
     }
 
     private List<Map<String, String>> convertProfessionalListData(List<School06Response.Body.Professional> obj) {
-        if (null != obj) {
+        if (null == obj) {
+            obj=new ArrayList<>();
+        }
             List<Map<String, String>> list = new ArrayList<>();
             for (int i = 0; i < obj.size(); i++) {
                 Map<String, String> item = new HashMap<>();
@@ -707,9 +707,6 @@ private void clearAllFocus(){
                 list.add(item);
             }
             return list;
-        } else {
-            return null;
-        }
     }
 
     private void fillCollegeListData(List<School05Response.Body.College> obj) {

@@ -53,6 +53,7 @@
         android:layout_below="@+id/id_card_tip"
         android:background="@color/white"
         android:hint="身份证号"
+        android:maxLength="18"
         android:padding="10dp"
         android:singleLine="true"
         android:textSize="16sp" />

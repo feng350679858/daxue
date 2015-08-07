@@ -189,7 +189,6 @@ public class IndexMineFragment extends BaseFragment {
                         if (!"0".equals(result.getCode())) {
                             messageHandler.postMessage(3, result.getMessage());
                         } else {
-
                             messageHandler.postMessage(2, resp.getBody().getStudent());
                         }
                     }

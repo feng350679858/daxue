@@ -5,5 +5,6 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob01.Partjob01Resp
 /**
  * Created by Json Ding on 2015/5/9.
  */
-public class Partjob09Response extends Partjob01Response {
+public class Partjob09Response extends Partjob01Response{
+
 }
