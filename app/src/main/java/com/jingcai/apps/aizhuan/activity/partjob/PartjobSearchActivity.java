@@ -450,7 +450,7 @@ public class PartjobSearchActivity extends BaseActivity {
                                 Partjob09Response.Body body = response.getBody();
                                 List<Partjob09Response.Body.Parttimejob> messageList = body.getParttimejob_list();
                                 if(messageList==null)
-                                    messageList=new ArrayList<>();
+                                    messageList=new ArrayList<Partjob01Response.Body.Parttimejob>();
                                 if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);
                                 } else {

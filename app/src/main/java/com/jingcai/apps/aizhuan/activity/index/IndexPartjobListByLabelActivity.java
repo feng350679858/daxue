@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob01.Partjob01Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob10.Partjob10Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob10.Partjob10Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -26,6 +28,7 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -99,8 +102,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                 }
             }
         });
-
-        layout_empty = findViewById(R.id.layout_empty);
+//        layout_empty = findViewById(R.id.layout_empty);
     }
 
     private String getTime() {
@@ -166,6 +168,8 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                             } else {
                                 Partjob10Response.Body body = response.getBody();
                                 List<Partjob10Response.Body.Parttimejob> messageList = body.getParttimejob_list();
+                                if(messageList==null)
+                                    messageList=new ArrayList<Partjob01Response.Body.Parttimejob>();
                                 if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);//无数据
                                 } else {
@@ -222,7 +226,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                 case 2: {
                     try {
                         partjobListView.setVisibility(View.GONE);
-                        layout_empty.setVisibility(View.VISIBLE);
+                        ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
                     }finally {
                         actionLock.unlock();
                     }

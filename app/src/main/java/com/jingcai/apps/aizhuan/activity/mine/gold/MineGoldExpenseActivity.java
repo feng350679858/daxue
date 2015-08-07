@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,9 +61,9 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
     }
 
     private void initView() {
-        layout_empty = findViewById(R.id.layout_empty);
+//        layout_empty = findViewById(R.id.layout_empty);
 //        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
-        ((TextView) findViewById(R.id.tv_empty)).setText("没有支出数据！");
+//        ((TextView) findViewById(R.id.tv_empty)).setText("没有支出数据！");
 
         mListView = (XListView) findViewById(R.id.lv_account_stream_detail_list);
         mListView.setPullRefreshEnable(true);
@@ -196,8 +197,8 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
                 case 1: {
                     try {
                         finishLoading();
-                        showToast("获取流水失败");
-                        Log.i(TAG, "获取流水失败:" + msg.obj);
+                        showToast("获取支出失败");
+                        Log.i(TAG, "获取支出失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }
@@ -207,7 +208,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
                     try {
                         //列表为空,将列表移除，然后将表示空图加上
                         mListView.setVisibility(View.GONE);
-                        layout_empty.setVisibility(View.VISIBLE);
+                        ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
                     } finally {
                         actionLock.unlock();
                     }
