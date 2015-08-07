@@ -17,8 +17,6 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.index.MainActivity;
-import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
@@ -31,7 +29,6 @@ import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
@@ -76,8 +73,7 @@ public class MinePersonalDataActivity extends BaseActivity {
         initData();  //填充数据
     }
 
-    private void initHeader()
-    {
+    private void initHeader(){
         ((TextView)findViewById(R.id.tv_content)).setText("个人资料");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +87,7 @@ public class MinePersonalDataActivity extends BaseActivity {
      * 初始化布局
      */
     private void initViews() {
+
         mImageLogopath = (ImageView) findViewById(R.id.iv_profile_logopath);
         mTextName = (TextView) findViewById(R.id.tv_profile_name);
         mTextGender = (TextView) findViewById(R.id.tv_profile_gender);
@@ -107,10 +104,11 @@ public class MinePersonalDataActivity extends BaseActivity {
        findViewById(R.id.ll_mine_profile_email).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MinePersonalDataActivity.this, InproveProfileSimpleItemActivity.class);
-                intent.putExtra("title", "邮箱地址");
-                intent.putExtra("hint", "请填写您的邮箱地址");
-                intent.putExtra("inputType", "email");
+                Intent intent = new Intent(MinePersonalDataActivity.this, ImproveProfileSimpleItemActivity.class);
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_TITLE, "邮箱地址");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_HINT, "请填写您的邮箱地址");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_INPUT_TYPE, "email");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_VALUE, mTextEmail.getText().toString());
                 startActivityForResult(intent, EMAIL_REQUEST_CODE);
             }
         });
@@ -119,10 +117,11 @@ public class MinePersonalDataActivity extends BaseActivity {
        findViewById(R.id.ll_mine_profile_qq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MinePersonalDataActivity.this, InproveProfileSimpleItemActivity.class);
-                intent.putExtra("title", "QQ");
-                intent.putExtra("hint", "请填写您的QQ号码");
-                intent.putExtra("inputType", "qq");
+                Intent intent = new Intent(MinePersonalDataActivity.this, ImproveProfileSimpleItemActivity.class);
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_TITLE, "QQ");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_HINT, "请填写您的QQ号码");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_INPUT_TYPE, "qq");
+                intent.putExtra(ImproveProfileSimpleItemActivity.INTENT_NAME_VALUE, mTextQq.getText().toString());
                 startActivityForResult(intent, QQ_REQUEST_CODE);
             }
         });
@@ -170,44 +169,13 @@ public class MinePersonalDataActivity extends BaseActivity {
                     });
                 }
                 popupWin.show();
-//                final PopupDialog dialog = new PopupDialog(MinePersonalDataActivity.this, R.layout.mine_photo_choose);
-//                dialog.setAction(R.id.ll_mine_photo_pai, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (AppUtil.isSdcardExisting()) {
-//                            Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-//                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
-//                            cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-//                            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-//                            // dialog.dismiss();
-//                        } else {
-//                            showToast("未找到SD卡");
-//                            // dialog.dismiss();
-//                        }
-//                        dialog.dismiss();
-//                    }
-//                }).setAction(R.id.ll_choose_from_album, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(Intent.ACTION_PICK);
-//                        intent.setType("image/*");//相片类型
-//                        startActivityForResult(intent,IMAGE_REQUEST_CODE);
-//                        dialog.dismiss();
-//                    }
-//                }).setAction(R.id.btn_pick_photo_cancel, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                    }
-//                }).show();
-
             }
         });
 
     }
 
     private void initData() {
-        showProgressDialog("数据加载中...");
+        showProgressDialog("信息加载中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -237,10 +205,10 @@ public class MinePersonalDataActivity extends BaseActivity {
         });
     }
 
-    private void fillStudentInView(Stu02Response.Stu02Body.Student student) {
+    private void fillStudentInView(final Stu02Response.Stu02Body.Student student) {
         student.setStudentid(UserSubject.getStudentid());
         student.setPassword(UserSubject.getPassword());
-        UserSubject.loginSuccess(student);//同步数据
+
         mTextName.setText(student.getName());
         mTextGender.setText("1".equals(student.getGender())?"女":"男");
         mTextAreaname.setText(student.getAreaname());
@@ -258,9 +226,16 @@ public class MinePersonalDataActivity extends BaseActivity {
         mTextCollegename.setText(student.getCollegename());
         mTextProfessional.setText(student.getProfessional());
         if (StringUtil.isNotEmpty(student.getLogopath())) {
-            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), R.drawable.default_head_img);
-
+            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, R.drawable.default_head_img);
         }
+        //开启另一个更新头像与同步数据，避免出现UI阻塞
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                UserSubject.loginSuccess(student);//同步数据
+            }
+        });
+
     }
 
     class MessageHandler extends BaseHandler {
@@ -348,7 +323,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                         Stu03Request.Student student = req.new Student();
                         req.setStudent(student);
 
-                        student.setEmail(data.getStringExtra("inputData"));
+                        student.setEmail(data.getStringExtra(ImproveProfileSimpleItemActivity.RETURN_INTENT_NAME_INPUT_DATA));
                         updateStudent(req);
 
                     }
@@ -360,7 +335,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                         Stu03Request.Student student = req.new Student();
                         req.setStudent(student);
 
-                        student.setQq(data.getStringExtra("inputData"));
+                        student.setQq(data.getStringExtra(ImproveProfileSimpleItemActivity.RETURN_INTENT_NAME_INPUT_DATA));
                         updateStudent(req);
                     }
                     break;
