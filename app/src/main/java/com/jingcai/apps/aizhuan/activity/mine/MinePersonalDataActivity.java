@@ -228,7 +228,7 @@ public class MinePersonalDataActivity extends BaseActivity {
         if (StringUtil.isNotEmpty(student.getLogopath())) {
             new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, R.drawable.default_head_img);
         }
-        //开启另一个更新头像与同步数据，避免出现UI阻塞
+        //开启另一个线程更新同步数据，避免出现UI阻塞
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {

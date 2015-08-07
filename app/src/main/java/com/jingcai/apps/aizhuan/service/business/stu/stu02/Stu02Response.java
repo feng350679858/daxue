@@ -36,6 +36,24 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
             private String studentid;
             private String password;
             private String haspaypasswordset;
+            private String idnoauthflag;
+            private String scnoauthflag;
+
+            public String getIdnoauthflag() {
+                return idnoauthflag;
+            }
+
+            public void setIdnoauthflag(String idnoauthflag) {
+                this.idnoauthflag = idnoauthflag;
+            }
+
+            public String getScnoauthflag() {
+                return scnoauthflag;
+            }
+
+            public void setScnoauthflag(String scnoauthflag) {
+                this.scnoauthflag = scnoauthflag;
+            }
 
             public String getOnlineflag() {
                 return onlineflag;

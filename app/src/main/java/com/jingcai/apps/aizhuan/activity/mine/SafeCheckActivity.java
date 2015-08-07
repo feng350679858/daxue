@@ -27,7 +27,6 @@ import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 public class SafeCheckActivity extends BaseActivity {
     private final String TAG="SafeCheckActivity";
-    private AzExecutor azExecutor;
     private AzService azService;
     private MessageHandler messageHandler;
 
@@ -46,16 +45,15 @@ public class SafeCheckActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        ((ImageView)findViewById(R.id.ib_back)).setImageDrawable(getResources().getDrawable(R.drawable.icon_cancel2));
-        ((ImageView)findViewById(R.id.ib_back)).setOnClickListener(new View.OnClickListener() {
+        final ImageView ivBack = (ImageView) findViewById(R.id.ib_back);
+        ivBack.setImageDrawable(getResources().getDrawable(R.drawable.icon_cancel2));
+        ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
         ((TextView)findViewById(R.id.tv_content)).setText("安全验证");
-        findViewById(R.id.iv_bird_badge).setVisibility(View.INVISIBLE);
-        findViewById(R.id.iv_func).setVisibility(View.INVISIBLE);
     }
     private void initViews(){
         name=(TextView)findViewById(R.id.name);
@@ -90,6 +88,7 @@ public class SafeCheckActivity extends BaseActivity {
     }
     private void resetPayPsw(){
         Intent intent=new Intent(this,MineResetPayPasswordActivity.class);
+        intent.putExtra(MineResetPayPasswordActivity.INTENT_EXTRA_NAME_STAGE,MineResetPayPasswordActivity.RESET_PASSWORD_STAGE_2);
         startActivity(intent);
         finish();
     }
