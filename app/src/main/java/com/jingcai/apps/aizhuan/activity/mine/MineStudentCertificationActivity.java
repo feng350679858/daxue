@@ -206,6 +206,7 @@ public class MineStudentCertificationActivity extends BaseActivity {
                 }
                 case 2:
                     showToast("提交成功，请耐心等待审核结果");
+                    UserSubject.updateScAuthFlag("2");  //认证中状态
                     finish();
                     break;
                 case 3:

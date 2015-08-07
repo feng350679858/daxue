@@ -20,8 +20,6 @@ import com.jingcai.apps.aizhuan.service.business.account.account01.Account01Requ
 import com.jingcai.apps.aizhuan.service.business.account.account01.Account01Response;
 import com.jingcai.apps.aizhuan.service.business.account.account05.Account05Request;
 import com.jingcai.apps.aizhuan.service.business.account.account05.Account05Response;
-import com.jingcai.apps.aizhuan.service.business.game.game10.Game10Request;
-import com.jingcai.apps.aizhuan.service.business.game.game10.Game10Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -81,35 +79,22 @@ public class MineAccountActivity extends BaseActivity {
      * 检查是否通过身份验证
      */
     private void checkIdentity() {
-        showProgressDialog("检查是否通过身份验证...");
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Game10Request req = new Game10Request();
-                Game10Request.Student student = req.new Student();
-                student.setId(UserSubject.getStudentid());
-                req.setStudent(student);
-
-                azService.doTrans(req, Game10Response.class, new AzService.Callback<Game10Response>() {
-                    @Override
-                    public void success(Game10Response resp) {
-                        final Game10Response.Body body = resp.getBody();
-                        final Game10Response.Body.Student stu = body.getStudent();
-                        final String checkstatus = stu.getCheckstatus();
-                        if (!"0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(5, resp.getResultMessage());
-                        } else {
-                            messageHandler.postMessage(4, checkstatus);
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        });
+        String idnoauthflag = UserSubject.getIdnoauthflag();
+        String tip = null;
+        switch (idnoauthflag){
+            case "0":
+                tip = getString(R.string.gold_withdraw_validate_identity_not_pass);
+                mTipWin.showWindow("身份验证",tip,"下次再说","去吧去吧");
+                break;
+            case "1":
+                Intent intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
+                startActivity(intent);
+                break;
+            case "2":
+                tip = getString(R.string.gold_withdraw_validate_identity_wait);
+                mTipWin.showWindow("身份验证", tip,"我知道了");
+                break;
+        }
     }
 
 
@@ -247,29 +232,6 @@ public class MineAccountActivity extends BaseActivity {
                     Log.w(TAG, "账户收入获取失败:" + msg.obj);
                     break;
                 }
-                case 4:
-                    String checkStatus = msg.obj.toString();  //审核状态
-                    String tip = null;
-                    switch (checkStatus){
-                        case "0":
-                        case "3":
-                            tip = getString(R.string.gold_withdraw_validate_identity_not_pass);
-                            mTipWin.showWindow("身份验证",tip,"下次再说","去吧去吧");
-                            break;
-                        case "1":
-                            tip = getString(R.string.gold_withdraw_validate_identity_wait);
-                            mTipWin.showWindow("身份验证", tip,"我知道了");
-                            break;
-                        case "2":
-                            Intent intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
-                            startActivity(intent);
-                            break;
-                    }
-                    break;
-                case 5:
-                    showToast("获取身份验证状态失败");
-                    Log.w(TAG, "获取身份验证状态失败:" + msg.obj);
-                    break;
                 default:
                     super.handleMessage(msg);
                     break;

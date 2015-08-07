@@ -20,6 +20,8 @@ public class UserSubject {
     private static boolean haspaypasswordset;
     private static boolean loginFlag = false;
     private static boolean onlineFlag = false;
+    private static String idnoauthflag;
+    private static String scnoauthflag;
 
     public static boolean isLogin() {
         return loginFlag;
@@ -121,6 +123,22 @@ public class UserSubject {
         UserSubject.haspaypasswordset = haspaypasswordset;
     }
 
+    public static String getIdnoauthflag() {
+        return idnoauthflag;
+    }
+
+    private static void setIdnoauthflag(String idnoauthflag) {
+        UserSubject.idnoauthflag = idnoauthflag;
+    }
+
+    public static String getScnoauthflag() {
+        return scnoauthflag;
+    }
+
+    private static void setScnoauthflag(String scnoauthflag) {
+        UserSubject.scnoauthflag = scnoauthflag;
+    }
+
     public static void init(Preferences instance) {
         loginFlag = instance.getBoolean(Preferences.PARAM_LOGIN_FLAG, false);
         if(!loginFlag){
@@ -143,6 +161,8 @@ public class UserSubject {
         cityname = instance.getString(Preferences.PARAM_CITY_NAME, "");
         isvisiable = instance.getString(Preferences.PARAM_ISVISIABLE, "");
         haspaypasswordset = instance.getBoolean(Preferences.PARAM_HASPAYPASSWORDSET, false);
+        idnoauthflag = instance.getString(Preferences.PARAM_IDNOAUTHFLAG, "0");
+        scnoauthflag = instance.getString(Preferences.PARAM_SCNOAUTHFLAG, "0");
     }
 
 
@@ -161,6 +181,8 @@ public class UserSubject {
         loginFlag = true;
         onlineFlag = "1".equals(stu.getOnlineflag());
         haspaypasswordset = "1".equals(stu.getHaspaypasswordset());
+        idnoauthflag = stu.getIdnoauthflag()==null?"0":stu.getIdnoauthflag();
+        scnoauthflag = stu.getScnoauthflag()==null?"0":stu.getScnoauthflag();
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -176,6 +198,8 @@ public class UserSubject {
         pref.update(Preferences.PARAM_LOGIN_FLAG, loginFlag);
         pref.update(Preferences.PARAM_ONLINE_FLAG, onlineFlag);
         pref.update(Preferences.PARAM_HASPAYPASSWORDSET, haspaypasswordset);
+        pref.update(Preferences.PARAM_IDNOAUTHFLAG,idnoauthflag);
+        pref.update(Preferences.PARAM_SCNOAUTHFLAG,scnoauthflag);
     }
 
 
@@ -216,5 +240,27 @@ public class UserSubject {
         UserSubject.setLogourl(logourl);
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_LOGOURL, logourl);
+    }
+
+    /**
+     *更新身份验证Flag状态
+     * 0-否 1-是 2-认证中
+     * @param flag flag
+     */
+    public static void updateIdAuthFlag(String flag){
+        UserSubject.setIdnoauthflag(flag);
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_IDNOAUTHFLAG, flag);
+    }
+
+    /**
+     *更新学生验证Flag状态
+     * 0-否 1-是 2-认证中
+     * @param flag flag
+     */
+    public static void updateScAuthFlag(String flag){
+        UserSubject.setScnoauthflag(flag);
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_SCNOAUTHFLAG, flag);
     }
 }
