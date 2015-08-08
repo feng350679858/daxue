@@ -485,11 +485,14 @@ private void clearAllFocus(){
     }
 
     private void initCollegePopupWin() {
+        if(school_input.getTag()==null)
+            return;
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 School05Request req = new School05Request();
                 School05Request.Schoolinfo schoolinfo = req.new Schoolinfo();
+
                 schoolinfo.setSchoolid(school_input.getTag().toString());
 
                 req.setSchoolinfo(schoolinfo);
@@ -610,9 +613,6 @@ private void clearAllFocus(){
             switch (msg.what) {
                 case 0: {
                     List<Map<String, String>> list = convertSchoolListData((List<School04Response.Body.Schoolinfo>) msg.obj);
-                    if (null == list) {
-                        return;
-                    }
                     mListSchoolAdapter.addListData(list);
                     mListSchoolAdapter.notifyDataSetChanged();
 
@@ -641,9 +641,7 @@ private void clearAllFocus(){
                 case 4: {
                     try {
                         List<Map<String, String>> list = convertProfessionalListData((List<School06Response.Body.Professional>) msg.obj);
-                        if (null == list) {
-                            return;
-                        }
+
                         mListProfessionalAdapter.addListData(list);
                         mListProfessionalAdapter.notifyDataSetChanged();
 
@@ -685,6 +683,8 @@ private void clearAllFocus(){
     }
 
     private List<Map<String, String>> convertSchoolListData(List<School04Response.Body.Schoolinfo> obj) {
+        if(obj==null)
+            obj=new ArrayList<>();
         List<Map<String, String>> list = new ArrayList<>();
         for (int i = 0; i < obj.size(); i++) {
             Map<String, String> item = new HashMap<>();
@@ -697,7 +697,9 @@ private void clearAllFocus(){
     }
 
     private List<Map<String, String>> convertProfessionalListData(List<School06Response.Body.Professional> obj) {
-        if (null != obj) {
+        if (null == obj) {
+            obj=new ArrayList<>();
+        }
             List<Map<String, String>> list = new ArrayList<>();
             for (int i = 0; i < obj.size(); i++) {
                 Map<String, String> item = new HashMap<>();
@@ -705,9 +707,6 @@ private void clearAllFocus(){
                 list.add(item);
             }
             return list;
-        } else {
-            return null;
-        }
     }
 
     private void fillCollegeListData(List<School05Response.Body.College> obj) {
