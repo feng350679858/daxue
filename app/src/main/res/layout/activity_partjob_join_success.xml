@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="恭喜你，报名成功!"
+            android:text="哎哟喂，报名成功了~"
             android:textColor="@color/important_dark"
             android:textSize="18sp" />
 

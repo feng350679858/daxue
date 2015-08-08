@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,9 +66,9 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
      * 初始化视图
      */
     private void initView() {
-        layout_empty = findViewById(R.id.layout_empty);
-        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.mine_partjob_list_empty);
-        ((TextView)findViewById(R.id.tv_empty)).setText("暂时没有兼职，要马上行动哦！");
+//        layout_empty = findViewById(R.id.layout_empty);
+//        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.mine_partjob_list_empty);
+//        ((TextView)findViewById(R.id.tv_empty)).setText("暂时没有兼职，要马上行动哦！");
 
         mListMinePartjob = (XListView) findViewById(R.id.lv_mine_partjob);
         mListMinePartjob.setPullRefreshEnable(true);
@@ -105,6 +107,8 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
                             } else {
                                 Partjob03Response.Partjob03Body partjob03Body = response.getBody();
                                 List<Partjob01Response.Body.Parttimejob> joininfoList = partjob03Body.getJoininfo_list();
+                                if(joininfoList==null)
+                                    joininfoList=new ArrayList<>();
                                 if (0 == mCurrentStart && joininfoList.size() < 1) {
                                     messageHandler.postMessage(2);
                                 } else {
@@ -221,7 +225,7 @@ public class MyPartjobListActivity extends BaseActivity implements AdapterView.O
                     try {
                         //列表为空,将列表移除，然后将表示空图加上
                         mListMinePartjob.setVisibility(View.GONE);
-                        layout_empty.setVisibility(View.VISIBLE);
+                        ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
                     }finally {
                         actionLock.unlock();
                     }

@@ -33,6 +33,7 @@ import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob01.Partjob01Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob09.Partjob09Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob09.Partjob09Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -428,16 +429,16 @@ public class PartjobSearchActivity extends BaseActivity {
                         job.setGisy(GlobalConstant.gis.getGisy());
                         job.setProvincename(GlobalConstant.gis.getProvincename());
                         job.setCityname(GlobalConstant.gis.getCityname());
-                        job.setDistrictname(GlobalConstant.gis.getDistrictname());
+
                     }
                     job.setAreacode(currentAreacode);
                     job.setAreacode2((String) tv_area_limit.getTag());
+                    job.setDistrictname(tv_area_limit.getText().toString());
                     job.setGender((String) tv_gender_limit.getTag());
                     job.setWorktype((String) tv_worktype_limit.getTag());
                     job.setKeys(mTxtSearchKey.getText().toString());
-                    job.setType((String) tv_search_all.getTag());
+                    job.setType((String)tv_search_all.getTag());
                     job.setStudentid(UserSubject.getStudentid());
-
                     job.setStart(String.valueOf(mCurrentStart));
                     job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     req.setParttimejob(job);
@@ -448,6 +449,8 @@ public class PartjobSearchActivity extends BaseActivity {
                             if ("0".equals(result.getCode())) {
                                 Partjob09Response.Body body = response.getBody();
                                 List<Partjob09Response.Body.Parttimejob> messageList = body.getParttimejob_list();
+                                if(messageList==null)
+                                    messageList=new ArrayList<Partjob01Response.Body.Parttimejob>();
                                 if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);
                                 } else {
@@ -484,6 +487,8 @@ public class PartjobSearchActivity extends BaseActivity {
                 case 0: {
                     try {
                         List<Partjob09Response.Body.Parttimejob> list = (List<Partjob09Response.Body.Parttimejob>) msg.obj;
+                        if(list==null)
+                            list=new ArrayList<>();
                         partjobListAdapter.addData(list);
                         partjobListAdapter.notifyDataSetChanged();
 

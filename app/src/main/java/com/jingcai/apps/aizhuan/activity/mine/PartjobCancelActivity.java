@@ -76,6 +76,7 @@ public class PartjobCancelActivity extends BaseActivity{
         mTxtMention = (TextView) findViewById(R.id.tv_mine_partjob_cancel_mention);
         mBtnComfirm = (Button) findViewById(R.id.btn_confirm_false);
         mBtnComfirm.setText("我意已决");
+        mBtnComfirm.setEnabled(false);
         mBtnContactMerchant = (Button) findViewById(R.id.btn_confirm_true);
         mBtnContactMerchant.setText("联系商家");
         mBtnComfirm.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +201,7 @@ public class PartjobCancelActivity extends BaseActivity{
         if(noTimeLeft){
             //过了截止日期
             mTxtMention.setText(R.string.mine_partjob_cancel_unable);
+
         }else{
             //还没过截至日期
             try {
@@ -212,7 +214,7 @@ public class PartjobCancelActivity extends BaseActivity{
                 }else{
                     mTxtMention.setText(R.string.mine_partjob_cancel_no_chance);
                     mBtnComfirm.setTextColor(getResources().getColor(R.color.assist_grey));
-                    mBtnComfirm.setEnabled(false);
+
                 }
             } catch (Exception e) {
                 showToast("获取剩余可取消次数异常");

@@ -16,5 +16,10 @@
         android:divider="@color/divider_color"
         android:dividerHeight="@dimen/divider_height"/>
 
-    <include layout="@layout/empty_content" />
+    <ViewStub
+        android:id="@+id/stub_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/stub_general_empty_list_view"
+        />
 </LinearLayout>

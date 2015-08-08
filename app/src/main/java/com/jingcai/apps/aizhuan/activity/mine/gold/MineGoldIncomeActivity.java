@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -61,7 +62,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
     private void initView() {
         layout_empty = findViewById(R.id.layout_empty);
 //        ((ImageView)findViewById(R.id.iv_empty)).setImageResource(R.drawable.ic_launcher);
-        ((TextView) findViewById(R.id.tv_empty)).setText("还木有流水，还不快去赚起来！");
+//        ((TextView) findViewById(R.id.tv_empty)).setText("还木有流水，还不快去赚起来！");
 
         mListView = (XListView) findViewById(R.id.lv_account_stream_detail_list);
         mListView.setPullRefreshEnable(true);
@@ -205,7 +206,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
                     try {
                         //列表为空,将列表移除，然后将表示空图加上
                         mListView.setVisibility(View.GONE);
-                        layout_empty.setVisibility(View.VISIBLE);
+                        ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
                     } finally {
                         actionLock.unlock();
                     }
