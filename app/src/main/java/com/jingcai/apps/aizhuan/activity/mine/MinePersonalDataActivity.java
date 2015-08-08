@@ -141,7 +141,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                         public void onClick(View v) {
                             if (AppUtil.isSdcardExisting()) {
                                 Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getImageUri());
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getCropImageUri());
                                 cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                                 startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
                                 // dialog.dismiss();
@@ -347,7 +347,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                 // 照相机现拍
                 case CAMERA_REQUEST_CODE:
                     if (AppUtil.isSdcardExisting()) {
-                        resizeImage(AppUtil.getImageUri());
+                        resizeImage(AppUtil.getCropImageUri());
                     } else {
                         showToast("未找到存储卡，无法存储照片");
                     }
