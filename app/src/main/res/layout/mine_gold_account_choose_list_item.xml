@@ -12,15 +12,15 @@
 
         <ImageView
             android:id="@+id/iv_mine_account_choose_list_item_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="@dimen/avatar_diameter"
+            android:layout_height="@dimen/avatar_diameter"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp">
 
             <TextView
                 android:id="@+id/tv_mine_account_choose_list_item_title"
@@ -33,9 +33,9 @@
                 android:id="@+id/tv_mine_account_choose_list_item_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/normal_grey" />
+                android:textSize="12sp"
+                android:textColor="@color/assist_grey" />
         </LinearLayout>
     </LinearLayout>
 

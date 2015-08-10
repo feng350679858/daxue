@@ -130,7 +130,7 @@ public class MineAccountActivity extends BaseActivity {
                         checkIdentity();
                         break;
                     case R.id.btn_mine_gold_account_topup://充值
-                        intent = new Intent(thisActivity, MineGoldTopupActivity.class);
+                        intent = new Intent(thisActivity, MineGoldRechargeActivity.class);
                         break;
                 }
                 if(null != intent) {
