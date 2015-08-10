@@ -306,17 +306,18 @@ public class PartjobDetailActivity extends BaseActivity {
             partjob_isjoin.setBackgroundResource(R.drawable.btn_yellow_boarded_bg_normal);
         }
         if (partjob_isjoin.getText().toString().equals("我要报名"))
-            partjob_isjoin.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
-                                                          showToast("对不起，您所报的兼职性别不符");
-                                                      } else {
-                                                          initPopupWin();
-                                                      }
+            partjob_isjoin.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
+                                showToast("对不起，您所报的兼职性别不符");
+                            } else {
+                                initPopupWin();
+                            }
 
-                                                  }
-                                              }
+                        }
+                    }
 
             );
     }

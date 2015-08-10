@@ -100,12 +100,11 @@ public class ProfileImproveActivity extends BaseActivity {
                             .setContentView(contentView)
                             .build();
                     //logo
-                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(getResources().getDrawable(R.drawable.logo_merchant_default));
+                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageResource(R.drawable.ic_launcher);
                     //title
-                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("联系人");
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("客服赚赚");
                     //phone
-                    final TextView phone = (TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone);
-                    phone.setText("15712345678");
+                    ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_phone)).setText(R.string.mine_contact_service_tel_num);
                     //2 button
                     contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -117,7 +116,7 @@ public class ProfileImproveActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(Intent.ACTION_CALL);
-                            intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+                            intent.setData(Uri.parse("tel:" + R.string.mine_contact_service_tel_num));
                             startActivity(intent);
                         }
                     });
@@ -476,7 +475,7 @@ public class ProfileImproveActivity extends BaseActivity {
         showProgressDialog("数据加载中...");
         areaCode = "100000";
         getAreaInfo(1);
-   //     loadProfileData();
+        //     loadProfileData();
     }
 
     private void loadProfileData() {
@@ -521,7 +520,7 @@ public class ProfileImproveActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     showToast("获取失败");
-                    Log.i(TAG,"获取失败:" + msg.obj);
+                    Log.i(TAG, "获取失败:" + msg.obj);
                     break;
                 }
                 case 1: {
@@ -531,7 +530,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 }
                 case 2: {
                     showToast("已开通省份获取失败");
-                    Log.i(TAG,"已开通省份获取失败:" + msg.obj);
+                    Log.i(TAG, "已开通省份获取失败:" + msg.obj);
                     break;
                 }
                 case 3: {
@@ -542,7 +541,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 }
                 case 4: {
                     showToast("已开通城市获取失败");
-                    Log.i(TAG,"已开通城市获取失败:" + msg.obj);
+                    Log.i(TAG, "已开通城市获取失败:" + msg.obj);
                     break;
                 }
                 case 5: {
@@ -553,7 +552,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 }
                 case 6: {
                     showToast("已开通地区获取失败");
-                    Log.i(TAG,"已开通地区获取失败:" + msg.obj);
+                    Log.i(TAG, "已开通地区获取失败:" + msg.obj);
                     break;
                 }
                 case 7: {
