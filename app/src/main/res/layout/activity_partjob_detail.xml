@@ -36,18 +36,25 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="-15dp">
 
-                    <ImageView
-                        android:id="@+id/partjob_content_logo"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/img_border_gray"
-                        android:padding="2dp"
-                        android:scaleType="fitCenter" />
+                    <LinearLayout
+                        android:id="@+id/partjob_content_logo_layout"
+                        android:layout_width="63dp"
+                        android:layout_height="63dp"
+                        android:padding="3dp"
+                        android:background="@drawable/img_border_gray">
+
+                        <ImageView
+                            android:id="@+id/partjob_content_logo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/partjob_content_logo"
+                        android:layout_toRightOf="@+id/partjob_content_logo_layout"
                         android:orientation="vertical">
 
                         <TextView

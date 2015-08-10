@@ -25,7 +25,6 @@ import com.jingcai.apps.aizhuan.util.UmengShareUtil;
  */
 public class PartjobJoinSuccessActivity extends BaseActivity {
     private UmengShareUtil umengShareUtil;
-    private String partjobid;
     private String tel;
     private String msg;
     private String url;
@@ -34,7 +33,6 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        partjobid = getIntent().getStringExtra("partjobid");
         tel = getIntent().getStringExtra("tel");
         msg = getIntent().getStringExtra("msg");
         url = getIntent().getStringExtra("url");

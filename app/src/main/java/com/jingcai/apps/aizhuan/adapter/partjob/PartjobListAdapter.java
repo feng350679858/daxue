@@ -18,14 +18,14 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartjobListAdapter extends BaseAdapter{
+public class PartjobListAdapter extends BaseAdapter {
     private AdapterType adapterType;
     private Context mContext;
     private List<Partjob01Response.Body.Parttimejob> dataList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public PartjobListAdapter(AdapterType adapterType, Context ctx){
+    public PartjobListAdapter(AdapterType adapterType, Context ctx) {
         this.adapterType = adapterType;
         this.mContext = ctx;
         this.mInflater = LayoutInflater.from(ctx);
@@ -51,24 +51,24 @@ public class PartjobListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if(convertView == null){
-            convertView = mInflater.inflate(R.layout.mine_partjob_list_item,null);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.mine_partjob_list_item, null);
 
             viewHolder = new ViewHolder();
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.pj_list_item_logo);
-            viewHolder.tv_title = (TextView)convertView.findViewById(R.id.pj_list_item_title);
-            viewHolder.tv_salary = (TextView)convertView.findViewById(R.id.pj_list_item_salary);
-            viewHolder.tv_salary_unit = (TextView)convertView.findViewById(R.id.pj_list_item_salaryunit);
-            viewHolder.tv_workdays = (TextView)convertView.findViewById(R.id.pj_list_item_workdays);
-            viewHolder.iv_settlelength = (TextView)convertView.findViewById(R.id.pj_list_item_wage_settlelength);
-            viewHolder.iv_label = (ImageView)convertView.findViewById(R.id.pj_list_item_label);
-            viewHolder.tv_label=(TextView)convertView.findViewById(R.id.tv_pj_list_item_label);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.pj_list_item_title);
+            viewHolder.tv_salary = (TextView) convertView.findViewById(R.id.pj_list_item_salary);
+            viewHolder.tv_salary_unit = (TextView) convertView.findViewById(R.id.pj_list_item_salaryunit);
+            viewHolder.tv_workdays = (TextView) convertView.findViewById(R.id.pj_list_item_workdays);
+            viewHolder.iv_settlelength = (TextView) convertView.findViewById(R.id.pj_list_item_wage_settlelength);
+            viewHolder.iv_label = (ImageView) convertView.findViewById(R.id.pj_list_item_label);
+            viewHolder.tv_label = (TextView) convertView.findViewById(R.id.tv_pj_list_item_label);
             viewHolder.tv_distance_icon = convertView.findViewById(R.id.tv_distance_icon);
             viewHolder.tv_distance = (TextView) convertView.findViewById(R.id.tv_distance);
-            viewHolder.tv_distance_unit = (TextView)convertView.findViewById(R.id.tv_distance_unit);
-            viewHolder.location_bg=(LinearLayout)convertView.findViewById(R.id.mine_partjob_list_item_location_bg);
+            viewHolder.tv_distance_unit = (TextView) convertView.findViewById(R.id.tv_distance_unit);
+            viewHolder.location_bg = (LinearLayout) convertView.findViewById(R.id.mine_partjob_list_item_location_bg);
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Partjob01Response.Body.Parttimejob parttimejob = dataList.get(position);
@@ -80,16 +80,16 @@ public class PartjobListAdapter extends BaseAdapter{
         //标题
         viewHolder.tv_title.setText(parttimejob.getTitle());
         setWorkdays(viewHolder.tv_workdays, parttimejob.getWorktimetype(), parttimejob.getWorkdays());
-        if("-1".equals(parttimejob.getDistance()) || StringUtil.isEmpty(parttimejob.getDistance())) {
+        if ("-1".equals(parttimejob.getDistance()) || StringUtil.isEmpty(parttimejob.getDistance())) {
             viewHolder.location_bg.setVisibility(View.INVISIBLE);
         }
         setDistance(viewHolder.tv_distance_icon, viewHolder.tv_distance, viewHolder.tv_distance_unit, parttimejob.getDistance());
         setSalary(viewHolder.tv_salary, viewHolder.tv_salary_unit, parttimejob.getSalary(), parttimejob.getSalaryunit());
-        if(AdapterType.MinePartjob == adapterType){
-            setLabel(viewHolder.tv_label,parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
+        if (AdapterType.MinePartjob == adapterType) {
+            setLabel(viewHolder.tv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
             viewHolder.tv_label.setVisibility(View.VISIBLE);
             viewHolder.iv_label.setVisibility(View.GONE);
-        }else {
+        } else {
             setLabel(viewHolder.iv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
             viewHolder.tv_label.setVisibility(View.GONE);
             viewHolder.iv_label.setVisibility(View.VISIBLE);
@@ -100,41 +100,78 @@ public class PartjobListAdapter extends BaseAdapter{
     }
 
     public static void setSettlelength(TextView tv_settlelength, String settleLength) {
-        if ("0".equals(settleLength)) {
-            //日结
-            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_day);
-        } else if ("1".equals(settleLength)) {
-            //周结
-            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_week);
-        } else if ("2".equals(settleLength)) {
-            //半月结
-            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_half_month);
-        } else if ("3".equals(settleLength)) {
-            //月结
-            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_month);
-        } else if ("4".equals(settleLength)) {
-            //完工结
-            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_finish);
+        switch (settleLength) {
+            case "0":
+                tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_day);
+                break;
+            case "1":
+                tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_week);
+                break;
+            case "2":
+                tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_half_month);
+                break;
+            case "3":
+                tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_month);
+                break;
+            case "4":
+                tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_finish);
+                break;
+            default:
         }
+//        if ("0".equals(settleLength)) {
+//            //日结
+//            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_day);
+//        } else if ("1".equals(settleLength)) {
+//            //周结
+//            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_week);
+//        } else if ("2".equals(settleLength)) {
+//            //半月结
+//            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_half_month);
+//        } else if ("3".equals(settleLength)) {
+//            //月结
+//            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_month);
+//        } else if ("4".equals(settleLength)) {
+//            //完工结
+//            tv_settlelength.setText(R.string.mine_partjob_detail_settle_length_finish);
+//        }
     }
+
     public static void setSettlelength(ImageView iv_settlelength, String settleLength) {
-        if("0".equals(settleLength)){//日结
-            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_day);
-        }else if("1".equals(settleLength)){//周结
-            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_week);
-        }else if("2".equals(settleLength)){//半月结
-            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_halfmonth);
-        }else if("3".equals(settleLength)){//月结
-            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_month);
-        }else if("4".equals(settleLength)){//完工结
-            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_finish);
+        switch (settleLength) {
+            case "0":
+                iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_day);
+                break;
+            case "1":
+                iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_week);
+                break;
+            case "2":
+                iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_halfmonth);
+                break;
+            case "3":
+                iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_month);
+                break;
+            case "4":
+                iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_finish);
+                break;
+            default:
         }
+//        if ("0".equals(settleLength)) {//日结
+//            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_day);
+//        } else if ("1".equals(settleLength)) {//周结
+//            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_week);
+//        } else if ("2".equals(settleLength)) {//半月结
+//            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_halfmonth);
+//        } else if ("3".equals(settleLength)) {//月结
+//            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_month);
+//        } else if ("4".equals(settleLength)) {//完工结
+//            iv_settlelength.setImageResource(R.drawable.mine_partjob_item_settlelength_finish);
+//        }
     }
 
     public static void setLabel(ImageView iv_label, String worktimetype, String label, AdapterType adapterType) {
         //填充本地图片
         //报名状态
-        if(AdapterType.PartjobList == adapterType || AdapterType.IndexLabel == adapterType) {
+        if (AdapterType.PartjobList == adapterType || AdapterType.IndexLabel == adapterType) {
             if ("1".equals(label)) {//推荐
                 iv_label.setImageResource(R.drawable.partjob_list_item_label_recommend);
             } else if ("2".equals(label)) {//已报满
@@ -142,10 +179,11 @@ public class PartjobListAdapter extends BaseAdapter{
             } else {
                 iv_label.setImageResource(0);
             }
-        }else{
+        } else {
             iv_label.setImageResource(0);
         }
     }
+
     public void setLabel(TextView iv_label, String worktimetype, String label, AdapterType adapterType) {
         if (AdapterType.MinePartjob == adapterType) {
             //长期兼职显示工作中
@@ -158,24 +196,48 @@ public class PartjobListAdapter extends BaseAdapter{
                     iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
                 }
             } else {
-                if ("1".equals(label)) {//已报名
-                    iv_label.setText("已报名");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
-                } else if ("2".equals(label)) {//工作中
-                    iv_label.setText("工作中");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
-                } else if ("3".equals(label)) {//休息中
-                    iv_label.setText("休息中");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_purple));
-                } else if ("4".equals(label)) {//已完成
-                    iv_label.setText("已完成");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_red));
-                } else if ("5".equals(label)) {//已取消
-                    iv_label.setText("已取消");
-                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_grey));
-                } else {
-                    iv_label.setText("");
+                switch (label) {
+                    case "1":
+                        iv_label.setText("已报名");
+                        iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
+                        break;
+                    case "2":
+                        iv_label.setText("工作中");
+                        iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
+                        break;
+                    case "3":
+                        iv_label.setText("休息中");
+                        iv_label.setTextColor(mContext.getResources().getColor(R.color.font_purple));
+                        break;
+                    case "4":
+                        iv_label.setText("已完成");
+                        iv_label.setTextColor(mContext.getResources().getColor(R.color.font_red));
+                        break;
+                    case "5":
+                        iv_label.setText("已取消");
+                        iv_label.setTextColor(mContext.getResources().getColor(R.color.font_grey));
+                        break;
+                    default:
+                        iv_label.setText("");
                 }
+//                if ("1".equals(label)) {//已报名
+//                    iv_label.setText("已报名");
+//                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
+//                } else if ("2".equals(label)) {//工作中
+//                    iv_label.setText("工作中");
+//                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_blue));
+//                } else if ("3".equals(label)) {//休息中
+//                    iv_label.setText("休息中");
+//                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_purple));
+//                } else if ("4".equals(label)) {//已完成
+//                    iv_label.setText("已完成");
+//                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_red));
+//                } else if ("5".equals(label)) {//已取消
+//                    iv_label.setText("已取消");
+//                    iv_label.setTextColor(mContext.getResources().getColor(R.color.font_grey));
+//                } else {
+//                    iv_label.setText("");
+//                }
             }
         }
     }
@@ -183,6 +245,19 @@ public class PartjobListAdapter extends BaseAdapter{
     public static void setSalary(TextView tv_salary, TextView tv_salary_unit, String salary, String salaryunit) {
         //工资
         tv_salary.setText(StringUtil.money(salary));
+//        switch (salaryunit) {
+//            case "0":
+//                tv_salary_unit.setText(R.string.mine_partjob_list_salary_unit_per_hour);
+//                break;
+//            case "1":
+//                tv_salary_unit.setText(R.string.mine_partjob_list_salary_unit_per_day);
+//                break;
+//            case "2":
+//                tv_salary_unit.setText(R.string.mine_partjob_list_salary_unit_per_month);
+//                break;
+//            default:
+//                tv_salary_unit.setText("");
+//        }
         if ("0".equals(salaryunit)){
             tv_salary_unit.setText(R.string.mine_partjob_list_salary_unit_per_hour);
         }else if("1".equals(salaryunit)){
@@ -196,11 +271,11 @@ public class PartjobListAdapter extends BaseAdapter{
 
     public static void setDistance(View tv_distance_icon, TextView tv_distance, View tv_distance_unit, String distance) {
         //多地址
-        if("-1".equals(distance) || StringUtil.isEmpty(distance)) {
+        if ("-1".equals(distance) || StringUtil.isEmpty(distance)) {
             tv_distance_icon.setVisibility(View.GONE);
             tv_distance.setVisibility(View.GONE);
             tv_distance_unit.setVisibility(View.GONE);
-        }else{
+        } else {
             tv_distance_icon.setVisibility(View.VISIBLE);
             tv_distance.setVisibility(View.VISIBLE);
             tv_distance_unit.setVisibility(View.VISIBLE);
@@ -210,16 +285,16 @@ public class PartjobListAdapter extends BaseAdapter{
 
     public static void setWorkdays(TextView tv_workdays, String worktimetype, String workdays) {
         //长期兼职
-        if("1".equals(worktimetype)){
+        if ("1".equals(worktimetype)) {
             tv_workdays.setText("长期兼职");
-        }else{
+        } else {
             //将工作时间由2014-12-31,2014-12-31,2014-12-31转换为12月31日 12月31日 12月31日
             StringBuffer sb = new StringBuffer();
-            if(StringUtil.isNotEmpty(workdays)){
+            if (StringUtil.isNotEmpty(workdays)) {
                 String[] dates = workdays.split(",");
-                for (int i = 0; i <dates.length ; i++) {
+                for (int i = 0; i < dates.length; i++) {
                     sb.append(DateUtil.formatDateString(dates[i], "yyyy-MM-dd", "M月d日"));
-                    if(i!=dates.length-1){
+                    if (i != dates.length - 1) {
                         sb.append(" ");
                     }
                 }
@@ -236,7 +311,7 @@ public class PartjobListAdapter extends BaseAdapter{
         dataList.clear();
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         protected ImageView iv_logo;
         protected TextView tv_title;
         protected TextView tv_salary;
@@ -256,7 +331,7 @@ public class PartjobListAdapter extends BaseAdapter{
         }
     }
 
-    public enum AdapterType{
+    public enum AdapterType {
         IndexLabel, PartjobList, MinePartjob
     }
 }
