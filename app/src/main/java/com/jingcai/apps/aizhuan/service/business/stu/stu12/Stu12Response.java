@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Json Ding on 2015/8/8.
  */
 public class Stu12Response extends BaseResponse<Stu12Response.Body> {
-    public class Body {
+    public static class Body {
         private List<Evaluate> evaluate_list;
 
         public List<Evaluate> getEvaluate_list() {
@@ -19,7 +19,7 @@ public class Stu12Response extends BaseResponse<Stu12Response.Body> {
             this.evaluate_list = evaluate_list;
         }
 
-        public class Evaluate{
+        public static class Evaluate{
             private String evaluateid;
             private String sourceid;
             private String sourcename;
