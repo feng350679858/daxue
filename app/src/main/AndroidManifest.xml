@@ -155,6 +155,7 @@
         <activity android:name=".activity.mine.ProfileImproveActivity" />
         <activity android:name=".activity.mine.ProfileImprove2Activity" />
         <activity android:name=".activity.mine.MineStudentCertificationStateActivity" />
+        <activity android:name=".activity.mine.MineEvaluateActivity" />
 
         <!-- mine ==> gold -->
         <activity android:name=".activity.mine.gold.MineGoldRechargeActivity"/>

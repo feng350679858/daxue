@@ -5,9 +5,8 @@
     android:orientation="vertical"
     android:divider="@drawable/field_divider_grey"
     android:showDividers="middle"
-    android:layout_marginTop="10dp"
     android:dividerPadding="@dimen/list_item_padding"
-    android:background="@drawable/list_item_bg">
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,6 +32,22 @@
                 android:layout_height="22dp"
                 android:layout_marginRight="2dp"
                 android:src="@drawable/icon_star_selected" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_star_selected" />
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_star_selected" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/icon_star_selected" />
         </LinearLayout>
 
         <TextView
@@ -51,13 +66,17 @@
         android:textColor="@color/normal_grey"
         android:padding="@dimen/list_item_padding"
         android:layout_width="match_parent"
-        android:text="    打动人心的大部分歌听懂了都不会觉得治愈，用最认真最平静的方式让你去怀旧打动人心的大部分歌听懂了都不会觉得至于，用最认真，最平静的方式，让你去怀旧................."
-        android:layout_height="wrap_content" />
+        android:minLines="4"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/list_item_padding"
+        android:paddingLeft="@dimen/list_item_padding"
+        android:paddingRight="@dimen/list_item_padding"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 

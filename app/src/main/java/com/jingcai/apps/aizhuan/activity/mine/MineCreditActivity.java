@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -11,22 +12,33 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.adapter.mine.RemarkListAdapter;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
+import com.jingcai.apps.aizhuan.service.business.stu.stu12.Stu12Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.LocalValUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by Administrator on 2015/7/20.
- */
+
 public class MineCreditActivity extends BaseActivity {
     private final String TAG = "MineCreditActivity";
+
+    public static final String INTENT_NAME_STUDENT_ID = "studentid";
+
     private MessageHandler messageHandler;
     private AzService azService;
     private TextView mTvName;
@@ -36,8 +48,13 @@ public class MineCreditActivity extends BaseActivity {
     private TextView mTvCollegeName;
     private TextView mTvMore;
     private ListView mListRemark;
+    private RemarkListAdapter mListAdapter;
 
     private BitmapUtil mBitmapUtil;
+    private volatile List<Stu12Response.Body.Evaluate> mRemarkList;
+
+    private String studentid;  //如果有studentid,那么则显示其他人的信用
+    private boolean showMine = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,14 +64,29 @@ public class MineCreditActivity extends BaseActivity {
         messageHandler = new MessageHandler(MineCreditActivity.this);
         azService = new AzService(MineCreditActivity.this);
         mBitmapUtil = new BitmapUtil(this);
+        unpackIntent();
         initHeader();
         initViews();  //初始化Views
         initData();
 
     }
 
+    /**
+     * 如果有studentid 传过来，则显示其他的人信用页面
+     * 没有则显示自己的信用页面
+     */
+    private void unpackIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            studentid = intent.getStringExtra(INTENT_NAME_STUDENT_ID);
+            if(StringUtil.isNotEmpty(studentid)){
+                showMine = false;
+            }
+        }
+    }
+
     private void initHeader() {
-        ((TextView) findViewById(R.id.tv_content)).setText("我的信用");
+        ((TextView) findViewById(R.id.tv_content)).setText(StringUtil.isEmpty(INTENT_NAME_STUDENT_ID) ? "我的信用" : "个人信用");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,25 +102,125 @@ public class MineCreditActivity extends BaseActivity {
         mTvCredit = (TextView) findViewById(R.id.tv_mine_credit_score);
         mIvLogo = (CircleImageView) findViewById(R.id.iv_mine_credit_avatar);
         mTvMore = (TextView) findViewById(R.id.tv_more_remark);
+
         mListRemark = (ListView) findViewById(R.id.lv_single_remark_list);
+        mListAdapter = new RemarkListAdapter(this);
+
     }
 
     public void initData() {
-        mTvName.setText(UserSubject.getName());
-        mTvSchoolName.setText(UserSubject.getSchoolname());
-        mTvCollegeName.setText(UserSubject.getCollegename());
-        mBitmapUtil.getImage(mIvLogo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
+        if(showMine) {
+            mTvName.setText(UserSubject.getName());
+            mTvSchoolName.setText(UserSubject.getSchoolname());
+            mTvCollegeName.setText(UserSubject.getCollegename());
+            mBitmapUtil.getImage(mIvLogo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
+        }else{
+            initProfileData();
+        }
 
         initCreditData();
+        initRemarkData();
     }
 
+    /**
+     * 资料
+     */
+    private void initProfileData() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu02Request req = new Stu02Request();
+                final Stu02Request.Student stu = req.new Student();
+                stu.setStudentid(studentid);
+                req.setStudent(stu);
+                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
+                    @Override
+                    public void success(Stu02Response response) {
+                        ResponseResult result = response.getResult();
+                        Stu02Response.Stu02Body stu02Body = response.getBody();
+                        final Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
+                        if("0".equals(result.getCode())) {
+                            messageHandler.postMessage(6,student);
+                        }else{
+                            messageHandler.postMessage(5,result.getMessage());
+                        }
+                    }
+                    @Override
+                    public void fail(AzException e) {
+                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 评论
+     */
+    private void initRemarkData() {
+        if(GlobalConstant.debugFlag){
+            List<Stu12Response.Body.Evaluate> evaluates = new ArrayList<>();
+            for(int i = 0 ; i < 10; i++){
+                Stu12Response.Body.Evaluate evaluate = new Stu12Response.Body.Evaluate();
+                evaluate.setContent("这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容这是内容内容内容");
+                evaluate.setEvaluateid("evaluateid" + i);
+                evaluate.setOptime("20150809231135");
+                evaluate.setScore(String.valueOf(i % 5 + 1));
+                evaluate.setSourceid("7a82a05512bf411c9dd2f318f8798a3e");
+                evaluate.setSourceimgurl(UserSubject.getLogourl());
+                evaluate.setSourcename("丁" + i);
+                evaluate.setTitle("这是标题这是标题这是标题" + i);
+                evaluates.add(evaluate);
+            }
+            messageHandler.postMessage(4, evaluates);
+        }else{
+            new AzExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Stu12Request req = new Stu12Request();
+                    final Stu12Request.Student stu = req.new Student();
+
+                    stu.setStudentid(showMine ? UserSubject.getStudentid() : studentid);  //从UserSubject中获取studentId
+                    req.setStudent(stu);
+                    azService.doTrans(req, Stu12Response.class, new AzService.Callback<Stu12Response>() {
+
+                        @Override
+                        public void success(Stu12Response resp) {
+                            ResponseResult result = resp.getResult();
+                            Stu12Response.Body stu12Body = resp.getBody();
+                            List<Stu12Response.Body.Evaluate> evaluates = stu12Body.getEvaluate_list();
+                            if (null == evaluates) {
+                                evaluates = new ArrayList<>();
+                            }
+                            if (!"0".equals(result.getCode())) {
+                                messageHandler.postMessage(3, result.getMessage());
+                            } else {
+                                messageHandler.postMessage(4, evaluates);
+                            }
+                        }
+
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
+
+                }
+            });
+        }
+
+    }
+
+    /**
+     * 评分
+     */
     private void initCreditData() {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 Stu11Request req = new Stu11Request();
                 final Stu11Request.Student stu = req.new Student();
-                stu.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
+                stu.setStudentid(showMine ? UserSubject.getStudentid() : studentid);  //从UserSubject中获取studentId
                 req.setStudent(stu);
                 azService.doTrans(req, Stu11Response.class, new AzService.Callback<Stu11Response>() {
                     @Override
@@ -138,10 +270,72 @@ public class MineCreditActivity extends BaseActivity {
                     fillCreditInView(student2);
                     break;
                 }
+                case 3 :{
+                    showToast("获取评语失败");
+                    Log.i(TAG, "获取评语失败:" + msg.obj);
+                    break;
+                }
+                case 4:{
+                    List<Stu12Response.Body.Evaluate> evaluates = (List<Stu12Response.Body.Evaluate>) msg.obj;
+                    fillTopOneEvaluate(evaluates);
+                    break;
+                }case 5:{
+                    showToast("获取个人资料失败");
+                    Log.i(TAG, "获取个人资料失败:" + msg.obj);
+                    break;
+                }case 6:{
+                    Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
+                    fillStudentProfile(student);
+                }
                 default: {
                     super.handleMessage(msg);
                 }
             }
+        }
+    }
+
+    /**
+     * 填充学生信息
+     * @param student stu02
+     */
+    private void fillStudentProfile(Stu02Response.Stu02Body.Student student) {
+        mTvName.setText(student.getName());
+        mTvSchoolName.setText(student.getSchoolname());
+        mTvCollegeName.setText(student.getCollegename());
+        mBitmapUtil.getImage(mIvLogo, student.getLogopath(), true, R.drawable.default_head_img);
+    }
+
+    /**
+     * 获取最上一条评价并显示，根据条目数量改变底部查看更多的显示
+     * @param evaluates
+     */
+    private void fillTopOneEvaluate(final List<Stu12Response.Body.Evaluate> evaluates) {
+        mRemarkList = evaluates;
+        final int size = evaluates.size();
+        if(size <= 1){
+            mTvMore.setText("没有更多评语");
+            mTvMore.setTextColor(getResources().getColor(R.color.assist_grey));
+            mTvMore.setEnabled(false);
+        }else{
+            mTvMore.setText("查看更多评语");
+            mTvMore.setTextColor(getResources().getColor(R.color.main_yellow));
+            mTvMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mRemarkList == null){
+                        showToast("评语读取中，请稍等");
+                    }else{
+                        LocalValUtil.setVal(evaluates);
+                        Intent intent = new Intent(MineCreditActivity.this,MineEvaluateActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
+        if(size >= 1){
+            ArrayList<Stu12Response.Body.Evaluate> topEvaluate = new ArrayList<>(evaluates.subList(0,1));
+            mListAdapter.setListData(topEvaluate);
+            mListRemark.setAdapter(mListAdapter);
         }
     }
 }
