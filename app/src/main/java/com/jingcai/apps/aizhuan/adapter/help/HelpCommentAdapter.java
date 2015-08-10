@@ -93,7 +93,12 @@ public class HelpCommentAdapter extends BaseAdapter {
         viewHolder.tv_stu_college.setText(region.getSourcecollege());
 
         final boolean likeFlag = "1".equals(region.getPraiseflag());
-        viewHolder.cb_comment_like.setText(region.getPraisecount());
+        //点赞
+        if("0".equals(region.getPraisecount()) || StringUtil.isEmpty(region.getPraisecount())){
+            viewHolder.cb_comment_like.setText("");
+        }else {
+            viewHolder.cb_comment_like.setText(region.getPraisecount());
+        }
         viewHolder.cb_comment_like.setChecked(likeFlag);
 
         if (StringUtil.isEmpty(region.getRefname())) {

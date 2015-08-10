@@ -112,7 +112,11 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_title.setText("1".equals(job.getType()) ? "跑腿" : "公告");
 
             //点赞
-            viewHolder.cb_jishi_like.setText(job.getPraisecount());
+            if("0".equals(job.getPraisecount())||StringUtil.isEmpty(job.getPraisecount())) {
+                viewHolder.cb_jishi_like.setText("");
+            }else {
+                viewHolder.cb_jishi_like.setText(job.getPraisecount());
+            }
             viewHolder.cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
 
             final CheckBox cb_jishi_like = viewHolder.cb_jishi_like;
@@ -124,7 +128,11 @@ public class CampusAdapter extends BaseAdapter {
             });
 
             //评论
-            viewHolder.cb_jishi_comment.setText(job.getCommentcount());
+            if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+                viewHolder.cb_jishi_comment.setText("");
+            }else {
+                viewHolder.cb_jishi_comment.setText(job.getCommentcount());
+            }
 
             //即时帮助-求助中,helperid为空表示有还未有人请求帮助
             if("1".equals(job.getType()) && "1".equals(job.getStatus())
@@ -149,7 +157,11 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_title.setText(job.getTitle());
 
             //点赞
-            viewHolder.cb_wenda_like.setText(job.getPraisecount());
+            if("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())){
+                viewHolder.cb_wenda_like.setText("");
+            }else {
+                viewHolder.cb_wenda_like.setText(job.getPraisecount());
+            }
             viewHolder.cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
 
             final CheckBox cb_wenda_like = viewHolder.cb_wenda_like;
@@ -161,7 +173,12 @@ public class CampusAdapter extends BaseAdapter {
             });
 
             //评论
-            viewHolder.cb_wenda_comment.setText(job.getCommentcount());
+            //评论
+            if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+                viewHolder.cb_wenda_comment.setText("");
+            }else {
+                viewHolder.cb_wenda_comment.setText(job.getCommentcount());
+            }
 
             //本人问答帮助
             final boolean selfHelpFlag = "1".equals(job.getHelpflag());

@@ -26,6 +26,15 @@ public class Partjob19Request extends BaseRequest {
     public class Parttimejob {
         private String helpid;
         private String studentid;
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public String getHelpid() {
             return helpid;

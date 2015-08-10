@@ -7,13 +7,14 @@ import android.widget.CheckBox;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob30.Partjob30Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob30.Partjob30Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.InnerLock;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 /**
  * Created by lejing on 15/8/4.
@@ -58,7 +59,6 @@ public class LikeHandler {
                     Partjob12Request.Parttimejob p = req.new Parttimejob();
                     p.setSourceid(UserSubject.getStudentid());
                     p.setTargettype(targettype);
-
                     p.setTargetid(targetid);
                     p.setOptype("2");//1：评论 2：点赞
                     req.setParttimejob(p);
@@ -68,7 +68,7 @@ public class LikeHandler {
                             if ("0".equals(resp.getResultCode())) {
                                 Partjob12Response.Parttimejob parttimejob = resp.getBody().getParttimejob();
                                 String praiseid = parttimejob.getCommentid();
-                                String praisecount = parttimejob.getPraisecount();
+                                String praisecount = parttimejob.getCount();
                                 Object[] objs = new Object[]{checkBox, true, praisecount, praiseid};
                                 messageHandler.postMessage(3, objs);
                             } else {
@@ -92,9 +92,9 @@ public class LikeHandler {
                     p.setCommentid(praiseid);
                     p.setType("2");//1：评论 2：赞
                     req.setParttimejob(p);
-                    azService.doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
+                    azService.doTrans(req, Partjob30Response.class, new AzService.Callback<Partjob30Response>() {
                         @Override
-                        public void success(Partjob12Response resp) {
+                        public void success(Partjob30Response resp) {
                             if ("0".equals(resp.getResultCode())) {
                                 String praisecount = resp.getBody().getParttimejob().getPraisecount();
                                 Object[] objs = new Object[]{checkBox, false, praisecount, null};
@@ -131,7 +131,11 @@ public class LikeHandler {
                         String pariseCount = (String) objs[2];
 
                         cb.setChecked(flag);
-                        cb.setText(pariseCount);
+                        if("0".equals(pariseCount) || StringUtil.isEmpty(pariseCount)){
+                            cb.setText("");
+                        }else {
+                            cb.setText(pariseCount);
+                        }
                         if(null != callback) {
                             if(flag) {
                                 String praiseid = (String) objs[3];

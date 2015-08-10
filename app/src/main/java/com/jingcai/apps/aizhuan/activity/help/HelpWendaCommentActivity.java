@@ -192,7 +192,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     @Override
                     public void success(Partjob12Response resp) {
                         if ("0".equals(resp.getResultCode())) {
-                            String praisecount = resp.getBody().getParttimejob().getPraisecount();
+                            String praisecount = resp.getBody().getParttimejob().getCount();
                             messageHandler.postMessage(3, praisecount);
                         } else {
                             messageHandler.postMessage(4, "取消赞失败");
@@ -297,7 +297,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     } else {
                         Partjob29Request req = new Partjob29Request();
                         Partjob29Request.Parttimejob job = req.new Parttimejob();
-                        job.setSourceid(UserSubject.getStudentid());
+                        job.setReceiverid(UserSubject.getStudentid());
                         job.setTargettype("3");//3答案
                         job.setTargetid(answerid);
                         job.setCommenttype("1");//1评论
@@ -310,6 +310,9 @@ public class HelpWendaCommentActivity extends BaseActivity {
                                 ResponseResult result = response.getResult();
                                 if ("0".equals(result.getCode())) {
                                     List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                    if(null == parttimejob_list){
+                                        parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
+                                    }
                                     messageHandler.postMessage(0, parttimejob_list);
                                 } else {
                                     messageHandler.postMessage(1, result.getMessage());
