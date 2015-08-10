@@ -14,7 +14,7 @@
         <include layout="@layout/index_campus_list_item_title" />
 
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_detail_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -22,16 +22,16 @@
             android:background="@drawable/help_item_content_bg"
             android:elegantTextHeight="true"
             android:lineSpacingMultiplier="1.2"
-            android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n\n\n\n\n\n内容请仔细想想慢慢想仔细想想慢慢想想想慢慢想\n想想慢慢想"
+            android:text=""
             android:textColor="@color/important_dark"
             android:textSize="16sp" />
 
         <include layout="@layout/index_campus_list_item_wenda" />
 
     </LinearLayout>
-
+<!--
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color" />-->
 </LinearLayout>

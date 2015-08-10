@@ -207,7 +207,7 @@ public class RegistActivity extends BaseActivity {
             return false;
         }
         int length = et_password.getText().toString().length();
-        if (6 < length || length > 16) {
+        if (6 > length || length > 16) {
             showToast("密码长度必须在6至16位之间", 0);
             return false;
         }
@@ -215,7 +215,7 @@ public class RegistActivity extends BaseActivity {
             showToast("密码输入不一致", 0);
             return false;
         }
-        return false;
+        return true;
     }
 
     class MessageHandler extends BaseHandler {

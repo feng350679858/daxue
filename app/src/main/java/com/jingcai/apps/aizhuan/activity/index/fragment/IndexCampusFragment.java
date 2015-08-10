@@ -236,6 +236,7 @@ public class IndexCampusFragment extends BaseFragment {
                 if (jishiFlag) {
                     Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
+                    intent.putExtra("type", job.getType());//1跑腿 还是 3公告
                     baseActivity.startActivityForResult(intent, REQUEST_CODE_JISHI_DETAIL);
                 } else {
                     Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);

@@ -16,11 +16,12 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob14.Partjob14Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob14.Partjob14Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob39.Partjob39Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.StringUtil;
@@ -29,7 +30,6 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
  * Created by lejing on 15/7/16.
  */
 public class HelpWendaEditActivity extends BaseActivity {
-    private static final String TAG = "HelpWendaCommnet";
     private String helpid, answerid;
     private MessageHandler messageHandler;
     private TextView tv_func;
@@ -42,7 +42,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         helpid = getIntent().getStringExtra("helpid");
         answerid = getIntent().getStringExtra("answerid");
-        if(StringUtil.isEmpty(helpid)){
+        if (StringUtil.isEmpty(helpid)) {
             finishWithResult();
         } else {
             messageHandler = new MessageHandler(this);
@@ -57,19 +57,20 @@ public class HelpWendaEditActivity extends BaseActivity {
     }
 
     private void finishWithResult() {
-        if(updateFlag) {
+        if (updateFlag) {
             Intent intent = new Intent();
             intent.putExtra("answerid", answerid);
             intent.putExtra("helpContent", et_help_content.getText().toString());
             intent.putExtra("anonFlag", cb_anonymous.isChecked());
             setResult(RESULT_OK, intent);
-        }else{
+        } else {
             setResult(RESULT_CANCELED);
         }
+        finish();
     }
 
     private void initData() {
-        if(StringUtil.isEmpty(answerid))    return;
+        if (StringUtil.isEmpty(answerid)) return;
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -103,7 +104,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                answer();
+                finishWithResult();
             }
         });
 
@@ -114,7 +115,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         tv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishWithResult();
+                answer();
             }
         });
     }
@@ -178,39 +179,65 @@ public class HelpWendaEditActivity extends BaseActivity {
             }
         }
     }
+
     private void answer() {
-        if(!actionLock.tryLock()){
+        if (!actionLock.tryLock()) {
             return;
         }
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Partjob14Request req = new Partjob14Request();
-                Partjob14Request.Parttimejob job = req.new Parttimejob();
-                job.setAnonflag(cb_anonymous.isChecked()?"1":"0");
-                job.setContent(et_help_content.getText().toString());
-                job.setQuestionid(helpid);
-                job.setStudentid(UserSubject.getStudentid());
-                req.setParttimejob(job);
-                new AzService().doTrans(req, Partjob14Response.class, new AzService.Callback<Partjob14Response>() {
-                    @Override
-                    public void success(Partjob14Response resp) {
-                        if ("0".equals(resp.getResultCode())) {
-                            String answerid = resp.getBody().getParttimejob().getHelperid();
-                            messageHandler.postMessage(0, answerid);
-                        } else {
-                            messageHandler.postMessage(1, resp.getResultMessage());
+        if(StringUtil.isEmpty(answerid)) {
+            new AzExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Partjob14Request req = new Partjob14Request();
+                    Partjob14Request.Parttimejob job = req.new Parttimejob();
+                    job.setAnonflag(cb_anonymous.isChecked() ? "1" : "0");
+                    job.setContent(et_help_content.getText().toString());
+                    job.setQuestionid(helpid);
+                    job.setStudentid(UserSubject.getStudentid());
+                    req.setParttimejob(job);
+                    new AzService().doTrans(req, Partjob14Response.class, new AzService.Callback<Partjob14Response>() {
+                        @Override
+                        public void success(Partjob14Response resp) {
+                            if ("0".equals(resp.getResultCode())) {
+                                String answerid = resp.getBody().getParttimejob().getHelperid();
+                                messageHandler.postMessage(0, answerid);
+                            } else {
+                                messageHandler.postMessage(1, resp.getResultMessage());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
+                }
+            });
+        }else{
+            new AzExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Partjob39Request req = new Partjob39Request(answerid, et_help_content.getText().toString());
+                    new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                        @Override
+                        public void success(BaseResponse resp) {
+                            if ("0".equals(resp.getResultCode())) {
+                                messageHandler.postMessage(0, answerid);
+                            } else {
+                                messageHandler.postMessage(1, resp.getResultMessage());
+                            }
+                        }
+
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
+                }
+            });
+        }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

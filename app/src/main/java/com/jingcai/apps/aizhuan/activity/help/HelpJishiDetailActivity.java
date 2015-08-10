@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
@@ -31,7 +32,9 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.DictUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
@@ -47,12 +50,27 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private String helpid, type;
     private AzExecutor azExecutor = new AzExecutor();
     private AzService azService = new AzService();
+    private BitmapUtil bitmapUtil = new BitmapUtil();
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private CheckBox cb_jishi_help;
     private EditText et_reploy_comment;
+    private ImageView iv_func;
+    private ImageView civ_head_logo;
+    private LevelTextView ltv_level;
+    private TextView tv_stu_name;
+    private TextView tv_stu_college;
+    private TextView tv_deploy_time;
+    private TextView tv_money;
+    private TextView tv_detail_content;
+    private View layout_jishi_like;
+    private CheckBox cb_jishi_like;
+    private CheckBox cb_jishi_comment;
+    private View layout_jishi_help;
+    private Partjob19Response.Parttimejob job;
+    private TextView tv_gender_limit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +98,20 @@ public class HelpJishiDetailActivity extends BaseActivity {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("求助详情");
 
-        final ImageView iv_func = (ImageView) findViewById(R.id.iv_func);
-        iv_func.setVisibility(View.VISIBLE);
+        iv_func = (ImageView) findViewById(R.id.iv_func);
+        if(GlobalConstant.debugFlag){
+            iv_func.setVisibility(View.VISIBLE);
+        }else {
+            iv_func.setVisibility(View.GONE);
+        }
         iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(null == job && !GlobalConstant.debugFlag) {
+                    return;
+                }
                 int dp10_px = HelpJishiDetailActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
-                Log.d("==", "---------" + dp10_px);
                 View contentView = LayoutInflater.from(HelpJishiDetailActivity.this).inflate(R.layout.help_wenda_answer_setting_pop, null);
                 PopupWin groupWin = PopupWin.Builder.create(HelpJishiDetailActivity.this)
                         .setWidth(dp10_px * 17)
@@ -96,8 +120,14 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         .setParentView(iv_func)
                         .setContentView(contentView)
                         .build();
-                {
-                    View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
+
+                View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
+                View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
+
+                final boolean selfFlag = GlobalConstant.debugFlag?false:UserSubject.getStudentid().equals(job.getSourceid());
+                if (selfFlag) {
+                    tv_pop_abuse_report.setVisibility(View.GONE);
+                }else{
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
                     tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -107,7 +137,6 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     });
                 }
                 {
-                    View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
                     tv_pop_share.setVisibility(View.VISIBLE);
                     tv_pop_share.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -116,43 +145,64 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         }
                     });
                 }
+
                 groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
             }
         });
-
-//        Field field = null;
-//        try {
-//            int i = com.android.internal.R.style.Animation_Toast;
-//            field = com.android.internal.R.style.class.getField("Animation_Toast");
-//            Field modifiersField = Field.class.getDeclaredField("modifiers");
-//            modifiersField.setAccessible(true);
-//            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-//            field.set(null, com.jingcai.apps.custometoast.R.style.toastInAndOutAnim);
-//        } catch (NoSuchFieldException e ){
-//        } catch (IllegalAccessException e) {
-//        }
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
+                //setResult(RESULT_CANCELED);
                 finish();
             }
         });
     }
 
     private void initView() {
-        TextView tv_title = (TextView) findViewById(R.id.tv_main_tip);
-        tv_title.setText("跑腿");
+        TextView tv_main_tip = (TextView) findViewById(R.id.tv_main_tip);
+        tv_main_tip.setText("1".equals(type)?"跑腿":"公告");
+        civ_head_logo = (ImageView)findViewById(R.id.civ_head_logo);
+        ltv_level = (LevelTextView) findViewById(R.id.ltv_level);
+        tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
+        tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
+        tv_deploy_time = (TextView) findViewById(R.id.tv_deploy_time);
+        tv_money = (TextView) findViewById(R.id.tv_money);
+        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
+        tv_gender_limit = (TextView) findViewById(R.id.tv_gender_limit);
 
-        et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
-
-        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
-        cb_jishi_help.setVisibility(View.VISIBLE);//帮TA
-        findViewById(R.id.layout_jishi_help).setOnClickListener(new View.OnClickListener() {
+        layout_jishi_like = findViewById(R.id.layout_jishi_like);
+        layout_jishi_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (null != job) {
+                    new LikeHandler(HelpJishiDetailActivity.this).setCallback(new LikeHandler.Callback() {
+                        @Override
+                        public void like(String praiseid, CheckBox checkBox) {
+                            job.setPraiseflag("1");
+                            job.setPraiseid(praiseid);
+                            job.setPraisecount(checkBox.getText().toString());
+                        }
+
+                        @Override
+                        public void unlike(CheckBox checkBox) {
+                            job.setPraiseflag("0");
+                            job.setPraiseid(null);
+                            job.setPraisecount(checkBox.getText().toString());
+                        }
+                    }).click("1".equals(type)?"1":"5", helpid, job.getPraiseid(), cb_jishi_like);
+                }
+            }
+        });
+        cb_jishi_like = (CheckBox) findViewById(R.id.cb_jishi_like);
+        cb_jishi_comment = (CheckBox) findViewById(R.id.cb_jishi_comment);
+        layout_jishi_help = findViewById(R.id.layout_jishi_help);
+        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
+        layout_jishi_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
                 showToast("显示帮助确认弹窗");
             }
         });
@@ -163,7 +213,6 @@ public class HelpJishiDetailActivity extends BaseActivity {
         groupListView.setPullRefreshEnable(true);
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
-
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
@@ -184,10 +233,10 @@ public class HelpJishiDetailActivity extends BaseActivity {
             public void click(View view, CommentItem region) {
                 boolean selected = region.isSelected();
                 commentAdapter.clearSelected();
-                if(!selected) {
+                if (!selected) {
                     region.setSelected(!selected);
                     et_reploy_comment.setHint("回复：" + region.getSourcename());
-                }else{
+                } else {
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -223,8 +272,43 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 }).click(region.getSourceid(), "2", region.getContentid());
             }
         });
+
+        et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
     }
 
+    private void setViewData(){
+        if(null == job){
+            return;
+        }
+        iv_func.setVisibility(View.VISIBLE);
+        //tv_main_tip.setText(job.getTopiccontent());
+        bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
+        try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
+        tv_stu_name.setText(job.getSourcename());
+        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {
+            tv_stu_college.setText(job.getSourcecollege());
+        }else{
+            tv_stu_college.setText(job.getSourceschool());
+        }
+        tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        tv_money.setText(StringUtil.getPrintMoney(job.getMoney()));
+        tv_detail_content.setText(job.getPubliccontent());
+        tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGenderlimit()));
+
+        //点赞
+        if("0".equals(job.getPraisecount())||StringUtil.isEmpty(job.getPraisecount())) {
+            cb_jishi_like.setText("");
+        }else {
+            cb_jishi_like.setText(job.getPraisecount());
+        }
+        cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
+        //评论
+        if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+            cb_jishi_comment.setText("");
+        }else {
+            cb_jishi_comment.setText(job.getCommentcount());
+        }
+    }
     private void onLoad() {
         groupListView.stopRefresh();
         groupListView.stopLoadMore();
@@ -241,7 +325,8 @@ public class HelpJishiDetailActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-
+                        job = (Partjob19Response.Parttimejob) msg.obj;
+                        setViewData();
                     } finally {
                         actionLock.unlock();
                     }
@@ -302,6 +387,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 public void run() {
                     Partjob19Request req = new Partjob19Request();
                     Partjob19Request.Parttimejob job = req.new Parttimejob();
+                    job.setType(type);//1：即时型求助   3：公告求助
                     job.setStudentid(UserSubject.getStudentid());
                     job.setHelpid(helpid);
                     req.setParttimejob(job);
@@ -355,7 +441,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     } else {
                         Partjob29Request req = new Partjob29Request();
                         Partjob29Request.Parttimejob job = req.new Parttimejob();
-                        job.setSourceid(UserSubject.getStudentid());
+                        job.setReceiverid(UserSubject.getStudentid());
                         job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
                         job.setTargetid(helpid);
                         job.setCommenttype("1");//1评论
@@ -368,6 +454,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
                                 ResponseResult result = response.getResult();
                                 if ("0".equals(result.getCode())) {
                                     List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                    if(null == parttimejob_list){
+                                        parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
+                                    }
                                     messageHandler.postMessage(2, parttimejob_list);
                                 } else {
                                     messageHandler.postMessage(3, result.getMessage());

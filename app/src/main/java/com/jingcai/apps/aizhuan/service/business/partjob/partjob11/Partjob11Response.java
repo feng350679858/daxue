@@ -23,7 +23,7 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Body> {
     }
     public static class Parttimejob {
         private String helpid;
-        private String type;
+        private String type;//1:即时型求助 2:问答型求助 3:求助公告
         private String money;
         private String title;
         private String content;

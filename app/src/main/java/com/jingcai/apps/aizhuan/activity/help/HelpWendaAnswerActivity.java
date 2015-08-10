@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.AnonHandler;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
@@ -28,10 +29,14 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by lejing on 15/7/16.
@@ -41,14 +46,21 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     private static final int REQUEST_CODE_ANSWER_COMMENT = 1102;
     private String answerid;
     private MessageHandler messageHandler;
+    private BitmapUtil bitmapUtil = new BitmapUtil();
     private View tv_reward, tv_reedit;
     private Partjob36Response.Parttimejob job;
-    private ImageView iv_func;
     private View layout_wenda_help;
     private View layout_wenda_like;
     private View layout_wenda_comment;
     private CheckBox cb_wenda_like;
     private CheckBox cb_wenda_comment;
+    private CircleImageView civ_head_logo;
+    private LevelTextView ltv_level;
+    private TextView tv_stu_name;
+    private TextView tv_deploy_time;
+    private TextView tv_stu_college;
+    private TextView tv_detail_content;
+    private ImageView iv_func;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +118,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null == job){
+                if (null == job) {
                     return;
                 }
                 int dp10_px = HelpWendaAnswerActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
@@ -140,11 +152,12 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                                 @Override
                                 public void call() {
                                     win.dismiss();
-                                    job.setAnonflag("1".equals(job.getAnonflag()) ? "0" : "1");
-                                    if("1".equals(job.getAnonflag())) {
-
-                                    }
-                                    //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
+                                    initData();
+//                                    job.setAnonflag("1".equals(job.getAnonflag()) ? "0" : "1");
+//                                    if ("1".equals(job.getAnonflag())) {
+//
+//                                    }
+//                                    //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
                                 }
                             }).click("2", answerid);
                         }
@@ -161,7 +174,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                             startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
                         }
                     });
-                }else{
+                } else {
                     tv_pop_anonymous.setVisibility(View.GONE);
                     tv_pop_reedit.setVisibility(View.GONE);
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
@@ -207,6 +220,13 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     }
 
     private void initView(){
+        civ_head_logo = (CircleImageView)findViewById(R.id.civ_head_logo);
+        ltv_level = (LevelTextView)findViewById(R.id.ltv_level);
+        tv_stu_name = (TextView)findViewById(R.id.tv_stu_name);
+        tv_deploy_time = (TextView)findViewById(R.id.tv_deploy_time);
+        tv_stu_college = (TextView)findViewById(R.id.tv_stu_college);
+        tv_detail_content = (TextView)findViewById(R.id.tv_detail_content);
+
         layout_wenda_like = findViewById(R.id.layout_wenda_like);
         cb_wenda_like = (CheckBox)findViewById(R.id.cb_wenda_like);
         layout_wenda_comment = findViewById(R.id.layout_wenda_comment);
@@ -272,14 +292,32 @@ public class HelpWendaAnswerActivity extends BaseActivity {
 
     private void initViewData() {
         if(null == job) return ;
-
         iv_func.setVisibility(View.VISIBLE);
 
+        bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
+        try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
+        tv_stu_name.setText(job.getSourcename());
+        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {
+            tv_stu_college.setText(job.getSourcecollege());
+        }else{
+            tv_stu_college.setText(job.getSourceschool());
+        }
+        tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        tv_detail_content.setText(job.getContent());
+
         //点赞
-        cb_wenda_like.setText(job.getPraisecount());
+        if("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())){
+            cb_wenda_like.setText("");
+        }else {
+            cb_wenda_like.setText(job.getPraisecount());
+        }
         cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
         //评论
-        cb_wenda_comment.setText(job.getCommentcount());
+        if("0".equals(job.getCommentcount()) || StringUtil.isEmpty(job.getCommentcount())){
+            cb_wenda_comment.setText("");
+        }else {
+            cb_wenda_comment.setText(job.getCommentcount());
+        }
 
         final boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
         if (selfFlag) {
@@ -313,7 +351,14 @@ public class HelpWendaAnswerActivity extends BaseActivity {
         switch (requestCode){
             case REQUEST_CODE_ANSWER_EDIT:{
                 if(Activity.RESULT_OK == resultCode){
-                    //TODO 撰写变为我的答案
+                    //更新内容
+                    //String helperid = data.getStringExtra("helperid");
+                    String helpContent = data.getStringExtra("helpContent");
+                    job.setContent(helpContent);
+
+                    boolean anonFlag = data.getBooleanExtra("anonFlag", false);
+                    job.setAnonflag(anonFlag ?"1":"0");
+                    tv_detail_content.setText(helpContent);
                 }
                 break;
             }

@@ -59,10 +59,10 @@ public class HelpWendaDetailActivity extends BaseActivity {
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private CheckBox cb_wenda_help, cb_wenda_help_my, cb_wenda_comment, cb_wenda_like;
-    private TextView tv_title;
+    private TextView tv_main_tip;
     private ImageView civ_head_logo;
     private LevelTextView ltv_level;
-    private TextView tv_stu_name, tv_stu_college, tv_deploy_time, tv_content;
+    private TextView tv_stu_name, tv_stu_college, tv_deploy_time, tv_detail_content;
     private View layout_wenda_like, layout_wenda_help;
     private Partjob34Response.Parttimejob job;
 
@@ -171,14 +171,14 @@ public class HelpWendaDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_title = (TextView)findViewById(R.id.tv_title);
+        tv_main_tip = (TextView)findViewById(R.id.tv_main_tip);
         civ_head_logo = (ImageView)findViewById(R.id.civ_head_logo);
         ltv_level = (LevelTextView) findViewById(R.id.ltv_level);
         tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
         tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
         tv_deploy_time = (TextView) findViewById(R.id.tv_deploy_time);
         findViewById(R.id.tv_money).setVisibility(View.GONE);
-        tv_content = (TextView) findViewById(R.id.tv_content);
+        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
 
         layout_wenda_like = findViewById(R.id.layout_wenda_like);
         layout_wenda_like.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +252,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                         region.setPraiseid(null);
                         region.setPraisecount(checkBox.getText().toString());
                     }
-                }).click("2", helpid, region.getPraiseid(), checkBox);
+                }).click("3", region.getContentid(), region.getPraiseid(), checkBox);
             }
 
             @Override
@@ -273,7 +273,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
             return;
         }
         iv_func.setVisibility(View.VISIBLE);
-        tv_title.setText(job.getTopiccontent());
+        tv_main_tip.setText(job.getTopiccontent());
         bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
         try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
         tv_stu_name.setText(job.getSourcename());
@@ -283,13 +283,21 @@ public class HelpWendaDetailActivity extends BaseActivity {
             tv_stu_college.setText(job.getSourceschool());
         }
         tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
-        tv_content.setText(job.getContent());
+        tv_detail_content.setText(job.getContent());
 
         //点赞
-        cb_wenda_like.setText(job.getPraisecount());
+        if("0".equals(job.getPraisecount())||StringUtil.isEmpty(job.getPraisecount())) {
+            cb_wenda_like.setText("");
+        }else {
+            cb_wenda_like.setText(job.getPraisecount());
+        }
         cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
         //评论
-        cb_wenda_comment.setText(job.getCommentcount());
+        if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+            cb_wenda_comment.setText("");
+        }else {
+            cb_wenda_comment.setText(job.getCommentcount());
+        }
 
         showHelpLayout();
     }
@@ -330,7 +338,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER_VIEW2:{
+            case REQUEST_CODE_ANSWER_VIEW2:{//我的答案
                 if(resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
                     groupListView.autoRefresh();
@@ -339,11 +347,12 @@ public class HelpWendaDetailActivity extends BaseActivity {
             }
             case REQUEST_CODE_ANSWER_EDIT:{
                 if(resultCode == RESULT_OK) {
-                    //正常发布完成，显示我的答案页面
+                    //正常发布完成，显示我的答案页面，刷新列表
                     String helperid = data.getStringExtra("helperid");
                     job.setHelpflag("1");
                     job.setHelperid(helperid);
                     showHelpLayout();
+                    groupListView.autoRefresh();
                 }
                 break;
             }
@@ -490,6 +499,9 @@ public class HelpWendaDetailActivity extends BaseActivity {
                                 ResponseResult result = response.getResult();
                                 if ("0".equals(result.getCode())) {
                                     List<Partjob15Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                    if(null == parttimejob_list){
+                                        parttimejob_list = new ArrayList<Partjob15Response.Parttimejob>();
+                                    }
                                     messageHandler.postMessage(2, parttimejob_list);
                                 } else {
                                     messageHandler.postMessage(3, result.getMessage());
