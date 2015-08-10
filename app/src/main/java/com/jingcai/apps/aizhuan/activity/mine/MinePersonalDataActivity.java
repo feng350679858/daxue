@@ -29,14 +29,18 @@ import com.jingcai.apps.aizhuan.util.AppUtil;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.CaptureCropUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/7/18.
  */
 public class MinePersonalDataActivity extends BaseActivity {
-    private final String TAG="MinePersonalData";
+    private final String TAG = "MinePersonalData";
     private static final int EMAIL_REQUEST_CODE = 1;//邮箱
     private static final int QQ_REQUEST_CODE = 2;//QQ
     private static final int IMAGE_REQUEST_CODE = 3;//头像的request_code
@@ -58,23 +62,25 @@ public class MinePersonalDataActivity extends BaseActivity {
     private TextView mTextProfessional;
     private PopupWin popupWin;
     private AzService azService;
+    private CaptureCropUtil mCropUtil;
     private BitmapUtil bitmapUtil;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_personal_data);
         messageHandler = new MessageHandler(MinePersonalDataActivity.this);
         azService = new AzService(MinePersonalDataActivity.this);
-        bitmapUtil=new BitmapUtil(this);
+        mCropUtil = new CaptureCropUtil(this);
+        bitmapUtil = new BitmapUtil(this);
 
         initHeader();
         initViews();  //初始化Views
         initData();  //填充数据
     }
 
-    private void initHeader(){
-        ((TextView)findViewById(R.id.tv_content)).setText("个人资料");
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("个人资料");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,17 +97,17 @@ public class MinePersonalDataActivity extends BaseActivity {
         mImageLogopath = (ImageView) findViewById(R.id.iv_profile_logopath);
         mTextName = (TextView) findViewById(R.id.tv_profile_name);
         mTextGender = (TextView) findViewById(R.id.tv_profile_gender);
-        mTextAreaname = (TextView)findViewById(R.id.tv_profile_areaname);
+        mTextAreaname = (TextView) findViewById(R.id.tv_profile_areaname);
         mTextPhone = (TextView) findViewById(R.id.tv_profile_phone);
         mTextEmail = (TextView) findViewById(R.id.tv_profile_email);
         mTextQq = (TextView) findViewById(R.id.tv_profile_qq);
         mTextSchoolname = (TextView) findViewById(R.id.tv_profile_schoolname);
         mTextJoindate = (TextView) findViewById(R.id.tv_profile_joindate);
         mTextCollegename = (TextView) findViewById(R.id.tv_profile_collegename);
-        mTextProfessional = (TextView)findViewById(R.id.tv_profile_professional);
+        mTextProfessional = (TextView) findViewById(R.id.tv_profile_professional);
 
         //修改邮箱
-       findViewById(R.id.ll_mine_profile_email).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_mine_profile_email).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MinePersonalDataActivity.this, ImproveProfileSimpleItemActivity.class);
@@ -114,7 +120,7 @@ public class MinePersonalDataActivity extends BaseActivity {
         });
 
         //修改QQ
-       findViewById(R.id.ll_mine_profile_qq).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_mine_profile_qq).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MinePersonalDataActivity.this, ImproveProfileSimpleItemActivity.class);
@@ -125,48 +131,31 @@ public class MinePersonalDataActivity extends BaseActivity {
                 startActivityForResult(intent, QQ_REQUEST_CODE);
             }
         });
-       findViewById(R.id.ll_mine_profile_image).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_mine_profile_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null == popupWin) {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("camera", "拍照");
+                    map.put("album", "从相册选择");
                     View parentView = MinePersonalDataActivity.this.getWindow().getDecorView();
-                    View contentView = LayoutInflater.from(MinePersonalDataActivity.this).inflate(R.layout.mine_photo_choose, null);
-
                     popupWin = PopupWin.Builder.create(MinePersonalDataActivity.this)
+                            .setData(map, new PopupWin.Callback() {
+                                @Override
+                                public void select(String key, String val) {
+                                    if ("camera".equals(key)) {
+                                        if (AppUtil.isSdcardExisting()) {
+                                            mCropUtil.openCamera();
+                                        } else {
+                                            showToast("未找到SD卡");
+                                        }
+                                    } else if ("album".equals(key)) {
+                                        mCropUtil.openAlbum();
+                                    }
+                                }
+                            })
                             .setParentView(parentView)
-                            .setContentView(contentView)
                             .build();
-                    contentView.findViewById(R.id.ll_mine_photo_pai).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (AppUtil.isSdcardExisting()) {
-                                Intent cameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.getCropImageUri());
-                                cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-                                // dialog.dismiss();
-                            } else {
-                                showToast("未找到SD卡");
-                                // dialog.dismiss();
-                            }
-                            popupWin.dismiss();
-                        }
-                    });
-                    contentView.findViewById(R.id.ll_choose_from_album).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(Intent.ACTION_PICK);
-                            intent.setType("image/*");//相片类型
-                            startActivityForResult(intent, IMAGE_REQUEST_CODE);
-                            popupWin.dismiss();
-                        }
-                    });
-                    contentView.findViewById(R.id.btn_pick_photo_cancel).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWin.dismiss();
-                        }
-                    });
                 }
                 popupWin.show();
             }
@@ -210,23 +199,23 @@ public class MinePersonalDataActivity extends BaseActivity {
         student.setPassword(UserSubject.getPassword());
 
         mTextName.setText(student.getName());
-        mTextGender.setText("1".equals(student.getGender())?"女":"男");
+        mTextGender.setText("1".equals(student.getGender()) ? "女" : "男");
         mTextAreaname.setText(student.getAreaname());
         mTextPhone.setText(student.getPhone());
         mTextEmail.setText(student.getEmail());
         mTextQq.setText(student.getQq());
         mTextSchoolname.setText(student.getSchoolname());
-        if(StringUtil.isNotEmpty(student.getJoindate())) {
-            if(student.getJoindate().length()>4){
+        if (StringUtil.isNotEmpty(student.getJoindate())) {
+            if (student.getJoindate().length() > 4) {
                 mTextJoindate.setText(student.getJoindate().substring(0, 4));
-            }else {
+            } else {
                 mTextJoindate.setText(student.getJoindate());
             }
         }
         mTextCollegename.setText(student.getCollegename());
         mTextProfessional.setText(student.getProfessional());
         if (StringUtil.isNotEmpty(student.getLogopath())) {
-            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, R.drawable.default_head_img);
+            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), true, R.drawable.default_head_img);
         }
         //开启另一个线程更新同步数据，避免出现UI阻塞
         new AzExecutor().execute(new Runnable() {
@@ -254,7 +243,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                 }
                 case 1: {
                     showToast("获取失败");
-                    Log.i(TAG,"获取失败:" + msg.obj);
+                    Log.i(TAG, "获取失败:" + msg.obj);
                     break;
                 }
                 case 2:
@@ -263,26 +252,21 @@ public class MinePersonalDataActivity extends BaseActivity {
                     break;
                 case 3:
                     showToast("更新失败");
-                    Log.i(TAG,"更新失败:" + msg.obj);
+                    Log.i(TAG, "更新失败:" + msg.obj);
                     break;
-                case 4: {
-                    if(null != msg.obj ){
-                        //将截取的照片 存入imageView中
-                        Bitmap bitmap = (Bitmap)msg.obj;
-                        mImageLogopath.setImageBitmap(bitmap);
 
-                        uploadLogo(bitmap);
-
-                    } else{
-                        showToast("图片获取失败");
-                    }
-                    break;
-                }
                 default: {
                     super.handleMessage(msg);
                 }
             }
         }
+    }
+
+    private void setAndUploadLogo() {
+        //将截取的照片 存入imageView中
+        Bitmap bitmap1 = mCropUtil.decodeUriAsBitmap(CaptureCropUtil.getCropImageUri());
+        mImageLogopath.setImageBitmap(bitmap1);
+        uploadLogo(bitmap1);
     }
 
     private void uploadLogo(Bitmap bitmap) {
@@ -330,7 +314,7 @@ public class MinePersonalDataActivity extends BaseActivity {
                     break;
                 //QQ
                 case QQ_REQUEST_CODE:
-                    if(data != null){
+                    if (data != null) {
                         Stu03Request req = new Stu03Request();
                         Stu03Request.Student student = req.new Student();
                         req.setStudent(student);
@@ -341,27 +325,24 @@ public class MinePersonalDataActivity extends BaseActivity {
                     break;
 
                 // 从相册获取头像
-                case IMAGE_REQUEST_CODE:
-                    resizeImage(data.getData());
+                case CaptureCropUtil.REQUEST_CODE_IMAGE:
+                    mCropUtil.resizeImage(data.getData(), 1, 1, 150, 150);
                     break;
                 // 照相机现拍
-                case CAMERA_REQUEST_CODE:
+                case CaptureCropUtil.REQUEST_CODE_CAMERA:
                     if (AppUtil.isSdcardExisting()) {
-                        resizeImage(AppUtil.getCropImageUri());
+                        mCropUtil.resizeImage(CaptureCropUtil.getCaptureImageUri(),  1, 1, 150, 150);
                     } else {
                         showToast("未找到存储卡，无法存储照片");
                     }
                     break;
                 // 图片截取
-                case RESIZE_REQUEST_CODE:
-                    if (data != null) {
-                        Bitmap bitmap = null;
-                        if(null != data.getExtras()){
-                            bitmap = data.getExtras().getParcelable("data");
-                        }
-                        messageHandler.postMessage(4, bitmap);
-                    }
+                case CaptureCropUtil.REQUEST_CODE_RESIZE:
+                    setAndUploadLogo();
                     break;
+                default: {
+                    super.onActivityResult(requestCode, resultCode, data);
+                }
             }
         }
 
@@ -369,6 +350,7 @@ public class MinePersonalDataActivity extends BaseActivity {
 
     /**
      * 更新student，发送到服务端
+     *
      * @param req
      */
     private void updateStudent(final Stu03Request req) {
@@ -395,21 +377,22 @@ public class MinePersonalDataActivity extends BaseActivity {
 
     /**
      * 从服务端读取完，读取成功后更新UI与UserSubject
+     *
      * @param student 用户所输入的数据
      */
     private void updateUIField(Stu03Request.Student student) {
         if (StringUtil.isNotEmpty(student.getEmail())) {
             mTextEmail.setText(student.getEmail());
         }
-        if( StringUtil.isNotEmpty(student.getQq())){
+        if (StringUtil.isNotEmpty(student.getQq())) {
             mTextQq.setText(student.getQq());
         }
-        if(StringUtil.isNotEmpty(student.getLogopath())){
-           // UserSubject.setLogourl(student.getLogopath());
-          //  Preferences.setLogopath(MinePersonalDataActivity.this, student.getLogopath());
-         //   new BitmapUtil(MinePersonalDataActivity.this).getImage((MinePersonalDataActivity.this).getResideMenu().getIv_logopath(), UserSubject.getLogourl(), 0);
+        if (StringUtil.isNotEmpty(student.getLogopath())) {
+            // UserSubject.setLogourl(student.getLogopath());
+            //  Preferences.setLogopath(MinePersonalDataActivity.this, student.getLogopath());
+            //   new BitmapUtil(MinePersonalDataActivity.this).getImage((MinePersonalDataActivity.this).getResideMenu().getIv_logopath(), UserSubject.getLogourl(), 0);
             //mImageLogopath.setImageDrawable(student.getLogopath());
-            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(),true, 0);
+            new BitmapUtil(MinePersonalDataActivity.this).getImage(mImageLogopath, student.getLogopath(), true, 0);
 
         }
     }
@@ -419,18 +402,18 @@ public class MinePersonalDataActivity extends BaseActivity {
      *
      * @param uri
      */
-    public void resizeImage(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 150);
-        intent.putExtra("outputY", 150);
-        intent.putExtra("return-data", true);
-//        intent.putExtra("outputFormat", "JPEG");
-//        intent.putExtra("noFaceDetection", true);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, RESIZE_REQUEST_CODE);
-    }
+//    public void resizeImage(Uri uri) {
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        intent.putExtra("crop", "true");
+//        intent.putExtra("aspectX", 1);
+//        intent.putExtra("aspectY", 1);
+//        intent.putExtra("outputX", 150);
+//        intent.putExtra("outputY", 150);
+//        intent.putExtra("return-data", true);
+////        intent.putExtra("outputFormat", "JPEG");
+////        intent.putExtra("noFaceDetection", true);
+////        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent, RESIZE_REQUEST_CODE);
+//    }
 }
