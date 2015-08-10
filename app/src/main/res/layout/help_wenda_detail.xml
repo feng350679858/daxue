@@ -12,8 +12,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_header"
-        android:divider="@color/divider_color"
-        android:dividerHeight="5dp"
-        android:headerDividersEnabled="false"
         xlv:extraHeader="@layout/help_wenda_detail_header" />
 </RelativeLayout>

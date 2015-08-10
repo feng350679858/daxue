@@ -41,10 +41,10 @@ public class LoginActivity extends BaseActivity {
 
         messageHandler = new MessageHandler(this);
 
+        initViews();
+
         if (UserSubject.isLogin()) {
             doLogin(UserSubject.getPhone(), DES3Util.decrypt(UserSubject.getPassword()));
-        } else {
-            initViews();
         }
     }
 
@@ -109,11 +109,11 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void success(Sys04Response response) {
                         ResponseResult result = response.getResult();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(1, result.getMessage());
-                        } else {
+                        if ("0".equals(result.getCode())) {
                             Sys04Response.Sys04Body sys04Body = response.getBody();
                             getStudentInfo(azService, sys04Body.getStudent().getStudentid(), encryptPassword);
+                        } else {
+                            messageHandler.postMessage(1, result.getMessage());
                         }
                     }
 
@@ -140,10 +140,10 @@ public class LoginActivity extends BaseActivity {
                 Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
                 student.setStudentid(studentid);
                 student.setPassword(encryptPassword);
-                if (!"0".equals(result.getCode())) {
-                    messageHandler.postMessage(2, result.getMessage());
-                } else {
+                if ("0".equals(result.getCode())) {
                     messageHandler.postMessage(0, student);
+                } else {
+                    messageHandler.postMessage(2, result.getMessage());
                 }
             }
 

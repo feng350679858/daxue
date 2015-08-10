@@ -2,125 +2,136 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/content_background"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_head_logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/icon_share_qq"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/divider_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+        android:background="@color/content_background"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <RelativeLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_share_qq" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_stu_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="花几支"
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_stu_school"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_stu_name"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tv_stu_name"
+                    android:text="浙江大学"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_stu_college"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_stu_name"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tv_stu_school"
+                    android:text="计算机学院"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_stu_name"
+                    android:layout_marginTop="5dp"
+                    android:text="11:31"
+                    android:textSize="12sp" />
+
+
+                <!--   <CheckBox
+                       android:id="@+id/cb_comment_like"
+                       android:button="@null"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:clickable="true"
+                       android:drawableLeft="@drawable/help_item_like"
+                       android:drawablePadding="5dp"
+                       android:gravity="center"
+                       android:paddingBottom="10dp"
+                       android:paddingLeft="10dp"
+                       android:paddingRight="10dp"
+                       android:text="12"
+                       android:textColor="@color/normal_grey"
+                       android:textSize="14sp" />-->
+
+                <LinearLayout
+                    android:id="@+id/layout_comment_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <CheckBox
+                        android:id="@+id/cb_comment_like"
+                        style="@style/help_checkbox_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/help_item_like"
+                        android:text="12" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_stu_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_comment_origin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="花几支"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:text="回复 鸟几只：大放大打发打发士大夫大放大打发打发士大夫"
                 android:textColor="@color/normal_grey"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_stu_school"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_stu_name"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/tv_stu_name"
-                android:text="浙江大学"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_stu_college"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_stu_name"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/tv_stu_school"
-                android:text="计算机学院"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_stu_name"
                 android:layout_marginTop="5dp"
-                android:text="11:31"
-                android:textSize="12sp" />
+                android:lineSpacingMultiplier="1.2"
+                android:text="大放大打发打发士大夫大放大打发打发士大夫大放大打发打"
+                android:textColor="@color/important_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-
-         <!--   <CheckBox
-                android:id="@+id/cb_comment_like"
-                android:button="@null"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:drawableLeft="@drawable/help_item_like"
-                android:drawablePadding="5dp"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="12"
-                android:textColor="@color/normal_grey"
-                android:textSize="14sp" />-->
-
-            <LinearLayout
-                android:id="@+id/layout_comment_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <CheckBox
-                    android:id="@+id/cb_comment_like"
-                    style="@style/help_checkbox_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/help_item_like"
-                    android:text="12" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_comment_origin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="5dp"
-            android:singleLine="true"
-            android:text="回复 鸟几只：大放大打发打发士大夫大放大打发打发士大夫"
-            android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="大放大打发打发士大夫大放大打发打发士大夫大放大打发打"
-            android:textColor="@color/important_dark"
-            android:textSize="14sp" />
     </LinearLayout>
-
 </LinearLayout>

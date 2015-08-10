@@ -33,11 +33,13 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elegantTextHeight="true"
                 android:lineSpacingMultiplier="1.2"
-                android:text="求助内容\n\n\n\n\n请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"
+                android:text=""
+                android:gravity="center"
                 android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
@@ -55,9 +57,9 @@
         <include layout="@layout/index_campus_list_item_jishi" />
 
     </LinearLayout>
-
+<!--
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/divider_color" />
+        android:background="@color/divider_color" />-->
 </LinearLayout>

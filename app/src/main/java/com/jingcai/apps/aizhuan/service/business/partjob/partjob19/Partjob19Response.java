@@ -24,7 +24,10 @@ public class Partjob19Response extends BaseResponse<Partjob19Response.Body> {
         private String privatecontent;
         private String money;
         private String sourceid;
+        private String sourcename;
+        private String sourceimgurl;
         private String sourcelevel;
+        private String sourceschool;
         private String sourcecollege;
         private String optime;
         private String targetid;
@@ -32,7 +35,58 @@ public class Partjob19Response extends BaseResponse<Partjob19Response.Body> {
         private String targetimgurl;
         private String commentcount;
         private String praisecount;
+        private String praiseflag;
+        private String praiseid;
+        private String genderlimit;
         private String status;
+
+        public String getGenderlimit() {
+            return genderlimit;
+        }
+
+        public void setGenderlimit(String genderlimit) {
+            this.genderlimit = genderlimit;
+        }
+
+        public String getPraiseflag() {
+            return praiseflag;
+        }
+
+        public void setPraiseflag(String praiseflag) {
+            this.praiseflag = praiseflag;
+        }
+
+        public String getPraiseid() {
+            return praiseid;
+        }
+
+        public void setPraiseid(String praiseid) {
+            this.praiseid = praiseid;
+        }
+
+        public String getSourceimgurl() {
+            return sourceimgurl;
+        }
+
+        public void setSourceimgurl(String sourceimgurl) {
+            this.sourceimgurl = sourceimgurl;
+        }
+
+        public String getSourcename() {
+            return sourcename;
+        }
+
+        public void setSourcename(String sourcename) {
+            this.sourcename = sourcename;
+        }
+
+        public String getSourceschool() {
+            return sourceschool;
+        }
+
+        public void setSourceschool(String sourceschool) {
+            this.sourceschool = sourceschool;
+        }
 
         public String getCommentcount() {
             return commentcount;
