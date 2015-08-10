@@ -299,6 +299,7 @@ public class IdentityAuthenticationActivity extends BaseActivity{
                 }
                 case 2:
                     showToast("提交成功，请耐心等待审核结果");
+                    UserSubject.updateIdAuthFlag("2");
                     finish();
                     break;
                 case 3:

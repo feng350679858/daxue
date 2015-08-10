@@ -24,9 +24,9 @@ public class CaptureCropUtil {
     public static final String CROP_IMAGE_PATH = "/dalegexue/image/crop/";
     public static final String CAPTURE_IMAGE_PATH = "/dalegexue/image/capture/";
 
-    public static final int REQUEST_CODE_CAMERA = 0xa00;
-    public static final int REQUEST_CODE_IMAGE = 0xa01;
-    public static final int REQUEST_CODE_RESIZE = 0xa02;
+    public static final int REQUEST_CODE_CAMERA = 0xa00;  //照相的request_code
+    public static final int REQUEST_CODE_IMAGE = 0xa01;   //相册的request_code
+    public static final int REQUEST_CODE_RESIZE = 0xa02;  //截取的request_code
 
     private Activity mActivity;
 

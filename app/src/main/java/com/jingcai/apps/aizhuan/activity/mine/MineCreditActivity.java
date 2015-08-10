@@ -1,11 +1,11 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -14,46 +14,47 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
-import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
-import com.jingcai.apps.aizhuan.service.business.stu.stu03.Stu03Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.StringUtil;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Administrator on 2015/7/20.
  */
 public class MineCreditActivity extends BaseActivity {
-    private final String TAG="MineCreditActivity";
+    private final String TAG = "MineCreditActivity";
     private MessageHandler messageHandler;
     private AzService azService;
-    private TextView mTextName;
-    private TextView mTextSchoolname;
-    private TextView mTextCredit;
+    private TextView mTvName;
+    private CircleImageView mIvLogo;
+    private TextView mTvSchoolName;
+    private TextView mTvCredit;
+    private TextView mTvCollegeName;
+    private TextView mTvMore;
+    private ListView mListRemark;
+
+    private BitmapUtil mBitmapUtil;
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_credit);
 
         messageHandler = new MessageHandler(MineCreditActivity.this);
         azService = new AzService(MineCreditActivity.this);
-
-
+        mBitmapUtil = new BitmapUtil(this);
         initHeader();
         initViews();  //初始化Views
-        initData();  //填充数据
-        initCredit();
+        initData();
 
     }
 
-    private void initHeader()
-    {
-        ((TextView)findViewById(R.id.tv_content)).setText("我的信用");
-
+    private void initHeader() {
+        ((TextView) findViewById(R.id.tv_content)).setText("我的信用");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,47 +62,27 @@ public class MineCreditActivity extends BaseActivity {
             }
         });
     }
+
     private void initViews() {
-        mTextName = (TextView) findViewById(R.id.tv_mine_credit_name);
-        mTextSchoolname = (TextView) findViewById(R.id.tv_mine_credit_school);
-      //  mTextCollegename = (TextView) findViewById(R.id.tv_profile_collegename);
-        mTextCredit = (TextView) findViewById(R.id.tv_mine_credit_score);
+        mTvName = (TextView) findViewById(R.id.tv_mine_credit_name);
+        mTvSchoolName = (TextView) findViewById(R.id.tv_mine_credit_school);
+        mTvCollegeName = (TextView) findViewById(R.id.tv_mine_credit_college);
+        mTvCredit = (TextView) findViewById(R.id.tv_mine_credit_score);
+        mIvLogo = (CircleImageView) findViewById(R.id.iv_mine_credit_avatar);
+        mTvMore = (TextView) findViewById(R.id.tv_more_remark);
+        mListRemark = (ListView) findViewById(R.id.lv_single_remark_list);
     }
 
+    public void initData() {
+        mTvName.setText(UserSubject.getName());
+        mTvSchoolName.setText(UserSubject.getSchoolname());
+        mTvCollegeName.setText(UserSubject.getCollegename());
+        mBitmapUtil.getImage(mIvLogo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
 
-    private void initData() {
-        showProgressDialog("数据加载中..");
-        new AzExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                Stu02Request req = new Stu02Request();
-                final Stu02Request.Student stu = req.new Student();
-                stu.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                req.setStudent(stu);
-                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
-                    @Override
-                    public void success(Stu02Response response) {
-                        ResponseResult result = response.getResult();
-                        Stu02Response.Stu02Body stu02Body = response.getBody();
-                        Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
-                        if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(1, result.getMessage());
-                        } else {
-                            messageHandler.postMessage(0, student);
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-
-            }
-        });
+        initCreditData();
     }
 
-    public void initCredit(){
+    private void initCreditData() {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -132,18 +113,10 @@ public class MineCreditActivity extends BaseActivity {
         });
     }
 
-    private void fillStudentInView(Stu02Response.Stu02Body.Student student) {
-        mTextName.setText(student.getName());
-        mTextSchoolname.setText(student.getSchoolname() + " " + student.getCollegename());
-    //   mTextCredit.setText(student2.getScore());
-
-    }
-
     private void fillCreditInView(Stu11Response.Body.Student student) {
-       //mTextName.setText(student.getName());
-      //  mTextSchoolname.setText(student.getSchoolname()+" "+student.getCollegename());
-          mTextCredit.setText(student.getScore());
-
+        if(null != student){
+            mTvCredit.setText(student.getScore());
+        }
     }
 
     class MessageHandler extends BaseHandler {
@@ -155,20 +128,13 @@ public class MineCreditActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             closeProcessDialog();
             switch (msg.what) {
-                case 0: {
-                    Stu02Response.Stu02Body.Student student1 = (Stu02Response.Stu02Body.Student) msg.obj;
-                    //        Stu11Response.Stu11Body.Student student2 = (Stu11Response.Stu11Body.Student) msg.obj;
-                    fillStudentInView(student1);
-                    break;
-                }
                 case 1: {
-                    showToast("获取失败");
-                    Log.i(TAG,"获取失败:" + msg.obj);
+                    showToast("个人信用分数获取失败");
+                    Log.i(TAG, "个人信用分数获取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
-                   // Stu02Response.Stu02Body.Student student1 = (Stu02Response.Stu02Body.Student) msg.obj;
-                            Stu11Response.Body.Student student2 = (Stu11Response.Body.Student) msg.obj;
+                    Stu11Response.Body.Student student2 = (Stu11Response.Body.Student) msg.obj;
                     fillCreditInView(student2);
                     break;
                 }

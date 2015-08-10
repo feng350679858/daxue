@@ -16,8 +16,13 @@ public class WeixinNumberActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_contact_service_weixin);
+
+        initHeader();
+
+    }
+
+    private void initHeader() {
         ((TextView)findViewById(R.id.tv_content)).setText("微信公众账号");
-        // findViewById(R.id.tv_info).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

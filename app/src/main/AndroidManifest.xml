@@ -157,7 +157,7 @@
         <activity android:name=".activity.mine.MineStudentCertificationStateActivity" />
 
         <!-- mine ==> gold -->
-        <activity android:name=".activity.mine.gold.MineGoldTopupActivity"/>
+        <activity android:name=".activity.mine.gold.MineGoldRechargeActivity"/>
         <activity android:name=".activity.mine.gold.MineGoldWithdrawActivity"/>
         <activity android:name=".activity.mine.gold.MineModifyPayPasswordActivity"/>
         <activity android:name=".activity.mine.gold.MineResetPayPasswordActivity"/>
