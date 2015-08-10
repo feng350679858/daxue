@@ -15,12 +15,15 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.mine.RemarkListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
+import com.jingcai.apps.aizhuan.persistence.db.Database;
+import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
+import com.jingcai.apps.aizhuan.service.business.stu.stu12.Stu12Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu12.Stu12Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
@@ -86,7 +89,7 @@ public class MineCreditActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        ((TextView) findViewById(R.id.tv_content)).setText(StringUtil.isEmpty(INTENT_NAME_STUDENT_ID) ? "我的信用" : "个人信用");
+        ((TextView) findViewById(R.id.tv_content)).setText(showMine ? "我的信用" : "个人信用");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,6 +306,20 @@ public class MineCreditActivity extends BaseActivity {
         mTvSchoolName.setText(student.getSchoolname());
         mTvCollegeName.setText(student.getCollegename());
         mBitmapUtil.getImage(mIvLogo, student.getLogopath(), true, R.drawable.default_head_img);
+        updateDbContact(student);
+    }
+
+    private void updateDbContact(Stu02Response.Stu02Body.Student student) {
+        Database db = Database.getInstance(getApplicationContext());
+        db.open();
+        final List<ContactInfo> contactInfos
+                = db.fetchContactsInfoByStudentId(UserSubject.getStudentid(), student.getStudentid());
+        if(contactInfos.size() > 0){
+            ContactInfo c = contactInfos.get(0);
+            c.setName(student.getName());
+            c.setLogourl(student.getLogopath());
+            db.updateContactInfo(UserSubject.getStudentid(),c);
+        }
     }
 
     /**
