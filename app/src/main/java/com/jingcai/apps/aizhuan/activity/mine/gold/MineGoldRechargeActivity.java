@@ -34,14 +34,13 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/16.
  */
-public class MineGoldTopupActivity extends BaseActivity {
+public class MineGoldRechargeActivity extends BaseActivity {
     private final String TAG = "MineGoldTopupActivity";
-    private static final int REQUEST_CODE_CHOICE_ACCOUNT = 1;
     private MessageHandler messageHandler;
 
-    private TextView mWithDrawRMB;
-    private EditText mInputCount;
-    private Button mWithdrawSubmit;
+    private TextView mTvRechargeRMB;
+    private EditText mEtInputCount;
+    private Button mTvRechargeSubmit;
 
     private AzService azService;
     private ListView mListView;
@@ -73,11 +72,11 @@ public class MineGoldTopupActivity extends BaseActivity {
     }
 
     private void initView() {
-        mInputCount = (EditText) findViewById(R.id.et_mine_gold_topup_count);
-        mWithdrawSubmit = (Button) findViewById(R.id.btn_mine_gold_topup_submit);
-        mWithDrawRMB = (TextView) findViewById(R.id.tv_mine_gold_topup_money);
+        mEtInputCount = (EditText) findViewById(R.id.et_mine_gold_topup_count);
+        mTvRechargeSubmit = (Button) findViewById(R.id.btn_mine_gold_topup_submit);
+        mTvRechargeRMB = (TextView) findViewById(R.id.tv_mine_gold_topup_money);
 
-        mInputCount.addTextChangedListener(new TextWatcher() {
+        mEtInputCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -92,19 +91,21 @@ public class MineGoldTopupActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 String inputCount = s.toString();
                 if (StringUtil.isNotEmpty(inputCount) && !"0.0".equals(StringUtil.money(inputCount))) {
-                    mWithDrawRMB.setText(StringUtil.money(inputCount)+"元");
-                    mWithdrawSubmit.setEnabled(true);
+                    mTvRechargeRMB.setText(StringUtil.money(inputCount) + "元");
+                    mTvRechargeSubmit.setEnabled(true);
+                    mTvRechargeSubmit.setTextColor(getResources().getColor(R.color.important_dark));
                 } else {
-                    mWithdrawSubmit.setEnabled(false);
+                    mTvRechargeSubmit.setEnabled(false);
+                    mTvRechargeSubmit.setTextColor(getResources().getColor(R.color.assist_grey));
                 }
             }
 
         });
 
-        mWithdrawSubmit.setOnClickListener(new View.OnClickListener() {
+        mTvRechargeSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputCountStr = mInputCount.getText().toString();
+                String inputCountStr = mEtInputCount.getText().toString();
                 if (selectedBank == null) {
                     showToast("请选择账户");
                     return;
@@ -158,7 +159,7 @@ public class MineGoldTopupActivity extends BaseActivity {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                azService = new AzService(MineGoldTopupActivity.this);
+                azService = new AzService(MineGoldRechargeActivity.this);
 
                 Account04Request request = new Account04Request();
                 Account04Request.Student student = request.new Student();
@@ -254,8 +255,8 @@ public class MineGoldTopupActivity extends BaseActivity {
         for (int i = 0; i < wallets.size(); i++) {
             if ("gold".equals(wallets.get(i).getCode())) {
                 mEnableGoldCount = Float.parseFloat(wallets.get(i).getCredit());
-                String gold = StringUtil.getFormatFloat(mEnableGoldCount, "#,###");
-                ((TextView) findViewById(R.id.tv_mine_gold_topup_rest)).setText(gold + "金");
+                String gold = StringUtil.getPrintMoney(mEnableGoldCount);
+                ((TextView) findViewById(R.id.tv_mine_gold_topup_rest)).setText(gold + "元");
             }
         }
     }
