@@ -139,6 +139,10 @@ public class ConversationAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = createViewByMessage(message);
+            if (convertView == null) {
+                Log.w(TAG,"create convert view fail,wrong type?");
+                return null;
+            }
             if (message.getType() == IMAGE) {
                 try {
                     holder.iv = ((ImageView) convertView.findViewById(R.id.iv_sendPicture));
