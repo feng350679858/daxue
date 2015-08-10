@@ -373,10 +373,9 @@ public class MessageConversationActivity extends BaseActivity{
 //        addIndicatorView(count,0);
 
         //改变indicator
-        mVpEmotion.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mVpEmotion.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.i(TAG,"position:"+position+"\tpositionOffset:"+positionOffset+"\tpositionOffsetPixels:"+positionOffsetPixels);
                 if(positionOffset == (int)positionOffset)
                     addIndicatorView(count,position);
             }

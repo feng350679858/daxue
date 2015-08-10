@@ -21,6 +21,9 @@ import java.util.Properties;
  */
 public class AppUtil {
 
+    public static final String CROP_IMAGE_PATH = "/dalegexue/image/crop/";
+    public static final String CAPTURE_IMAGE_PATH = "/dalegexue/image/capture/";
+
     public static void loadProperties(Context context) {
         Properties props = new Properties();
         try {
@@ -89,9 +92,20 @@ public class AppUtil {
      *
      * @return
      */
-    public static Uri getImageUri() {
-        return Uri.fromFile(new File(Environment.getExternalStorageDirectory(), UserSubject.getStudentid()));
+    public static Uri getCaptureImageUri() {
+        final File path = new File(Environment.getExternalStorageDirectory()+CAPTURE_IMAGE_PATH);
+        if(!path.exists()){
+            path.mkdirs();
+        }
+        return Uri.fromFile(new File(path.getAbsolutePath(),"CAPTURE_"+UserSubject.getStudentid()).getAbsoluteFile());
+    }
 
+    public static Uri getCropImageUri() {
+        final File path = new File(Environment.getExternalStorageDirectory()+CROP_IMAGE_PATH);
+        if(!path.exists()){
+            path.mkdirs();
+        }
+        return Uri.fromFile(new File(path.getAbsolutePath(),"CROP_"+UserSubject.getStudentid()).getAbsoluteFile());
     }
 
     public static boolean isApkInstalled(Context context, String packageName) {
