@@ -43,13 +43,15 @@ import java.util.Date;
  * Created by chenchao on 15/7/14.
  */
 public class PartjobDetailActivity extends BaseActivity {
-    private final String TAG="PartjobDetailActivity";
+    private final String TAG = "PartjobDetailActivity";
     private String partjobid, logopath;
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
     private LinearLayout linearLayout_label;
     private PopupWin partjobdetailWin;
+
+    private String message, tel;
     /**
      * 接受到的数据
      */
@@ -99,13 +101,13 @@ public class PartjobDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 int num = Integer.parseInt(workernum) - Integer.parseInt(partjob_content_joinnum.getText().toString());
-                String msg = "我发现了一个兼职：" + partjob_content_title.getText().toString() +
+                message = "我发现了一个兼职：" + partjob_content_title.getText().toString() +
                         ",居然" + partjob_content_salary.getText().toString() +
                         partjob_content_salaryunit.getText().toString() +
                         "的工资,地点就在：" + partjob_content_address.getText().toString() +
                         "。现在还有" + num + "个名额，还不快来看看：";
 
-                postShareMessage(msg);
+                postShareMessage(message);
             }
         });
 
@@ -185,7 +187,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 }
                 case 1: {
                     showToast("获取报名详情出错");
-                    Log.i(TAG,"获取报名详情出错：" + msg.obj);
+                    Log.i(TAG, "获取报名详情出错：" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -201,6 +203,15 @@ public class PartjobDetailActivity extends BaseActivity {
                 }
                 case 4: {
                     showToast("报名成功");
+                    Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("msg", message);
+                    bundle.putString("tel", tel);
+                    bundle.putString("url", getShareUrl());
+                    bundle.putString("logopath", logopath);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
                     break;
                 }
                 default: {
@@ -217,34 +228,7 @@ public class PartjobDetailActivity extends BaseActivity {
         /*
          * 兼职详情
          */
-        switch (mParttimejob.getWorktype()) {
-            case "0":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
-                break;
-            case "1":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
-                break;
-            case "2":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
-                break;
-            case "3":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
-                break;
-            case "4":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
-                break;
-            case "5":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
-                break;
-            case "6":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
-                break;
-            case "7":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
-                break;
-            default:
-        }
-
+        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
         PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, mParttimejob.getSalary(), mParttimejob.getSalaryunit());
@@ -252,6 +236,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_joinnum.setText(mParttimejob.getJoinnum());
         workernum = mParttimejob.getWorkernum();
         partjob_content_workernum.setText("/" + mParttimejob.getWorkernum() + "人");
+
         if (mParttimejob.getWorkdays().equals("") || mParttimejob.getWorkdays() == null)
             worktimetype = "1";
         else
@@ -291,6 +276,7 @@ public class PartjobDetailActivity extends BaseActivity {
         else
             partjob_content_genderlimit.setVisibility(View.GONE);
         partjob_content_remarks.setText(mParttimejob.getRemarks());
+
         if (null != mParttimejob.getSchoolmate_list() && 0 != mParttimejob.getSchoolmate_list().size()) {
             for (Partjob02Response.Partjob02Body.Parttimejob.Schoolmate schoolmate : mParttimejob.getSchoolmate_list()) {
                 ImageView imageView = new ImageView(this);
@@ -324,46 +310,9 @@ public class PartjobDetailActivity extends BaseActivity {
                                                   @Override
                                                   public void onClick(View v) {
                                                       if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
-                                                          Toast toast = Toast.makeText(PartjobDetailActivity.this, "对不起，您所报的兼职性别不符", Toast.LENGTH_LONG);
-                                                          toast.show();
+                                                          showToast("对不起，您所报的兼职性别不符");
                                                       } else {
-                                                          if (null == partjobdetailWin) {
-                                                              View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
-                                                              View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.partjob_detail_popupdialog, null);
-
-                                                              partjobdetailWin = PopupWin.Builder.create(PartjobDetailActivity.this)
-                                                                      .setParentView(parentView)
-                                                                      .setContentView(contentView)
-                                                                      .build();
-
-                                                              ((ImageView) contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
-                                                              PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_detail_popup_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
-                                                              PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
-                                                              PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), worktimetype, mParttimejob.getWorkdays());
-                                                              ((TextView) contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
-                                                              ((TextView) contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名\"" + mParttimejob.getTitle() + "\"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
-                                                              ((Button) contentView.findViewById(R.id.btn_confirm_false)).setText("取消");
-                                                              contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
-                                                                  @Override
-                                                                  public void onClick(View v) {
-                                                                      partjobdetailWin.dismiss();
-                                                                  }
-                                                              });
-                                                              ((Button) contentView.findViewById(R.id.btn_confirm_true)).setText("确认");
-
-                                                              contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
-                                                                  @Override
-                                                                  public void onClick(View v) {
-                                                                      int num = Integer.parseInt(workernum) - Integer.parseInt(partjob_content_joinnum.getText().toString());
-                                                                      String msg = "求同行好友！我刚才在兼职兔报名了一个" + partjob_content_title.getText().toString() +
-                                                                              ",薪资可是" + partjob_content_salary.getText().toString() +
-                                                                              partjob_content_salaryunit.getText().toString() +
-                                                                              "！有没有一起的，还有" + num + "个名额，，快点击：";
-                                                                      joinSuccess(msg, mParttimejob.getPhone());
-                                                                  }
-                                                              });
-                                                          }
-                                                          partjobdetailWin.show();
+                                                          initPopupWin();
                                                       }
 
                                                   }
@@ -372,16 +321,77 @@ public class PartjobDetailActivity extends BaseActivity {
             );
     }
 
-    private String getUrl() {
-        String url = GlobalConstant.h5Url + "/partjob/detail?channel=" + GlobalConstant.TERMINAL_TYPE_ANDROID + "&id=" + partjobid;
-        if (UserSubject.isLogin()) {
-            url += "&studentid=" + UserSubject.getStudentid();
+    private void initPopupWin() {
+
+        if (null == partjobdetailWin) {
+            View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
+            View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.partjob_detail_popupdialog, null);
+
+            partjobdetailWin = PopupWin.Builder.create(PartjobDetailActivity.this)
+                    .setParentView(parentView)
+                    .setContentView(contentView)
+                    .build();
+
+            ((ImageView) contentView.findViewById(R.id.partjob_detail_popup_logo)).setImageDrawable(partjob_content_logo.getDrawable());
+            PartjobListAdapter.setSalary((TextView) contentView.findViewById(R.id.partjob_detail_popup_salary), (TextView) contentView.findViewById(R.id.partjob_detail_popup_salaryunit), mParttimejob.getSalary(), mParttimejob.getSalaryunit());
+            PartjobListAdapter.setSettlelength((TextView) contentView.findViewById(R.id.partjob_detail_popup_settlelength), mParttimejob.getSettlelength());
+            PartjobListAdapter.setWorkdays((TextView) contentView.findViewById(R.id.partjob_detail_popup_workdays), worktimetype, mParttimejob.getWorkdays());
+            ((TextView) contentView.findViewById(R.id.partjob_detail_popup_address)).setText(mParttimejob.getAddress());
+            ((TextView) contentView.findViewById(R.id.partjob_detail_popup_tip)).setText("您即将报名\"" + mParttimejob.getTitle() + "\"兼职。7天内，您仅有一次取消报名的权限，请确保你能按时前往并及时联系商家。");
+            ((Button) contentView.findViewById(R.id.btn_confirm_false)).setText("取消");
+            contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    partjobdetailWin.dismiss();
+                }
+            });
+            ((Button) contentView.findViewById(R.id.btn_confirm_true)).setText("确认");
+
+            contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int num = Integer.parseInt(workernum) - Integer.parseInt(partjob_content_joinnum.getText().toString());
+                    message = "求同行好友！我刚才在兼职兔报名了一个" + partjob_content_title.getText().toString() +
+                            ",薪资可是" + partjob_content_salary.getText().toString() +
+                            partjob_content_salaryunit.getText().toString() +
+                            "！有没有一起的，还有" + num + "个名额，，快点击：";
+                    tel = mParttimejob.getPhone();
+                    joinSuccess();
+                }
+            });
         }
-        if (GlobalConstant.gis.hasGis()) {
-            url += "&gisx=" + GlobalConstant.gis.getGisx() + "&gisy=" + GlobalConstant.gis.getGisy();
+        partjobdetailWin.show();
+    }
+
+    private void fillTopPicture(String worktype) {
+        switch (worktype) {
+            case "0":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
+                break;
+            case "1":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
+                break;
+            case "2":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
+                break;
+            case "3":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
+                break;
+            case "4":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
+                break;
+            case "5":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
+                break;
+            case "6":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
+                break;
+            case "7":
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
+                break;
+            default:
+                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type9));
         }
-        Log.d("==url:", url);
-        return url;
     }
 
     private String getShareUrl() {
@@ -415,13 +425,7 @@ public class PartjobDetailActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    /**
-     * 报名成功回调方法
-     *
-     * @param msg
-     * @param tel
-     */
-    public void joinSuccess(String msg, String tel) {
+    public void joinSuccess() {
         //报名
         new AzExecutor().execute(new Thread(new Runnable() {
             @Override
@@ -453,28 +457,16 @@ public class PartjobDetailActivity extends BaseActivity {
                 });
             }
         }));
-        showToast("报名成功");
-        Log.d("==", msg);
-        Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("partjobid", partjobid);
-        bundle.putString("msg", msg);
-        bundle.putString("tel", tel);
-        bundle.putString("url", getShareUrl());
-        bundle.putString("logopath", logopath);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
     }
 
     /**
      * 打电话
      */
-    public void callTel(String tel) {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + tel));
-        startActivity(intent);
-    }
+//    public void callTel(String tel) {
+//        Intent intent = new Intent(Intent.ACTION_CALL);
+//        intent.setData(Uri.parse("tel:" + tel));
+//        startActivity(intent);
+//    }
 
 
 }

@@ -7,98 +7,112 @@
 
     <include layout="@layout/include_header" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:background="@color/content_background">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:id="@+id/picture"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/partjob_join_success_happy" />
 
         <TextView
+            android:layout_below="@+id/picture"
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="哎哟喂，报名成功了~"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/important_dark"
             android:textSize="18sp" />
 
         <TextView
+            android:layout_below="@+id/tv1"
+            android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="请立即与商家联系，确认工作事项。"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/assist_grey"
             android:textSize="16sp" />
 
-<RelativeLayout
-    android:layout_marginTop="80dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:background="@color/important_dark"
-        android:layout_toLeftOf="@+id/divider_text"
-        android:layout_centerVertical="true"/>
-    <TextView
-        android:id="@+id/divider_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_centerInParent="true"
-        android:text="我想要"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/important_dark"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:background="@color/important_dark"
-        android:layout_toRightOf="@+id/divider_text"
-        android:layout_centerVertical="true"/>
-</RelativeLayout>
-        <LinearLayout
+        <RelativeLayout
+            android:layout_above="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/divider_text"
+                android:background="@color/important_dark" />
+
+            <TextView
+                android:id="@+id/divider_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="我想要"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/divider_text"
+                android:background="@color/important_dark" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_share"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/share_selector"
-                android:drawablePadding="10dp"
+                android:layout_weight="1"
                 android:background="@color/content_background"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/share_selector"
                 android:padding="10dp"
                 android:text="分享兼职"
                 android:textColor="@color/important_dark"
                 android:textSize="14sp" />
 
             <Button
-                android:layout_weight="1"
                 android:id="@+id/btn_connect_merchant"
-                android:layout_marginLeft="20dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/connect_selector"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@color/content_background"
                 android:drawablePadding="10dp"
+                android:drawableTop="@drawable/connect_selector"
                 android:padding="10dp"
                 android:text="联系商家"
-                android:background="@color/content_background"
                 android:textColor="@color/important_dark"
                 android:textSize="14sp" />
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
