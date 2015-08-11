@@ -289,4 +289,12 @@ public class UserSubject {
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_SCNOAUTHFLAG, flag);
     }
+    /**
+     *更改level
+     */
+    public static void setLevel(){
+        UserSubject.level = "1";
+        Preferences pref = Preferences.getInstance();
+        pref.update(Preferences.PARAM_LEVEL, true);
+    }
 }

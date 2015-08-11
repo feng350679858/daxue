@@ -129,16 +129,6 @@ public class ProfileImproveActivity extends BaseActivity {
     private void initView() {
         name = (TextInputLayout) findViewById(R.id.profile_improve_name);
         name_input = (ClearableEditText) name.getEditText();
-        name_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && !"".equals(name_input.getText().toString())) {
-                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
-                } else {
-                    name_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                }
-            }
-        });
         name_input.addTextChangedListener(myTextWatcher);
         gender = (TextInputLayout) findViewById(R.id.profile_improve_gender);
         gender_input = gender.getEditText();
@@ -197,16 +187,6 @@ public class ProfileImproveActivity extends BaseActivity {
 
         spreading_code = (TextInputLayout) findViewById(R.id.profile_improve_spreading_code);
         spreading_code_input = (ClearableEditText) spreading_code.getEditText();
-        spreading_code_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && !"".equals(spreading_code_input.getText().toString())) {
-                    spreading_code_input.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.widget_clearable_edittext_del), null);
-                } else {
-                    spreading_code_input.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                }
-            }
-        });
         warning = (TextView) findViewById(R.id.profile_improve_warning);
         next = (Button) findViewById(R.id.profile_improve_next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +209,7 @@ public class ProfileImproveActivity extends BaseActivity {
                 intent.putExtra("email", email);
                 intent.putExtra("qq", qq);
                 startActivity(intent);
+                finish();
             }
         });
         //在TextVew中加入图片
@@ -475,7 +456,7 @@ public class ProfileImproveActivity extends BaseActivity {
         showProgressDialog("数据加载中...");
         areaCode = "100000";
         getAreaInfo(1);
-        //     loadProfileData();
+        loadProfileData();
     }
 
     private void loadProfileData() {
