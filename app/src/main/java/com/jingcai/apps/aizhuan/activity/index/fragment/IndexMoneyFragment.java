@@ -182,6 +182,7 @@ public class IndexMoneyFragment extends BaseFragment {
         }
     }
     private void initData() {
+        showProgressDialog("兼职加载中...");
         //请求世界消息列表
         azExecutor.execute(new Runnable() {
             @Override
@@ -298,6 +299,7 @@ public class IndexMoneyFragment extends BaseFragment {
 
         @Override
         public void handleMessage(Message msg) {
+            closeProcessDialog();
             switch (msg.what) {
                 case 3: {
                     List<Busi01Response.Body.Label> list = (List<Busi01Response.Body.Label>) msg.obj;

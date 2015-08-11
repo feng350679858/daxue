@@ -3,10 +3,7 @@ package com.jingcai.apps.aizhuan.service.business.stu.stu12;
 import com.jingcai.apps.aizhuan.service.base.BaseRequest;
 import com.jingcai.apps.aizhuan.service.business.BizConstant;
 
-/**
- * Created by Administrator on 2015/7/22.
- */
-public class stu12Request extends BaseRequest {
+public class Stu12Request extends BaseRequest {
     private Student student;
 
     public Student getStudent() {

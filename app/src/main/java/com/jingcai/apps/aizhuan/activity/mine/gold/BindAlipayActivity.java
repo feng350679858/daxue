@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -67,8 +70,10 @@ public class BindAlipayActivity extends BaseActivity {
         findViewById(R.id.tv_account_add_alipay_term).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO H5页面
-                showToast("进入条款页面");
+                Intent intent = new Intent(BindAlipayActivity.this, IndexBannerDetailActivity.class);
+                intent.putExtra("title","金融服务协议");
+                intent.putExtra("url", GlobalConstant.h5Url+"/jrfuxy.html");
+                startActivity(intent);
             }
         });
 
