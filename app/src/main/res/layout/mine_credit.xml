@@ -28,14 +28,14 @@
             android:id="@+id/tv_mine_credit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:textColor="@color/important_dark"
             android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -58,7 +58,7 @@
             android:id="@+id/tv_mine_credit_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rate_bg"
             android:gravity="center"
             android:textColor="@color/important_dark"
@@ -66,6 +66,7 @@
     </LinearLayout>
 
     <ListView
+        android:layout_marginTop="10dp"
         android:id="@+id/lv_single_remark_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -75,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@drawable/list_item_bg"
         android:gravity="center"
         android:padding="10dp"
         android:text="没有更多评语"

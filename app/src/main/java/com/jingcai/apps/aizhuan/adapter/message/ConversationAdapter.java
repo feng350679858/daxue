@@ -32,6 +32,7 @@ import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.common.ShowBigImage;
+import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.entity.ConversationBean;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.AppUtil;
@@ -138,6 +139,10 @@ public class ConversationAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = createViewByMessage(message);
+            if (convertView == null) {
+                Log.w(TAG,"create convert view fail,wrong type?");
+                return null;
+            }
             if (message.getType() == IMAGE) {
                 try {
                     holder.iv = ((ImageView) convertView.findViewById(R.id.iv_sendPicture));
@@ -177,9 +182,24 @@ public class ConversationAdapter extends BaseAdapter {
         }
         //设置用户头像
         if(message.direct == EMMessage.Direct.SEND) {
-            mBitmapUtil.getImage(holder.iv_avatar, UserSubject.getLogourl());
+            mBitmapUtil.getImage(holder.iv_avatar, UserSubject.getLogourl(),true,R.drawable.default_head_img);
+            holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MineCreditActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }else{
-            mBitmapUtil.getImage(holder.iv_avatar,mConversationBean.getLogourl());
+            mBitmapUtil.getImage(holder.iv_avatar,mConversationBean.getLogourl(),true,R.drawable.default_head_img);
+            holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MineCreditActivity.class);
+                    intent.putExtra(MineCreditActivity.INTENT_NAME_STUDENT_ID,mConversationBean.getStudentid());
+                    mContext.startActivity(intent);
+                }
+            });
         }
         message.setUnread(true);
         switch (message.getType()) {
