@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
+import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageCommentActivity;
 import com.jingcai.apps.aizhuan.activity.message.MessageConversationActivity;
@@ -33,6 +35,8 @@ import com.jingcai.apps.aizhuan.persistence.db.Database;
 import com.jingcai.apps.aizhuan.persistence.vo.ContactInfo;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.advice.advice06.Advice06Request;
+import com.jingcai.apps.aizhuan.service.business.advice.advice06.Advice06Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -55,6 +59,10 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     private BroadcastReceiver mNewMessageReceiver;
     private AzService azService;
     private Database mDb;
+    private MessageHandler messageHandler;
+    private int mUnreadComment;
+    private int mUnreadPraise;
+    private int mUnreadMessage;
 
     private View mBaseView;
 
@@ -63,6 +71,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
         super.onCreateView(inflater, container, savedInstanceState);
         mBaseView = inflater.inflate(R.layout.index_message_fragment, container, false);
         azService = new AzService(baseActivity);
+        messageHandler = new MessageHandler(baseActivity);
         mDb = Database.getInstance(baseActivity.getApplicationContext());
         mDb.open();
 
@@ -77,7 +86,37 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
     public void onResume() {
         super.onResume();
         HXHelper.getInstance().reConnect();
+        initUnreadState();
         loadConversations();  //加载历史消息
+    }
+
+    /**
+     * 初始化未读
+     */
+    private void initUnreadState() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Advice06Request req = new Advice06Request();
+                Advice06Request.Message message = req.new Message();
+                message.setStudentid(UserSubject.getStudentid());
+                req.setMessage(message);
+
+                azService.doTrans(req, Advice06Response.class, new AzService.Callback<Advice06Response>() {
+                    @Override
+                    public void success(Advice06Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(0xa1, resp.getBody().getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -148,7 +187,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
                 return;
             }
         }
-        getAndSaveStudentInfo(bean,c);
+        getAndSaveStudentInfo(bean, c);
     }
 
     /**
@@ -170,28 +209,29 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
                         ResponseResult result = response.getResult();
                         Stu02Response.Stu02Body stu02Body = response.getBody();
                         final Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
-                        if("0".equals(result.getCode())) {
+                        if ("0".equals(result.getCode())) {
                             bean.setName(student.getName());
                             bean.setLogourl(student.getLogopath());
 
-                            if(existContact != null){
+                            if (existContact != null) {
                                 existContact.setName(student.getName());
                                 existContact.setLogourl(student.getLogopath());
-                                mDb.updateContactInfo(UserSubject.getStudentid(),existContact);
-                                Log.d(TAG,"update a contact info in database.");
-                            }else{
+                                mDb.updateContactInfo(UserSubject.getStudentid(), existContact);
+                                Log.d(TAG, "update a contact info in database.");
+                            } else {
                                 ContactInfo newContact = new ContactInfo();
                                 newContact.setStudentid(bean.getStudentid());
                                 newContact.setLogourl(student.getLogopath());
                                 newContact.setName(student.getName());
                                 mDb.insertContactInfo(UserSubject.getStudentid(), newContact);
-                                Log.d(TAG,"create a contact info in database.");
+                                Log.d(TAG, "create a contact info in database.");
                             }
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
-                        Log.e(TAG,"Transcode : stu02 failed.Code:"+e.getCode()+",Message:"+e.getMessage());
+                        Log.e(TAG, "Transcode : stu02 failed.Code:" + e.getCode() + ",Message:" + e.getMessage());
                     }
                 });
             }
@@ -287,5 +327,46 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             ((MainActivity)baseActivity).markAsRead("1");
         }
 //        loadConversations();
+    }
+
+    private class MessageHandler extends BaseHandler{
+
+        public MessageHandler(Context ctx) {
+            super(ctx);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0xa1:
+                    fillUnreadCount((Advice06Response.Body.Message)msg.obj);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
+
+    /**
+     * 显示未读
+     */
+    private void fillUnreadCount(Advice06Response.Body.Message msg) {
+        final String commentcount = msg.getCommentcount();  //评论未读数
+        final String praisecount = msg.getPraisecount();  //赞未读数
+        final String unreadmessageflag = msg.getUnreadmessageflag();  //未读消息数
+
+        try {
+            mUnreadComment = Integer.parseInt(commentcount);
+            mUnreadPraise = Integer.parseInt(praisecount);
+            mUnreadMessage = Integer.parseInt(unreadmessageflag);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        mMessageListAdapter.setCommentUnread(mUnreadComment);
+        mMessageListAdapter.setPraiseUnread(mUnreadPraise);
+
+        mBaseView.findViewById(R.id.iv_bird_badge).setVisibility(mUnreadMessage>0?View.VISIBLE:View.INVISIBLE);
+
     }
 }
