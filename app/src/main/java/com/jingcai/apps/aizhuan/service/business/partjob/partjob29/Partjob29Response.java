@@ -179,6 +179,8 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Body> {
         private String refid;
         private String refname;
         private String refcontent;
+        private String sourcestudentid;
+        private String sourcestudentname;
 
         public String getRefname() {
             return refname;
@@ -202,6 +204,22 @@ public class Partjob29Response extends BaseResponse<Partjob29Response.Body> {
 
         public void setRefcontent(String refcontent) {
             this.refcontent = refcontent;
+        }
+
+        public String getSourcestudentid() {
+            return sourcestudentid;
+        }
+
+        public void setSourcestudentid(String sourcestudentid) {
+            this.sourcestudentid = sourcestudentid;
+        }
+
+        public String getSourcestudentname() {
+            return sourcestudentname;
+        }
+
+        public void setSourcestudentname(String sourcestudentname) {
+            this.sourcestudentname = sourcestudentname;
         }
     }
 

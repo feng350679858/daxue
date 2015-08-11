@@ -28,7 +28,8 @@
                     android:id="@+id/iv_profile_logopath"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/default_head_img"/>
 
                 <View
                     android:layout_width="0dp"
