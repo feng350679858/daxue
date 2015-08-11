@@ -8,6 +8,7 @@ import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.InnerLock;
@@ -38,16 +39,17 @@ public class AnonHandler {
     /**
      * @param targettype 1问题  2答案
      */
-    public void click(final String targettype, final String targetid) {
+    public void click(final boolean anonflag, final String targettype, final String targetid) {
         if (!actionLock.tryLock()) {
             return;
         }
-        Partjob35Request req = new Partjob35Request(UserSubject.getStudentid(), targettype, targetid);
-        azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+        Partjob35Request req = new Partjob35Request(UserSubject.getStudentid(), anonflag?"1":"0", targettype, targetid);
+        azService.doTrans(req, Partjob35Response.class, new AzService.Callback<Partjob35Response>() {
             @Override
-            public void success(BaseResponse resp) {
+            public void success(Partjob35Response resp) {
                 if ("0".equals(resp.getResultCode())) {
-                    messageHandler.postMessage(0);
+                    Partjob35Response.Parttimejob job = resp.getBody().getParttimejob();
+                    messageHandler.postMessage(0, job);
                 } else {
                     messageHandler.postMessage(1);
                 }
@@ -71,8 +73,9 @@ public class AnonHandler {
             switch (msg.what) {
                 case 0: {
                     try {
+                        Partjob35Response.Parttimejob job = (Partjob35Response.Parttimejob) msg.obj;
                         if (null != callback) {
-                            callback.call();
+                            callback.call(job);
                         }
                     } finally {
                         actionLock.unlock();
@@ -95,6 +98,6 @@ public class AnonHandler {
     }
 
     public interface Callback {
-        void call();
+        void call(Partjob35Response.Parttimejob job);
     }
 }

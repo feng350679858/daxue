@@ -217,7 +217,8 @@ public class HelpWendaEditActivity extends BaseActivity {
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    Partjob39Request req = new Partjob39Request(answerid, et_help_content.getText().toString());
+                    Partjob39Request req = new Partjob39Request(UserSubject.getStudentid(), answerid, et_help_content.getText().toString());
+                    req.getParttimejob().setAnonflag(cb_anonymous.isChecked() ? "1" : "0");
                     new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                         @Override
                         public void success(BaseResponse resp) {

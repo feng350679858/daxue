@@ -12,10 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom"
-        android:layout_below="@+id/layout_header"
-        android:divider="@color/divider_color"
-        android:dividerHeight="5dp"
-        android:headerDividersEnabled="false" />
+        android:layout_below="@+id/layout_header"/>
 
     <LinearLayout
         android:id="@+id/layout_bottom"

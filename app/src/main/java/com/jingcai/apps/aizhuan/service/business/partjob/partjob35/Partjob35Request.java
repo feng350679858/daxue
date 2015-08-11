@@ -8,9 +8,10 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
  */
 public class Partjob35Request extends BaseRequest {
 
-    public Partjob35Request(String studentid, String targettype, String targetid){
+    public Partjob35Request(String studentid, String anonflag, String targettype, String targetid){
         this.parttimejob = new Parttimejob();
         this.parttimejob.setStudentid(studentid);
+        this.parttimejob.setAnonflag(anonflag);
         this.parttimejob.setTargettype(targettype);
         this.parttimejob.setTargetid(targetid);
     }
@@ -33,7 +34,16 @@ public class Partjob35Request extends BaseRequest {
     public class Parttimejob {
         private String studentid;
         private String targettype;
+        private String anonflag;
         private String targetid;
+
+        public String getAnonflag() {
+            return anonflag;
+        }
+
+        public void setAnonflag(String anonflag) {
+            this.anonflag = anonflag;
+        }
 
         public String getStudentid() {
             return studentid;

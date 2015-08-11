@@ -1,10 +1,7 @@
 package com.markmao.pulltorefresh.widget;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,92 +75,45 @@ public class XHeaderView extends LinearLayout {
         mRotateDownAnim.setFillAfter(true);
     }
 
-    private boolean initPlayedFlag = false;
-    private AnimationDrawable animationDrawable;
-
     public void setState(int state) {
         if (state == mState && mIsFirst) {
             mIsFirst = true;
             return;
         }
-        Log.d("==", "---mState=" + mState + "----state=" + state);
-//        if (state == STATE_REFRESHING) {
-//            // show progress
-//            mArrowImageView.clearAnimation();
-//            mArrowImageView.setVisibility(View.INVISIBLE);
-//            mProgressBar.setVisibility(View.VISIBLE);
-//        } else {
-//            // show arrow image
-//            mArrowImageView.setVisibility(View.VISIBLE);
-//            mProgressBar.setVisibility(View.INVISIBLE);
-//        }
+
+        if (state == STATE_REFRESHING) {
+            // show progress
+            mArrowImageView.clearAnimation();
+            mArrowImageView.setVisibility(View.INVISIBLE);
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            // show arrow image
+            mArrowImageView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.INVISIBLE);
+        }
 
         switch (state) {
             case STATE_NORMAL:
                 if (mState == STATE_READY) {
-//                    mArrowImageView.startAnimation(mRotateDownAnim);
-//                    Log.d("==", "---------------mRotateDownAnim1");
-
-                    if(null != animationDrawable) {
-                        animationDrawable.stop();
-                    }
-                    mArrowImageView.setImageResource(R.drawable.animation1);
-                    animationDrawable = (AnimationDrawable) mArrowImageView.getDrawable();
-                    animationDrawable.start();
+                    mArrowImageView.startAnimation(mRotateDownAnim);
                 }
 
                 if (mState == STATE_REFRESHING) {
-//                    mArrowImageView.clearAnimation();
-//                    Log.d("==", "---------------clearAnimation1");
+                    mArrowImageView.clearAnimation();
+                }
 
-                    if(null != animationDrawable) {
-                        animationDrawable.stop();
-                    }
-                    mArrowImageView.setImageResource(R.drawable.animation2);
-                    animationDrawable = (AnimationDrawable) mArrowImageView.getDrawable();
-                    animationDrawable.start();
-                }
-                if(!initPlayedFlag){
-                    initPlayedFlag = true;
-                    if(null != animationDrawable) {
-                        animationDrawable.stop();
-                    }
-                    mArrowImageView.setImageResource(R.drawable.animation1);
-                    animationDrawable = (AnimationDrawable) mArrowImageView.getDrawable();
-                    animationDrawable.start();
-                }
                 mHintTextView.setText(R.string.header_hint_refresh_normal);
                 break;
 
             case STATE_READY:
                 if (mState != STATE_READY) {
-//                    mArrowImageView.clearAnimation();
-//                    Log.d("==", "---------------clearAnimation2");
-//                    mArrowImageView.startAnimation(mRotateUpAnim);
-//                    Log.d("==", "---------------mRotateUpAnim2");
-
-                    if(null != animationDrawable) {
-                        animationDrawable.stop();
-                    }
-
-                    mArrowImageView.setImageResource(R.drawable.animation2);
-                    animationDrawable = (AnimationDrawable) mArrowImageView.getDrawable();
-                    animationDrawable.start();
-
+                    mArrowImageView.clearAnimation();
+                    mArrowImageView.startAnimation(mRotateUpAnim);
                     mHintTextView.setText(R.string.header_hint_refresh_ready);
                 }
                 break;
 
             case STATE_REFRESHING:
-                if (mState == STATE_READY) {
-                    if(null != animationDrawable) {
-                        animationDrawable.stop();
-                    }
-                    initPlayedFlag = false;
-                    mArrowImageView.setImageResource(R.drawable.animation3);
-                    animationDrawable = (AnimationDrawable) mArrowImageView.getDrawable();
-                    animationDrawable.start();
-                }
                 mHintTextView.setText(R.string.header_hint_refresh_loading);
                 break;
 
