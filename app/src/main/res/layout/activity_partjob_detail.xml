@@ -291,6 +291,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textColor="@color/normal_grey"
+                        android:maxLength="255"
                         android:textSize="12sp" />
                 </LinearLayout>
 
