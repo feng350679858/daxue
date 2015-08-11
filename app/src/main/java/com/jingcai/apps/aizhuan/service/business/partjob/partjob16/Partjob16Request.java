@@ -13,14 +13,14 @@ public class Partjob16Request extends BaseRequest {
         return BizConstant.BIZ_PARTTIME_JOB_16;
     }
 
-    private Partjob16Request partjob11Request;
+    private Parttimejob parttimejob;
 
-    public Partjob16Request getPartjob11Request() {
-        return partjob11Request;
+    public Parttimejob getParttimejob() {
+        return parttimejob;
     }
 
-    public void setPartjob11Request(Partjob16Request partjob11Request) {
-        this.partjob11Request = partjob11Request;
+    public void setParttimejob(Parttimejob parttimejob) {
+        this.parttimejob = parttimejob;
     }
 
     public class Parttimejob {

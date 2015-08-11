@@ -11,3 +11,5 @@ gradle
 gradlew*
 
 /gradle.properties
+
+/libraries/pulltorefresh2/

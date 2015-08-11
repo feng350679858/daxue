@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,9 @@ import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.AnonHandler;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
-import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob36.Partjob36Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -33,8 +32,6 @@ import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
-
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,13 +58,14 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     private TextView tv_stu_college;
     private TextView tv_detail_content;
     private ImageView iv_func;
+    private boolean updateFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         answerid = getIntent().getStringExtra("answerid");
         if(StringUtil.isEmpty(answerid)){
-            finish();
+            finishWithResult();
         } else {
             messageHandler = new MessageHandler(this);
             setContentView(R.layout.help_wenda_answer);
@@ -150,16 +148,19 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                             //使用/取消匿名
                             new AnonHandler(HelpWendaAnswerActivity.this).setCallback(new AnonHandler.Callback() {
                                 @Override
-                                public void call() {
+                                public void call(Partjob35Response.Parttimejob job2) {
                                     win.dismiss();
-                                    initData();
-//                                    job.setAnonflag("1".equals(job.getAnonflag()) ? "0" : "1");
-//                                    if ("1".equals(job.getAnonflag())) {
-//
-//                                    }
-//                                    //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
+                                    job.setSourceimgurl(job2.getSourceimgurl());
+                                    job.setSourcename(job2.getSourcename());
+                                    job.setSourceschool(job2.getSourceschool());
+                                    job.setSourcecollege(job2.getSourcecollege());
+                                    job.setAnonflag(job2.getAnonflag());
+                                    initViewData();
+
+                                    updateFlag = true;
+                                    //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
                                 }
-                            }).click("2", answerid);
+                            }).click(!anonFlag, "2", answerid);
                         }
                     });
 
@@ -214,7 +215,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult();
             }
         });
     }
@@ -246,6 +247,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                             job.setPraiseflag("1");
                             job.setPraiseid(praiseid);
                             job.setPraisecount(checkBox.getText().toString());
+                            updateFlag = true;
                         }
 
                         @Override
@@ -253,6 +255,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                             job.setPraiseflag("0");
                             job.setPraiseid(null);
                             job.setPraisecount(checkBox.getText().toString());
+                            updateFlag = true;
                         }
                     }).click("3", answerid, job.getPraiseid(), cb_wenda_like);
                 }
@@ -267,27 +270,6 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_CODE_ANSWER_COMMENT);
             }
         });
-
-        if(GlobalConstant.debugFlag){//TODO delete
-            layout_wenda_help.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showToast("------debug------");
-                    boolean selfFlag = false;
-                    if (selfFlag) {//重新编辑
-                        Intent intent = new Intent(HelpWendaAnswerActivity.this, HelpWendaEditActivity.class);
-                        intent.putExtra("helpid", "00000001");
-                        intent.putExtra("answerid", answerid);
-                        startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
-                    } else {//打赏
-                        Intent intent = new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class);
-                        intent.putExtra("answerid", answerid);
-                        intent.putExtra("receiverid", "00000001");
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
     }
 
     private void initViewData() {
@@ -351,21 +333,18 @@ public class HelpWendaAnswerActivity extends BaseActivity {
         switch (requestCode){
             case REQUEST_CODE_ANSWER_EDIT:{
                 if(Activity.RESULT_OK == resultCode){
-                    //更新内容
-                    //String helperid = data.getStringExtra("helperid");
-                    String helpContent = data.getStringExtra("helpContent");
-                    job.setContent(helpContent);
-
-                    boolean anonFlag = data.getBooleanExtra("anonFlag", false);
-                    job.setAnonflag(anonFlag ?"1":"0");
-                    tv_detail_content.setText(helpContent);
+                    //更新内容和匿名状态
+                    initData();
+                    updateFlag = true;
                 }
                 break;
             }
             case REQUEST_CODE_ANSWER_COMMENT:{
-                if(Activity.RESULT_OK == resultCode){//更新评论数量
+                if(Activity.RESULT_OK == resultCode){
+                    //更新评论数量
                     String commentCount = data.getStringExtra("commentCount");
                     cb_wenda_comment.setText(commentCount);
+                    //initData();
                 }
                 break;
             }
@@ -406,5 +385,25 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                 }
             }
         }
+    }
+    private void finishWithResult() {
+        if (updateFlag) {
+            Intent intent = new Intent();
+            intent.putExtra("answerid", answerid);
+            intent.putExtra("content", tv_detail_content.getText().toString());
+            intent.putExtra("praiseflag", job.getPraiseflag());
+            intent.putExtra("praiseid", job.getPraiseid());
+            intent.putExtra("praisecount", job.getPraisecount());
+
+            intent.putExtra("sourcename", job.getSourcename());
+            intent.putExtra("sourceimgurl", job.getSourceimgurl());
+            intent.putExtra("sourceschool", job.getSourceschool());
+            intent.putExtra("sourcecollege", job.getSourcecollege());
+
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
     }
 }

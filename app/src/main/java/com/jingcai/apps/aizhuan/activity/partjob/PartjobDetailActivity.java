@@ -30,6 +30,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Resp
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob05.Partjob05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -38,6 +39,8 @@ import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by chenchao on 15/7/14.
@@ -50,8 +53,9 @@ public class PartjobDetailActivity extends BaseActivity {
     private BitmapUtil bitmapUtil;
     private LinearLayout linearLayout_label;
     private PopupWin partjobdetailWin;
+    private PopupWin schoolmateWin;
 
-    private String message, tel;
+    private String message, tel,schoolmate_tel;
     /**
      * 接受到的数据
      */
@@ -193,6 +197,17 @@ public class PartjobDetailActivity extends BaseActivity {
                 case 2: {
                     showToast("报名出错");
                     Log.i(TAG, "报名出错：" + msg.obj);
+//                    {//测试
+//                        Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("msg", message);
+//                        bundle.putString("tel", tel);
+//                        bundle.putString("url", getShareUrl());
+//                        bundle.putString("logopath", logopath);
+//                        intent.putExtras(bundle);
+//                        startActivity(intent);
+//                        finish();
+//                    }
                     break;
                 }
                 case 3: {
@@ -243,6 +258,7 @@ public class PartjobDetailActivity extends BaseActivity {
             worktimetype = "0";
         PartjobListAdapter.setWorkdays(partjob_content_workdays, worktimetype, mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
+//        partjob_content_endtime.setText(DateUtil.parseDate(mParttimejob.getEndtime()).toString());
         partjob_content_endtime.setText(mParttimejob.getEndtime());
         partjob_content_address.setText(mParttimejob.getAddress());
         if (null != mParttimejob.getGisx() && 0 != Double.parseDouble(mParttimejob.getGisx())
@@ -278,12 +294,20 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_remarks.setText(mParttimejob.getRemarks());
 
         if (null != mParttimejob.getSchoolmate_list() && 0 != mParttimejob.getSchoolmate_list().size()) {
-            for (Partjob02Response.Partjob02Body.Parttimejob.Schoolmate schoolmate : mParttimejob.getSchoolmate_list()) {
-                ImageView imageView = new ImageView(this);
+            for (int index=0;index<mParttimejob.getSchoolmate_list().size();index++) {
+                final CircleImageView imageView = new CircleImageView(this);
                 LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(35, 35);
                 layout.setMargins(10, 0, 0, 0);
                 imageView.setLayoutParams(layout);
-                bitmapUtil.getImage(imageView, schoolmate.getLogopath(), R.drawable.logo_merchant_default);
+                bitmapUtil.getImage(imageView, mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
+                imageView.setTag(index);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int index = (int)imageView.getTag();
+                        initSchoolmateWin(index);
+                    }
+                });
                 linearLayout_label.addView(imageView);
             }
             partjob_detail_schoolmate_num.setText("共" + mParttimejob.getSchoolmate_list().size() + "人");
@@ -320,6 +344,41 @@ public class PartjobDetailActivity extends BaseActivity {
                     }
 
             );
+    }
+
+    private void initSchoolmateWin(int index) {
+        if (null == schoolmateWin) {
+            View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
+            View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.school_mate_popupwin, null);
+
+            schoolmateWin = PopupWin.Builder.create(PartjobDetailActivity.this)
+                    .setParentView(parentView)
+                    .setContentView(contentView)
+                    .build();
+            bitmapUtil.getImage((CircleImageView) contentView.findViewById(R.id.head_logo), mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
+            if("0".equals(mParttimejob.getSchoolmate_list().get(index).getGender()))
+                ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.male));
+            else
+                ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.female));
+            ((TextView)contentView.findViewById(R.id.name_and_college)).setText(mParttimejob.getSchoolmate_list().get(index).getName()+"/"+mParttimejob.getSchoolmate_list().get(index).getCollege());
+            ((TextView)contentView.findViewById(R.id.phone)).setText(StringUtil.hiddenPhone(mParttimejob.getSchoolmate_list().get(index).getPhone()));
+            schoolmate_tel=mParttimejob.getSchoolmate_list().get(index).getPhone();
+            contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    schoolmateWin.dismiss();
+                }
+            });
+            contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" +schoolmate_tel));
+                    startActivity(intent);
+                }
+            });
+        }
+        schoolmateWin.show();
     }
 
     private void initPopupWin() {

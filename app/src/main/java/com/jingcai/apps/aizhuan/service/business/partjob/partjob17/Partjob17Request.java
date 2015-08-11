@@ -30,6 +30,24 @@ public class Partjob17Request extends BaseRequest {
         private String content;
         private String regionid;
         private String anonflag;
+        private String gisx;
+        private String gisy;
+
+        public String getGisx() {
+            return gisx;
+        }
+
+        public void setGisx(String gisx) {
+            this.gisx = gisx;
+        }
+
+        public String getGisy() {
+            return gisy;
+        }
+
+        public void setGisy(String gisy) {
+            this.gisy = gisy;
+        }
 
         public String getAnonflag() {
             return anonflag;

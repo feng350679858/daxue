@@ -448,7 +448,6 @@ public class PartjobSearchActivity extends BaseActivity {
                             ResponseResult result = response.getResult();
                             if ("0".equals(result.getCode())) {
                                 Partjob09Response.Body body = response.getBody();
-                                partjobListAdapter.clearData();
                                 List<Partjob09Response.Body.Parttimejob> messageList = body.getParttimejob_list();
                                 if(messageList==null)
                                     messageList=new ArrayList<Partjob01Response.Body.Parttimejob>();

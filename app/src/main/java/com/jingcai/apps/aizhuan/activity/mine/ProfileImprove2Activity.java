@@ -86,8 +86,8 @@ public class ProfileImprove2Activity extends BaseActivity {
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
-                finish();
+                Intent intent=new Intent(ProfileImprove2Activity.this,ProfileImproveActivity.class);
+                startActivity(intent);
             }
         });
         ((TextView) findViewById(R.id.tv_func)).setText("联系客服");
@@ -134,13 +134,11 @@ public class ProfileImprove2Activity extends BaseActivity {
     private void initView() {
         school = (TextInputLayout) findViewById(R.id.profile_improve_school);
         school_input = school.getEditText();
-   //     school_input.addTextChangedListener(myTextWatcher);
         college = (TextInputLayout) findViewById(R.id.profile_improve_college);
         college_input = college.getEditText();
         college_input.addTextChangedListener(myTextWatcher);
         professional = (TextInputLayout) findViewById(R.id.profile_improve_professional);
         professional_input = professional.getEditText();
-    //    professional_input.addTextChangedListener(myTextWatcher);
         joindate = (TextInputLayout) findViewById(R.id.profile_improve_joindate);
         joindate_input = joindate.getEditText();
         joindate_input.addTextChangedListener(myTextWatcher);
@@ -226,9 +224,7 @@ public class ProfileImprove2Activity extends BaseActivity {
         @Override
         public void onClick(View v) {
             clearAllFocus();
-            college_input.requestFocus();
             if (!"".equals(school_input.getText().toString())) {
-                college_input.requestFocus();
                 initCollegePopupWin();
             }
         }
@@ -672,6 +668,7 @@ private void clearAllFocus(){
                 }
                 case 7: {
                     showToast("已完善资料");
+                    UserSubject.setLevel();
                     finish();
                     break;
                 }
@@ -710,7 +707,7 @@ private void clearAllFocus(){
     }
 
     private void fillCollegeListData(List<School05Response.Body.College> obj) {
-
+        college_input.requestFocus();
         Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < obj.size(); i++) {
             map.put(obj.get(i).getId(), obj.get(i).getName());

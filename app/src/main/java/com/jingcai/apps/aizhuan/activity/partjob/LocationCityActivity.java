@@ -24,7 +24,6 @@ import com.jingcai.apps.aizhuan.service.business.school.school02.School02Request
 import com.jingcai.apps.aizhuan.service.business.school.school02.School02Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
-import com.jingcai.apps.aizhuan.util.LocateUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
@@ -86,15 +85,8 @@ private void initHeader(){
             }
         });
         tv_index_partjob_change_city = (TextView)findViewById(R.id.tv_index_partjob_change_city);
-        new LocateUtil(this, new LocateUtil.Callback() {
-            @Override
-            public void locateSuccess(LocateUtil.Area area, List<LocateUtil.Area> areaList) {
-                if(null != areaList && areaList.size()>1) {
-                    tv_index_partjob_change_city.setText(areaList.get(1).getName());
-                    tv_index_partjob_change_city.setTag(areaList.get(1).getCode());
-                }
-            }
-        }).locate();
+        tv_index_partjob_change_city.setText(GlobalConstant.getGis().getAreaname());
+        tv_index_partjob_change_city.setTag(GlobalConstant.getGis().getAreacode());
 
         mListCity = (ListView) findViewById(R.id.lv_index_partjob_change_city);
         View location_city_bottom = LayoutInflater.from(LocationCityActivity.this).inflate(R.layout.location_city_bottom, null);

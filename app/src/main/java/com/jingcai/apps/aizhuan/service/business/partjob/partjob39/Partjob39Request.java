@@ -8,8 +8,9 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
  */
 public class Partjob39Request extends BaseRequest {
 
-    public Partjob39Request(String answerid, String content){
+    public Partjob39Request(String studentid, String answerid, String content){
         this.parttimejob = new Parttimejob();
+        this.parttimejob.studentid = studentid;
         this.parttimejob.answerid = answerid;
         this.parttimejob.content = content;
     }
@@ -29,9 +30,19 @@ public class Partjob39Request extends BaseRequest {
         this.parttimejob = parttimejob;
     }
 
-    class Parttimejob {
+    public class Parttimejob {
+        private String studentid;
         private String answerid;
         private String content;
+        private String anonflag;
+
+        public String getStudentid() {
+            return studentid;
+        }
+
+        public void setStudentid(String studentid) {
+            this.studentid = studentid;
+        }
 
         public String getContent() {
             return content;
@@ -47,6 +58,14 @@ public class Partjob39Request extends BaseRequest {
 
         public void setAnswerid(String answerid) {
             this.answerid = answerid;
+        }
+
+        public void setAnonflag(String anonflag) {
+            this.anonflag = anonflag;
+        }
+
+        public String getAnonflag() {
+            return anonflag;
         }
     }
 }

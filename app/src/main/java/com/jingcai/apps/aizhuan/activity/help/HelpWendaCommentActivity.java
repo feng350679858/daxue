@@ -43,7 +43,8 @@ import java.util.List;
 public class HelpWendaCommentActivity extends BaseActivity {
     private String answerid;
     private String commentCount = null;
-    private String selectCommentId = null;
+//    private String selectCommentId = null;
+    private CommentItem selectedRegion;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
@@ -64,6 +65,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
             initHeader();
 
             initView();
+
             initGroupData();
         }
     }
@@ -98,6 +100,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
         btn_wenda_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideInputMethodDialog(HelpWendaCommentActivity.this);
                 doComment();
             }
         });
@@ -110,10 +113,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
-                commentAdapter.clearData();
-                mCurrentStart = 0;
-                groupListView.setPullLoadEnable(true);
-                initGroupData();
+                refresh();
             }
 
             @Override
@@ -129,10 +129,11 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 commentAdapter.clearSelected();
                 if (!selected) {
                     region.setSelected(!selected);
-                    selectCommentId = region.getContentid();
+                    //selectCommentId = region.getContentid();
+                    selectedRegion = region;
                     et_reploy_comment.setHint("回复：" + region.getSourcename());
                 } else {
-                    selectCommentId = null;
+                    selectedRegion = null;
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -170,20 +171,29 @@ public class HelpWendaCommentActivity extends BaseActivity {
         });
     }
 
+    private void refresh() {
+        commentAdapter.clearData();
+        mCurrentStart = 0;
+        groupListView.setPullLoadEnable(true);
+        initGroupData();
+    }
+
     private void doComment() {
         if (!actionLock.tryLock()) return;
+        //showProgressDialog("发布评论中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
+                //try {Thread.sleep(500);} catch (InterruptedException e) {}
                 Partjob12Request req = new Partjob12Request();
                 Partjob12Request.Parttimejob job = req.new Parttimejob();
                 job.setSourceid(UserSubject.getStudentid());
-                if (null == selectCommentId) {
+                if (null == selectedRegion) {
                     job.setTargettype("3");//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
                     job.setTargetid(answerid);
                 } else {
                     job.setTargettype("4");
-                    job.setTargetid(selectCommentId);
+                    job.setTargetid(selectedRegion.getContentid());
                 }
                 job.setOptype("1");//评论类型 1：评论 2：点赞
                 job.setContent(et_reploy_comment.getText().toString());
@@ -245,12 +255,17 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     }
                 }
                 case 3: {
-                    try {
-                        commentCount = String.valueOf(msg.obj);
-                        groupListView.autoRefresh();
-                    } finally {
-                        actionLock.unlock();
-                    }
+                    actionLock.unlock();
+
+                    commentCount = String.valueOf(msg.obj);
+
+                    commentAdapter.clearSelected();
+                    commentAdapter.notifyDataSetChanged();
+                    selectedRegion = null;
+                    et_reploy_comment.setText("");
+                    et_reploy_comment.setHint("评论");
+
+                    refresh();
                 }
                 case 4: {
                     try {
@@ -266,68 +281,41 @@ public class HelpWendaCommentActivity extends BaseActivity {
     }
 
     private void initGroupData() {
-        if (actionLock.tryLock()) {
-            showProgressDialog("获取圈子中...");
-            new AzExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<CommentItem> regionList = new ArrayList<CommentItem>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
-                            region.setSourcename("学生" + (i + mCurrentStart));
-                            region.setSourcelevel("19");
-                            region.setSourceschool("浙江大学");
-                            region.setSourcecollege("计算机学院");
-                            region.setOptime("20150801233341");
-                            if (i % 4 == 0) {
-                                region.setRefcomment(new Partjob29Response.Refcomment());
-                                region.getRefcomment().setRefname("花仙子");
-                                region.getRefcomment().setRefcontent("你是一个大SB");
+        if (!actionLock.tryLock()) return;
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob29Request req = new Partjob29Request();
+                Partjob29Request.Parttimejob job = req.new Parttimejob();
+                job.setReceiverid(UserSubject.getStudentid());
+                job.setTargettype("3");//3答案
+                job.setTargetid(answerid);
+                job.setCommenttype("1");//1评论
+                job.setStart("" + mCurrentStart);
+                job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                req.setParttimejob(job);
+                new AzService().doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
+                    @Override
+                    public void success(Partjob29Response response) {
+                        ResponseResult result = response.getResult();
+                        if ("0".equals(result.getCode())) {
+                            List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                            if(null == parttimejob_list){
+                                parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
                             }
-                            if (i % 2 == 0) {
-                                region.setPraiseflag("1");
-                                region.setPraiseid("23232332");
-                            }
-                            region.setPraisecount("23");
-                            region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
+                            messageHandler.postMessage(0, parttimejob_list);
+                        } else {
+                            messageHandler.postMessage(1, result.getMessage());
                         }
-                        messageHandler.postMessage(0, regionList);
-                    } else {
-                        Partjob29Request req = new Partjob29Request();
-                        Partjob29Request.Parttimejob job = req.new Parttimejob();
-                        job.setReceiverid(UserSubject.getStudentid());
-                        job.setTargettype("3");//3答案
-                        job.setTargetid(answerid);
-                        job.setCommenttype("1");//1评论
-                        job.setStart("" + mCurrentStart);
-                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setParttimejob(job);
-                        new AzService().doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
-                            @Override
-                            public void success(Partjob29Response response) {
-                                ResponseResult result = response.getResult();
-                                if ("0".equals(result.getCode())) {
-                                    List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
-                                    if(null == parttimejob_list){
-                                        parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
-                                    }
-                                    messageHandler.postMessage(0, parttimejob_list);
-                                } else {
-                                    messageHandler.postMessage(1, result.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
                     }
-                }
-            });
-        }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     @Override
