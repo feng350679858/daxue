@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,8 +23,6 @@ import android.widget.TextView;
 
 import com.markmao.pulltorefresh.R;
 
-import java.util.ArrayList;
-
 /**
  * XListView, it's based on <a href="https://github.com/Maxwin-z/XListView-Android">XListView(Maxwin)</a>
  *
@@ -33,7 +30,7 @@ import java.util.ArrayList;
  * @date 2013-10-08
  */
 public class XListView extends ListView implements OnScrollListener {
-    private static final String TAG = "XListView";
+//    private static final String TAG = "XListView";
 
     private final static int SCROLL_BACK_HEADER = 0;
     private final static int SCROLL_BACK_FOOTER = 1;

@@ -47,4 +47,6 @@ public abstract class CommentItem {
     public abstract void setPraiseid(String praiseid);
 
     public abstract void setPraisecount(String praisecount);
+
+    public abstract void setContent(String content);
 }

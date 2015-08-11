@@ -64,6 +64,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
             initHeader();
 
             initView();
+
             initGroupData();
         }
     }
@@ -98,6 +99,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
         btn_wenda_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideInputMethodDialog(HelpWendaCommentActivity.this);
                 doComment();
             }
         });
@@ -247,6 +249,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 case 3: {
                     try {
                         commentCount = String.valueOf(msg.obj);
+                        et_reploy_comment.setText("");
                         groupListView.autoRefresh();
                     } finally {
                         actionLock.unlock();
@@ -271,60 +274,35 @@ public class HelpWendaCommentActivity extends BaseActivity {
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<CommentItem> regionList = new ArrayList<CommentItem>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
-                            region.setSourcename("学生" + (i + mCurrentStart));
-                            region.setSourcelevel("19");
-                            region.setSourceschool("浙江大学");
-                            region.setSourcecollege("计算机学院");
-                            region.setOptime("20150801233341");
-                            if (i % 4 == 0) {
-                                region.setRefcomment(new Partjob29Response.Refcomment());
-                                region.getRefcomment().setRefname("花仙子");
-                                region.getRefcomment().setRefcontent("你是一个大SB");
-                            }
-                            if (i % 2 == 0) {
-                                region.setPraiseflag("1");
-                                region.setPraiseid("23232332");
-                            }
-                            region.setPraisecount("23");
-                            region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
-                        }
-                        messageHandler.postMessage(0, regionList);
-                    } else {
-                        Partjob29Request req = new Partjob29Request();
-                        Partjob29Request.Parttimejob job = req.new Parttimejob();
-                        job.setReceiverid(UserSubject.getStudentid());
-                        job.setTargettype("3");//3答案
-                        job.setTargetid(answerid);
-                        job.setCommenttype("1");//1评论
-                        job.setStart("" + mCurrentStart);
-                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setParttimejob(job);
-                        new AzService().doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
-                            @Override
-                            public void success(Partjob29Response response) {
-                                ResponseResult result = response.getResult();
-                                if ("0".equals(result.getCode())) {
-                                    List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
-                                    if(null == parttimejob_list){
-                                        parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
-                                    }
-                                    messageHandler.postMessage(0, parttimejob_list);
-                                } else {
-                                    messageHandler.postMessage(1, result.getMessage());
+                    Partjob29Request req = new Partjob29Request();
+                    Partjob29Request.Parttimejob job = req.new Parttimejob();
+                    job.setReceiverid(UserSubject.getStudentid());
+                    job.setTargettype("3");//3答案
+                    job.setTargetid(answerid);
+                    job.setCommenttype("1");//1评论
+                    job.setStart("" + mCurrentStart);
+                    job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    req.setParttimejob(job);
+                    new AzService().doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
+                        @Override
+                        public void success(Partjob29Response response) {
+                            ResponseResult result = response.getResult();
+                            if ("0".equals(result.getCode())) {
+                                List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                if(null == parttimejob_list){
+                                    parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
                                 }
+                                messageHandler.postMessage(0, parttimejob_list);
+                            } else {
+                                messageHandler.postMessage(1, result.getMessage());
                             }
+                        }
 
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
                 }
             });
         }

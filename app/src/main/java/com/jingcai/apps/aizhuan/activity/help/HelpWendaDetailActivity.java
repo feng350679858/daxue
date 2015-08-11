@@ -30,6 +30,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob15.Partjob15Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob15.Partjob15Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob34.Partjob34Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob34.Partjob34Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -65,6 +66,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
     private TextView tv_stu_name, tv_stu_college, tv_deploy_time, tv_detail_content;
     private View layout_wenda_like, layout_wenda_help;
     private Partjob34Response.Parttimejob job;
+    private CommentItem selectedRegion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,15 +130,15 @@ public class HelpWendaDetailActivity extends BaseActivity {
                             //使用/取消匿名
                             new AnonHandler(HelpWendaDetailActivity.this).setCallback(new AnonHandler.Callback() {
                                 @Override
-                                public void call() {
+                                public void call(Partjob35Response.Parttimejob job) {
                                     win.dismiss();
-                                    job.setAnonflag("1".equals(job.getAnonflag()) ? "0" : "1");
-                                    if("1".equals(job.getAnonflag())) {
+                                    HelpWendaDetailActivity.this.job.setAnonflag("1".equals(HelpWendaDetailActivity.this.job.getAnonflag()) ? "0" : "1");
+                                    if("1".equals(HelpWendaDetailActivity.this.job.getAnonflag())) {
 
                                     }
                                     //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
                                 }
-                            }).click("1", helpid);
+                            }).click(anonFlag, "1", helpid);
                         }
                     });
                 }
@@ -233,6 +235,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
             public void click(View view, CommentItem region) {
                 Intent intent = new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", region.getContentid());
+                selectedRegion = region;
                 startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW1);
             }
 
@@ -334,7 +337,11 @@ public class HelpWendaDetailActivity extends BaseActivity {
             case REQUEST_CODE_ANSWER_VIEW1:{
                 if(resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
-                    groupListView.autoRefresh();
+//                    groupListView.autoRefresh();
+                    String praisecount = data.getStringExtra("");
+                    selectedRegion.setPraisecount(praisecount);
+                    String content = data.getStringExtra("");
+                    selectedRegion.setContent(content);
                 }
                 break;
             }
