@@ -207,7 +207,7 @@ public class IndexMessageFragment extends BaseFragment implements MessageListAda
             tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String to = "7a82a05512bf411c9dd2f318f8798a3e";
+                    String to = "7427873d75ac4d0f9a62b72bd484e42f";
                     EMConversation conversation = EMChatManager.getInstance().getConversation(to);
                     EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
                     message.setReceipt(to);

@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.message.CommentReplyActivity;
+import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response.Parttimejob;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +115,7 @@ public class CommentListAdapter extends BaseAdapter {
             holder.mRefcontent = (TextView) convertView.findViewById(R.id.tv_reference_content);
             holder.mReflogo = (ImageView) convertView.findViewById(R.id.iv_reference_logo);
             holder.mBtnReply = (TextView) convertView.findViewById(R.id.tv_reply);
-            holder.mTvLevel = (LevelTextView) convertView.findViewById(R.id.tv_level);
+            holder.mTvLevel = (LevelTextView) convertView.findViewById(R.id.ltv_level);
             holder.mLlRefContainer = (LinearLayout) convertView.findViewById(R.id.ll_ref_container);
             convertView.setTag(holder);
         } else {
@@ -147,7 +150,16 @@ public class CommentListAdapter extends BaseAdapter {
         }
 
         if (null != holder.mTvReply) {
-            holder.mTvReply.setText(comment.getRefcomment().getRefcontent());
+            final Partjob29Response.Refcomment refcomment = comment.getRefcomment();
+            if (refcomment != null) {
+                String prefix;
+                if(StringUtil.isNotEmpty(refcomment.getSourcestudentname())){
+                    prefix = refcomment.getRefname()+"回复"+refcomment.getSourcestudentname()+":";
+                }else{
+                    prefix = "回复"+refcomment.getRefname()+":";
+                }
+                holder.mTvReply.setText(prefix+refcomment.getRefcontent());
+            }
         }
 
         try {
@@ -175,10 +187,9 @@ public class CommentListAdapter extends BaseAdapter {
                String str = "";
                 switch (v.getId()){
                     case R.id.iv_logo:
-                        str = "头像 click";
+                        handleCredit(position);
                         break;
                     case R.id.tv_reply:
-                        str = "回复按钮 click";
                         handleReply(position);
                         break;
                     case R.id.tv_content:
@@ -196,6 +207,16 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mBtnReply.setOnClickListener(mClickListener);
         holder.mTvContent.setOnClickListener(mClickListener);
         holder.mLlRefContainer.setOnClickListener(mClickListener);
+    }
+
+    /**
+     * 点击头像进入个人信用页面
+     * @param position index
+     */
+    private void handleCredit(int position) {
+        Intent intent = new Intent(mContext, MineCreditActivity.class);
+        intent.putExtra(MineCreditActivity.INTENT_NAME_STUDENT_ID,mComments.get(position).getSourceid());
+        mContext.startActivity(intent);
     }
 
     /**
