@@ -8,6 +8,8 @@ import com.jingcai.apps.aizhuan.util.StringUtil;
 public class GlobalConstant {
     public static final String TERMINAL_TYPE_ANDROID    = "2";//终端类型，2代表android
     public static final String BUSINESS_TYPE_PARTJOB    = "1";//1兼职
+    public static final String AREA_CODE_ZHEJIANG       = "330000";//浙江省区域编码
+    public static final String AREA_NAME_ZHEJIANG       = "浙江省";
     public static final String AREA_CODE_HANGZHOU       = "330100";//杭州区域编码
     public static final String AREA_NAME_HANGZHOU       = "杭州市";
     public static final String SDK_VERSION              = "2.0";
@@ -36,9 +38,9 @@ public class GlobalConstant {
         private String provincename;
         private String cityname;
         private String districtname;
-        private String areacode;
-        private String areaname;
-        private String areacode2;
+        private String areacode;//城市编码
+        private String areaname;//城市名称
+        private String areacode2;//区域编码
 
         public String getGisx() {
             return gisx;
@@ -133,9 +135,9 @@ public class GlobalConstant {
             return false;
         }
 
-        public void setAreacode(String areacode, String areacode2) {
+        public void setCityArea(String areacode, String areaname) {
             this.areacode = areacode;
-            this.areacode2 = areacode2;
+            this.areaname = areaname;
         }
     }
 }

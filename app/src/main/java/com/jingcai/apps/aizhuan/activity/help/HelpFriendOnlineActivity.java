@@ -102,6 +102,7 @@ public class HelpFriendOnlineActivity extends BaseActivity {
             @Override
             public void click(View view, HelpFriendAdapter.ViewHolder holder) {
                 Intent intent = new Intent();
+                intent.putExtra("userid", "aaaaaaaaaaa");
                 intent.putExtra("username", "夏邑");
                 intent.putExtra("schoolname", "浙江理工大学");
                 intent.putExtra("collegename", "经贸学院");

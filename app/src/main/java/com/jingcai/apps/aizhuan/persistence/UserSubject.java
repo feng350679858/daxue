@@ -6,23 +6,23 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
  * Created by lejing on 15/4/28.
  */
 public class UserSubject {
-
     private static String studentid;
     private static String phone;
     private static String password;
     private static String name;
     private static String gender;
     private static String logourl;
+    private static String schoolid;
     private static String schoolname;
+    private static String collegename;
     private static String cityname;
     private static String isvisiable;
     private static String level;
     private static boolean haspaypasswordset;
     private static boolean loginFlag = false;
     private static boolean onlineFlag = false;
-    private static String idnoauthflag;
-    private static String scnoauthflag;
-    private static String collegename;
+    private static String idnoauthflag;//是否通过身份验证
+    private static String scnoauthflag;//是否通过学生验证
 
     public static boolean isLogin() {
         return loginFlag;
@@ -78,6 +78,14 @@ public class UserSubject {
 
     private static void setLogourl(String logourl) {
         UserSubject.logourl = logourl;
+    }
+
+    public static String getSchoolid() {
+        return schoolid;
+    }
+
+    public static void setSchoolid(String schoolid) {
+        UserSubject.schoolid = schoolid;
     }
 
     public static String getSchoolname() {
@@ -153,13 +161,17 @@ public class UserSubject {
         if(!loginFlag){
             name = null;
             level = "0";
+            schoolid = null;
             schoolname = null;
+            collegename = null;
             logourl = null;
             onlineFlag = false;
         }else{
             name = instance.getString(Preferences.PARAM_NAME, "");
             level = instance.getString(Preferences.PARAM_LEVEL, "");
+            schoolid = instance.getString(Preferences.PARAM_SCHOOL_ID, "");
             schoolname = instance.getString(Preferences.PARAM_SCHOOL_NAME, "");
+            collegename = instance.getString(Preferences.PARAM_COLLEGE_NAME,"");
             logourl = instance.getString(Preferences.PARAM_LOGOURL, "");
             onlineFlag = instance.getBoolean(Preferences.PARAM_ONLINE_FLAG, false);
         }
@@ -172,7 +184,6 @@ public class UserSubject {
         haspaypasswordset = instance.getBoolean(Preferences.PARAM_HASPAYPASSWORDSET, false);
         idnoauthflag = instance.getString(Preferences.PARAM_IDNOAUTHFLAG, "0");
         scnoauthflag = instance.getString(Preferences.PARAM_SCNOAUTHFLAG, "0");
-        collegename = instance.getString(Preferences.PARAM_COLLEGENAME,"");
     }
 
 
@@ -183,7 +194,9 @@ public class UserSubject {
         name = stu.getName();
         gender = stu.getGender();
         logourl = stu.getLogopath();
+        schoolid = stu.getSchool();
         schoolname = stu.getSchoolname();
+        collegename = stu.getCollegename();
         // cityname = stu.getAreaname();
         cityname = "杭州";
         isvisiable = stu.getIsvisiable();
@@ -193,7 +206,6 @@ public class UserSubject {
         haspaypasswordset = "1".equals(stu.getHaspaypasswordset());
         idnoauthflag = stu.getIdnoauthflag()==null?"0":stu.getIdnoauthflag();
         scnoauthflag = stu.getScnoauthflag()==null?"0":stu.getScnoauthflag();
-        collegename = stu.getCollegename();
 
         Preferences pref = Preferences.getInstance();
         pref.update(Preferences.PARAM_STUDENTID, studentid);
@@ -202,7 +214,9 @@ public class UserSubject {
         pref.update(Preferences.PARAM_NAME, name);
         pref.update(Preferences.PARAM_GENDER, gender);
         pref.update(Preferences.PARAM_LOGOURL, logourl);
+        pref.update(Preferences.PARAM_SCHOOL_ID, schoolid);
         pref.update(Preferences.PARAM_SCHOOL_NAME, schoolname);
+        pref.update(Preferences.PARAM_COLLEGE_NAME, collegename);
         pref.update(Preferences.PARAM_CITY_NAME, cityname);
         pref.update(Preferences.PARAM_ISVISIABLE, isvisiable);
         pref.update(Preferences.PARAM_LEVEL, level);
@@ -211,13 +225,13 @@ public class UserSubject {
         pref.update(Preferences.PARAM_HASPAYPASSWORDSET, haspaypasswordset);
         pref.update(Preferences.PARAM_IDNOAUTHFLAG,idnoauthflag);
         pref.update(Preferences.PARAM_SCNOAUTHFLAG,scnoauthflag);
-        pref.update(Preferences.PARAM_COLLEGENAME,collegename);
     }
 
 
     public static void loginFail() {
         name = null;
         level = "0";
+        schoolid = null;
         schoolname = null;
         logourl = null;
         loginFlag = false;

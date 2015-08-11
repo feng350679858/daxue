@@ -51,13 +51,13 @@
             </LinearLayout>
 
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView1"
+                android:id="@+id/actv_topic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/help_jishi_content_bg"
                 android:completionHint="请选择你的话题"
-                android:completionThreshold="1"
+                android:completionThreshold="2"
                 android:dropDownHorizontalOffset="-10dp"
                 android:dropDownWidth="match_parent"
                 android:gravity="center_vertical"
@@ -102,7 +102,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/et_secret"
+                android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="5dp"
@@ -154,7 +154,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/cb_hidden_name"
+                    android:id="@+id/cb_anonymous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@null"

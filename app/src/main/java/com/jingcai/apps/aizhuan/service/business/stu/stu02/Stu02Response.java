@@ -22,10 +22,11 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
             private String phone;
             private String email;
             private String qq;
+            private String school;
             private String schoolname;
+            private String college;
             private String collegename;
             private String joindate;
-            private String college;
             private String professional;
             private String promotioncode;
             private String logopath;
@@ -109,6 +110,14 @@ public class Stu02Response extends BaseResponse<Stu02Response.Stu02Body> {
 
             public void setQq(String qq) {
                 this.qq = qq;
+            }
+
+            public String getSchool() {
+                return school;
+            }
+
+            public void setSchool(String school) {
+                this.school = school;
             }
 
             public String getSchoolname() {

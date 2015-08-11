@@ -31,7 +31,9 @@ public class Preferences {
     protected static final String PARAM_NAME = "name";
     protected static final String PARAM_GENDER = "gender";
     protected static final String PARAM_LOGOURL = "logourl";
+    protected static final String PARAM_SCHOOL_ID = "schoolid";
     protected static final String PARAM_SCHOOL_NAME = "schoolname";
+    protected static final String PARAM_COLLEGE_NAME = "collegename";
     protected static final String PARAM_CITY_NAME = "cityname";
     protected static final String PARAM_LOGIN_FLAG = "loginflag";
     protected static final String PARAM_ONLINE_FLAG = "onlineflag";
@@ -40,7 +42,6 @@ public class Preferences {
     protected static final String PARAM_HASPAYPASSWORDSET = "ispaypasswordset";
     protected static final String PARAM_IDNOAUTHFLAG = "idnoauthflag";
     protected static final String PARAM_SCNOAUTHFLAG = "scnoauthflag";
-    public static final java.lang.String PARAM_COLLEGENAME = "collegename";
 
     //系统管理模块
     public interface Sys {
