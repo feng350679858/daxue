@@ -258,8 +258,10 @@ public class PartjobDetailActivity extends BaseActivity {
             worktimetype = "0";
         PartjobListAdapter.setWorkdays(partjob_content_workdays, worktimetype, mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
-//        partjob_content_endtime.setText(DateUtil.parseDate(mParttimejob.getEndtime()).toString());
-        partjob_content_endtime.setText(mParttimejob.getEndtime());
+
+        String endtime=new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(DateUtil.parseDate(mParttimejob.getEndtime()));
+        partjob_content_endtime.setText(endtime);
+//        partjob_content_endtime.setText(mParttimejob.getEndtime());
         partjob_content_address.setText(mParttimejob.getAddress());
         if (null != mParttimejob.getGisx() && 0 != Double.parseDouble(mParttimejob.getGisx())
                 && null != mParttimejob.getGisy() && 0 != Double.parseDouble(mParttimejob.getGisy())) {
