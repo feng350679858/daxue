@@ -3,6 +3,7 @@ package com.jingcai.apps.aizhuan.activity.help;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -275,6 +276,13 @@ public class HelpWendaDeployActivity extends BaseActivity {
 //        adapter.setList(Arrays.asList(books));
         actv_topic = (AutoCompleteTextView) findViewById(R.id.actv_topic);
         actv_topic.setAdapter(adapter);
+        actv_topic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewHolder viewHolder = (ViewHolder) view.getTag();
+                Log.d("==", viewHolder.job.getTopicid()+"=========="+viewHolder.job.getTopicname());
+            }
+        });
 //        actv_topic.addTextChangedListener(new MyWatcher());
 
         et_content = (EditText) findViewById(R.id.et_content);

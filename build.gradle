@@ -15,7 +15,7 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        //maven { url "http://192.168.0.20:8081/nexus/content/repositories/jingcai_android_snapshots/" }
+        maven { url "http://192.168.0.20:8081/nexus/content/repositories/jingcai_android_snapshots/" }
         //mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }

@@ -28,15 +28,15 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
+    compile 'com.jingcai.android.libs:pulltorefresh:1.0.0-SNAPSHOT'
+    compile 'com.jingcai.android.libs:toptoast:1.0.0-SNAPSHOT'
+    compile 'com.jingcai.android.libs:umenglib:1.0.0-SNAPSHOT'
+    compile 'com.jingcai.android.libs:wheel:1.0.0-SNAPSHOT'
+    compile 'com.jingcai.android.libs:qrcode:1.0.0-SNAPSHOT'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.mcxiaoke.volley:library:1.0.15+'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
     compile 'org.bouncycastle:bcprov-ext-jdk15:1.46'
-    compile project(':toptoast')
-    compile project(':pulltorefresh')
-    compile project(':umenglib')
-    compile project(':wheel')
-    compile project(':qrcode')
 }
