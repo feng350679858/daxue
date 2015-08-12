@@ -63,10 +63,7 @@ public class PartjobListAdapter extends BaseAdapter {
             viewHolder.iv_settlelength = (TextView) convertView.findViewById(R.id.pj_list_item_wage_settlelength);
             viewHolder.iv_label = (ImageView) convertView.findViewById(R.id.pj_list_item_label);
             viewHolder.tv_label = (TextView) convertView.findViewById(R.id.tv_pj_list_item_label);
-            viewHolder.tv_distance_icon = convertView.findViewById(R.id.tv_distance_icon);
             viewHolder.tv_distance = (TextView) convertView.findViewById(R.id.tv_distance);
-            viewHolder.tv_distance_unit = (TextView) convertView.findViewById(R.id.tv_distance_unit);
-            viewHolder.location_bg = (LinearLayout) convertView.findViewById(R.id.mine_partjob_list_item_location_bg);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -80,10 +77,7 @@ public class PartjobListAdapter extends BaseAdapter {
         //标题
         viewHolder.tv_title.setText(parttimejob.getTitle());
         setWorkdays(viewHolder.tv_workdays, parttimejob.getWorktimetype(), parttimejob.getWorkdays());
-        if ("-1".equals(parttimejob.getDistance()) || StringUtil.isEmpty(parttimejob.getDistance())) {
-            viewHolder.location_bg.setVisibility(View.INVISIBLE);
-        }
-        setDistance(viewHolder.location_bg, viewHolder.tv_distance, parttimejob.getDistance());
+        setDistance(viewHolder.tv_distance, parttimejob.getDistance());
         setSalary(viewHolder.tv_salary, viewHolder.tv_salary_unit, parttimejob.getSalary(), parttimejob.getSalaryunit());
         if (AdapterType.MinePartjob == adapterType) {
             setLabel(viewHolder.tv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
@@ -269,27 +263,15 @@ public class PartjobListAdapter extends BaseAdapter {
         }
     }
 
-    public static void setDistance(View tv_distance_icon, TextView tv_distance, View tv_distance_unit, String distance) {
-        //多地址
-        if ("-1".equals(distance) || StringUtil.isEmpty(distance)) {
-            tv_distance_icon.setVisibility(View.GONE);
-            tv_distance.setVisibility(View.GONE);
-            tv_distance_unit.setVisibility(View.GONE);
-        } else {
-            tv_distance_icon.setVisibility(View.VISIBLE);
-            tv_distance.setVisibility(View.VISIBLE);
-            tv_distance_unit.setVisibility(View.VISIBLE);
-            tv_distance.setText(StringUtil.distance(distance));
-        }
-    }
 
-    public static void setDistance(LinearLayout ll_container, TextView tv_distance, String distance) {
+
+    public static void setDistance(TextView tv_distance, String distance) {
         //多地址
         if ("-1".equals(distance) || StringUtil.isEmpty(distance)) {
-            ll_container.setVisibility(View.INVISIBLE);
+            tv_distance.setVisibility(View.INVISIBLE);
         } else {
-            ll_container.setVisibility(View.VISIBLE);
-            tv_distance.setText(StringUtil.distance(distance));
+            tv_distance.setVisibility(View.VISIBLE);
+            tv_distance.setText(StringUtil.distance(distance)+"km");
         }
     }
 
@@ -330,10 +312,7 @@ public class PartjobListAdapter extends BaseAdapter {
         protected TextView iv_settlelength;
         protected ImageView iv_label;
         protected TextView tv_label;
-        protected View tv_distance_icon;
         protected TextView tv_distance;
-        protected TextView tv_distance_unit;
-        protected LinearLayout location_bg;
         protected Partjob01Response.Body.Parttimejob partjob;
 
         public Partjob01Response.Body.Parttimejob getPartjob() {

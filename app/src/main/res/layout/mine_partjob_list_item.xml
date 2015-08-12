@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_bg"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/pj_list_item_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:id="@+id/tv_pj_list_item_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
-        android:textSize="14sp"
-        android:visibility="gone" />
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/mine_partjob_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/partjob_content_logo_layout"
             android:layout_width="67dp"
             android:layout_height="67dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
             android:background="@drawable/img_border_gray"
             android:padding="2dp">
 
@@ -47,42 +30,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/ll_partjob_info_container"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="4"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/partjob_content_logo_layout"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/pj_list_item_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/pj_list_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/important_dark"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2">
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/icon_salary"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="￥"
                         android:textColor="@color/red"
                         android:textSize="14sp" />
@@ -90,8 +70,9 @@
                     <TextView
                         android:id="@+id/pj_list_item_salary"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:ellipsize="end"
+                        android:gravity="center_vertical"
                         android:maxWidth="70dp"
                         android:singleLine="true"
                         android:textColor="@color/red"
@@ -100,83 +81,76 @@
                     <TextView
                         android:id="@+id/pj_list_item_salaryunit"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:ellipsize="end"
+                        android:gravity="center_vertical"
                         android:singleLine="true"
                         android:textColor="@color/normal_grey"
                         android:textSize="12sp" />
+
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8">
-
-                    <TextView
-                        android:id="@+id/pj_list_item_wage_settlelength"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@color/main_yellow"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:textColor="@color/important_dark"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/pj_list_item_workdays"
+                    android:id="@+id/pj_list_item_wage_settlelength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:textColor="@color/normal_grey"
+                    android:background="@color/main_yellow"
+                    android:gravity="center_vertical"
+                    android:padding="1dp"
+                    android:textColor="@color/important_dark"
                     android:textSize="12sp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/pj_list_item_workdays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColor="@color/normal_grey"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/mine_partjob_list_item_location_bg"
+
+        <ImageView
+            android:id="@+id/pj_list_item_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/tv_pj_list_item_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ll_partjob_info_container"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
             android:background="@drawable/grey_alpha_radius_bg"
+            android:drawableLeft="@drawable/partjob_pop_address"
+            android:drawablePadding="2dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:textColor="@color/normal_grey"
+            android:textSize="12sp" />
 
-            <ImageView
-                android:id="@+id/tv_distance_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginBottom="1dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/partjob_pop_address" />
-
-
-            <TextView
-                android:id="@+id/tv_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/normal_grey"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_distance_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="km"
-                android:textColor="@color/normal_grey"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:id="@+id/divider"
@@ -185,4 +159,4 @@
         android:layout_below="@+id/mine_partjob_list_item"
         android:layout_marginLeft="10dp"
         android:background="@color/divider_color" />
-</RelativeLayout>
+</LinearLayout>
