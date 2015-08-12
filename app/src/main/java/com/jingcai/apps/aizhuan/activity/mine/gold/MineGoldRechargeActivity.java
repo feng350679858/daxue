@@ -96,12 +96,12 @@ public class MineGoldRechargeActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 String inputCount = s.toString();
                 double count;
-                try{
+                try {
                     count = Double.parseDouble(inputCount);
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     count = 0.0;
                 }
-                if (count!=0.0) {
+                if (count != 0.0) {
                     mTvRechargeRMB.setText(StringUtil.money(inputCount) + "元");
                     mTvRechargeSubmit.setEnabled(true);
                     mTvRechargeSubmit.setTextColor(getResources().getColor(R.color.important_dark));
@@ -138,12 +138,32 @@ public class MineGoldRechargeActivity extends BaseActivity {
      */
     private void generateOrder() {
         //支付宝
-        if("AliPay".equalsIgnoreCase(selectedBank.getCode())){
+        if ("AliPay".equalsIgnoreCase(selectedBank.getCode())) {
+            checkInstall();
             generateAlipayOrder();
-        }else{
-            showToast(selectedBank.getName()+"支付渠道暂未开通");
+        } else {
+            showToast(selectedBank.getName() + "支付渠道暂未开通");
         }
     }
+
+
+    /**
+     * 查询终端设备是否存在支付宝认证账户
+     */
+    public void checkInstall() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask payTask = new PayTask(MineGoldRechargeActivity.this);
+                // 调用查询接口，获取查询结果
+                boolean isExist = payTask.checkAccountIfExist();
+
+                messageHandler.postMessage(7, isExist);
+            }
+        });
+    }
+
 
     private void generateAlipayOrder() {
         new AzExecutor().execute(new Runnable() {
@@ -238,9 +258,6 @@ public class MineGoldRechargeActivity extends BaseActivity {
         });
     }
 
-
-
-
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
@@ -268,16 +285,16 @@ public class MineGoldRechargeActivity extends BaseActivity {
                     Log.i(TAG, "获取余额失败：" + msg.obj);
                     break;
                 }
-                case 4:{
+                case 4: {
                     postPayMessage(((Account07Response.Body.Pay) msg.obj));
                     break;
                 }
-                case 5:{
+                case 5: {
                     showToast("生成订单失败，请稍后重试");
                     Log.i(TAG, "生成订单失败：" + msg.obj);
                     break;
                 }
-                case 6:{
+                case 6: {
                     PayResult payResult = new PayResult((String) msg.obj);
 
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
@@ -300,6 +317,13 @@ public class MineGoldRechargeActivity extends BaseActivity {
                     }
                     break;
                 }
+                case 7: {
+                    boolean mInstall = (boolean) msg.obj;
+                    if(!mInstall){
+                        showToast("装了支付宝后要登录哟");
+                    }
+                    break;
+                }
                 default:
                     super.handleMessage(msg);
                     break;
@@ -309,15 +333,16 @@ public class MineGoldRechargeActivity extends BaseActivity {
 
     /**
      * 发送支付宝
+     *
      * @param pay
      */
     private void postPayMessage(Account07Response.Body.Pay pay) {
-        if(null == pay){
+        if (null == pay) {
             showToast("订单出现异常");
-        }else{
+        } else {
             final String content = getOrderInfo(pay.getPartner(), pay.getSellerid(),
                     pay.getTradeno(), pay.getSubject(), pay.getDes(), pay.getFee(), pay.getNotifyurl(), pay.getPaymenttype());
-            Log.i(TAG,content);
+            Log.i(TAG, content);
             String sign = pay.getSign();
             final String payInfo = content + "&sign=\"" + sign + "\"&"
                     + "sign_type=\"RSA\"";
@@ -328,7 +353,7 @@ public class MineGoldRechargeActivity extends BaseActivity {
                     PayTask alipay = new PayTask(MineGoldRechargeActivity.this);
                     // 调用支付接口，获取支付结果
                     String result = alipay.pay(payInfo);
-                    messageHandler.postMessage(6,result);
+                    messageHandler.postMessage(6, result);
                 }
             });
         }
@@ -337,16 +362,15 @@ public class MineGoldRechargeActivity extends BaseActivity {
 
     /**
      * create the order info. 创建订单信息
-     *
      */
     private String getOrderInfo(String partner,
-                               String sellerid,
-                               String tradeno,
-                               String subject,
-                               String des,
-                               String fee,
-                               String notifyurl,
-                               String paymenttype) {
+                                String sellerid,
+                                String tradeno,
+                                String subject,
+                                String des,
+                                String fee,
+                                String notifyurl,
+                                String paymenttype) {
         StringBuilder sb = new StringBuilder();
         // 签约合作者身份ID
         sb.append("partner=").append("\"").append(partner).append("\"");
@@ -400,8 +424,8 @@ public class MineGoldRechargeActivity extends BaseActivity {
         if (null == banks || 0 == banks.size()) {
             return;
         }
-        selectedBank=banks.get(0);
-        mListAdapter = new AccountChoiceListAdapter(this,selectedBank);
+        selectedBank = banks.get(0);
+        mListAdapter = new AccountChoiceListAdapter(this, selectedBank);
         mListView = (ListView) findViewById(R.id.lv_mine_account_topup_choice_list);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
