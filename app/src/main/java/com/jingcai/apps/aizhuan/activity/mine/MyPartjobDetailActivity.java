@@ -70,10 +70,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
     private TextView mTvPartjobWorkdays;
     private TextView mIvPartjobSettlelength;
     private TextView mIvPartjobLabel;
-    private View mTvDistanceIcon;
-    private LinearLayout location_bg;
     private TextView mTvDistance;
-    private View mTvDistanceUnit;
     private PartjobListAdapter partjobListAdapter;
     private PopupWin connectionWin;
     /**
@@ -122,10 +119,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mIvPartjobLabel = (TextView) findViewById(R.id.tv_pj_list_item_label);
         mIvPartjobLabel.setVisibility(View.VISIBLE);
         ((ImageView) findViewById(R.id.pj_list_item_label)).setVisibility(View.GONE);
-        location_bg=(LinearLayout)findViewById(R.id.mine_partjob_list_item_location_bg);
-        mTvDistanceIcon = findViewById(R.id.tv_distance_icon);
         mTvDistance = (TextView) findViewById(R.id.tv_distance);
-        mTvDistanceUnit = findViewById(R.id.tv_distance_unit);
 
         //工作信息
         mTvWorkWorktime = (TextView) findViewById(R.id.tv_mine_partjob_detail_worktime);
@@ -276,10 +270,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mTvPartjobTitle.setText(mJoininfo.getTitle());
 
         PartjobListAdapter.setWorkdays(mTvPartjobWorkdays, mJoininfo.getWorktimetype(), mJoininfo.getWorkdays());
-        if("-1".equals( mJoininfo.getDistance()) || StringUtil.isEmpty( mJoininfo.getDistance())) {
-            location_bg.setVisibility(View.INVISIBLE);
-        }
-        PartjobListAdapter.setDistance(mTvDistanceIcon, mTvDistance, mTvDistanceUnit, mJoininfo.getDistance());
+        PartjobListAdapter.setDistance( mTvDistance, mJoininfo.getDistance());
         PartjobListAdapter.setSalary(mTvPartjobSalary, mTvPartjobSalaryUnit, mJoininfo.getSalary(), mJoininfo.getSalaryunit());
         partjobListAdapter.setLabel(mIvPartjobLabel, mJoininfo.getWorktimetype(), mJoininfo.getLabel(), PartjobListAdapter.AdapterType.MinePartjob);
         PartjobListAdapter.setSettlelength(mIvPartjobSettlelength, mJoininfo.getSettlelength());
