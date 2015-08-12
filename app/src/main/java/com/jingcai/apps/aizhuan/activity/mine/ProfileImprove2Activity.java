@@ -457,8 +457,6 @@ public class ProfileImprove2Activity extends BaseActivity {
                 stu.setName(getIntent().getStringExtra("name"));
                 stu.setGender(getIntent().getStringExtra("gender"));
                 stu.setAreacode(getIntent().getStringExtra("areacode"));
-//                stu.setEmail(getIntent().getStringExtra("email"));
-//                stu.setQq(getIntent().getStringExtra("qq"));
                 stu.setSchool(school_input.getTag().toString());
                 stu.setJoindate(joindate_input.getText().toString());
                 stu.setCollege(college_input.getTag().toString());
