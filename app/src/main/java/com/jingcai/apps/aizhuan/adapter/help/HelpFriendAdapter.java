@@ -6,24 +6,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Json Ding on 2015/4/29.
  */
 public class HelpFriendAdapter extends BaseAdapter {
     private BaseActivity baseActivity;
-    private List<Base04Response.Body.Region> regionList;
+    private List<Stu10Response.Item> regionList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
     private Callback callback;
@@ -45,7 +51,7 @@ public class HelpFriendAdapter extends BaseAdapter {
     }
 
     @Override
-    public Base04Response.Body.Region getItem(int position) {
+    public Stu10Response.Item getItem(int position) {
         return regionList.get(position);
     }
 
@@ -61,24 +67,41 @@ public class HelpFriendAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.help_friend_online_list_item, null);
             viewHolder = new ViewHolder();
+            viewHolder.civ_head_logo = (CircleImageView)convertView.findViewById(R.id.civ_head_logo);
+            viewHolder.ltv_level = (LevelTextView)convertView.findViewById(R.id.ltv_level);
+            viewHolder.tv_stu_name = (TextView)convertView.findViewById(R.id.tv_stu_name);
+            viewHolder.tv_stu_school = (TextView)convertView.findViewById(R.id.tv_stu_school);
+            viewHolder.tv_stu_college = (TextView)convertView.findViewById(R.id.tv_stu_college);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         //将对象存入viewHolder
-        Base04Response.Body.Region region = regionList.get(position);
+        Stu10Response.Item region = regionList.get(position);
         viewHolder.region = region;
-        if(null != callback) {
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        bitmapUtil.getImage(viewHolder.civ_head_logo, region.getTargetimgurl(), R.drawable.default_head_img);
+        String targetlevel = region.getTargetlevel();
+        if(StringUtil.isNotEmpty(targetlevel)) {
+            viewHolder.ltv_level.setLevel(Integer.parseInt(targetlevel));
+        }
+        viewHolder.tv_stu_name.setText(region.getTargetname());
+        viewHolder.tv_stu_school.setText(region.getTargetschool());
+        viewHolder.tv_stu_college.setText(region.getTargetcollege());
+
+        final boolean online = "1".equals(region.getStatus());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (online) {
                     if (null != callback) {
                         callback.click(v, (ViewHolder) v.getTag());
                     }
+                }else{
+                    baseActivity.showToast("只能选择在线老友");
                 }
-            });
-        }
+            }
+        });
         return convertView;
     }
 
@@ -86,13 +109,18 @@ public class HelpFriendAdapter extends BaseAdapter {
         regionList.clear();
     }
 
-    public void addData(List<Base04Response.Body.Region> list) {
+    public void addData(List<Stu10Response.Item> list) {
         regionList.addAll(list);
     }
 
 
     public class ViewHolder {
-        public Base04Response.Body.Region region;
+        public Stu10Response.Item region;
+        public CircleImageView civ_head_logo;
+        public LevelTextView ltv_level;
+        public TextView tv_stu_name;
+        public TextView tv_stu_school;
+        public TextView tv_stu_college;
     }
 
     public interface Callback{

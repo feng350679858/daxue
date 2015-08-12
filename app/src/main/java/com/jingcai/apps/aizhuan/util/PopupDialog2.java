@@ -1,21 +1,20 @@
 package com.jingcai.apps.aizhuan.util;
 
-import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IdRes;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -27,17 +26,18 @@ import java.util.Map;
 /**
  * Created by lejing on 15/7/15.
  */
-public class PopupWin {
+public class PopupDialog2 {
+    private Context mctx;
     private View mParentView;
     private View mContentView;
-    private PopupWindow popupWindow;
+    private Dialog popupWindow;
     private int mWidth, mHeight;
     private int mAnimstyle;
     private boolean mFocusable;
 
     private OnShowStateChangeCallBack mOnShowStateChangeCallBack;
 
-    private PopupWin(View view1, View view2) {
+    private PopupDialog2(View view1, View view2) {
         this.mParentView = view1;
         this.mContentView = view2;
     }
@@ -107,7 +107,7 @@ public class PopupWin {
             return this;
         }
 
-        public PopupWin build() {
+        public PopupDialog2 build() {
             if (null == parentView) {
                 throw new RuntimeException("you should set setParentView before build");
             }
@@ -124,7 +124,8 @@ public class PopupWin {
                 throw new RuntimeException("you should set setContentView or setData before build");
             }
 
-            final PopupWin win = new PopupWin(parentView, contentView);
+            final PopupDialog2 win = new PopupDialog2(parentView, contentView);
+            win.mctx = context;
             win.mWidth = width;
             win.mHeight = height;
             win.mAnimstyle = animstyle;
@@ -149,10 +150,10 @@ public class PopupWin {
         }
 
         class PopItemAdapter extends ArrayAdapter<PopItem> {
-            private PopupWin win;
+            private PopupDialog2 win;
             private int mResourceId;
 
-            public PopItemAdapter(Context context, PopupWin win, int textViewResourceId) {
+            public PopItemAdapter(Context context, PopupDialog2 win, int textViewResourceId) {
                 super(context, textViewResourceId);
                 this.win = win;
                 this.mResourceId = textViewResourceId;
@@ -210,12 +211,67 @@ public class PopupWin {
         }
     }
 
+    public static Rect getViewAbsoluteLocation(View view){
+        if(view == null){
+            return new Rect();
+        }
+        // 获取View相对于屏幕的坐标
+        int[] location = new int[2] ;
+        view.getLocationOnScreen(location);//这是获取相对于屏幕的绝对坐标，而view.getLocationInWindow(location); 是获取window上的相对坐标，本例中只有一个window，二者等价
+        // 获取View的宽高
+        int width = view.getMeasuredWidth();
+        int height = view.getMeasuredHeight();
+        // 获取View的Rect
+        Rect rect = new Rect();
+        rect.left = location[0];
+        rect.top = location[1];
+        rect.right = rect.left + width;
+        rect.bottom = rect.top + height;
+        return rect;
+    }
+    //参考：http://blog.csdn.net/johnny901114/article/details/7839512
+    private int[] calcPopupXY(View rootView, View anchor){
+        int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        rootView.measure(w, h);
+        int popupWidth = rootView.getMeasuredWidth();
+        int popupHeight = rootView.getMeasuredHeight();
+        Rect anchorRect = getViewAbsoluteLocation(anchor);
+        int x = anchorRect.left + (anchorRect.right - anchorRect.left)/2 - popupWidth / 2;
+        int y = anchorRect.top - popupHeight;
+        return new int[]{x,y};
+    }
     private void build() {
-        popupWindow = new PopupWindow(mContentView, mWidth, mHeight);
+        popupWindow = new Dialog(mctx);
 
-        popupWindow.setFocusable(mFocusable);
+        mContentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Dialog dialog = new Dialog(mctx);
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        //去掉默认的背景,下面两个都可以
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
+        //dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //http://stackoverflow.com/questions/12348405/dialog-is-bigger-than-expected-when-using-relativelayout
+        //dialog默认都是有title的
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题，否则会影响高度计算，一定要在setContentView之前调用，终于明白有一个设置theme的构造函数的目的了
+        dialog.setContentView(mContentView);
+
+        //计算弹框位置
+        int[] xy = calcPopupXY(mContentView, mParentView);
+        //gravity的默认值为Gravity.CENTER,即Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL.
+        //参考: http://www.cnblogs.com/angeldevil/archive/2012/03/31/2426242.html
+        dialog.getWindow().setGravity(Gravity.LEFT | Gravity.TOP);
+        params.x = xy[0];
+        params.y = xy[1];
+
+        dialog.show();
+
+
+
+//        popupWindow.setFocusable(mFocusable);
 //        popupWindow.setBackgroundDrawable(new ColorDrawable(0x80000000));//半透明
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+//        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
 //        if(!mFocusable) {
 //            popupWindow.setTouchable(true);
 //            popupWindow.setOutsideTouchable(true);
@@ -237,18 +293,18 @@ public class PopupWin {
 //            });
 //        }
 
-        if (0 != mAnimstyle) {
-            popupWindow.setAnimationStyle(mAnimstyle);
-        }
-        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        if (null != mParentView) {
-            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    ObjectAnimator.ofFloat(mParentView, "alpha", 0.5f, 1.0f).setDuration(500).start();
-                }
-            });
-        }
+//        if (0 != mAnimstyle) {
+//            popupWindow.setAnimationStyle(mAnimstyle);
+//        }
+//        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        if (null != mParentView) {
+//            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                @Override
+//                public void onDismiss() {
+//                    ObjectAnimator.ofFloat(mParentView, "alpha", 0.5f, 1.0f).setDuration(500).start();
+//                }
+//            });
+//        }
     }
 
     public void show() {
@@ -261,16 +317,17 @@ public class PopupWin {
 
     public void show(View parent, int gravity, int x, int y) {
         check();
-        popupWindow.showAtLocation(parent, gravity, x, y);
-        if (null != mParentView) {
-            ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
-        }
+//        popupWindow.showAtLocation(parent, gravity, x, y);
+//        if (null != mParentView) {
+//            ObjectAnimator.ofFloat(mParentView, "alpha", 1.0f, 0.5f).setDuration(500).start();
+//        }
         if(null != mOnShowStateChangeCallBack){
             mOnShowStateChangeCallBack.onShow();
         }
+        popupWindow.show();
     }
 
-    public PopupWin setAction(@IdRes int viewId, View.OnClickListener clickListener) {
+    public PopupDialog2 setAction(@IdRes int viewId, View.OnClickListener clickListener) {
         check();
         View view = findViewById(viewId);
         if (null != view) {

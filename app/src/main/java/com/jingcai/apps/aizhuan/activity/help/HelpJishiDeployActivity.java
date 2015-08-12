@@ -19,6 +19,10 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.common.MoneyWatcher;
 import com.jingcai.apps.aizhuan.activity.common.NumberWatcher;
+import com.jingcai.apps.aizhuan.activity.common.WordCountWatcher;
+import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin;
+import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin2;
+import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
 import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
@@ -31,6 +35,7 @@ import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.DES3Util;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
@@ -66,6 +71,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private String oldfriendid;
     private TextView tv_secret_tip;
     private TextView tv_content_tip;
+    private PayPwdWin payPwdWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,29 +97,13 @@ public class HelpJishiDeployActivity extends BaseActivity {
         });
     }
 
-    class WordCountWatcher implements TextWatcher {
-        private final TextView textView;
-        public WordCountWatcher(TextView textView){
-            this.textView = textView;
-        }
-        public void afterTextChanged(Editable edt) {
-            textView.setText(String.format("剩余%s字", (70 - edt.length())));
-        }
-
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-        }
-
-        public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-        }
-    }
-
     private void initView() {
         tv_content_tip = (TextView) findViewById(R.id.tv_content_tip);
         et_content = (EditText) findViewById(R.id.et_content);
-        et_content.addTextChangedListener(new WordCountWatcher(tv_content_tip));
+        et_content.addTextChangedListener(new WordCountWatcher(tv_content_tip, 70));
         tv_secret_tip = (TextView) findViewById(R.id.tv_secret_tip);
         et_secret = (EditText) findViewById(R.id.et_secret);
-        et_secret.addTextChangedListener(new WordCountWatcher(tv_secret_tip));
+        et_secret.addTextChangedListener(new WordCountWatcher(tv_secret_tip, 70));
 
         tv_gender = (TextView) findViewById(R.id.tv_gender);
         tv_gender.setTag("2");//不限
@@ -281,7 +271,17 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 if(!checkDeploy()){
                     return;
                 }
-                doDeploy();
+                if (null == payPwdWin) {
+                    payPwdWin = new PayPwdWin(HelpJishiDeployActivity.this);
+                    payPwdWin.setCallback(new PayPwdWin.Callback() {
+                        @Override
+                        public void call(String pwd) {
+                            doDeploy(pwd);
+                        }
+                    });
+                    payPwdWin.setTitle("确认支付");
+                }
+                payPwdWin.showPay(Double.parseDouble(et_pay_money.getText().toString()));
             }
         });
     }
@@ -392,6 +392,16 @@ public class HelpJishiDeployActivity extends BaseActivity {
                     showSeldefEndtimeDialog();
                     break;
                 }
+                case 5: {
+                    try {
+//                        PayInsufficientWin2 win = new PayInsufficientWin2(HelpJishiDeployActivity.this);
+                        PayInsufficientWin win = new PayInsufficientWin(HelpJishiDeployActivity.this);
+                        win.show();
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -469,6 +479,10 @@ public class HelpJishiDeployActivity extends BaseActivity {
             showToast("请输入酬谢金额");
             return false;
         }
+        if(Double.parseDouble(et_pay_money.getText().toString())<2){
+            showToast("酬谢金额不能低于2元");
+            return false;
+        }
         if(StringUtil.isEmpty(tv_end_time.getTag().toString())){
             showToast("请输入截止时间");
             return false;
@@ -476,10 +490,11 @@ public class HelpJishiDeployActivity extends BaseActivity {
         return true;
     }
 
-    private void doDeploy(){
+    private void doDeploy(final String pwd){
         if (!actionLock.tryLock()) {
             return;
         }
+        showProgressDialog("发布中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -487,6 +502,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 Partjob16Request.Parttimejob job = req.new Parttimejob();
                 job.setStudentid(UserSubject.getStudentid());
                 job.setType("2");
+                job.setPaypassword(DES3Util.encrypt(pwd));
                 job.setFriendid(oldfriendid);
                 job.setGenderlimit(tv_gender.getTag().toString());
                 job.setGisx(GlobalConstant.getGis().getGisx());
@@ -496,12 +512,15 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 job.setPrivatecontent(et_secret.getText().toString());
                 job.setRegionid(tv_group.getTag().toString());
                 job.setValidtime(tv_end_time.getTag().toString());
+                //job.setPaypassword(UserSubject.get);
                 req.setParttimejob(job);
                 new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                     @Override
                     public void success(BaseResponse resp) {
                         if ("0".equals(resp.getResultCode())) {
                             messageHandler.postMessage(2);
+                        } else if("S012".equals(resp.getResultCode())){//余额不足
+                            messageHandler.postMessage(5);
                         } else {
                             messageHandler.postMessage(3, resp.getResultMessage());
                         }

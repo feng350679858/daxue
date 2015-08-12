@@ -21,10 +21,11 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_online_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="3/5人"
+            android:text="0/0人"
             android:textColor="@color/normal_grey"
             android:textSize="14sp" />
     </RelativeLayout>

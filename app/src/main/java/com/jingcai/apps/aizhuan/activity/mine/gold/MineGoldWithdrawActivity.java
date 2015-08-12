@@ -230,7 +230,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
     private void initPaypwdWin() {
         payPwdWin = new PayPwdWin(this);
         payPwdWin.setTitle("确认提现");
-        payPwdWin.showPay(mInputCount.getText().toString() + "元");
+        payPwdWin.showPay(Double.parseDouble(mInputCount.getText().toString()));
         payPwdWin.setCallback(new PayPwdWin.Callback() {
             @Override
             public void call(String pwd) {

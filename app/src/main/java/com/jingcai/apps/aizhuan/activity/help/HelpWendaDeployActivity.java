@@ -3,7 +3,6 @@ package com.jingcai.apps.aizhuan.activity.help;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.common.WordCountWatcher;
 import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -30,7 +30,6 @@ import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob17.Partjob17Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob28.Partjob28Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob28.Partjob28Response;
@@ -50,19 +49,9 @@ import java.util.List;
  */
 public class HelpWendaDeployActivity extends BaseActivity {
     private MessageHandler messageHandler;
-
     private Button btn_wenda_help;
     private EditText et_content;
-
-    // 定义字符串数组作为提示的文本
-    String[] books = new String[]{"Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
-            "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
-            "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan",
-            "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
-            "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
-            "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory",
-            "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
-            "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"};
+    private String selectTopicid, selectTopiccontent;
     private TextView tv_group;
     private CheckBox cb_anonymous;
     private TopicAdapter adapter;
@@ -76,8 +65,9 @@ public class HelpWendaDeployActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.help_wenda_deploy);
         messageHandler = new MessageHandler(this);
+
+        setContentView(R.layout.help_wenda_deploy);
 
         initHeader();
 
@@ -97,18 +87,7 @@ public class HelpWendaDeployActivity extends BaseActivity {
         });
     }
 
-//    private class MyWatcher implements TextWatcher {
-//        public void afterTextChanged(Editable s) {
-//            doAfterTextChanged();
-//        }
-//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//        }
-//        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//        }
-//    }
-
     class TopicAdapter extends BaseAdapter implements ListAdapter, Filterable {
-        private Context ctx;
         private LayoutInflater mInflater;
         private List<Partjob28Response.Parttimejob> list;
         private MyFilter mFilter;
@@ -118,7 +97,6 @@ public class HelpWendaDeployActivity extends BaseActivity {
         }
 
         public TopicAdapter(Context ctx) {
-            this.ctx = ctx;
             mInflater = LayoutInflater.from(ctx);
         }
 
@@ -164,60 +142,42 @@ public class HelpWendaDeployActivity extends BaseActivity {
         }
 
         class MyFilter extends Filter {
-            //private List<String> mObjects;
-            private final Object mLock = new Object();
-            private ArrayList<String> mOriginalValues;
-
             @Override
             protected FilterResults performFiltering(CharSequence prefix) {
-//                FilterResults results = new FilterResults();
-//                if (mOriginalValues == null) {
-//                    synchronized (mLock) {
-//                        mOriginalValues = new ArrayList<String>(list);
-//                    }
-//                }
-//                if (prefix == null || prefix.length() == 0) {
-//                    ArrayList<String> list;
-//                    synchronized (mLock) {
-//                        list = new ArrayList<String>(mOriginalValues);
-//                    }
-//                    results.values = list;
-//                    results.count = list.size();
-//                } else {
-//                    String prefixString = prefix.toString().toLowerCase();
-//                    ArrayList<String> values;
-//                    synchronized (mLock) {
-//                        values = new ArrayList<String>(mOriginalValues);
-//                    }
-//                    final int count = values.size();
-//                    final ArrayList<String> newValues = new ArrayList<String>();
-//
-//                    for (int i = 0; i < count; i++) {
-//                        final String value = values.get(i);
-//                        final String valueText = value.toLowerCase();
-//
-//                        // First match against the whole, non-splitted value
-//                        if (valueText.startsWith(prefixString)) {
-//                            newValues.add(value);
-//                        } else {
-//                            final String[] words = valueText.split(" ");
-//                            final int wordCount = words.length;
-//
-//                            // Start at index 0, in case valueText starts with space(s)
-//                            for (int k = 0; k < wordCount; k++) {
-//                                if (words[k].startsWith(prefixString)) {
-//                                    newValues.add(value);
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    results.values = newValues;
-//                    results.count = newValues.size();
-//                }
-//                return results;
-                doFilter(prefix.toString().toLowerCase());
+                if (null == prefix || prefix.length() < actv_topic.getThreshold()) {
+                    return null;
+                }
+                if (!actionLock.tryLock()) return null;
+                final String filter = prefix.toString().toLowerCase();
+                new AzExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Partjob28Request req = new Partjob28Request();
+                        Partjob28Request.Parttimejob job = req.new Parttimejob();
+                        job.setTopicname(filter);
+                        req.setParttimejob(job);
+                        new AzService().doTrans(req, Partjob28Response.class, new AzService.Callback<Partjob28Response>() {
+                            @Override
+                            public void success(Partjob28Response resp) {
+                                if ("0".equals(resp.getResultCode())) {
+                                    List<Partjob28Response.Parttimejob> list = resp.getBody().getParttimejob_list();
+                                    if (null == list) {
+                                        list = new ArrayList<Partjob28Response.Parttimejob>();
+                                    }
+                                    messageHandler.postMessage(11, list);
+                                } else {
+                                    actionLock.unlock();
+                                }
+                            }
+
+                            @Override
+                            public void fail(AzException e) {
+                                //messageHandler.postException(e);
+                                actionLock.unlock();
+                            }
+                        });
+                    }
+                });
                 return null;
             }
 
@@ -231,38 +191,16 @@ public class HelpWendaDeployActivity extends BaseActivity {
 //                    notifyDataSetInvalidated();
 //                }
             }
-        }
-    }
 
-    private void doFilter(final String filter) {
-        new AzExecutor().execute(new Runnable() {
             @Override
-            public void run() {
-                Partjob28Request req = new Partjob28Request();
-                Partjob28Request.Parttimejob job = req.new Parttimejob();
-                job.setTopicname(filter);
-                req.setParttimejob(job);
-                new AzService().doTrans(req, Partjob28Response.class, new AzService.Callback<Partjob28Response>() {
-                    @Override
-                    public void success(Partjob28Response resp) {
-                        if ("0".equals(resp.getResultCode())) {
-                            List<Partjob28Response.Parttimejob> list = resp.getBody().getParttimejob_list();
-                            if (null == list) {
-                                list = new ArrayList<Partjob28Response.Parttimejob>();
-                            }
-                            messageHandler.postMessage(11, list);
-                        } else {
-                            messageHandler.postMessage(12, resp.getResultMessage());
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
+            public CharSequence convertResultToString(Object resultValue) {
+                if (null == resultValue || !(resultValue instanceof Partjob28Response.Parttimejob)) {
+                    return "";
+                }
+                Partjob28Response.Parttimejob job = (Partjob28Response.Parttimejob) resultValue;
+                return job.getTopicname();
             }
-        });
+        }
     }
 
     public class ViewHolder {
@@ -271,21 +209,23 @@ public class HelpWendaDeployActivity extends BaseActivity {
     }
 
     private void initView() {
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.popup_list_item2, books);
         adapter = new TopicAdapter(this);
-//        adapter.setList(Arrays.asList(books));
+        TextView tv_topic_tip = (TextView) findViewById(R.id.tv_topic_tip);
         actv_topic = (AutoCompleteTextView) findViewById(R.id.actv_topic);
         actv_topic.setAdapter(adapter);
+        actv_topic.addTextChangedListener(new WordCountWatcher(tv_topic_tip, 15));
         actv_topic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ViewHolder viewHolder = (ViewHolder) view.getTag();
-                Log.d("==", viewHolder.job.getTopicid()+"=========="+viewHolder.job.getTopicname());
+                selectTopicid = viewHolder.job.getTopicid();
+                selectTopiccontent = viewHolder.job.getTopicname();
             }
         });
-//        actv_topic.addTextChangedListener(new MyWatcher());
 
+        TextView tv_content_tip = (TextView) findViewById(R.id.tv_content_tip);
         et_content = (EditText) findViewById(R.id.et_content);
+        et_content.addTextChangedListener(new WordCountWatcher(tv_content_tip, 512));
         tv_group = (TextView) findViewById(R.id.tv_group);
         tv_group.setTag(UserSubject.getSchoolid());
         tv_group.setText(UserSubject.getSchoolname());
@@ -355,7 +295,7 @@ public class HelpWendaDeployActivity extends BaseActivity {
         btn_wenda_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkDeploy()){
+                if (!checkDeploy()) {
                     return;
                 }
                 doDeploy();
@@ -414,16 +354,17 @@ public class HelpWendaDeployActivity extends BaseActivity {
                     break;
                 }
                 case 11: {
-                    List<Partjob28Response.Parttimejob> list = (List<Partjob28Response.Parttimejob>) msg.obj;
-                    if (list.size() > 0) {
-                        adapter.setList(list);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        adapter.notifyDataSetInvalidated();
+                    try {
+                        List<Partjob28Response.Parttimejob> list = (List<Partjob28Response.Parttimejob>) msg.obj;
+                        if (list.size() > 0) {
+                            adapter.setList(list);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            adapter.notifyDataSetInvalidated();
+                        }
+                    } finally {
+                        actionLock.unlock();
                     }
-                    break;
-                }
-                case 12: {
                     break;
                 }
                 default: {
@@ -479,30 +420,41 @@ public class HelpWendaDeployActivity extends BaseActivity {
             });
         }
     }
-    private boolean checkDeploy(){
-        if(StringUtil.isEmpty(actv_topic.getText().toString())){
+
+    private boolean checkDeploy() {
+        if (StringUtil.isEmpty(actv_topic.getText().toString())) {
             showToast("请输入话题");
             return false;
         }
-        if(StringUtil.isEmpty(et_content.getText().toString())){
+        if (actv_topic.getText().toString().length()<2) {
+            showToast("请话题太短，请重新输入");
+            return false;
+        }
+        if (StringUtil.isEmpty(et_content.getText().toString())) {
             showToast("请输入求助内容");
             return false;
         }
         return true;
     }
 
-    private void doDeploy(){
+    private void doDeploy() {
         if (!actionLock.tryLock()) {
             return;
         }
+        showProgressDialog("发布中...");
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 Partjob17Request req = new Partjob17Request();
                 Partjob17Request.Parttimejob job = req.new Parttimejob();
                 job.setStudentid(UserSubject.getStudentid());
-//                job.setTopicid(topicid);
-//                job.setTopiccontent(topiccontent);
+                if(actv_topic.getText().toString().equals(selectTopiccontent)){
+                    job.setTopicid(selectTopicid);
+                    job.setTopiccontent(selectTopiccontent);
+                }else{
+                    job.setTopicid(null);
+                    job.setTopiccontent(actv_topic.getText().toString());
+                }
                 job.setContent(et_content.getText().toString());
                 job.setRegionid(tv_group.getTag().toString());
                 job.setAnonflag(cb_anonymous.isChecked() ? "1" : "0");

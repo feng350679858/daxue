@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:lineSpacingMultiplier="1.2"
                 android:maxLines="3"
-                android:text="求助内容请仔细想想慢慢想内容请仔细想想慢慢想\n内容请仔细想想慢慢想仔细想想慢慢想"
+                android:text=""
                 android:textColor="@color/important_dark"
                 android:textSize="16sp" />
 
@@ -43,7 +43,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="-5dp"
-                android:text="只限女生"
+                android:text=""
                 android:textColor="@color/normal_grey"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -51,7 +51,5 @@
     </LinearLayout>
 
     <include layout="@layout/index_campus_list_item_jishi" />
-
-    <include layout="@layout/index_campus_list_item_wenda" />
 
 </LinearLayout>

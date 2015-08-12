@@ -17,9 +17,10 @@ import com.jingcai.apps.aizhuan.adapter.help.HelpFriendAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
+import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Response;
+import com.jingcai.apps.aizhuan.service.business.stu.stu15.Stu15Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -35,9 +36,10 @@ import java.util.List;
 public class HelpFriendOnlineActivity extends BaseActivity {
     public static final int REQUEST_CODE_FRIEND = 1100;
     private MessageHandler messageHandler;
-    private XListView groupListView;
+    private XListView xlv_list;
     private HelpFriendAdapter helpFriendAdapter;
     private int mCurrentStart = 0;  //当前的开始
+    private TextView tv_online_rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class HelpFriendOnlineActivity extends BaseActivity {
 
         initGroupData();
     }
+
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("指定老友");
@@ -77,19 +80,18 @@ public class HelpFriendOnlineActivity extends BaseActivity {
     }
 
     private void initView() {
-        groupListView = (XListView) findViewById(R.id.xlv_list);
-        groupListView.setAdapter(helpFriendAdapter = new HelpFriendAdapter(this));
-        groupListView.setPullRefreshEnable(true);
-        groupListView.setPullLoadEnable(true);
-        groupListView.setAutoLoadEnable(true);
+        tv_online_rate = (TextView) findViewById(R.id.tv_online_rate);
 
-        groupListView.setXListViewListener(new XListView.IXListViewListener() {
+        xlv_list = (XListView) findViewById(R.id.xlv_list);
+        xlv_list.setAdapter(helpFriendAdapter = new HelpFriendAdapter(this));
+        xlv_list.setPullRefreshEnable(true);
+        xlv_list.setPullLoadEnable(true);
+        xlv_list.setAutoLoadEnable(true);
+
+        xlv_list.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
-                helpFriendAdapter.clearData();
-                mCurrentStart = 0;
-                groupListView.setPullLoadEnable(true);
-                initGroupData();
+                refresh();
             }
 
             @Override
@@ -102,21 +104,30 @@ public class HelpFriendOnlineActivity extends BaseActivity {
             @Override
             public void click(View view, HelpFriendAdapter.ViewHolder holder) {
                 Intent intent = new Intent();
-                intent.putExtra("userid", "aaaaaaaaaaa");
-                intent.putExtra("username", "夏邑");
-                intent.putExtra("schoolname", "浙江理工大学");
-                intent.putExtra("collegename", "经贸学院");
+                Stu10Response.Item item = holder.region;
+                intent.putExtra("userid", item.getTargetid());
+                intent.putExtra("username", item.getTargetname());
+                intent.putExtra("schoolname", item.getTargetschool());
+                intent.putExtra("collegename", item.getTargetcollege());
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
     }
 
-    private void onLoad() {
-        groupListView.stopRefresh();
-        groupListView.stopLoadMore();
-        groupListView.setRefreshTime(DateUtil.formatDate(new Date(), "MM-dd HH:mm"));
+    private void refresh() {
+        helpFriendAdapter.clearData();
+        mCurrentStart = 0;
+        xlv_list.setPullLoadEnable(true);
+        initGroupData();
     }
+
+    private void onLoad() {
+        xlv_list.stopRefresh();
+        xlv_list.stopLoadMore();
+        xlv_list.setRefreshTime(DateUtil.formatDate(new Date(), "MM-dd HH:mm"));
+    }
+
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context ctx) {
             super(ctx);
@@ -128,13 +139,26 @@ public class HelpFriendOnlineActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+                        Stu10Response.Body body = (Stu10Response.Body) msg.obj;
+                        List<Stu10Response.Item> list = null;
+                        if(null != body) {
+                            list = body.getStudent_list();
+                            Stu10Response.Student stu = body.getStudent();
+                            if(null != stu){
+                                tv_online_rate.setText(String.format("%s/%s人", stu.getOnlinenum(), stu.getOfflinenum()));
+                            }
+                        }else{
+                            tv_online_rate.setText(String.format("%s/%s人", "0", "0"));
+                        }
+                        if (null == list) {
+                            list = new ArrayList<Stu10Response.Item>();
+                        }
                         helpFriendAdapter.addData(list);
                         helpFriendAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();
                         onLoad();
                         if (list.size() < GlobalConstant.PAGE_SIZE) {
-                            groupListView.setPullLoadEnable(false);
+                            xlv_list.setPullLoadEnable(false);
                         }
                     } finally {
                         actionLock.unlock();
@@ -149,84 +173,97 @@ public class HelpFriendOnlineActivity extends BaseActivity {
                     }
                     break;
                 }
-//                case 2:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
+                case 2:{
+                    refresh();
+                    break;
+                }
+                case 3:{
+                    showToast("添加好友失败:" + msg.obj);
+                    break;
+                }
                 default: {
                     super.handleMessage(msg);
                 }
             }
         }
     }
-    private void initGroupData() {
-        //TODO 接入服务端接口
-        if (actionLock.tryLock()) {
-            showProgressDialog("获取圈子中...");
-            new AzExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            region.setRegionname("浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
-                        }
-                        messageHandler.postMessage(0, regionList);
-                    } else {
-                        final AzService azService = new AzService(HelpFriendOnlineActivity.this);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
-                            @Override
-                            public void success(Base04Response response) {
-                                ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
-                                } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //    messageHandler.postMessage(2);
-                                    //} else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //}
-                                }
-                            }
 
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
-                }
-            });
+    private void initGroupData() {
+        if (!actionLock.tryLock()) {
+            return;
         }
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu10Request req = new Stu10Request();
+                Stu10Request.Student region = req.new Student();
+                region.setStudentid(UserSubject.getStudentid());
+                region.setStart(String.valueOf(mCurrentStart));
+                region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                req.setStudent(region);
+                new AzService().doTrans(req, Stu10Response.class, new AzService.Callback<Stu10Response>() {
+                    @Override
+                    public void success(Stu10Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            Stu10Response.Body body = resp.getBody();
+                            messageHandler.postMessage(0, body);
+                        } else {
+                            messageHandler.postMessage(1, resp.getResultMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        actionLock.unlock();
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_FRIEND:{
-                if(RESULT_OK == resultCode){
-                    Log.d("==", "-----------studentid-----"+data.getStringExtra("studentid"));
+            case REQUEST_CODE_FRIEND: {
+                if (RESULT_OK == resultCode) {
+                    String qrcodeinfo = data.getStringExtra("qrcodeinfo");
+                    String key = "60110f7b38dc3173=";
+                    int index1 = qrcodeinfo.indexOf(key);
+                    int index2 = qrcodeinfo.indexOf("&");
+                    String studentid = qrcodeinfo.substring(index1 + key.length(), index2);
+                    doAddFriend(studentid);
                 }
             }
             default: {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    private void doAddFriend(final String studentid){
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu15Request req = new Stu15Request(UserSubject.getStudentid(), studentid);
+                new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                    @Override
+                    public void success(BaseResponse resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(2);
+                        } else {
+                            messageHandler.postMessage(3, resp.getResultMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        actionLock.unlock();
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 }

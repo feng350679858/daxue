@@ -99,7 +99,7 @@ public class HelpWendaRewardActivity extends BaseActivity {
                     });
                     payPwdWin.setTitle("确认打赏");
                 }
-                payPwdWin.showPay(moneyStr);
+                payPwdWin.showPay(Double.parseDouble(moneyStr));
             }
         });
     }

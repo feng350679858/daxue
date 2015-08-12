@@ -43,6 +43,7 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tv_topic_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -61,6 +62,7 @@
                 android:dropDownHorizontalOffset="-10dp"
                 android:dropDownWidth="match_parent"
                 android:gravity="center_vertical"
+                android:maxLength="15"
                 android:hint="输入你的话题"
                 android:singleLine="true"
                 android:textColor="@color/important_dark"
@@ -94,6 +96,7 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tv_content_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -110,6 +113,7 @@
                 android:gravity="top"
                 android:hint="请描述你的问题"
                 android:singleLine="false"
+                android:maxLength="512"
                 android:textSize="14sp" />
 
 

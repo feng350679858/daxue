@@ -35,6 +35,15 @@ public class Partjob16Request extends BaseRequest {
         private String friendid;
         private String gisx;
         private String gisy;
+        private String paypassword;
+
+        public String getPaypassword() {
+            return paypassword;
+        }
+
+        public void setPaypassword(String paypassword) {
+            this.paypassword = paypassword;
+        }
 
         public String getStudentid() {
             return studentid;

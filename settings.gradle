@@ -1,4 +1,6 @@
-include ':app'
+include ':app', ':qrcode'
+project(':qrcode').projectDir = new File('libraries/qrcode')
+
 
 //override your build tools version in project gradle.properties or ~/.gradle/gradle.properties
 if (!System.properties['buildToolsVersion']) {

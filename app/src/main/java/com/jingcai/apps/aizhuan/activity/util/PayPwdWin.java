@@ -70,9 +70,9 @@ public class PayPwdWin {
         mPopWin.show();
     }
 
-    public void showPay(String money) {
+    public void showPay(double money) {
         setPwdOnly(false);
-        ((TextView) mPopWin.findViewById(R.id.tv_pay_num)).setText(money);
+        ((TextView) mPopWin.findViewById(R.id.tv_pay_num)).setText(String.format("%.2f元",money));
         clearAll();
         mPopWin.show();
     }

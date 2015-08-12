@@ -26,7 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Json Ding on 2015/4/29.
  */
 public class CampusAdapter extends BaseAdapter {
-
+    private static final int TYPE_JISHI = 0;
+    private static final int TYPE_WENDA = 1;
     private Activity baseActivity;
     private List<Partjob11Response.Parttimejob> regionList;
     private LayoutInflater mInflater;
@@ -59,13 +60,45 @@ public class CampusAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+    @Override
+    public int getItemViewType(int position) {
+        Partjob11Response.Parttimejob job = regionList.get(position);
+        boolean jishiFlag = "1".equals(job.getType()) || "3".equals(job.getType());
+        return jishiFlag? TYPE_JISHI : TYPE_WENDA;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
+        final boolean jishiFlag = TYPE_JISHI == getItemViewType(position);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.index_campus_list_item, null);
             viewHolder = new ViewHolder();
+            if(jishiFlag) {
+                convertView = mInflater.inflate(R.layout.index_campus_list_jishi, null);
+
+                viewHolder.layout_jishi_like = convertView.findViewById(R.id.layout_jishi_like);
+                viewHolder.cb_jishi_like = (CheckBox) convertView.findViewById(R.id.cb_jishi_like);
+                viewHolder.layout_jishi_comment = convertView.findViewById(R.id.layout_jishi_comment);
+                viewHolder.cb_jishi_comment = (CheckBox) convertView.findViewById(R.id.cb_jishi_comment);
+                viewHolder.layout_jishi_help = convertView.findViewById(R.id.layout_jishi_help);
+                viewHolder.cb_jishi_help = (CheckBox) convertView.findViewById(R.id.cb_jishi_help);
+
+                viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_gender_limit);
+            }else{
+                convertView = mInflater.inflate(R.layout.index_campus_list_wenda, null);
+
+                viewHolder.layout_wenda_like = convertView.findViewById(R.id.layout_wenda_like);
+                viewHolder.cb_wenda_like = (CheckBox) convertView.findViewById(R.id.cb_wenda_like);
+                viewHolder.layout_wenda_comment = convertView.findViewById(R.id.layout_wenda_comment);
+                viewHolder.cb_wenda_comment = (CheckBox) convertView.findViewById(R.id.cb_wenda_comment);
+                viewHolder.layout_wenda_help = convertView.findViewById(R.id.layout_wenda_help);
+                viewHolder.cb_wenda_help = (CheckBox) convertView.findViewById(R.id.cb_wenda_help);//撰写
+                viewHolder.cb_wenda_help_my = (CheckBox) convertView.findViewById(R.id.cb_wenda_help_my);//我的答案
+            }
             viewHolder.layout_help_content = convertView.findViewById(R.id.layout_help_content);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_main_tip);
             viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
@@ -76,24 +109,7 @@ public class CampusAdapter extends BaseAdapter {
             viewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
 
             viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-            viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_gender_limit);
 
-            viewHolder.layout_help_jishi = convertView.findViewById(R.id.layout_help_jishi);
-            viewHolder.layout_jishi_like = convertView.findViewById(R.id.layout_jishi_like);
-            viewHolder.cb_jishi_like = (CheckBox) convertView.findViewById(R.id.cb_jishi_like);
-            viewHolder.layout_jishi_comment = convertView.findViewById(R.id.layout_jishi_comment);
-            viewHolder.cb_jishi_comment = (CheckBox) convertView.findViewById(R.id.cb_jishi_comment);
-            viewHolder.layout_jishi_help = convertView.findViewById(R.id.layout_jishi_help);
-            viewHolder.cb_jishi_help = (CheckBox) convertView.findViewById(R.id.cb_jishi_help);
-
-            viewHolder.layout_help_wenda = convertView.findViewById(R.id.layout_help_wenda);
-            viewHolder.layout_wenda_like = convertView.findViewById(R.id.layout_wenda_like);
-            viewHolder.cb_wenda_like = (CheckBox) convertView.findViewById(R.id.cb_wenda_like);
-            viewHolder.layout_wenda_comment = convertView.findViewById(R.id.layout_wenda_comment);
-            viewHolder.cb_wenda_comment = (CheckBox) convertView.findViewById(R.id.cb_wenda_comment);
-            viewHolder.layout_wenda_help = convertView.findViewById(R.id.layout_wenda_help);
-            viewHolder.cb_wenda_help = (CheckBox) convertView.findViewById(R.id.cb_wenda_help);//撰写
-            viewHolder.cb_wenda_help_my = (CheckBox) convertView.findViewById(R.id.cb_wenda_help_my);//我的答案
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -102,11 +118,7 @@ public class CampusAdapter extends BaseAdapter {
         final Partjob11Response.Parttimejob job = regionList.get(position);
         viewHolder.region = job;//将对象存入viewHolder
 
-        final boolean jishiFlag = "1".equals(job.getType()) || "3".equals(job.getType());
         if (jishiFlag) {
-            viewHolder.layout_help_jishi.setVisibility(View.VISIBLE);
-            viewHolder.layout_help_wenda.setVisibility(View.GONE);
-            viewHolder.tv_gender_limit.setVisibility(View.VISIBLE);
             viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGenderlimit()));
 
             viewHolder.tv_title.setText("1".equals(job.getType()) ? "跑腿" : "公告");
@@ -150,10 +162,6 @@ public class CampusAdapter extends BaseAdapter {
                 viewHolder.layout_jishi_help.setOnClickListener(null);
             }
         } else {
-            viewHolder.layout_help_jishi.setVisibility(View.GONE);
-            viewHolder.layout_help_wenda.setVisibility(View.VISIBLE);
-            viewHolder.tv_gender_limit.setVisibility(View.GONE);
-
             viewHolder.tv_title.setText(job.getTitle());
 
             //点赞

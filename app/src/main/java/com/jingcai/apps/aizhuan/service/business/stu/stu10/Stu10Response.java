@@ -56,7 +56,65 @@ public class Stu10Response extends BaseResponse<Stu10Response.Body> {
         private String targetname;
         private String targetschool;
         private String targetcollege;
+        private String targetimgurl;
+        private String targetlevel;
         private String status;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getTargetcollege() {
+            return targetcollege;
+        }
+
+        public void setTargetcollege(String targetcollege) {
+            this.targetcollege = targetcollege;
+        }
+
+        public String getTargetid() {
+            return targetid;
+        }
+
+        public void setTargetid(String targetid) {
+            this.targetid = targetid;
+        }
+
+        public String getTargetimgurl() {
+            return targetimgurl;
+        }
+
+        public void setTargetimgurl(String targetimgurl) {
+            this.targetimgurl = targetimgurl;
+        }
+
+        public String getTargetlevel() {
+            return targetlevel;
+        }
+
+        public void setTargetlevel(String targetlevel) {
+            this.targetlevel = targetlevel;
+        }
+
+        public String getTargetname() {
+            return targetname;
+        }
+
+        public void setTargetname(String targetname) {
+            this.targetname = targetname;
+        }
+
+        public String getTargetschool() {
+            return targetschool;
+        }
+
+        public void setTargetschool(String targetschool) {
+            this.targetschool = targetschool;
+        }
     }
 }
 

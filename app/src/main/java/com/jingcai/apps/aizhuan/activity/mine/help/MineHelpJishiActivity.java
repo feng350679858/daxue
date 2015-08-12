@@ -114,7 +114,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                         showToast("----------");
                     }
                 });
-                payPwdWin.showPay("3.51元");
+                payPwdWin.showPay(Double.parseDouble("3.51"));
             }
         });
         findViewById(R.id.btn_action).setOnClickListener(new View.OnClickListener() {
