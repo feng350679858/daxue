@@ -83,7 +83,7 @@ public class PartjobListAdapter extends BaseAdapter {
         if ("-1".equals(parttimejob.getDistance()) || StringUtil.isEmpty(parttimejob.getDistance())) {
             viewHolder.location_bg.setVisibility(View.INVISIBLE);
         }
-        setDistance(viewHolder.tv_distance_icon, viewHolder.tv_distance, viewHolder.tv_distance_unit, parttimejob.getDistance());
+        setDistance(viewHolder.location_bg, viewHolder.tv_distance, parttimejob.getDistance());
         setSalary(viewHolder.tv_salary, viewHolder.tv_salary_unit, parttimejob.getSalary(), parttimejob.getSalaryunit());
         if (AdapterType.MinePartjob == adapterType) {
             setLabel(viewHolder.tv_label, parttimejob.getWorktimetype(), parttimejob.getLabel(), adapterType);
@@ -279,6 +279,16 @@ public class PartjobListAdapter extends BaseAdapter {
             tv_distance_icon.setVisibility(View.VISIBLE);
             tv_distance.setVisibility(View.VISIBLE);
             tv_distance_unit.setVisibility(View.VISIBLE);
+            tv_distance.setText(StringUtil.distance(distance));
+        }
+    }
+
+    public static void setDistance(LinearLayout ll_container, TextView tv_distance, String distance) {
+        //多地址
+        if ("-1".equals(distance) || StringUtil.isEmpty(distance)) {
+            ll_container.setVisibility(View.INVISIBLE);
+        } else {
+            ll_container.setVisibility(View.VISIBLE);
             tv_distance.setText(StringUtil.distance(distance));
         }
     }
