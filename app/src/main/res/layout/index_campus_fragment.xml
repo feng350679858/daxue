@@ -5,14 +5,20 @@
     android:background="@color/content_background"
     android:orientation="vertical">
 
-    <include layout="@layout/include_header"/>
+    <include layout="@layout/include_header" />
 
     <com.markmao.pulltorefresh.widget.XListView xmlns:xlv="http://schemas.android.com/apk/res/com.jingcai.apps.aizhuan"
         android:id="@+id/xlv_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/divider_color"
-        android:headerDividersEnabled="false"
         android:dividerHeight="5dp"
+        android:headerDividersEnabled="false"
         xlv:extraHeader="@layout/index_campus_fragment_header" />
+
+    <ViewStub
+        android:id="@+id/stub_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/stub_general_empty_list_view" />
 </LinearLayout>

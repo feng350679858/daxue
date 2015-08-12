@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +49,6 @@ import com.markmao.pulltorefresh.widget.XListView;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class IndexCampusFragment extends BaseFragment {
     private static final int REQUEST_CODE_JISHI_DETAIL = 1101;
@@ -335,7 +335,7 @@ public class IndexCampusFragment extends BaseFragment {
                         @Override
                         public void success(Base01Response response) {
                             ResponseResult result = response.getResult();
-                            if (!"0".equals(result.getCode())) {
+                            if ("0".equals(result.getCode())) {
                                 Base01Response.Body body = response.getBody();
                                 List<Base01Response.Body.Banner> regionList = body.getBanner_list();
                                 messageHandler.postMessage(15, regionList);
@@ -355,70 +355,40 @@ public class IndexCampusFragment extends BaseFragment {
             azExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        Random random = new Random();
-                        List<Partjob11Response.Parttimejob> jobList = new ArrayList<Partjob11Response.Parttimejob>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob11Response.Parttimejob job = new Partjob11Response.Parttimejob();
-                            job.setHelpid(String.valueOf(i));
-                            job.setType(String.valueOf(random.nextInt(3) + 1));
-                            job.setTitle("title------" + i);
-                            job.setCommentcount(String.valueOf(i));
-                            job.setCommentcount("22");
-                            job.setGenderlimit(String.valueOf(random.nextInt(3)));
-                            job.setMoney(String.valueOf(random.nextInt(100)) + ".23");
-                            job.setContent("内容xxx的范德萨发到付\n浙江打发士大夫大浙江打发士大夫大浙江打发士大夫大学" + (i + mCurrentStart));
-                            job.setSourceid(String.valueOf(random.nextInt(10000)));
-                            job.setSourcelevel(String.valueOf(random.nextInt(20)));
-                            job.setSourcename("花几支" + i);
-                            job.setSourceschool("浙江理工大学");
-                            job.setSourcecollege("计算机学院");
-                            job.setOptime("20150731100123");
-                            job.setPraisecount("112");
-                            job.setCommentcount("10");
-                            job.setStatus(String.valueOf(random.nextInt(6) + 1));
-                            job.setPraiseflag(String.valueOf(random.nextInt(2)));
-                            jobList.add(job);
-                        }
-//                        try {
-//                            Thread.sleep(5000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-                        messageHandler.postMessage(0, jobList);
-                    } else {
-                        final Partjob11Request req = new Partjob11Request();
-                        final Partjob11Request.Parttimejob job = req.new Parttimejob();
-                        job.setStudentid(UserSubject.getStudentid());
-                        job.setGisx(GlobalConstant.gis.getGisx());
-                        job.setGisy(GlobalConstant.gis.getGisy());
-                        job.setStart(String.valueOf(mCurrentStart));
-                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setParttimejob(job);
+                    final Partjob11Request req = new Partjob11Request();
+                    final Partjob11Request.Parttimejob job = req.new Parttimejob();
+                    job.setStudentid(UserSubject.getStudentid());
+                    job.setGisx(GlobalConstant.gis.getGisx());
+                    job.setGisy(GlobalConstant.gis.getGisy());
+                    job.setStart(String.valueOf(mCurrentStart));
+                    job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    req.setParttimejob(job);
 
-                        azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
-                            @Override
-                            public void success(Partjob11Response response) {
-                                ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
+                    azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
+                        @Override
+                        public void success(Partjob11Response response) {
+                            ResponseResult result = response.getResult();
+                            if (!"0".equals(result.getCode())) {
+                                messageHandler.postMessage(1, result.getMessage());
+                            } else {
+                                Partjob11Response.Body body = response.getBody();
+                                List<Partjob11Response.Parttimejob> regionList = null == body?null:body.getParttimejob_list();
+                                if(null == regionList){
+                                    regionList = new ArrayList<Partjob11Response.Parttimejob>();
+                                }
+                                if (regionList.size() < 1 && 0 == mCurrentStart) {
+                                    messageHandler.postMessage(2);
                                 } else {
-                                    Partjob11Response.Body body = response.getBody();
-                                    List<Partjob11Response.Parttimejob> regionList = body.getParttimejob_list();
-                                    if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                        messageHandler.postMessage(2);
-                                    } else {
-                                        messageHandler.postMessage(0, regionList);
-                                    }
+                                    messageHandler.postMessage(0, regionList);
                                 }
                             }
+                        }
 
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
                 }
             });
         }
@@ -464,14 +434,19 @@ public class IndexCampusFragment extends BaseFragment {
                     }
                     break;
                 }
-//                case 2:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
+                case 2:{
+                    try {
+                        try {
+                            groupListView.setVisibility(View.GONE);
+                            ((ViewStub)mBaseView.findViewById(R.id.stub_empty_view)).inflate();
+                        }finally {
+                            actionLock.unlock();
+                        }
+                    }finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
                 case 3: {
                     try {
                         Object[] objs = (Object[]) msg.obj;

@@ -100,7 +100,7 @@ public class MessageCommentActivity extends BaseActivity {
                 }else if(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMEND){
                 }
                 parttimejob.setOptime("20150731111111");
-                parttimejob.setSourceid("sourceid:" + i);
+                parttimejob.setSourceid("7427873d75ac4d0f9a62b72bd484e42f");
                 parttimejob.setSourcename("丁" + i);
                 parttimejob.setSourceimgurl("http://img0.imgtn.bdimg.com/it/u=1259311097,2736957493&fm=21&gp=0.jpg");
                 parttimejob.setContentid(String.valueOf(i));
@@ -108,6 +108,10 @@ public class MessageCommentActivity extends BaseActivity {
                 if(i%3==0) {
                     Partjob29Response.Refcomment refcomment = new Partjob29Response.Refcomment();
                     refcomment.setRefcontent("这是引用这是引用的内容这是引用的内容这是引用的内容这是引用的内容的内容");
+                    refcomment.setRefname("sb"+i);
+                    if(i%6 == 0){
+                        refcomment.setSourcestudentname("db"+i);
+                    }
                     refcomment.setRefid("studentid:" + i);
                     parttimejob.setRefcomment(refcomment);
                 }
@@ -130,7 +134,7 @@ public class MessageCommentActivity extends BaseActivity {
                 @Override
                 public void run() {
                     final Partjob29Request req = new Partjob29Request();
-                    Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
+                    final Partjob29Request.Parttimejob parttimejob = req.new Parttimejob();
 
                     parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     parttimejob.setStart(String.valueOf(mCurrentStart));
@@ -145,6 +149,9 @@ public class MessageCommentActivity extends BaseActivity {
                             if ("0".equals(result.getCode())) {
                                 Partjob29Response.Body body = resp.getBody();
                                 List<Partjob29Response.Parttimejob> parttimejob_list = body.getParttimejob_list();
+                                if (parttimejob_list == null) {
+                                    parttimejob_list = new ArrayList<>();
+                                }
                                 if(0 == mCurrentStart && parttimejob_list.size()<1){
                                     messageHandler.postMessage(2);
                                 }else {

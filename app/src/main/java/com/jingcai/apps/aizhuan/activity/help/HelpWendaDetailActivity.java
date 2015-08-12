@@ -334,14 +334,26 @@ public class HelpWendaDetailActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
-            case REQUEST_CODE_ANSWER_VIEW1:{
+            case REQUEST_CODE_ANSWER_VIEW1:{//列表答案
                 if(resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
 //                    groupListView.autoRefresh();
-                    String praisecount = data.getStringExtra("");
-                    selectedRegion.setPraisecount(praisecount);
-                    String content = data.getStringExtra("");
-                    selectedRegion.setContent(content);
+//                    String praisecount = data.getStringExtra("");
+//                    selectedRegion.setPraisecount(praisecount);
+//                    String content = data.getStringExtra("");
+//                    selectedRegion.setContent(content);
+
+                    selectedRegion.setContent(data.getStringExtra("content"));
+                    selectedRegion.setPraiseflag(data.getStringExtra("praiseflag"));
+                    selectedRegion.setPraiseid(data.getStringExtra("praiseid"));
+                    selectedRegion.setPraisecount(data.getStringExtra("praisecount"));
+
+                    selectedRegion.setSourcename(data.getStringExtra("sourcename"));
+                    selectedRegion.setSourceimgurl(data.getStringExtra("sourceimgurl"));
+                    selectedRegion.setSourceschool(data.getStringExtra("sourceschool"));
+                    selectedRegion.setSourcecollege(data.getStringExtra("sourcecollege"));
+
+                    commentAdapter.notifyDataSetChanged();
                 }
                 break;
             }

@@ -26,17 +26,21 @@ public abstract class CommentItem {
 
     public abstract String getPraiseid();
 
-    public abstract String getSourcecollege();
-
     public abstract String getSourceid();
 
     public abstract String getSourceimgurl();
+    public abstract void setSourceimgurl(String sourceimgurl);
 
     public abstract String getSourcelevel();
 
     public abstract String getSourcename();
+    public abstract void setSourcename(String sourcename);
 
     public abstract String getSourceschool();
+    public abstract void setSourceschool(String sourceschool);
+
+    public abstract String getSourcecollege();
+    public abstract void setSourcecollege(String sourcecollege);
 
     public abstract String getRefname();
 

@@ -234,7 +234,10 @@
         <!-- jpush pro   a18858d0c3a777745fbc99f7 -->
         <meta-data android:name="JPUSH_APPKEY" android:value="203cf5c6a5b762b4d5ff6349" />
         <meta-data android:name="JPUSH_CHANNEL" android:value="A000" />
-        
+
+        <!-- 百度定位 -->
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="m9gCeRhDNDDofELWPoaxQ2zL" />
     </application>
 
 </manifest>

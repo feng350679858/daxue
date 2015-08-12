@@ -43,6 +43,7 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tv_content_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -58,7 +59,7 @@
                 android:background="@drawable/help_jishi_content_bg"
                 android:gravity="top"
                 android:singleLine="false"
-                android:text="打发打发打发阿发生的发顺丰爱对方答复adfadfa短发发到短发短发的飞代发地方\nad阿道打扫房间啊"
+                android:text=""
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -86,6 +87,7 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tv_secret_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"

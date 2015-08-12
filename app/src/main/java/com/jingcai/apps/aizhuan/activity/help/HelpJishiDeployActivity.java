@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,15 +21,19 @@ import com.jingcai.apps.aizhuan.activity.common.MoneyWatcher;
 import com.jingcai.apps.aizhuan.activity.common.NumberWatcher;
 import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -40,7 +46,6 @@ import java.util.Map;
  * Created by lejing on 15/7/14.
  */
 public class HelpJishiDeployActivity extends BaseActivity {
-    private final static String TAG = "JishiHelpDeployActivity";
     public static final int REQUEST_CODE_FRIEND = 1101;
     private MessageHandler messageHandler;
     private PopupWin groupWin;
@@ -58,6 +63,9 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private View iv_friend_clear, layout_friend_selected;
     private TextView tv_gender, tv_group, tv_friend, tv_end_time;
     private TextView tv_friend_name, tv_friend_school_college;
+    private String oldfriendid;
+    private TextView tv_secret_tip;
+    private TextView tv_content_tip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +91,35 @@ public class HelpJishiDeployActivity extends BaseActivity {
         });
     }
 
+    class WordCountWatcher implements TextWatcher {
+        private final TextView textView;
+        public WordCountWatcher(TextView textView){
+            this.textView = textView;
+        }
+        public void afterTextChanged(Editable edt) {
+            textView.setText(String.format("剩余%s字", (70 - edt.length())));
+        }
+
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+        }
+
+        public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+        }
+    }
 
     private void initView() {
+        tv_content_tip = (TextView) findViewById(R.id.tv_content_tip);
         et_content = (EditText) findViewById(R.id.et_content);
+        et_content.addTextChangedListener(new WordCountWatcher(tv_content_tip));
+        tv_secret_tip = (TextView) findViewById(R.id.tv_secret_tip);
         et_secret = (EditText) findViewById(R.id.et_secret);
+        et_secret.addTextChangedListener(new WordCountWatcher(tv_secret_tip));
+
         tv_gender = (TextView) findViewById(R.id.tv_gender);
+        tv_gender.setTag("2");//不限
         tv_group = (TextView) findViewById(R.id.tv_group);
+        tv_group.setTag(UserSubject.getSchoolid());
+        tv_group.setText(UserSubject.getSchoolname());
         iv_friend_clear = findViewById(R.id.iv_friend_clear);
         layout_friend_selected = findViewById(R.id.layout_friend_selected);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
@@ -96,6 +127,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         tv_friend_school_college = (TextView) findViewById(R.id.tv_friend_school_college);
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
         tv_end_time = (TextView) findViewById(R.id.tv_end_time);
+        tv_end_time.setTag("30");//30分钟
 
         et_pay_money.addTextChangedListener(new MoneyWatcher());
 
@@ -108,7 +140,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
                     Map<String, String> map = new LinkedHashMap<>();
                     map.put("0", "男");
                     map.put("1", "女");
-                    map.put("", "不限");
+                    map.put("2", "不限");
                     View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
                     genderWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
                             .setData(map, new PopupWin.Callback() {
@@ -206,6 +238,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         iv_friend_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                oldfriendid = null;
                 showSelectWin(false);
             }
         });
@@ -245,12 +278,14 @@ public class HelpJishiDeployActivity extends BaseActivity {
         btn_jishi_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actionLock.tryLock()) {
-                    messageHandler.postMessage(3);
+                if(!checkDeploy()){
+                    return;
                 }
+                doDeploy();
             }
         });
     }
+
 
     private void showSelectWin(boolean selectFlag) {
         if (selectFlag) {
@@ -330,24 +365,27 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 }
                 case 1: {
                     try {
-                        showToast("获取商家失败:" + msg.obj);
+                        showToast("获取圈子失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-//                case 2:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
+                case 2: {
+                    try {
+                        showToast("发布即时帮助成功！");
+                        finish();
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
                 case 3: {
-                    showToast("发布即时帮助成功！");
-                    finish();
-                    actionLock.unlock();
+                    try {
+                        showToast("发布失败:" + msg.obj);
+                    } finally {
+                        actionLock.unlock();
+                    }
                     break;
                 }
                 case 4: {
@@ -361,56 +399,41 @@ public class HelpJishiDeployActivity extends BaseActivity {
         }
     }
 
-
     private void initGroupData() {
-        //TODO 接入服务端接口
         if (actionLock.tryLock()) {
-//            showProgressDialog("获取圈子中...");
             final Context context = this;
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            region.setRegionname("浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
-                        }
-                        messageHandler.postMessage(0, regionList);
-                    } else {
-                        final AzService azService = new AzService(context);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
-                            @Override
-                            public void success(Base04Response response) {
-                                ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
-                                } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //                                if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //                                    messageHandler.postMessage(2);
-                                    //                                } else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //                                }
+                    final AzService azService = new AzService(context);
+                    final Base04Request req = new Base04Request();
+                    final Base04Request.Region region = req.new Region();
+                    region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
+                    region.setAreacode(GlobalConstant.gis.getAreacode());
+                    region.setStart(String.valueOf(mCurrentStart));
+                    region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    req.setRegion(region);
+                    azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
+                        @Override
+                        public void success(Base04Response response) {
+                            ResponseResult result = response.getResult();
+                            if ("0".equals(result.getCode())) {
+                                Base04Response.Body partjob07Body = response.getBody();
+                                List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
+                                if (null == regionList) {
+                                    regionList = new ArrayList<Base04Response.Body.Region>();
                                 }
+                                messageHandler.postMessage(0, regionList);
+                            } else {
+                                messageHandler.postMessage(1, result.getMessage());
                             }
+                        }
 
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
+                        @Override
+                        public void fail(AzException e) {
+                            messageHandler.postException(e);
+                        }
+                    });
                 }
             });
         }
@@ -421,6 +444,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_CODE_FRIEND: {
                 if (resultCode == RESULT_OK) {
+                    oldfriendid = data.getStringExtra("userid");
                     String username = data.getStringExtra("username");
                     String schoolname = data.getStringExtra("schoolname");
                     String collegename = data.getStringExtra("collegename");
@@ -434,5 +458,61 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    private boolean checkDeploy(){
+        if(StringUtil.isEmpty(et_content.getText().toString())){
+            showToast("请输入求助内容");
+            return false;
+        }
+        if(StringUtil.isEmpty(et_pay_money.getText().toString())){
+            showToast("请输入酬谢金额");
+            return false;
+        }
+        if(StringUtil.isEmpty(tv_end_time.getTag().toString())){
+            showToast("请输入截止时间");
+            return false;
+        }
+        return true;
+    }
+
+    private void doDeploy(){
+        if (!actionLock.tryLock()) {
+            return;
+        }
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob16Request req = new Partjob16Request();
+                Partjob16Request.Parttimejob job = req.new Parttimejob();
+                job.setStudentid(UserSubject.getStudentid());
+                job.setType("2");
+                job.setFriendid(oldfriendid);
+                job.setGenderlimit(tv_gender.getTag().toString());
+                job.setGisx(GlobalConstant.getGis().getGisx());
+                job.setGisy(GlobalConstant.getGis().getGisy());
+                job.setMoney(et_pay_money.getText().toString());
+                job.setPubliccontent(et_content.getText().toString());
+                job.setPrivatecontent(et_secret.getText().toString());
+                job.setRegionid(tv_group.getTag().toString());
+                job.setValidtime(tv_end_time.getTag().toString());
+                req.setParttimejob(job);
+                new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                    @Override
+                    public void success(BaseResponse resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            messageHandler.postMessage(2);
+                        } else {
+                            messageHandler.postMessage(3, resp.getResultMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 }

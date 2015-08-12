@@ -1,9 +1,5 @@
 package com.jingcai.apps.aizhuan.util;
 
-import android.content.Context;
-import android.os.Message;
-
-import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -12,26 +8,23 @@ import com.jingcai.apps.aizhuan.service.business.school.school07.School07Respons
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by lejing on 15/5/13.
  */
 public class LocateUtil {
     public static long lastRequestTime = -1;
-    public static List<Area> areaList = new ArrayList<>();;
-    public Context context;
-    public MessageHandle messageHandle;
+    public static List<Area> areaList = new CopyOnWriteArrayList<Area>();
     public Callback callback;
 
-    public LocateUtil(Context context, Callback callback) {
-        this.context = context;
+    public LocateUtil(Callback callback) {
         this.callback = callback;
-        this.messageHandle = new MessageHandle(context);
     }
 
     public void locate() {
-        if ((System.currentTimeMillis() - lastRequestTime) < 5 * 60 * 1000 && areaList.size()>0) {
-            messageHandle.postMessage(0);
+        if ((System.currentTimeMillis() - lastRequestTime) < 5 * 60 * 1000 && areaList.size() > 0) {
+            call();
             return;
         }
         new AzExecutor().execute(new Runnable() {
@@ -52,49 +45,37 @@ public class LocateUtil {
                         if ("0".equals(code)) {
                             List<School07Response.Body.Areainfo> areainfo_list = resp.getBody().getAreainfo_list();
                             if (null != areainfo_list && areainfo_list.size() > 0) {
-                                for(School07Response.Body.Areainfo a:areainfo_list){
+                                for (School07Response.Body.Areainfo a : areainfo_list) {
                                     areaList.add(new Area(a.getCode(), a.getName()));
                                 }
-                            }else{
-                                areaList.add(new Area(GlobalConstant.AREA_CODE_HANGZHOU, GlobalConstant.AREA_NAME_HANGZHOU));
                             }
-                            messageHandle.postMessage(0);
-                        } else {
-                            areaList.add(new Area(GlobalConstant.AREA_CODE_HANGZHOU, GlobalConstant.AREA_NAME_HANGZHOU));
-                            messageHandle.postMessage(0);
                         }
+                        call();
                     }
 
                     @Override
                     public void fail(AzException e) {
-                        messageHandle.postException(e);
+                        call();
                     }
                 });
             }
         });
     }
 
-    class MessageHandle extends BaseHandler {
-        public MessageHandle(Context ctx) {
-            super(ctx);
+    private void call() {
+        if(areaList.size()<2) {
+            areaList.clear();
+            areaList.add(new Area(GlobalConstant.AREA_CODE_ZHEJIANG, GlobalConstant.AREA_NAME_ZHEJIANG));
+            areaList.add(new Area(GlobalConstant.AREA_CODE_HANGZHOU, GlobalConstant.AREA_NAME_HANGZHOU));
         }
 
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0: {
-                    lastRequestTime = System.currentTimeMillis();
-                    callback.locateSuccess(areaList.get(areaList.size() - 1), areaList);
-                }
-                default: {
-                    super.handleMessage(msg);
-                }
-            }
-        }
+        lastRequestTime = System.currentTimeMillis();
+        callback.locateSuccess(areaList.get(1), areaList);
+
     }
 
     public interface Callback {
-        void locateSuccess(Area area, List<Area> areaList);
+        void locateSuccess(Area cityArea, List<Area> areaList);
     }
 
     public class Area {

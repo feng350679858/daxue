@@ -92,6 +92,7 @@ public interface BizConstant {
     String BIZ_ADVICE_03 = "advice03";//投诉和建议
     String BIZ_ADVICE_04 = "advice04";//获取未读消息条数
     String BIZ_ADVICE_05 = "advice05";//获取事件消息列表
+    String BIZ_ADVICE_06 = "advice06";//个人消息提示
 
     /**
      * base
