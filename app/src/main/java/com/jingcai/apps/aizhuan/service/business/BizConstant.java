@@ -116,6 +116,7 @@ public interface BizConstant {
     String BIZ_ACCOUNT_04 = "account04"; //第三方金融渠道列表查询
     String BIZ_ACCOUNT_05 = "account05"; //钱包余额日汇总
     String BIZ_ACCOUNT_06 = "account06"; //第三方金融渠道绑定
+    String BIZ_ACCOUNT_07 = "account07"; //充值支付单生成
 
     /**
      * game
