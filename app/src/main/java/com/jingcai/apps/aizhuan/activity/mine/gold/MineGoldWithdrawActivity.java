@@ -383,7 +383,7 @@ public class MineGoldWithdrawActivity extends BaseActivity {
                     break;
                 }
                 case 5: {
-                    showToast("提现失败");
+                    showToast("提现失败："+ msg.obj);
                     Log.i(TAG, "提现失败：" + msg.obj);
                     break;
                 }
