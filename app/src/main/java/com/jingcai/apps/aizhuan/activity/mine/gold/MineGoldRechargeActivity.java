@@ -36,11 +36,8 @@ import com.jingcai.apps.aizhuan.util.alipay.PayResult;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrator on 2015/7/16.
- */
 public class MineGoldRechargeActivity extends BaseActivity {
-    private final String TAG = "MineGoldTopupActivity";
+    private final String TAG = "MineGoldRecharge";
     private MessageHandler messageHandler;
 
     private TextView mTvRechargeRMB;
