@@ -197,7 +197,7 @@ public class PartjobDetailActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
-                    showToast("报名出错");
+                    showToast("报名出错：" + msg.obj);
                     Log.i(TAG, "报名出错：" + msg.obj);
 //                    {//测试
 //                        Intent intent = new Intent(PartjobDetailActivity.this, PartjobJoinSuccessActivity.class);
