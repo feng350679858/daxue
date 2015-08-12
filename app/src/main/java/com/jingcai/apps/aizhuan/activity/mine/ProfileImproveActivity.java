@@ -206,8 +206,6 @@ public class ProfileImproveActivity extends BaseActivity {
                 intent.putExtra("college", college);
                 intent.putExtra("collegename", collegename);
                 intent.putExtra("professional", professional);
-                intent.putExtra("email", email);
-                intent.putExtra("qq", qq);
                 startActivity(intent);
                 finish();
             }
@@ -576,11 +574,9 @@ public class ProfileImproveActivity extends BaseActivity {
         joindate = student.getJoindate();
         college = student.getCollege();
         collegename = student.getCollegename();
-        school = student.getSchoolname();
+        school = student.getSchool();
         schoolname = student.getSchoolname();
         professional = student.getProfessional();
-        email = student.getEmail();
-        qq = student.getQq();
         clearAllFocus();
     }
 }

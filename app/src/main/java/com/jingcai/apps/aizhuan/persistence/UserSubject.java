@@ -295,6 +295,6 @@ public class UserSubject {
     public static void setLevel(){
         UserSubject.level = "1";
         Preferences pref = Preferences.getInstance();
-        pref.update(Preferences.PARAM_LEVEL, true);
+        pref.update(Preferences.PARAM_LEVEL, "1");
     }
 }
