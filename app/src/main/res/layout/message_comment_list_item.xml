@@ -7,11 +7,23 @@
     android:orientation="horizontal"
     android:padding="@dimen/list_item_padding">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="@dimen/avatar_diameter"
-        android:layout_height="@dimen/avatar_diameter"
-        android:src="@drawable/default_image" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/avatar_diameter"
+            android:layout_height="@dimen/avatar_diameter"
+            android:src="@drawable/default_head_img" />
+
+        <com.jingcai.apps.aizhuan.activity.util.LevelTextView
+            android:id="@+id/ltv_level"
+            android:layout_width="@dimen/level_circle_diameter"
+            android:layout_height="@dimen/level_circle_diameter"
+            android:layout_gravity="bottom|right" />
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -36,12 +48,6 @@
                     android:layout_height="wrap_content"
                     android:text="夏一"
                     style="@style/title" />
-                <com.jingcai.apps.aizhuan.activity.util.LevelTextView
-                    android:id="@+id/tv_level"
-                    android:layout_marginLeft="2dp"
-                    android:layout_width="@dimen/level_circle_diameter"
-                    android:layout_height="@dimen/level_circle_diameter"
-                    app:level="11"/>
             </LinearLayout>
 
             <TextView

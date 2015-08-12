@@ -62,7 +62,7 @@ public class MessageListAdapter extends BaseAdapter {
         mCategorys = new ArrayList<>();
         mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_comment,"评论",0));
         mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_commend,"赞",0));
-        mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_merchant,"兼职商家",0));
+        mCategorys.add(new MessageCategoryBean(R.drawable.icon_index_message_list_item_merchant, "兼职商家", 0));
     }
 
     public void setListData(List<ConversationBean> messages) {
@@ -70,6 +70,22 @@ public class MessageListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setPraiseUnread(int count){
+        setItemUnread(ITEM_POSITION_RECOMMEND,count);
+    }
+
+    public void setCommentUnread(int count){
+        setItemUnread(ITEM_POSITION_COMMENT,count);
+    }
+
+    private void setItemUnread(int position,int count){
+        if(count <0){
+            Log.w(TAG,"badge count can not below 0");
+            count = 0;
+        }
+        mCategorys.get(position).setBadgeCount(count);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getViewTypeCount() {
@@ -127,7 +143,6 @@ public class MessageListAdapter extends BaseAdapter {
                 case VIEW_TYPE_CONVERSATION:
                     convertView = mLayoutInflater.inflate(R.layout.index_message_list_conversation_item, null);
                     holderCon = new ViewHolderConversation();
-                    holderCon.mIvLevel = (ImageView) convertView.findViewById(R.id.iv_level);
                     holderCon.mIvLogo = (ImageView) convertView.findViewById(R.id.iv_logo);
                     holderCon.mTvBadge = (TextView) convertView.findViewById(R.id.tv_badge);
                     holderCon.mTvContent = (TextView) convertView.findViewById(R.id.tv_content);
@@ -227,7 +242,6 @@ public class MessageListAdapter extends BaseAdapter {
         public TextView mTvTime;
         public TextView mTvContent;
         public TextView mTvBadge;
-        public ImageView mIvLevel;
         public View mItem;
         public View mDelete;
     }

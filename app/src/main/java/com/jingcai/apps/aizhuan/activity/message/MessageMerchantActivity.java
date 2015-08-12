@@ -29,6 +29,7 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -109,6 +110,9 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
                             } else {
                                 Partjob07Response.Partjob07Body partjob07Body = response.getBody();
                                 List<Partjob07Response.Partjob07Body.Merchant> merchantList = partjob07Body.getMerchant_list();
+                                if(null == merchantList){
+                                    merchantList = new ArrayList<>();
+                                }
                                 if (merchantList.size() < 1 && 0 == mCurrentStart) {
                                     messageHandler.postMessage(2);
                                 } else {
@@ -238,9 +242,6 @@ public class MessageMerchantActivity extends BaseActivity implements AdapterView
      */
     private void displayEmptyView() {
         ((ViewStub) findViewById(R.id.stub_empty_view)).inflate();
-        TextView tvEmpty = (TextView) findViewById(R.id.tv_empty_text);
-        tvEmpty.setText(getString(R.string.empty_merchant_list_tip));
-        tvEmpty.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.empty_list_message_merchant,0,0);
     }
 
 }

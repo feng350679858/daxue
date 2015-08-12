@@ -55,7 +55,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private Button next;
     private XListView mListSchool, mListProfessional;
     private SchoolListAdapter mListSchoolAdapter, mListProfessionalAdapter;
-    private PopupWin college_popupWin, joindate_popupWin,connectionWin;
+    private PopupWin college_popupWin, joindate_popupWin, connectionWin;
 
     private AzService azService;
     private String mSchoolSearchKey = "";
@@ -66,7 +66,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private int flag = 4;
     private boolean mSchoolSelected, mProfessionalSelected, isempty;
 
-    private MyTextWatcher myTextWatcher=new MyTextWatcher();
+    private MyTextWatcher myTextWatcher = new MyTextWatcher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,8 @@ public class ProfileImprove2Activity extends BaseActivity {
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //返回主界面
+                Intent intent = new Intent(ProfileImprove2Activity.this, ProfileImproveActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -134,13 +135,11 @@ public class ProfileImprove2Activity extends BaseActivity {
     private void initView() {
         school = (TextInputLayout) findViewById(R.id.profile_improve_school);
         school_input = school.getEditText();
-   //     school_input.addTextChangedListener(myTextWatcher);
         college = (TextInputLayout) findViewById(R.id.profile_improve_college);
         college_input = college.getEditText();
         college_input.addTextChangedListener(myTextWatcher);
         professional = (TextInputLayout) findViewById(R.id.profile_improve_professional);
         professional_input = professional.getEditText();
-    //    professional_input.addTextChangedListener(myTextWatcher);
         joindate = (TextInputLayout) findViewById(R.id.profile_improve_joindate);
         joindate_input = joindate.getEditText();
         joindate_input.addTextChangedListener(myTextWatcher);
@@ -222,17 +221,15 @@ public class ProfileImprove2Activity extends BaseActivity {
 
 
         });
-    college_input.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            clearAllFocus();
-            college_input.requestFocus();
-            if (!"".equals(school_input.getText().toString())) {
-                college_input.requestFocus();
-                initCollegePopupWin();
+        college_input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllFocus();
+                if (!"".equals(school_input.getText().toString())) {
+                    initCollegePopupWin();
+                }
             }
-        }
-    });
+        });
 //        college_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, boolean hasFocus) {
@@ -409,12 +406,14 @@ public class ProfileImprove2Activity extends BaseActivity {
             }
         });
     }
-private void clearAllFocus(){
-    school_input.clearFocus();
-    college_input.clearFocus();
-    professional_input.clearFocus();
-    joindate_input.clearFocus();
-}
+
+    private void clearAllFocus() {
+        school_input.clearFocus();
+        college_input.clearFocus();
+        professional_input.clearFocus();
+        joindate_input.clearFocus();
+    }
+
     private void initDate() {
         if (null != getIntent().getStringExtra("school") && !"".equals(getIntent().getStringExtra("school"))) {
             school_input.setTag(getIntent().getStringExtra("school"));
@@ -443,6 +442,8 @@ private void clearAllFocus(){
             joindate_input.setText(getIntent().getStringExtra("joindate"));
             joindate_input.setEnabled(false);
         }
+        if("1".equals(UserSubject.getLevel()))
+            next.setEnabled(false);
         clearAllFocus();
     }
 
@@ -456,8 +457,6 @@ private void clearAllFocus(){
                 stu.setName(getIntent().getStringExtra("name"));
                 stu.setGender(getIntent().getStringExtra("gender"));
                 stu.setAreacode(getIntent().getStringExtra("areacode"));
-                stu.setEmail(getIntent().getStringExtra("email"));
-                stu.setQq(getIntent().getStringExtra("qq"));
                 stu.setSchool(school_input.getTag().toString());
                 stu.setJoindate(joindate_input.getText().toString());
                 stu.setCollege(college_input.getTag().toString());
@@ -485,7 +484,7 @@ private void clearAllFocus(){
     }
 
     private void initCollegePopupWin() {
-        if(school_input.getTag()==null)
+        if (school_input.getTag() == null)
             return;
         new AzExecutor().execute(new Runnable() {
             @Override
@@ -626,7 +625,7 @@ private void clearAllFocus(){
                 }
                 case 1: {
                     showToast("学校读取失败");
-                    Log.i(TAG,"学校读取失败:" + msg.obj);
+                    Log.i(TAG, "学校读取失败:" + msg.obj);
                     break;
                 }
                 case 2: {
@@ -635,7 +634,7 @@ private void clearAllFocus(){
                 }
                 case 3: {
                     showToast("院系读取失败");
-                    Log.i(TAG,"院系读取失败:" + msg.obj);
+                    Log.i(TAG, "院系读取失败:" + msg.obj);
                     break;
                 }
                 case 4: {
@@ -659,7 +658,7 @@ private void clearAllFocus(){
                 case 5: {
                     try {
                         showToast("专业读取失败");
-                        Log.i(TAG,"专业读取失败:" + msg.obj);
+                        Log.i(TAG, "专业读取失败:" + msg.obj);
                     } finally {
                         actionLock.unlock();
                     }
@@ -667,11 +666,12 @@ private void clearAllFocus(){
                 }
                 case 6: {
                     showToast("完善资料失败");
-                    Log.i(TAG,"完善资料失败：" + msg.obj);
+                    Log.i(TAG, "完善资料失败：" + msg.obj);
                     break;
                 }
                 case 7: {
                     showToast("已完善资料");
+                    UserSubject.setLevel();
                     finish();
                     break;
                 }
@@ -683,8 +683,8 @@ private void clearAllFocus(){
     }
 
     private List<Map<String, String>> convertSchoolListData(List<School04Response.Body.Schoolinfo> obj) {
-        if(obj==null)
-            obj=new ArrayList<>();
+        if (obj == null)
+            obj = new ArrayList<>();
         List<Map<String, String>> list = new ArrayList<>();
         for (int i = 0; i < obj.size(); i++) {
             Map<String, String> item = new HashMap<>();
@@ -698,19 +698,19 @@ private void clearAllFocus(){
 
     private List<Map<String, String>> convertProfessionalListData(List<School06Response.Body.Professional> obj) {
         if (null == obj) {
-            obj=new ArrayList<>();
+            obj = new ArrayList<>();
         }
-            List<Map<String, String>> list = new ArrayList<>();
-            for (int i = 0; i < obj.size(); i++) {
-                Map<String, String> item = new HashMap<>();
-                item.put("name", obj.get(i).getName());
-                list.add(item);
-            }
-            return list;
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = 0; i < obj.size(); i++) {
+            Map<String, String> item = new HashMap<>();
+            item.put("name", obj.get(i).getName());
+            list.add(item);
+        }
+        return list;
     }
 
     private void fillCollegeListData(List<School05Response.Body.College> obj) {
-
+        college_input.requestFocus();
         Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < obj.size(); i++) {
             map.put(obj.get(i).getId(), obj.get(i).getName());
