@@ -51,11 +51,12 @@ public class PartjobDetailActivity extends BaseActivity {
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
+    private SimpleDateFormat format;
     private LinearLayout linearLayout_label;
     private PopupWin partjobdetailWin;
     private PopupWin schoolmateWin;
 
-    private String message, tel,schoolmate_tel;
+    private String message, tel,schoolmate_tel,endtime;
     /**
      * 接受到的数据
      */
@@ -76,6 +77,7 @@ public class PartjobDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         umengShareUtil = new UmengShareUtil(PartjobDetailActivity.this);
+        format=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         partjobid = getIntent().getStringExtra("partjobid");
         logopath = getIntent().getStringExtra("logopath");
         setContentView(R.layout.activity_partjob_detail);
@@ -259,9 +261,8 @@ public class PartjobDetailActivity extends BaseActivity {
         PartjobListAdapter.setWorkdays(partjob_content_workdays, worktimetype, mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
 
-        String endtime=new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(DateUtil.parseDate(mParttimejob.getEndtime()));
+        endtime=format.format(DateUtil.parseDate(mParttimejob.getEndtime()));
         partjob_content_endtime.setText(endtime);
-//        partjob_content_endtime.setText(mParttimejob.getEndtime());
         partjob_content_address.setText(mParttimejob.getAddress());
         if (null != mParttimejob.getGisx() && 0 != Double.parseDouble(mParttimejob.getGisx())
                 && null != mParttimejob.getGisy() && 0 != Double.parseDouble(mParttimejob.getGisy())) {
@@ -317,11 +318,9 @@ public class PartjobDetailActivity extends BaseActivity {
             ((LinearLayout) findViewById(R.id.schoolmate_visibility)).setVisibility(View.GONE);
         }
 
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(new Date());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = format.format(c1.getTime());
-        if (time.compareTo(mParttimejob.getEndtime()) > 0) {
+        Date date=new Date();
+        String time = format.format(date);
+        if (time.compareTo(endtime) > 0) {
             partjob_isjoin.setText("已截止");
             partjob_isjoin.setBackgroundResource(R.drawable.btn_red_disabled);
         } else if ("1".equals(mParttimejob.getIsjoin())) {

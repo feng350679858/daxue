@@ -322,7 +322,7 @@ public class PartjobListAdapter extends BaseAdapter {
         protected TextView tv_label;
         protected View tv_distance_icon;
         protected TextView tv_distance;
-        protected View tv_distance_unit;
+        protected TextView tv_distance_unit;
         protected LinearLayout location_bg;
         protected Partjob01Response.Body.Parttimejob partjob;
 
