@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/normal_grey"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_money_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收入:"
+                    android:textColor="@color/important_dark"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/tv_yellow_rectangle_bg"
+                    android:padding="2dp"
+                    android:text="0元"
+                    android:textColor="@color/important_dark"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/field_divider_grey"/>
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:lineSpacingMultiplier="1.3"
+                    android:maxLines="4"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/important_dark"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/field_divider_grey"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_head_logo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/default_head_img"/>
+
+            <TextView
+                android:id="@+id/tv_stu_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="匿名"
+                android:textColor="@color/important_dark"
+                android:textSize="14sp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_view_question"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:background="@drawable/btn_white_boarded_bg_selector"
+                android:text="查看问题"
+                android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btn_reedit"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_white_boarded_bg_selector"
+                android:text="编辑"
+                android:textSize="14sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/divider_color"/>
+</LinearLayout>

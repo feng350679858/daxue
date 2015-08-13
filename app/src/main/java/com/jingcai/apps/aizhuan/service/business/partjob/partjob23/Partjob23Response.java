@@ -1,14 +1,21 @@
 package com.jingcai.apps.aizhuan.service.business.partjob.partjob23;
 
 
-import com.jingcai.apps.aizhuan.service.base.BaseResponse;
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpListItem;
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpResponse;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob23Response extends BaseResponse<Partjob23Response.Body> {
+public class Partjob23Response extends MineHelpResponse<Partjob23Response.Body> {
+
+    @Override
+    public List getList() {
+        Body body = getBody();
+        return null == body ? null : body.getParttimejob_list();
+    }
 
     public static class Body {
         private List<Parttimejob> parttimejob_list;
@@ -22,17 +29,26 @@ public class Partjob23Response extends BaseResponse<Partjob23Response.Body> {
         }
     }
 
-    public static class Parttimejob {
+    public static class Parttimejob implements MineHelpListItem {
         private String helpid;
         private String optime;
         private String status;
         private String content;
+        private String answerid;
         private String targetid;
         private String targetname;
         private String targetimgurl;
         private String targetschool;
         private String targetcollege;
         private String anonflag;
+
+        public String getAnswerid() {
+            return answerid;
+        }
+
+        public void setAnswerid(String answerid) {
+            this.answerid = answerid;
+        }
 
         public String getAnonflag() {
             return anonflag;

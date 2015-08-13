@@ -77,10 +77,10 @@ public class HelpJishiDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         helpid = getIntent().getStringExtra("helpid");
         type = getIntent().getStringExtra("type");//1立即帮助 3公告
-        if(StringUtil.isEmpty(helpid)){
+        if (StringUtil.isEmpty(helpid)) {
             finish();
         } else {
-            if(StringUtil.isEmpty(type)){
+            if (StringUtil.isEmpty(type)) {
                 type = "1";
             }
             messageHandler = new MessageHandler(this);
@@ -99,16 +99,16 @@ public class HelpJishiDetailActivity extends BaseActivity {
         tvTitle.setText("求助详情");
 
         iv_func = (ImageView) findViewById(R.id.iv_func);
-        if(GlobalConstant.debugFlag){
+        if (GlobalConstant.debugFlag) {
             iv_func.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             iv_func.setVisibility(View.GONE);
         }
         iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null == job && !GlobalConstant.debugFlag) {
+                if (null == job && !GlobalConstant.debugFlag) {
                     return;
                 }
                 int dp10_px = HelpJishiDetailActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
@@ -124,10 +124,10 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
                 View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
 
-                final boolean selfFlag = GlobalConstant.debugFlag?false:UserSubject.getStudentid().equals(job.getSourceid());
+                final boolean selfFlag = GlobalConstant.debugFlag ? false : UserSubject.getStudentid().equals(job.getSourceid());
                 if (selfFlag) {
                     tv_pop_abuse_report.setVisibility(View.GONE);
-                }else{
+                } else {
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
                     tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -162,8 +162,8 @@ public class HelpJishiDetailActivity extends BaseActivity {
 
     private void initView() {
         TextView tv_main_tip = (TextView) findViewById(R.id.tv_main_tip);
-        tv_main_tip.setText("1".equals(type)?"跑腿":"公告");
-        civ_head_logo = (ImageView)findViewById(R.id.civ_head_logo);
+        tv_main_tip.setText("1".equals(type) ? "跑腿" : "公告");
+        civ_head_logo = (ImageView) findViewById(R.id.civ_head_logo);
         ltv_level = (LevelTextView) findViewById(R.id.ltv_level);
         tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
         tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
@@ -191,7 +191,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                             job.setPraiseid(null);
                             job.setPraisecount(checkBox.getText().toString());
                         }
-                    }).click("1".equals(type)?"1":"5", helpid, job.getPraiseid(), cb_jishi_like);
+                    }).click("1".equals(type) ? "1" : "5", helpid, job.getPraiseid(), cb_jishi_like);
                 }
             }
         });
@@ -276,18 +276,21 @@ public class HelpJishiDetailActivity extends BaseActivity {
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
     }
 
-    private void setViewData(){
-        if(null == job){
+    private void setViewData() {
+        if (null == job) {
             return;
         }
         iv_func.setVisibility(View.VISIBLE);
         //tv_main_tip.setText(job.getTopiccontent());
         bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
-        try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
+        try {
+            ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
+        } catch (Exception e) {
+        }
         tv_stu_name.setText(job.getSourcename());
-        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {
+        if (UserSubject.getSchoolname().equals(job.getSourceschool())) {
             tv_stu_college.setText(job.getSourcecollege());
-        }else{
+        } else {
             tv_stu_college.setText(job.getSourceschool());
         }
         tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
@@ -296,24 +299,26 @@ public class HelpJishiDetailActivity extends BaseActivity {
         tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGenderlimit()));
 
         //点赞
-        if("0".equals(job.getPraisecount())||StringUtil.isEmpty(job.getPraisecount())) {
+        if ("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())) {
             cb_jishi_like.setText("");
-        }else {
+        } else {
             cb_jishi_like.setText(job.getPraisecount());
         }
         cb_jishi_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
         //评论
-        if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+        if ("0".equals(job.getCommentcount()) || StringUtil.isEmpty(job.getCommentcount())) {
             cb_jishi_comment.setText("");
-        }else {
+        } else {
             cb_jishi_comment.setText(job.getCommentcount());
         }
     }
+
     private void onLoad() {
         groupListView.stopRefresh();
         groupListView.stopLoadMore();
         groupListView.setRefreshTime(DateUtil.formatDate(new Date(), "MM-dd HH:mm"));
     }
+
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context ctx) {
             super(ctx);
@@ -377,30 +382,92 @@ public class HelpJishiDetailActivity extends BaseActivity {
             }
         }
     }
+
     private void initGroupData() {
         //TODO 接入服务端接口
-        if (actionLock.tryLock()) {
-            //showProgressDialog("获取圈子中...");
-            //获取详情
-            azExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    Partjob19Request req = new Partjob19Request();
-                    Partjob19Request.Parttimejob job = req.new Parttimejob();
-                    job.setType(type);//1：即时型求助   3：公告求助
-                    job.setStudentid(UserSubject.getStudentid());
-                    job.setHelpid(helpid);
-                    req.setParttimejob(job);
+        if (!actionLock.tryLock()) {
+            return;
+        }
+        //showProgressDialog("获取圈子中...");
+        //获取详情
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob19Request req = new Partjob19Request();
+                Partjob19Request.Parttimejob job = req.new Parttimejob();
+                job.setType(type);//1：即时型求助   3：公告求助
+                job.setStudentid(UserSubject.getStudentid());
+                job.setHelpid(helpid);
+                req.setParttimejob(job);
 
-                    azService.doTrans(req, Partjob19Response.class, new AzService.Callback<Partjob19Response>() {
+                azService.doTrans(req, Partjob19Response.class, new AzService.Callback<Partjob19Response>() {
+                    @Override
+                    public void success(Partjob19Response response) {
+                        ResponseResult result = response.getResult();
+                        if ("0".equals(result.getCode())) {
+                            Partjob19Response.Parttimejob job = response.getBody().getParttimejob();
+                            messageHandler.postMessage(0, job);
+                        } else {
+                            messageHandler.postMessage(1, result.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
+        //获取评论列表
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (GlobalConstant.debugFlag) {
+                    List<CommentItem> regionList = new ArrayList<CommentItem>();
+                    for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
+                        Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
+                        region.setSourcename("学生" + (i + mCurrentStart));
+                        region.setSourcelevel("19");
+                        region.setSourceschool("浙江大学");
+                        region.setSourcecollege("计算机学院");
+                        region.setOptime("20150801233341");
+                        if (i % 4 == 0) {
+                            region.setRefcomment(new Partjob29Response.Refcomment());
+                            region.getRefcomment().setRefname("花仙子");
+                            region.getRefcomment().setRefcontent("你是一个大SB");
+                        }
+                        if (i % 2 == 0) {
+                            region.setPraiseflag("1");
+                            region.setPraiseid("23232332");
+                        }
+                        region.setPraisecount("23");
+                        region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
+                        regionList.add(region);
+                    }
+                    messageHandler.postMessage(2, regionList);
+                } else {
+                    Partjob29Request req = new Partjob29Request();
+                    Partjob29Request.Parttimejob job = req.new Parttimejob();
+                    job.setReceiverid(UserSubject.getStudentid());
+                    job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
+                    job.setTargetid(helpid);
+                    job.setCommenttype("1");//1评论
+                    job.setStart("" + mCurrentStart);
+                    job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                    req.setParttimejob(job);
+                    azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
                         @Override
-                        public void success(Partjob19Response response) {
+                        public void success(Partjob29Response response) {
                             ResponseResult result = response.getResult();
                             if ("0".equals(result.getCode())) {
-                                Partjob19Response.Parttimejob job = response.getBody().getParttimejob();
-                                messageHandler.postMessage(0, job);
+                                List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                                if (null == parttimejob_list) {
+                                    parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
+                                }
+                                messageHandler.postMessage(2, parttimejob_list);
                             } else {
-                                messageHandler.postMessage(1, result.getMessage());
+                                messageHandler.postMessage(3, result.getMessage());
                             }
                         }
 
@@ -410,67 +477,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         }
                     });
                 }
-            });
-            //获取评论列表
-            azExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<CommentItem> regionList = new ArrayList<CommentItem>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
-                            region.setSourcename("学生" + (i + mCurrentStart));
-                            region.setSourcelevel("19");
-                            region.setSourceschool("浙江大学");
-                            region.setSourcecollege("计算机学院");
-                            region.setOptime("20150801233341");
-                            if(i%4 == 0) {
-                                region.setRefcomment(new Partjob29Response.Refcomment());
-                                region.getRefcomment().setRefname("花仙子");
-                                region.getRefcomment().setRefcontent("你是一个大SB");
-                            }
-                            if(i%2 == 0) {
-                                region.setPraiseflag("1");
-                                region.setPraiseid("23232332");
-                            }
-                            region.setPraisecount("23");
-                            region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
-                            regionList.add(region);
-                        }
-                        messageHandler.postMessage(2, regionList);
-                    } else {
-                        Partjob29Request req = new Partjob29Request();
-                        Partjob29Request.Parttimejob job = req.new Parttimejob();
-                        job.setReceiverid(UserSubject.getStudentid());
-                        job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
-                        job.setTargetid(helpid);
-                        job.setCommenttype("1");//1评论
-                        job.setStart("" + mCurrentStart);
-                        job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setParttimejob(job);
-                        azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
-                            @Override
-                            public void success(Partjob29Response response) {
-                                ResponseResult result = response.getResult();
-                                if ("0".equals(result.getCode())) {
-                                    List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
-                                    if(null == parttimejob_list){
-                                        parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
-                                    }
-                                    messageHandler.postMessage(2, parttimejob_list);
-                                } else {
-                                    messageHandler.postMessage(3, result.getMessage());
-                                }
-                            }
-
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 }

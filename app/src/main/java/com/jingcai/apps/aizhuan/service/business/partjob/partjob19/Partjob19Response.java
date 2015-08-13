@@ -33,12 +33,57 @@ public class Partjob19Response extends BaseResponse<Partjob19Response.Body> {
         private String targetid;
         private String targetname;
         private String targetimgurl;
+        private String targetschool;
+        private String targetcollege;
+        private String targetphone;
         private String commentcount;
         private String praisecount;
         private String praiseflag;
         private String praiseid;
         private String genderlimit;
+        private String evelflag;
         private String status;
+        private String timeout;
+
+        public String getEvelflag() {
+            return evelflag;
+        }
+
+        public void setEvelflag(String evelflag) {
+            this.evelflag = evelflag;
+        }
+
+        public String getTargetcollege() {
+            return targetcollege;
+        }
+
+        public void setTargetcollege(String targetcollege) {
+            this.targetcollege = targetcollege;
+        }
+
+        public String getTargetphone() {
+            return targetphone;
+        }
+
+        public void setTargetphone(String targetphone) {
+            this.targetphone = targetphone;
+        }
+
+        public String getTargetschool() {
+            return targetschool;
+        }
+
+        public void setTargetschool(String targetschool) {
+            this.targetschool = targetschool;
+        }
+
+        public String getTimeout() {
+            return timeout;
+        }
+
+        public void setTimeout(String timeout) {
+            this.timeout = timeout;
+        }
 
         public String getGenderlimit() {
             return genderlimit;

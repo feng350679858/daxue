@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/iv_close"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="right"
@@ -17,12 +18,14 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_head_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/icon_share_qq" />
+        android:src="@drawable/default_head_img" />
 
     <TextView
+        android:id="@+id/tv_stu_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -39,6 +42,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_stu_school"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="浙江理工大学"
@@ -46,6 +50,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/tv_stu_college"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -57,13 +62,14 @@
     <include layout="@layout/mine_help_score" />
 
     <TextView
+        android:id="@+id/tv_help_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="left"
+        android:gravity="center"
         android:maxLines="2"
         android:padding="10dp"
-        android:text="求助内容求助内容求助内容求助内容求助内容求助内容求助内容求助内容"
+        android:text=""
         android:textColor="@color/normal_grey"
         android:textSize="14sp" />
 

@@ -12,12 +12,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by lejing on 15/7/22.
@@ -26,8 +31,24 @@ public class HelpEvaluateActivity extends BaseActivity {
     private int[] starIdArr = {R.id.ib_start_0,R.id.ib_start_1,R.id.ib_start_2,R.id.ib_start_3,R.id.ib_start_4};
     private CheckBox[] starViewArr = new CheckBox[starIdArr.length];
     private MessageHandler messageHandler;
+    private BitmapUtil bitmapUtil = new BitmapUtil();
     private EditText et_evaluate_content;
     private Button btn_evaluate;
+    private ImageView iv_close;
+    private CircleImageView civ_head_logo;
+    private TextView tv_stu_name;
+    private TextView tv_stu_school;
+    private TextView tv_stu_college;
+    private TextView tv_stu_score;
+    private TextView tv_help_content;
+    private boolean forceflag;
+    private String targetid;
+    private String targetimgurl;
+    private String targetname;
+    private String targetschool;
+    private String targetcollege;
+    private String content;
+    private String targettype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,35 +56,65 @@ public class HelpEvaluateActivity extends BaseActivity {
         messageHandler = new MessageHandler(this);
         setContentView(R.layout.help_evaluate);
 
+        forceflag = getIntent().getBooleanExtra("forceflag", true);
+        content = getIntent().getStringExtra("content");
+        targetid = getIntent().getStringExtra("targetid");
+        targettype = getIntent().getStringExtra("targettype");//1：学生 2：联系人 3：商家
+        targetimgurl = getIntent().getStringExtra("targetimgurl");
+        targetname = getIntent().getStringExtra("targetname");
+        targetschool = getIntent().getStringExtra("targetschool");
+        targetcollege = getIntent().getStringExtra("targetcollege");
+
         initView();
 
-//        new AzExecutor().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(300);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                messageHandler.postMessage(0);
-//            }
-//        });
-        btn_evaluate.setEnabled(true);
+        setValues();
+
+    }
+
+    private void setValues(){
+        iv_close.setVisibility(forceflag ? View.GONE : View.VISIBLE);
+        if(!forceflag){
+            iv_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+        tv_help_content.setText(content);
+        bitmapUtil.getImage(civ_head_logo, targetimgurl, true, R.drawable.default_head_img);
+        tv_stu_name.setText(targetname);
+        tv_stu_school.setText(targetschool);
+        tv_stu_college.setText(targetcollege);
+
+        getScore();
+    }
+
+    /**
+     * 获取信用分
+     */
+    private void getScore() {
+
     }
 
     private void initView() {
+        iv_close = (ImageView) findViewById(R.id.iv_close);
+        civ_head_logo = (CircleImageView) findViewById(R.id.civ_head_logo);
+        tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
+        tv_stu_school = (TextView) findViewById(R.id.tv_stu_school);
+        tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
+        tv_stu_score = (TextView) findViewById(R.id.tv_stu_score);
+        tv_help_content = (TextView) findViewById(R.id.tv_help_content);
         et_evaluate_content = (EditText) findViewById(R.id.et_evaluate_content);
-        et_evaluate_content.setText(String.valueOf(System.currentTimeMillis()));
-        Log.d("==", "----------" + this.getTaskId() + "-----" + this);
 
-        findViewById(R.id.btn_evaluate).setOnClickListener(new View.OnClickListener() {
+        btn_evaluate = (Button)findViewById(R.id.btn_evaluate);
+        btn_evaluate.setEnabled(false);
+        btn_evaluate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        btn_evaluate = (Button)findViewById(R.id.btn_evaluate);
 
         for(int i=0;i<starIdArr.length;i++){
             CheckBox btn = (CheckBox) findViewById(starIdArr[i]);
@@ -74,13 +125,11 @@ public class HelpEvaluateActivity extends BaseActivity {
                     boolean flag = true;
                     for (int i = 0; i < starIdArr.length; i++) {
                         if (v.getId() == starIdArr[i]) {
-                            //starViewArr[i].setChecked(!starViewArr[i].isChecked());
                             flag = false;
                         } else {
                             starViewArr[i].setChecked(flag);
                         }
                     }
-                    Log.d("==", "---------"+starViewArr[0].isChecked());
                     btn_evaluate.setEnabled(starViewArr[0].isChecked());
                 }
             });
@@ -90,8 +139,6 @@ public class HelpEvaluateActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        et_evaluate_content.setText(String.valueOf(System.currentTimeMillis()));
-        Log.d("==", "----------" + this.getTaskId() + "-----" + this);
     }
 
     class MessageHandler extends BaseHandler {
@@ -118,7 +165,9 @@ public class HelpEvaluateActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
+            if(forceflag) {
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

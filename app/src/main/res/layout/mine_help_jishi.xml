@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/help_item_jishi_help2"
@@ -26,7 +27,7 @@
 
         <CheckBox
             android:id="@+id/cb_tip"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/mine_help_text_yellow_bg"
@@ -35,7 +36,7 @@
             android:clickable="false"
             android:gravity="center"
             android:singleLine="true"
-            android:text="剩余时间 12:16:10"
+            android:text="谢谢使用"
             android:textColor="@color/important_dark"
             android:textSize="12sp" />
     </LinearLayout>
@@ -93,6 +94,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
@@ -117,6 +119,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
@@ -141,10 +144,11 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_public_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
-                    android:text="在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。"
+                    android:text=""
                     android:textColor="@color/normal_grey"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -165,10 +169,11 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_private_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
-                    android:text="在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。在纽约市长支持下，限制Uber出租车数量的法案，已进入投票阶段。这终于激发了一向不愿意透漏任何交通数据、保密到家的Uber，公布了自己过去两个月在纽约市的行车数据。意外地，此数据让纽约市长决定暂缓法案。双方星期三宣布达成协议。"
+                    android:text=""
                     android:textColor="@color/normal_grey"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -187,11 +192,13 @@
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_head_logo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/icon_share_qq" />
 
         <TextView
+            android:id="@+id/tv_stu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -219,7 +226,7 @@
             android:layout_height="32dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/btn_yellow_boarded_bg_selector"
-            android:text="取消求助"
+            android:text="action"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

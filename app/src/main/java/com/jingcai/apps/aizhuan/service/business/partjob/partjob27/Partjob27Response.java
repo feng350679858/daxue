@@ -1,5 +1,7 @@
 package com.jingcai.apps.aizhuan.service.business.partjob.partjob27;
 
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpListItem;
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpResponse;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 
 import java.util.List;
@@ -7,9 +9,15 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/7/21.
  */
-public class Partjob27Response extends BaseResponse<Partjob27Response.Partjob27Body> {
+public class Partjob27Response extends MineHelpResponse<Partjob27Response.Body> {
 
-    public static class Partjob27Body {
+    @Override
+    public List getList() {
+        Body body = getBody();
+        return null == body?null:body.getParttimejob_list();
+    }
+
+    public static class Body {
         private List<Parttimejob> parttimejob_list;
 
         public List<Parttimejob> getParttimejob_list() {
@@ -21,8 +29,9 @@ public class Partjob27Response extends BaseResponse<Partjob27Response.Partjob27B
         }
     }
 
-    public static class Parttimejob {
+    public static class Parttimejob implements MineHelpListItem {
         private String helpid;
+        private String answerid;
         private String optime;
         private String content;
         private String salary;
@@ -31,6 +40,23 @@ public class Partjob27Response extends BaseResponse<Partjob27Response.Partjob27B
         private String sourceimgurl;
         private String sourceschool;
         private String sourcecollege;
+        private String anonflag;
+
+        public String getAnswerid() {
+            return answerid;
+        }
+
+        public void setAnswerid(String answerid) {
+            this.answerid = answerid;
+        }
+
+        public String getAnonflag() {
+            return anonflag;
+        }
+
+        public void setAnonflag(String anonflag) {
+            this.anonflag = anonflag;
+        }
 
         public String getContent() {
             return content;
