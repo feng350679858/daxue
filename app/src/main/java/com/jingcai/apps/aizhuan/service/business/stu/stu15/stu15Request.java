@@ -6,9 +6,9 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
 /**
  * Created by Administrator on 2015/7/22.
  */
-public class Stu15Request extends BaseRequest {
+public class stu15Request extends BaseRequest {
     private Student student;
-    public Stu15Request(String sourceid, String targetid){
+    public stu15Request(String sourceid, String targetid){
         Student stu = new Student();
         stu.sourceid = sourceid;
         stu.targetid = targetid;

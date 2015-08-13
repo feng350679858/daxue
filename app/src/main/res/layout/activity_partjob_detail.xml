@@ -413,6 +413,7 @@
                     android:id="@+id/horizontalScrollView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:scrollbarAlwaysDrawHorizontalTrack="false"
                     android:scrollbars="none">
 
@@ -420,8 +421,7 @@
                         android:id="@+id/linearLayout_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="5dp" />
+                        android:orientation="horizontal"/>
                 </HorizontalScrollView>
             </LinearLayout>
 
@@ -433,7 +433,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/important_dark"
                 android:textSize="17sp" />
 
