@@ -83,9 +83,14 @@ public class BindAlipayActivity extends BaseActivity {
                 if (checkAndInitDialog()) {
                     String content = "账号：" + mEtPhone.getText().toString() + "\n姓名：" + mEtName.getText().toString();
                     mConfirmWin.showWindow("绑定账号", content, "取消", "确定");
-                    mConfirmWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
+                    mConfirmWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
                         @Override
-                        public void onConfirmButtonClick() {
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onConfirm() {
                             bindAccount();
                             mConfirmWin.dismiss();
                         }

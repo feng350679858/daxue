@@ -146,10 +146,15 @@ public class MineAccountActivity extends BaseActivity {
         findViewById(R.id.btn_mine_gold_account_withdraw).setOnClickListener(activityChangeListener);
         findViewById(R.id.btn_mine_gold_account_topup).setOnClickListener(activityChangeListener);
 
-        mTipWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
+        mTipWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
             @Override
-            public void onConfirmButtonClick() {
-                Intent intent = new Intent(MineAccountActivity.this,IdentityAuthenticationActivity.class);
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                Intent intent = new Intent(MineAccountActivity.this, IdentityAuthenticationActivity.class);
                 startActivity(intent);
                 mTipWin.dismiss();
                 finish();
