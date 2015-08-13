@@ -17,6 +17,7 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/cb_status_line_0"
                 android:layout_width="0dp"
                 android:layout_height="5dp"
                 android:layout_weight="1"
@@ -26,15 +27,17 @@
                 android:clickable="false" />
 
             <CheckBox
+                android:id="@+id/cb_status_line_1"
                 android:layout_width="0dp"
                 android:layout_height="8dp"
                 android:layout_weight="2"
                 android:background="@drawable/help_process_line"
                 android:button="@null"
-                android:checked="true"
+                android:checked="false"
                 android:clickable="false" />
 
             <CheckBox
+                android:id="@+id/cb_status_line_2"
                 android:layout_width="0dp"
                 android:layout_height="8dp"
                 android:layout_weight="2"
@@ -44,6 +47,16 @@
                 android:visibility="visible" />
 
             <CheckBox
+                android:id="@+id/cb_status_line_3"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_weight="2"
+                android:background="@drawable/help_process_line"
+                android:button="@null"
+                android:clickable="false" />
+
+            <CheckBox
+                android:id="@+id/cb_status_line_4"
                 android:layout_width="0dp"
                 android:layout_height="5dp"
                 android:layout_weight="1"
@@ -59,12 +72,14 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/layout_status_node_0"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <CheckBox
+                    android:id="@+id/cb_status_node_0"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/help_process_point"
@@ -74,6 +89,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_status_node_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -81,21 +97,41 @@
                 android:visibility="visible">
 
                 <CheckBox
+                    android:id="@+id/cb_status_node_1"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/help_process_point"
                     android:button="@null"
-                    android:checked="true"
+                    android:checked="false"
                     android:clickable="false" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_status_node_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
                 <CheckBox
+                    android:id="@+id/cb_status_node_2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/help_process_point"
+                    android:button="@null"
+                    android:checked="false"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_status_node_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_status_node_3"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/help_process_point"
@@ -114,30 +150,43 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_status_name_0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="帮助中"
+            android:text="状态0"
             android:textColor="@color/normal_grey"
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_status_name_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="已完成"
+            android:text="状态1"
+            android:textColor="@color/normal_grey"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_status_name_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="状态2"
             android:textColor="@color/normal_grey"
             android:textSize="12sp"
             android:visibility="visible" />
 
         <TextView
+            android:id="@+id/tv_status_name_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="已结束"
+            android:text="状态3"
             android:textColor="@color/normal_grey"
             android:textSize="12sp" />
     </LinearLayout>

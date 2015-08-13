@@ -6,12 +6,19 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob18Request extends BaseRequest{
-
+public class Partjob18Request extends BaseRequest {
+    public Partjob18Request(String studentid, String start, String pagesize){
+        Parttimejob job = new Parttimejob();
+        job.studentid = studentid;
+        job.start = start;
+        job.pagesize = pagesize;
+        this.parttimejob = job;
+    }
     @Override
     public String getTranscode() {
         return BizConstant.BIZ_PARTTIME_JOB_18;
     }
+
     private Parttimejob parttimejob;
 
     public Parttimejob getParttimejob() {
@@ -22,7 +29,7 @@ public class Partjob18Request extends BaseRequest{
         this.parttimejob = parttimejob;
     }
 
-  public class Parttimejob{
+    public class Parttimejob {
         private String studentid;
         private String start;
         private String pagesize;
