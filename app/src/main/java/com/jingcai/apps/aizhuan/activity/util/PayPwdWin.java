@@ -1,10 +1,12 @@
 package com.jingcai.apps.aizhuan.activity.util;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.mine.SafeCheckActivity;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 
 /**
@@ -58,6 +60,14 @@ public class PayPwdWin {
         for (int id : inputTextIdArr) {
             inputTextViewArr[i++] = mPopWin.findViewById(id);
         }
+
+        mPopWin.findViewById(R.id.tv_forget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity, SafeCheckActivity.class);
+                baseActivity.startActivity(intent);
+            }
+        });
     }
 
     public void setTitle(String title) {
