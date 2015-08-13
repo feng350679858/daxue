@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -298,20 +299,18 @@ public class PartjobDetailActivity extends BaseActivity {
 
         if (null != mParttimejob.getSchoolmate_list() && 0 != mParttimejob.getSchoolmate_list().size()) {
             for (int index=0;index<mParttimejob.getSchoolmate_list().size();index++) {
-                final CircleImageView imageView = new CircleImageView(this);
-                LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(35, 35);
-                layout.setMargins(10, 0, 0, 0);
-                imageView.setLayoutParams(layout);
+                View convertView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.schoolmate_list_item, linearLayout_label, false);
+                CircleImageView imageView = (CircleImageView) convertView.findViewById(R.id.iv_logo);
                 bitmapUtil.getImage(imageView, mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
-                imageView.setTag(index);
-                imageView.setOnClickListener(new View.OnClickListener() {
+                convertView.setTag(index);
+                convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int index = (int)imageView.getTag();
+                        int index = (int)v.getTag();
                         initSchoolmateWin(index);
                     }
                 });
-                linearLayout_label.addView(imageView);
+                linearLayout_label.addView(convertView);
             }
             partjob_detail_schoolmate_num.setText("共" + mParttimejob.getSchoolmate_list().size() + "人");
         } else {
@@ -348,7 +347,6 @@ public class PartjobDetailActivity extends BaseActivity {
     }
 
     private void initSchoolmateWin(int index) {
-        if (null == schoolmateWin) {
             View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.school_mate_popupwin, null);
 
@@ -361,7 +359,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.male));
             else
                 ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.female));
-            ((TextView)contentView.findViewById(R.id.name_and_college)).setText(mParttimejob.getSchoolmate_list().get(index).getName()+"/"+mParttimejob.getSchoolmate_list().get(index).getCollege());
+            ((TextView)contentView.findViewById(R.id.name_and_college)).setText(mParttimejob.getSchoolmate_list().get(index).getName()+" / "+mParttimejob.getSchoolmate_list().get(index).getCollege());
             ((TextView)contentView.findViewById(R.id.phone)).setText(StringUtil.hiddenPhone(mParttimejob.getSchoolmate_list().get(index).getPhone()));
             schoolmate_tel=mParttimejob.getSchoolmate_list().get(index).getPhone();
             contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
@@ -378,7 +376,6 @@ public class PartjobDetailActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
-        }
         schoolmateWin.show();
     }
 
