@@ -2,8 +2,8 @@ package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.mine.gold.IdentityAuthenticationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.gold.MineResetPayPasswordActivity;
+import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -26,22 +28,48 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 
 public class SafeCheckActivity extends BaseActivity {
-    private final String TAG="SafeCheckActivity";
+    private final String TAG = "SafeCheckActivity";
     private AzService azService;
     private MessageHandler messageHandler;
 
-    private TextView name;
-    private EditText id_crad_number_input;
+    private TextView mTvName;
+    private EditText mEtIdno;
     private Button next;
+
+    private IOSPopWin mTipWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_resetpaypsw2);
-
+        mTipWin = new IOSPopWin(this);
         messageHandler = new MessageHandler(this);
+
+
         initHeader();
         initViews();
+
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        checkIdentity();
+    }
+
+    private void checkIdentity() {
+        String idnoauthflag = UserSubject.getIdnoauthflag();
+        String tip = null;
+        switch (idnoauthflag) {
+            case "0":
+                tip = getString(R.string.gold_modify_pay_psw_validate_identity_not_pass);
+                mTipWin.showWindow("身份验证", tip, "下次再说", "去吧去吧");
+                break;
+            case "2":
+                tip = getString(R.string.gold_withdraw_validate_identity_wait);
+                mTipWin.showWindow("身份验证", tip, "我知道了");
+                break;
+        }
     }
 
     private void initHeader() {
@@ -53,13 +81,14 @@ public class SafeCheckActivity extends BaseActivity {
                 finish();
             }
         });
-        ((TextView)findViewById(R.id.tv_content)).setText("安全验证");
+        ((TextView) findViewById(R.id.tv_content)).setText("安全验证");
     }
-    private void initViews(){
-        name=(TextView)findViewById(R.id.name);
-        name.setText(UserSubject.getName());
-        id_crad_number_input=(EditText)findViewById(R.id.id_card_number_input);
-        id_crad_number_input.addTextChangedListener(new TextWatcher() {
+
+    private void initViews() {
+        mTvName = (TextView) findViewById(R.id.name);
+        mTvName.setText(UserSubject.getName());
+        mEtIdno = (EditText) findViewById(R.id.id_card_number_input);
+        mEtIdno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -78,41 +107,58 @@ public class SafeCheckActivity extends BaseActivity {
                     next.setEnabled(false);
             }
         });
-        next=(Button)findViewById(R.id.next);
+        next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 check();
             }
         });
+
+        mTipWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
+            @Override
+            public void onCancel() {
+                SafeCheckActivity.this.finish();
+            }
+
+            @Override
+            public void onConfirm() {
+                Intent intent = new Intent(SafeCheckActivity.this, IdentityAuthenticationActivity.class);
+                startActivity(intent);
+                mTipWin.dismiss();
+                finish();
+            }
+        });
     }
-    private void resetPayPsw(){
-        Intent intent=new Intent(this,MineResetPayPasswordActivity.class);
-        intent.putExtra(MineResetPayPasswordActivity.INTENT_EXTRA_NAME_STAGE,MineResetPayPasswordActivity.RESET_PASSWORD_STAGE_2);
+
+    private void resetPayPsw() {
+        Intent intent = new Intent(this, MineResetPayPasswordActivity.class);
         startActivity(intent);
         finish();
     }
-    private void check(){
+
+    private void check() {
         showProgressDialog("安全验证中...");
         new AzExecutor().execute(new Thread(new Runnable() {
             @Override
             public void run() {
                 azService = new AzService(SafeCheckActivity.this);
-                Game13Request req=new Game13Request();
-                Game13Request.Student student=req.new Student();
+                Game13Request req = new Game13Request();
+                Game13Request.Student student = req.new Student();
                 student.setId(UserSubject.getStudentid());
-                student.setIdno(id_crad_number_input.getText().toString());
+                student.setIdno(mEtIdno.getText().toString());
                 req.setStudent(student);
                 azService.doTrans(req, Game13Response.class, new AzService.Callback<Game13Response>() {
                     @Override
                     public void success(Game13Response response) {
                         ResponseResult result = response.getResult();
                         if (!"0".equals(result.getCode())) {
-                            messageHandler.postMessage(0,result.getMessage());
+                            messageHandler.postMessage(0, result.getMessage());
                         } else {
                             messageHandler.postMessage(1);
                         }
                     }
+
                     @Override
                     public void fail(AzException e) {
                         messageHandler.postException(e);
@@ -121,6 +167,7 @@ public class SafeCheckActivity extends BaseActivity {
             }
         }));
     }
+
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
@@ -132,7 +179,7 @@ public class SafeCheckActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     showToast("证件号有误");
-                    Log.i(TAG,"安全验证失败:" + msg.obj);
+                    Log.i(TAG, "安全验证失败:" + msg.obj);
                     break;
                 }
                 case 1: {

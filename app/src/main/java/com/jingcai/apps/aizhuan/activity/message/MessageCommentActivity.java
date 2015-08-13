@@ -139,10 +139,11 @@ public class MessageCommentActivity extends BaseActivity {
                     parttimejob.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     parttimejob.setStart(String.valueOf(mCurrentStart));
                     parttimejob.setReceiverid(UserSubject.getStudentid());
+                    parttimejob.setCommenttype(activityFlag == INTENT_VALUE_ACTIVITY_FLAG_COMMENT?"1":"2");
                     parttimejob.setReadflag("1");
 
                     req.setParttimejob(parttimejob);
-                    azService.doTrans(req, Partjob29Response.class,new AzService.Callback<Partjob29Response>() {
+                    azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
                         @Override
                         public void success(Partjob29Response resp) {
                             ResponseResult result = resp.getResult();
@@ -152,9 +153,9 @@ public class MessageCommentActivity extends BaseActivity {
                                 if (parttimejob_list == null) {
                                     parttimejob_list = new ArrayList<>();
                                 }
-                                if(0 == mCurrentStart && parttimejob_list.size()<1){
+                                if (0 == mCurrentStart && parttimejob_list.size() < 1) {
                                     messageHandler.postMessage(2);
-                                }else {
+                                } else {
                                     messageHandler.postMessage(0, parttimejob_list);
                                 }
                             } else {

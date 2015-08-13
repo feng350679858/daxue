@@ -1,7 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.mine.gold;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -26,8 +25,6 @@ import com.jingcai.apps.aizhuan.util.DES3Util;
 public class MineResetPayPasswordActivity extends BaseActivity {
     private static final String TAG = "MineResetPayPassword";
 
-    public static final String INTENT_EXTRA_NAME_STAGE = "stage";
-    public static final String INTENT_EXTRA_NAME_NEW_PSW = "new_psw";
     public static final int RESET_PASSWORD_STAGE_1 = 1;  //输入旧密码
     public static final int RESET_PASSWORD_STAGE_2 = 2;  //输入新密码
     public static final int RESET_PASSWORD_STAGE_3 = 3;  //重复新密码
@@ -40,31 +37,39 @@ public class MineResetPayPasswordActivity extends BaseActivity {
     private MessageHandler messageHandler;
     private AzService azService;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_reset_pay_password);
-        unpackIntent();  //解封intent
         messageHandler = new MessageHandler(this);
         azService = new AzService(this);
 
-        initHeader();
-        initView();
+        if (!UserSubject.getHaspaypasswordset()) {
+            reloadByState(RESET_PASSWORD_STAGE_2);
+        }else{
+            reloadByState(RESET_PASSWORD_STAGE_1);
+        }
+//        initHeader();
+//        initView();
     }
 
-    private void unpackIntent() {
-        final Intent intent = getIntent();
-        if (intent == null) {
-            Log.w(TAG, "This activity required a intent which has extra name INTENT_EXTRA_NAME_STAGE");
-            this.finish();
-            return;
+    private void reloadByState(int stage){
+        mCurrentStage = stage;
+        clearPswPad();  //清除密码框
+        switch (mCurrentStage) {
+            case RESET_PASSWORD_STAGE_1:
+                showToast("请输入当前支付密码");
+                break;
+            case RESET_PASSWORD_STAGE_2:
+                showToast("请输入新的支付密码");
+                break;
+            case RESET_PASSWORD_STAGE_3:
+                showToast("请再输一次");
+                break;
         }
-
-        mCurrentStage = intent.getIntExtra(INTENT_EXTRA_NAME_STAGE, RESET_PASSWORD_STAGE_1);
-        if (mCurrentStage == RESET_PASSWORD_STAGE_3) {
-            mNewPsw = intent.getStringExtra(INTENT_EXTRA_NAME_NEW_PSW);
-        }
-
+        initHeader();
+        initView();
     }
 
     private void initHeader() {
@@ -84,11 +89,7 @@ public class MineResetPayPasswordActivity extends BaseActivity {
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCurrentStage == RESET_PASSWORD_STAGE_3) {
-                    Intent intent = new Intent(MineResetPayPasswordActivity.this, MineResetPayPasswordActivity.class);
-                    intent.putExtra(INTENT_EXTRA_NAME_STAGE, RESET_PASSWORD_STAGE_2);
-                    startActivity(intent);
-                }
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -117,6 +118,7 @@ public class MineResetPayPasswordActivity extends BaseActivity {
                 mainTip = "请再次输入6位新支付密码";
                 subTip = "设置后，该密码将成为新的支付密码，请牢记";
                 btnText = "完成";
+                mBtnNext.setVisibility(View.VISIBLE);
                 break;
         }
         mBtnNext.setText(btnText);
@@ -129,9 +131,8 @@ public class MineResetPayPasswordActivity extends BaseActivity {
                 if (mCurrentStage == RESET_PASSWORD_STAGE_1) {
                     showProgressDialog("验证支付密码中...");
                     validatePayPassword();
-                }
-                else if (mCurrentStage == RESET_PASSWORD_STAGE_3) {
-                    if(!mNewPsw.equals(mPswString.toString())){
+                } else if (mCurrentStage == RESET_PASSWORD_STAGE_3) {
+                    if (!mNewPsw.equals(mPswString.toString())) {
                         showToast("两次密码输入不一致");
                         return;
                     }
@@ -242,11 +243,8 @@ public class MineResetPayPasswordActivity extends BaseActivity {
                 if (mPswString.length() == 6) {
                     //如果为第二幕，则输入到了六位自动跳入第三幕
                     if(mCurrentStage == RESET_PASSWORD_STAGE_2){
-                        Intent intent = new Intent(MineResetPayPasswordActivity.this,MineResetPayPasswordActivity.class);
-                        intent.putExtra(INTENT_EXTRA_NAME_STAGE,RESET_PASSWORD_STAGE_3);
-                        intent.putExtra(INTENT_EXTRA_NAME_NEW_PSW,mPswString.toString());
-                        startActivity(intent);
-                        finish();
+                        mNewPsw = mPswString.toString();
+                        reloadByState(RESET_PASSWORD_STAGE_3);
                     }else{
                         mBtnNext.setEnabled(true);
                         mBtnNext.setTextColor(getResources().getColor(R.color.important_dark));
@@ -270,6 +268,17 @@ public class MineResetPayPasswordActivity extends BaseActivity {
         findViewById(R.id.iv_mine_back).setOnClickListener(padListener);
     }
 
+    private void clearPswPad(){
+        for (int i = 1; i <= 6; i++) {
+            try {
+                int viewId = MineResetPayPasswordActivity.this.getResources().getIdentifier("tv_mine_psw_length_" + i, "id", MineResetPayPasswordActivity.this.getPackageName());
+                MineResetPayPasswordActivity.this.findViewById(viewId).setVisibility(View.INVISIBLE);
+            } catch (Exception e) {
+                Log.e(TAG, "Couldn't find tv_psw_length_" + i + " ,Did you remove it?");
+            }
+        }
+    }
+
     class MessageHandler extends BaseHandler {
         public MessageHandler(Context context) {
             super(context);
@@ -282,6 +291,7 @@ public class MineResetPayPasswordActivity extends BaseActivity {
                 case 0: {
                     showToast("修改支付密码成功");
                     UserSubject.setHasPayPassword();
+                    setResult(RESULT_OK);
                     MineResetPayPasswordActivity.this.finish();
                     break;
                 }
@@ -291,11 +301,7 @@ public class MineResetPayPasswordActivity extends BaseActivity {
                     break;
                 }
                 case 2: {
-                    Intent intent = new Intent(MineResetPayPasswordActivity.this,MineResetPayPasswordActivity.class);
-                    intent.putExtra(INTENT_EXTRA_NAME_STAGE,RESET_PASSWORD_STAGE_2);
-                    intent.putExtra(INTENT_EXTRA_NAME_NEW_PSW,mPswString.toString());
-                    startActivity(intent);
-                    MineResetPayPasswordActivity.this.finish();
+                    reloadByState(RESET_PASSWORD_STAGE_2);
                     break;
                 }
                 case 3: {
