@@ -136,6 +136,8 @@ public class MineHelpListActivity extends BaseActivity {
                 case 0: {
                     try {
                         List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
+                        if(list==null)
+                            list=new ArrayList<>();
                         commentAdapter.addData(list);
                         commentAdapter.notifyDataSetChanged();
                         mCurrentStart += list.size();

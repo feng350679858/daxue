@@ -419,36 +419,36 @@ public class PartjobDetailActivity extends BaseActivity {
         partjobdetailWin.show();
     }
 
-    private void fillTopPicture(String worktype) {
-        switch (worktype) {
-            case "0":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
-                break;
-            case "1":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
-                break;
-            case "2":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
-                break;
-            case "3":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
-                break;
-            case "4":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
-                break;
-            case "5":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
-                break;
-            case "6":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
-                break;
-            case "7":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
-                break;
-            default:
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type9));
-        }
-    }
+//    private void fillTopPicture(String worktype) {
+//        switch (worktype) {
+//            case "0":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
+//                break;
+//            case "1":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
+//                break;
+//            case "2":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
+//                break;
+//            case "3":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
+//                break;
+//            case "4":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
+//                break;
+//            case "5":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
+//                break;
+//            case "6":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
+//                break;
+//            case "7":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
+//                break;
+//            default:
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type9));
+//        }
+//    }
 
     private String getShareUrl() {
         return GlobalConstant.weixinUrl + "/partjob/detail?id=" + partjobid;
