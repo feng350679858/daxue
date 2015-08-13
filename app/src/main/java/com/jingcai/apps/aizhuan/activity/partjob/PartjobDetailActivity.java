@@ -246,7 +246,8 @@ public class PartjobDetailActivity extends BaseActivity {
         /*
          * 兼职详情
          */
-        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
+//        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
+        bitmapUtil.getImage(partjob_content_top, mParttimejob.getWorktypeimgurl(), true, R.drawable.partjob_detail_type9);
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
         PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, mParttimejob.getSalary(), mParttimejob.getSalaryunit());
