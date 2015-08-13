@@ -3,6 +3,8 @@ package com.jingcai.apps.aizhuan.activity.sys;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +45,7 @@ public class ModifyPswActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        ((TextView) findViewById(R.id.tv_content)).setText("设置");
+        ((TextView) findViewById(R.id.tv_content)).setText("修改登录密码");
         findViewById(R.id.iv_func).setVisibility(View.GONE);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,10 @@ public class ModifyPswActivity extends BaseActivity {
         mTxtOldPassword = (EditText) findViewById(R.id.et_sys_modify_psw_old_psw);
         mTxtNewPassword = (EditText) findViewById(R.id.et_sys_modify_psw_new_psw);
         mTxtNewPassword2 = (EditText) findViewById(R.id.et_sys_modify_psw_new_psw_2);
+
+        mTxtOldPassword.addTextChangedListener(mSubmitButtonMonitor);
+        mTxtNewPassword.addTextChangedListener(mSubmitButtonMonitor);
+        mTxtNewPassword2.addTextChangedListener(mSubmitButtonMonitor);
 
         mBtnSubmit = (Button) findViewById(R.id.btn_sys_modify_psw_submit);
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +119,35 @@ public class ModifyPswActivity extends BaseActivity {
         });
 
     }
+
+    private TextWatcher mSubmitButtonMonitor = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String oldPassword = mTxtOldPassword.getText().toString();
+            String newPassword = mTxtNewPassword.getText().toString();
+            String newPassword2 = mTxtNewPassword2.getText().toString();
+
+            if(StringUtil.isEmpty(oldPassword)
+                    || StringUtil.isEmpty(newPassword)
+                    || StringUtil.isEmpty(newPassword2)){
+                mBtnSubmit.setEnabled(false);
+                mBtnSubmit.setTextColor(getResources().getColor(R.color.assist_grey));
+            }else{
+                mBtnSubmit.setEnabled(true);
+                mBtnSubmit.setTextColor(getResources().getColor(R.color.important_dark));
+            }
+        }
+    };
 
 
     class MessageHandler extends BaseHandler {

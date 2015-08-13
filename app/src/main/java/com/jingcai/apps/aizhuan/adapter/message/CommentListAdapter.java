@@ -69,7 +69,8 @@ public class CommentListAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return (mComments.get(position).getRefcomment() != null) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
+        final Partjob29Response.Refcomment refcomment = mComments.get(position).getRefcomment();
+        return (refcomment != null && refcomment.getRefid()!=null) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
     }
 
     @Override
@@ -136,7 +137,9 @@ public class CommentListAdapter extends BaseAdapter {
                 final String targettype = comment.getReftarget().getTargettype();
                 switch (targettype) {
                     case "1": targetName = "求助";break;
-                    case "2": targetName = "答案";break;
+                    case "2": targetName = "问题";break;
+                    case "3": targetName = "答案";break;
+                    case "5": targetName = "求助公告";break;
                     default: targetName = "内容";break;
                 }
             }else{

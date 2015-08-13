@@ -18,18 +18,18 @@ public class IOSPopWin {
     private static final String TAG = "IOSPopWin";
     private PopupWin mIOSWin;
     private Activity mContext;
-    private ConfirmButtonClickListener mListener;
+    private ButtonClickListener mListener;
 
     private TextView mTvTitle;
     private TextView mTvContent;
     private Button mCancelButton;
     private Button mConfirmButton;
 
-    public IOSPopWin(Activity context){
+    public IOSPopWin(Activity context) {
         mContext = context;
     }
 
-    public void setConfirmButtonClickListener(ConfirmButtonClickListener listener){
+    public void setButtonClickListener(ButtonClickListener listener) {
         mListener = listener;
     }
 
@@ -37,7 +37,7 @@ public class IOSPopWin {
      * 参数必须大于3个，否则不会起作用.
      * 3个参数时，唯一的一个按钮为dismiss
      * 4个参数时，callBack才起作用
-     *
+     * <p/>
      * args[0]  标题
      * args[1]  内容
      * args[2]  左按钮文字
@@ -46,31 +46,32 @@ public class IOSPopWin {
      * @param args
      */
     public void showWindow(String... args) {
-        if(args.length < 3){
+        if (args.length < 3) {
             Log.w(TAG, "Length can't below 3 In ios dialog");
             return;
         }
-        if(null == mIOSWin) {
+        if (null == mIOSWin) {
             final View decorView = mContext.getWindow().getDecorView();
             View contentView = LayoutInflater.from(mContext).inflate(R.layout.pop_withdraw_validate_tip, null);
             mIOSWin = PopupWin.Builder.create(mContext)
                     .setParentView(decorView)
                     .setContentView(contentView)
+                    .setAnimstyle(0)
                     .build();
             mTvContent = (TextView) contentView.findViewById(R.id.tv_ios_dialog_content);
             mTvTitle = (TextView) contentView.findViewById(R.id.tv_ios_dialog_title);
             mCancelButton = (Button) contentView.findViewById(R.id.btn_ios_dialog_cancel);
             mConfirmButton = (Button) contentView.findViewById(R.id.btn_ios_dialog_confirm);
-            if(args.length >= 3){
+            if (args.length >= 3) {
 
                 mTvTitle.setText(args[0]);
                 mTvContent.setText(args[1]);
                 mCancelButton.setText(args[2]);
-                if(args.length ==3){
+                if (args.length == 3) {
                     mConfirmButton.setVisibility(View.GONE);
                     mCancelButton.setBackgroundResource(R.drawable.btn_white_bottom_radius_bg);
                 }
-                if(args.length == 4){
+                if (args.length == 4) {
                     mConfirmButton.setText(args[3]);
                 }
             }
@@ -78,13 +79,18 @@ public class IOSPopWin {
             mCancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onCancel();
+                    }
                     mIOSWin.dismiss();
                 }
             });
             mConfirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   mListener.onConfirmButtonClick();
+                    if (mListener != null) {
+                        mListener.onConfirm();
+                    }
                 }
             });
         }
@@ -92,11 +98,13 @@ public class IOSPopWin {
         mIOSWin.show(Gravity.CENTER, 0, 0);
     }
 
-    public void dismiss(){
+    public void dismiss() {
         mIOSWin.dismiss();
     }
 
-    public interface ConfirmButtonClickListener{
-        void onConfirmButtonClick();
+    public interface ButtonClickListener {
+        void onCancel();
+
+        void onConfirm();
     }
 }
