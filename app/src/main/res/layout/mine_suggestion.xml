@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/yellow_btn_bg_selector"
+            android:background="@drawable/yellow_radius_btn_bg_selector"
             android:text="提交"
             android:textColor="@color/important_dark"
             android:textSize="18sp"/>
