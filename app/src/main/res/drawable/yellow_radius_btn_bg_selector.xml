@@ -4,17 +4,20 @@
         <shape
             android:shape="rectangle">
             <solid android:color="@color/darker_yellow"/>
+            <corners android:radius="5dp"/>
         </shape>
     </item><item android:state_checked="true" >
         <shape
             android:shape="rectangle">
             <solid android:color="@color/darker_yellow"/>
+            <corners android:radius="5dp"/>
         </shape>
     </item>
     <item>
         <shape
             android:shape="rectangle">
             <solid android:color="@color/main_yellow"/>
+            <corners android:radius="5dp"/>
         </shape>
     </item>
 </selector>

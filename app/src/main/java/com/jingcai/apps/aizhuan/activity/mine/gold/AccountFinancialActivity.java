@@ -106,9 +106,14 @@ public class AccountFinancialActivity extends BaseActivity implements AccountBan
     @Override
     public void OnSwipeListButtonClick(final int position, View view) {
         mConfirmWin.showWindow("提示", "确定要删除此账号？", "下次再说", "解解解");
-        mConfirmWin.setConfirmButtonClickListener(new IOSPopWin.ConfirmButtonClickListener() {
+        mConfirmWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
             @Override
-            public void onConfirmButtonClick() {
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onConfirm() {
                 unBindAccount(((Account04Response.Account04Body.Bank) mListAdapter.getItem(position)));
                 mConfirmWin.dismiss();
             }
