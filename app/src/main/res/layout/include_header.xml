@@ -11,7 +11,7 @@
         android:layout_width="@dimen/header_height"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:background="@color/main_yellow"
+        android:background="@drawable/yellow_btn_bg_selector"
         android:src="@drawable/icon_left_arrow" />
     <TextView
         android:id="@+id/tv_back"
@@ -56,24 +56,26 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp">
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/iv_func"
-            android:visibility="invisible"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:src="@drawable/icon_index_message_bird" />
+            android:src="@drawable/icon_index_message_bird"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/yellow_btn_bg_selector"/>
 
         <ImageView
             android:id="@+id/iv_bird_badge"
             style="@style/style_badge"
+            android:layout_marginRight="5dp"
             android:layout_alignEnd="@id/iv_func"
             android:layout_alignRight="@id/iv_func" />
     </RelativeLayout>
