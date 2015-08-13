@@ -103,7 +103,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/index_mine_progress_bar_bg"
-                        android:progress="100"
                         android:progressDrawable="@drawable/index_mine_progress_bar" />
 
                 </LinearLayout>
@@ -124,13 +123,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_mine_credit"
+                    android:drawableLeft="@drawable/icon_index_mine_credit"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_mine_credit"
+                    android:drawableStart="@drawable/icon_index_mine_credit"
                     android:gravity="center_vertical"
                     android:text="我的信用"
-                    android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
+                    style="@style/list_item_left" />
 
                 <TextView
                     android:id="@+id/credit_score"
@@ -143,7 +141,6 @@
                     android:drawablePadding="10dp"
                     android:drawableRight="@drawable/icon_right_triangle"
                     android:gravity="center_vertical"
-                    android:text="4.7分"
                     android:textColor="@color/important_dark"
                     android:textSize="16sp" />
             </RelativeLayout>
@@ -163,13 +160,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_student_certification"
+                    android:drawableLeft="@drawable/icon_index_mine_student_certification"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_student_certification"
+                    android:drawableStart="@drawable/icon_index_mine_student_certification"
                     android:gravity="center_vertical"
                     android:text="学生认证"
-                    android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
+                    style="@style/list_item_left" />
 
                 <TextView
                     android:id="@+id/tv_auth_state"
@@ -209,13 +205,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:drawableLeft="@drawable/icon_index_tab_mine_question"
+                        android:drawableLeft="@drawable/icon_index_mine_question"
                         android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/icon_index_tab_mine_question"
+                        android:drawableStart="@drawable/icon_index_mine_question"
                         android:gravity="center_vertical"
                         android:text="我的求助"
-                        android:textColor="@color/important_dark"
-                        android:textSize="16sp" />
+                        style="@style/list_item_left" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -228,8 +223,7 @@
                         android:drawableRight="@drawable/icon_right_triangle"
                         android:gravity="center_vertical"
                         android:text="10"
-                        android:textColor="@color/important_dark"
-                        android:textSize="16sp" />
+                        style="@style/list_item_left" />
 
                 </RelativeLayout>
 
@@ -246,13 +240,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:drawableLeft="@drawable/icon_index_tab_mine_help"
+                        android:drawableLeft="@drawable/icon_index_mine_help"
                         android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/icon_index_tab_mine_help"
+                        android:drawableStart="@drawable/icon_index_mine_help"
                         android:gravity="center_vertical"
                         android:text="我的帮助"
-                        android:textColor="@color/important_dark"
-                        android:textSize="16sp" />
+                        style="@style/list_item_left" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -282,13 +275,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:drawableLeft="@drawable/icon_index_tab_mine_partjob"
+                        android:drawableLeft="@drawable/icon_index_mine_partjob"
                         android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/icon_index_tab_mine_partjob"
+                        android:drawableStart="@drawable/icon_index_mine_partjob"
                         android:gravity="center_vertical"
                         android:text="我的兼职"
-                        android:textColor="@color/important_dark"
-                        android:textSize="16sp" />
+                        style="@style/list_item_left" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -315,13 +307,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_mine_account"
+                    android:drawableLeft="@drawable/icon_index_mine_account"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_mine_account"
+                    android:drawableStart="@drawable/icon_index_mine_account"
                     android:gravity="center_vertical"
                     android:text="我的金库"
-                    android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
+                    style="@style/list_item_left" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -346,13 +337,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_index_tab_mine_customer_service"
+                    android:drawableLeft="@drawable/icon_index_mine_customer_service"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/icon_index_tab_mine_customer_service"
+                    android:drawableStart="@drawable/icon_index_mine_customer_service"
                     android:gravity="center_vertical"
                     android:text="联系客服"
-                    android:textColor="@color/important_dark"
-                    android:textSize="16sp" />
+                    style="@style/list_item_left" />
 
                 <ImageView
                     android:layout_width="wrap_content"

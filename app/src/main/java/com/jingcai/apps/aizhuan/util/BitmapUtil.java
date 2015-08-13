@@ -23,7 +23,7 @@ public class BitmapUtil {
     private RequestQueue queue;
     private ImageLoader imageLoader;
     private static ImageLoader.ImageCache bitmapCache = new ImageLoader.ImageCache() {
-        private int maxSize = 10 * 1024 * 1024;
+        private int maxSize = (int) Runtime.getRuntime().maxMemory()/8;
         private LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(maxSize) {
             protected int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getRowBytes() * bitmap.getHeight();

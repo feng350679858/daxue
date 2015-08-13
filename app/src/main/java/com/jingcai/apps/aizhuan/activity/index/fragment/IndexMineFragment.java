@@ -110,11 +110,11 @@ public class IndexMineFragment extends BaseFragment {
 
         ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
         ((ImageView) mainView.findViewById(R.id.ib_back)).setImageDrawable(getResources
-                ().getDrawable(R.drawable.icon_index_tab_mine_twodimensioncode));
+                ().getDrawable(R.drawable.icon_index_mine_twodimensioncode));
         ImageView ivFunc = (ImageView) mainView.findViewById(R.id.iv_func);
         ivFunc.setVisibility(View.VISIBLE);
         ivFunc.setImageDrawable(getResources
-                ().getDrawable(R.drawable.icon_index_tab_mine_settings));
+                ().getDrawable(R.drawable.icon_index_mine_settings));
         ivFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

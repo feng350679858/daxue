@@ -85,12 +85,20 @@
 
     <!-- =========通用样式========= -->
     <style name="title">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/important_dark</item>
     </style>
     <style name="content">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/important_dark</item>
+    </style>
+    <style name="list_item_left">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/important_dark</item>
+    </style>
+    <style name="list_item_right">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/assist_grey</item>
     </style>
     <style name="sub_title">
         <item name="android:textSize">14sp</item>

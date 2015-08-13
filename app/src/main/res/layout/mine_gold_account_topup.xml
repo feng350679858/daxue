@@ -27,7 +27,7 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/icon_mine_gold_account"
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/icon_index_tab_mine_question"
+                android:drawableStart="@drawable/icon_index_mine_question"
                 android:gravity="center_vertical"
                 android:text="金库余额"
                 android:textColor="@color/important_dark"

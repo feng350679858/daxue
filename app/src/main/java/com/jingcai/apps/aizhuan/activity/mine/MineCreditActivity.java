@@ -1,11 +1,14 @@
 package com.jingcai.apps.aizhuan.activity.mine;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -121,8 +124,23 @@ public class MineCreditActivity extends BaseActivity {
             initProfileData();
         }
 
+        playLogoAnim();
+
         initCreditData();
         initRemarkData();
+    }
+
+    private void playLogoAnim() {
+        ObjectAnimator animAlpha = ObjectAnimator.ofFloat(mIvLogo,"alpha",1f,0.5f,1f);
+        ObjectAnimator animTrans = ObjectAnimator.ofFloat(mIvLogo,"translationY",0f,-100f,0f);
+        ObjectAnimator animRotate = ObjectAnimator.ofFloat(mIvLogo,"rotationY",0f,360f);
+
+        AnimatorSet set = new AnimatorSet();
+        set.setStartDelay(1000l);
+        set.setDuration(1000l);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.playTogether(animAlpha,animTrans,animRotate);
+        set.start();
     }
 
     /**
@@ -307,6 +325,8 @@ public class MineCreditActivity extends BaseActivity {
         mTvCollegeName.setText(student.getCollegename());
         mBitmapUtil.getImage(mIvLogo, student.getLogopath(), true, R.drawable.default_head_img);
         updateDbContact(student);
+
+
     }
 
     private void updateDbContact(Stu02Response.Stu02Body.Student student) {
