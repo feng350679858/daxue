@@ -25,19 +25,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
                 android:text="校友可见"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                android:padding="10dp"
+                style="@style/list_item_left" />
 
             <com.jingcai.apps.aizhuan.view.SlideButton
                 android:id="@+id/switch_setting_isvisiable"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
+                android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <View
@@ -52,22 +50,19 @@
             android:layout_height="wrap_content"
             android:background="@drawable/list_item_bg"
             android:clickable="true"
+            android:padding="10dp"
             android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:text="朋友邀请"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/list_item_left" />
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
 
@@ -83,22 +78,19 @@
             android:layout_height="wrap_content"
             android:background="@drawable/list_item_bg"
             android:clickable="true"
+            android:padding="10dp"
             android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:text="我有话说"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/list_item_left" />
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
@@ -117,22 +109,19 @@
             android:layout_height="wrap_content"
             android:background="@drawable/list_item_bg"
             android:clickable="true"
+            android:padding="10dp"
             android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:text="修改密码"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/list_item_left" />
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
 
@@ -147,6 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/list_item_bg"
+            android:padding="10dp"
             android:clickable="true"
             android:gravity="center_vertical">
 
@@ -154,16 +144,12 @@
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:text="版本更新"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/list_item_left" />
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_right_triangle" />
         </LinearLayout>
     </LinearLayout>
@@ -181,22 +167,19 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/list_item_bg"
         android:clickable="true"
+        android:padding="10dp"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="10dp"
             android:text="关于我们"
-            android:textColor="@color/important_dark"
-            android:textSize="16sp" />
+            style="@style/list_item_left" />
 
         <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_right_triangle" />
     </LinearLayout>
 
@@ -209,6 +192,6 @@
         android:background="@drawable/list_item_bg"
         android:text="退出登录"
         android:textColor="@color/main_yellow"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

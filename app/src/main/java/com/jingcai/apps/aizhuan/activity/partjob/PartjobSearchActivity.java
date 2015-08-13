@@ -563,7 +563,7 @@ public class PartjobSearchActivity extends BaseActivity {
             }
             mDrawer.animateClose();
             changeArrowDirection(iv_search_all, false);
-            // 检索 search
+            // 检索 icon_money_index_search
             doReSearch();
         }
     }
@@ -574,7 +574,7 @@ public class PartjobSearchActivity extends BaseActivity {
         tv_search_all.setTag("1");
         mDrawer.animateClose();
         changeArrowDirection(iv_search_all, false);
-        // 检索 search
+        // 检索 icon_money_index_search
         doReSearch();
     }
 
