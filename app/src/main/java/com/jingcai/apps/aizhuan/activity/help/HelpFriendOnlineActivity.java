@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,7 +19,7 @@ import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Response;
-import com.jingcai.apps.aizhuan.service.business.stu.stu15.Stu15Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu15.stu15Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -246,7 +245,7 @@ public class HelpFriendOnlineActivity extends BaseActivity {
         new AzExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                Stu15Request req = new Stu15Request(UserSubject.getStudentid(), studentid);
+                stu15Request req = new stu15Request(UserSubject.getStudentid(), studentid);
                 new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                     @Override
                     public void success(BaseResponse resp) {

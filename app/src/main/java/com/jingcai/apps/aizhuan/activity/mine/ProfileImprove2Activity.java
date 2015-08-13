@@ -344,7 +344,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String selected = years.get(position).get("name");
-                            joindate_input.setText(selected);
+                            joindate_input.setText(selected+"0901");
                             joindate_popupWin.dismiss();
                             clearAllFocus();
                         }
