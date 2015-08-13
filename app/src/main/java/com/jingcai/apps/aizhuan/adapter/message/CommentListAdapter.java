@@ -10,9 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaCommentActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.message.CommentReplyActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
@@ -43,7 +46,7 @@ public class CommentListAdapter extends BaseAdapter {
     private BitmapUtil mBitmapUtil;
     private Optype optype;
 
-    public CommentListAdapter(Context ctx,Optype type) {
+    public CommentListAdapter(Context ctx, Optype type) {
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         mComments = new ArrayList<>();
@@ -51,18 +54,18 @@ public class CommentListAdapter extends BaseAdapter {
         optype = type;
     }
 
-    public void setListData(List<Parttimejob> comments){
-        if(comments != null){
+    public void setListData(List<Parttimejob> comments) {
+        if (comments != null) {
             mComments = comments;
         }
     }
 
 
     public void addData(List<Parttimejob> list) {
-        if(mComments == null){
+        if (mComments == null) {
             mComments = new ArrayList<>();
         }
-        if(list != null){
+        if (list != null) {
             mComments.addAll(list);
         }
     }
@@ -70,7 +73,7 @@ public class CommentListAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         final Partjob29Response.Refcomment refcomment = mComments.get(position).getRefcomment();
-        return (refcomment != null && refcomment.getRefid()!=null) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
+        return (refcomment != null && refcomment.getRefid() != null) ? ITEM_TYPE_HAS_REPLY : ITEM_TYPE_NO_REPLY;
     }
 
     @Override
@@ -131,23 +134,34 @@ public class CommentListAdapter extends BaseAdapter {
         holder.mTvName.setText(comment.getSourcename());
         holder.mTvTime.setText(DateUtil.getHumanlityDateString(DateUtil.parseDate(comment.getOptime())));
 
-        if(optype== Optype.COMMEND){
+        if (optype == Optype.COMMEND) {
             String targetName;
-            if(itemType == ITEM_TYPE_NO_REPLY){
+            if (itemType == ITEM_TYPE_NO_REPLY) {
                 final String targettype = comment.getReftarget().getTargettype();
                 switch (targettype) {
-                    case "1": targetName = "求助";break;
-                    case "2": targetName = "问题";break;
-                    case "3": targetName = "答案";break;
-                    case "5": targetName = "求助公告";break;
-                    default: targetName = "内容";break;
+                    case "1":
+                        targetName = "求助";
+                        break;
+                    case "2":
+                        targetName = "问题";
+                        break;
+                    case "3":
+                        targetName = "答案";
+                        break;
+                    case "5":
+                        targetName = "求助公告";
+                        break;
+                    default:
+                        targetName = "内容";
+                        break;
                 }
-            }else{
+            } else {
                 targetName = "评论";
             }
-            holder.mTvContent.setText("赞了这个"+targetName);
-            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.help_item_like_pressed,0);
-        }else{
+            holder.mTvContent.setText("赞了这个" + targetName);
+            holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.help_item_like_pressed, 0);
+            holder.mBtnReply.setVisibility(View.INVISIBLE);
+        } else {
             holder.mTvContent.setText(comment.getContent());
             holder.mTvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
@@ -156,18 +170,18 @@ public class CommentListAdapter extends BaseAdapter {
             final Partjob29Response.Refcomment refcomment = comment.getRefcomment();
             if (refcomment != null) {
                 String prefix;
-                if(StringUtil.isNotEmpty(refcomment.getSourcestudentname())){
-                    prefix = refcomment.getRefname()+"回复"+refcomment.getSourcestudentname()+":";
-                }else{
-                    prefix = "回复"+refcomment.getRefname()+":";
+                if (StringUtil.isNotEmpty(refcomment.getSourcestudentname())) {
+                    prefix = refcomment.getRefname() + "回复" + refcomment.getSourcestudentname() + ":";
+                } else {
+                    prefix = "回复" + refcomment.getRefname() + ":";
                 }
-                holder.mTvReply.setText(prefix+refcomment.getRefcontent());
+                holder.mTvReply.setText(prefix + refcomment.getRefcontent());
             }
         }
 
         try {
             holder.mTvLevel.setLevel(Integer.parseInt(comment.getSourcelevel()));
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             holder.mTvLevel.setLevel(0);
         }
 
@@ -180,15 +194,16 @@ public class CommentListAdapter extends BaseAdapter {
 
     /**
      * 注册事件
-     * @param holder holder
+     *
+     * @param holder   holder
      * @param position 点击的位置
      */
     private void registerEvents(ViewHolder holder, final int position) {
         View.OnClickListener mClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String str = "";
-                switch (v.getId()){
+                String str = "";
+                switch (v.getId()) {
                     case R.id.iv_logo:
                         handleCredit(position);
                         break;
@@ -196,13 +211,12 @@ public class CommentListAdapter extends BaseAdapter {
                         handleReply(position);
                         break;
                     case R.id.tv_content:
-                        str = "内容 click";
+                        handleContent(position);
                         break;
                     case R.id.ll_ref_container:
-                        str = "引用内容 click";
+                        handleRefContent(position);
                         break;
                 }
-                Toast.makeText(mContext,str,Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -213,17 +227,83 @@ public class CommentListAdapter extends BaseAdapter {
     }
 
     /**
+     * 内容点击
+     */
+    private void handleContent(int position) {
+        final Parttimejob parttimejob = mComments.get(position);
+        final Partjob29Response.Reftarget reftarget = parttimejob.getReftarget();
+        final int itemType = getItemViewType(position);
+
+        /**
+         * ( 有引用评论 或 (无引用评论 且 item类型为评论) ) 且 引用目标类型为答案
+         * 则进入其评论列表页
+         * 其他都与点击内容相同
+         */
+        if ((itemType == ITEM_TYPE_HAS_REPLY || (itemType == ITEM_TYPE_NO_REPLY && optype == Optype.COMMENT)) && ("3".equals(reftarget.getTargettype()))) {
+            Intent intent = new Intent(mContext, HelpWendaCommentActivity.class);
+            intent.putExtra("answerid", reftarget.getTargetid());
+            mContext.startActivity(intent);
+        } else {
+            handleRefContent(position);
+        }
+
+
+    }
+
+    /**
+     * 引用内容点击
+     */
+    private void handleRefContent(int position) {
+        final Parttimejob parttimejob = mComments.get(position);
+        final Partjob29Response.Reftarget reftarget = parttimejob.getReftarget();
+        if (reftarget != null) {
+            String targetId = reftarget.getTargetid();
+            String targetType = reftarget.getTargettype();
+            Intent intent = new Intent();
+            switch (targetType) {
+                case "1":
+                case "5":
+                    String type;
+                    if ("1".equals(targetType)) {
+                        type = "1";  //跑腿
+                    } else {
+                        type = "3";  //公告
+                    }
+                    intent.putExtra("type", type);
+                    intent.putExtra("helpid", targetId);
+                    intent.setClass(mContext, HelpJishiDetailActivity.class);
+                    break;
+                case "2":
+                    intent.putExtra("helpid", targetId);
+                    intent.setClass(mContext, HelpWendaDetailActivity.class);
+                    break;
+                case "3":
+                    intent.putExtra("answerid", targetId);
+                    intent.setClass(mContext, HelpWendaAnswerActivity.class);
+                    break;
+                default:
+                    intent = null;
+            }
+            if (null != intent) {
+                mContext.startActivity(intent);
+            }
+        }
+    }
+
+    /**
      * 点击头像进入个人信用页面
+     *
      * @param position index
      */
     private void handleCredit(int position) {
         Intent intent = new Intent(mContext, MineCreditActivity.class);
-        intent.putExtra(MineCreditActivity.INTENT_NAME_STUDENT_ID,mComments.get(position).getSourceid());
+        intent.putExtra(MineCreditActivity.INTENT_NAME_STUDENT_ID, mComments.get(position).getSourceid());
         mContext.startActivity(intent);
     }
 
     /**
      * 回复
+     *
      * @param position list index
      */
     private void handleReply(int position) {
@@ -236,7 +316,7 @@ public class CommentListAdapter extends BaseAdapter {
     }
 
     public void clearData() {
-        if(mComments != null){
+        if (mComments != null) {
             mComments.clear();
         }
     }
