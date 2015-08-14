@@ -196,7 +196,7 @@ public class PartjobCancelActivity extends BaseActivity{
      * @param student
      */
     private void fillMention(Partjob08Response.Partjob04Body.Student student) {
-        Date endDate = DateUtil.parseDate(getIntent().getStringExtra("endtime"),"yyyy-MM-dd HH:mm:ss");
+        Date endDate = DateUtil.parseDate(getIntent().getStringExtra("endtime"));
         boolean noTimeLeft = endDate.getTime() < System.currentTimeMillis();
         if(noTimeLeft){
             //过了截止日期

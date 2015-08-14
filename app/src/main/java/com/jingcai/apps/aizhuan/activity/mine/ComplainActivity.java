@@ -134,7 +134,7 @@ public class ComplainActivity extends BaseActivity {
                     break;
                 }
                 case 1:{
-                    showToast("投诉信息提交失败");
+                    showToast("投诉信息提交失败："+ msg.obj);
                     Log.i(TAG,"投诉信息提交失败："+ msg.obj);
                     break;
                 }

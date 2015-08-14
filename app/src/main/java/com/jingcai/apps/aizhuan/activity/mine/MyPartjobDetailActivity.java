@@ -284,7 +284,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mTvWorkAddress.setText(mJoininfo.getAddress());
         if (null != mJoininfo.getGisx() && 0 != Double.parseDouble(mJoininfo.getGisx())
                 && null != mJoininfo.getGisy() && 0 != Double.parseDouble(mJoininfo.getGisy())) {
-            mTvWorkAddress.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.location), null);
+            mTvWorkAddress.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.location), null);
             mTvWorkAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

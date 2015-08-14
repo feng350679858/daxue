@@ -53,7 +53,7 @@ public class PartjobDetailActivity extends BaseActivity {
     private PopupWin partjobdetailWin;
     private PopupWin schoolmateWin;
 
-    private String message, tel,schoolmate_tel,endtime;
+    private String message, tel, schoolmate_tel, endtime;
     /**
      * 接受到的数据
      */
@@ -74,7 +74,7 @@ public class PartjobDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         umengShareUtil = new UmengShareUtil(PartjobDetailActivity.this);
-        format=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         partjobid = getIntent().getStringExtra("partjobid");
         logopath = getIntent().getStringExtra("logopath");
         setContentView(R.layout.activity_partjob_detail);
@@ -242,7 +242,8 @@ public class PartjobDetailActivity extends BaseActivity {
         /*
          * 兼职详情
          */
-        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
+//        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
+        bitmapUtil.getImage(partjob_content_top, mParttimejob.getWorktypeimgurl(), true, R.drawable.partjob_detail_type9);
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
         partjob_content_title.setText(mParttimejob.getTitle());
         PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, mParttimejob.getSalary(), mParttimejob.getSalaryunit());
@@ -258,12 +259,11 @@ public class PartjobDetailActivity extends BaseActivity {
         PartjobListAdapter.setWorkdays(partjob_content_workdays, worktimetype, mParttimejob.getWorkdays());
         partjob_content_worktime.setText(mParttimejob.getWorktime());
 
-        endtime=format.format(DateUtil.parseDate(mParttimejob.getEndtime()));
+        endtime = format.format(DateUtil.parseDate(mParttimejob.getEndtime()));
         partjob_content_endtime.setText(endtime);
         partjob_content_address.setText(mParttimejob.getAddress());
-        if (null != mParttimejob.getGisx() && 0 != Double.parseDouble(mParttimejob.getGisx())
-                && null != mParttimejob.getGisy() && 0 != Double.parseDouble(mParttimejob.getGisy())) {
-            partjob_content_address.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.location), null);
+        if (null != mParttimejob.getGisx() && null != mParttimejob.getGisy()) {
+            partjob_content_address.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.location), null);
             partjob_content_address.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -294,7 +294,7 @@ public class PartjobDetailActivity extends BaseActivity {
         partjob_content_remarks.setText(mParttimejob.getRemarks());
 
         if (null != mParttimejob.getSchoolmate_list() && 0 != mParttimejob.getSchoolmate_list().size()) {
-            for (int index=0;index<mParttimejob.getSchoolmate_list().size();index++) {
+            for (int index = 0; index < mParttimejob.getSchoolmate_list().size(); index++) {
                 View convertView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.schoolmate_list_item, linearLayout_label, false);
                 CircleImageView imageView = (CircleImageView) convertView.findViewById(R.id.iv_logo);
                 bitmapUtil.getImage(imageView, mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
@@ -302,7 +302,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int index = (int)v.getTag();
+                        int index = (int) v.getTag();
                         initSchoolmateWin(index);
                     }
                 });
@@ -313,65 +313,63 @@ public class PartjobDetailActivity extends BaseActivity {
             ((LinearLayout) findViewById(R.id.schoolmate_visibility)).setVisibility(View.GONE);
         }
 
-        Date date=new Date();
+        Date date = new Date();
         String time = format.format(date);
         if (time.compareTo(endtime) > 0) {
             partjob_isjoin.setText("已截止");
-            partjob_isjoin.setBackgroundResource(R.drawable.btn_red_disabled);
+            partjob_isjoin.setEnabled(false);
         } else if ("1".equals(mParttimejob.getIsjoin())) {
             partjob_isjoin.setText("已报名");
-            partjob_isjoin.setBackgroundResource(R.drawable.btn_red_disabled);
+            partjob_isjoin.setEnabled(false);
         } else {
             partjob_isjoin.setText("我要报名");
-            partjob_isjoin.setBackgroundResource(R.drawable.btn_yellow_boarded_bg_normal);
         }
-        if (partjob_isjoin.getText().toString().equals("我要报名"))
-            partjob_isjoin.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
-                                showToast("对不起，您所报的兼职性别不符");
-                            } else {
-                                initPopupWin();
-                            }
-
+        partjob_isjoin.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!UserSubject.getGender().equals(mParttimejob.getGenderlimit()) && !mParttimejob.getGenderlimit().equals("2")) {
+                            showToast("对不起，您所报的兼职性别不符");
+                        } else {
+                            initPopupWin();
                         }
-                    }
 
-            );
+                    }
+                }
+
+        );
     }
 
     private void initSchoolmateWin(int index) {
-            View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
-            View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.school_mate_popupwin, null);
+        View parentView = PartjobDetailActivity.this.getWindow().getDecorView();
+        View contentView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.school_mate_popupwin, null);
 
-            schoolmateWin = PopupWin.Builder.create(PartjobDetailActivity.this)
-                    .setParentView(parentView)
-                    .setContentView(contentView)
-                    .build();
-            bitmapUtil.getImage((CircleImageView) contentView.findViewById(R.id.head_logo), mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
-            if("0".equals(mParttimejob.getSchoolmate_list().get(index).getGender()))
-                ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.male));
-            else
-                ((ImageView)contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.female));
-            ((TextView)contentView.findViewById(R.id.name_and_college)).setText(mParttimejob.getSchoolmate_list().get(index).getName()+" / "+mParttimejob.getSchoolmate_list().get(index).getCollege());
-            ((TextView)contentView.findViewById(R.id.phone)).setText(StringUtil.hiddenPhone(mParttimejob.getSchoolmate_list().get(index).getPhone()));
-            schoolmate_tel=mParttimejob.getSchoolmate_list().get(index).getPhone();
-            contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    schoolmateWin.dismiss();
-                }
-            });
-            contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" +schoolmate_tel));
-                    startActivity(intent);
-                }
-            });
+        schoolmateWin = PopupWin.Builder.create(PartjobDetailActivity.this)
+                .setParentView(parentView)
+                .setContentView(contentView)
+                .build();
+        bitmapUtil.getImage((CircleImageView) contentView.findViewById(R.id.head_logo), mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
+        if ("0".equals(mParttimejob.getSchoolmate_list().get(index).getGender()))
+            ((ImageView) contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.male));
+        else
+            ((ImageView) contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.female));
+        ((TextView) contentView.findViewById(R.id.name_and_college)).setText(mParttimejob.getSchoolmate_list().get(index).getName() + " / " + mParttimejob.getSchoolmate_list().get(index).getCollege());
+        ((TextView) contentView.findViewById(R.id.phone)).setText(StringUtil.hiddenPhone(mParttimejob.getSchoolmate_list().get(index).getPhone()));
+        schoolmate_tel = mParttimejob.getSchoolmate_list().get(index).getPhone();
+        contentView.findViewById(R.id.btn_confirm_false).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                schoolmateWin.dismiss();
+            }
+        });
+        contentView.findViewById(R.id.btn_confirm_true).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + schoolmate_tel));
+                startActivity(intent);
+            }
+        });
         schoolmateWin.show();
     }
 
@@ -417,36 +415,36 @@ public class PartjobDetailActivity extends BaseActivity {
         partjobdetailWin.show();
     }
 
-    private void fillTopPicture(String worktype) {
-        switch (worktype) {
-            case "0":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
-                break;
-            case "1":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
-                break;
-            case "2":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
-                break;
-            case "3":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
-                break;
-            case "4":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
-                break;
-            case "5":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
-                break;
-            case "6":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
-                break;
-            case "7":
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
-                break;
-            default:
-                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type9));
-        }
-    }
+//    private void fillTopPicture(String worktype) {
+//        switch (worktype) {
+//            case "0":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type1));
+//                break;
+//            case "1":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type2));
+//                break;
+//            case "2":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type3));
+//                break;
+//            case "3":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type4));
+//                break;
+//            case "4":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type5));
+//                break;
+//            case "5":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type6));
+//                break;
+//            case "6":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type7));
+//                break;
+//            case "7":
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type8));
+//                break;
+//            default:
+//                partjob_content_top.setImageDrawable(getResources().getDrawable(R.drawable.partjob_detail_type9));
+//        }
+//    }
 
     private String getShareUrl() {
         return GlobalConstant.weixinUrl + "/partjob/detail?id=" + partjobid;
