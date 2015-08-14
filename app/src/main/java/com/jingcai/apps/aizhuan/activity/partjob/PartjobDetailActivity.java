@@ -244,7 +244,7 @@ public class PartjobDetailActivity extends BaseActivity {
          */
 //        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
         bitmapUtil.getImage(partjob_content_top, mParttimejob.getWorktypeimgurl(), true, R.drawable.partjob_detail_type9);
-        bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.logo_merchant_default);
+        bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.default_image);
         partjob_content_title.setText(mParttimejob.getTitle());
         PartjobListAdapter.setSalary(partjob_content_salary, partjob_content_salaryunit, mParttimejob.getSalary(), mParttimejob.getSalaryunit());
         PartjobListAdapter.setSettlelength(partjob_content_settlelength, mParttimejob.getSettlelength());
@@ -297,7 +297,7 @@ public class PartjobDetailActivity extends BaseActivity {
             for (int index = 0; index < mParttimejob.getSchoolmate_list().size(); index++) {
                 View convertView = LayoutInflater.from(PartjobDetailActivity.this).inflate(R.layout.schoolmate_list_item, linearLayout_label, false);
                 CircleImageView imageView = (CircleImageView) convertView.findViewById(R.id.iv_logo);
-                bitmapUtil.getImage(imageView, mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
+                bitmapUtil.getImage(imageView, mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.default_image);
                 convertView.setTag(index);
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -348,7 +348,7 @@ public class PartjobDetailActivity extends BaseActivity {
                 .setParentView(parentView)
                 .setContentView(contentView)
                 .build();
-        bitmapUtil.getImage((CircleImageView) contentView.findViewById(R.id.head_logo), mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.logo_merchant_default);
+        bitmapUtil.getImage((CircleImageView) contentView.findViewById(R.id.head_logo), mParttimejob.getSchoolmate_list().get(index).getLogopath(), R.drawable.default_image);
         if ("0".equals(mParttimejob.getSchoolmate_list().get(index).getGender()))
             ((ImageView) contentView.findViewById(R.id.icon_gender)).setImageDrawable(getResources().getDrawable(R.drawable.male));
         else

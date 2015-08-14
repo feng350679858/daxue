@@ -122,7 +122,6 @@ public class IndexMineFragment extends BaseFragment {
                 Intent intent = new Intent(baseActivity, IndexBannerDetailActivity.class);
                 intent.putExtra("title","我的二维码");
                 intent.putExtra("url", GlobalConstant.h5Url+"/student/qrcode?studentid="+UserSubject.getStudentid());
-                Log.i(TAG,GlobalConstant.h5Url+"/student/qrcode?studentid="+UserSubject.getStudentid());
                 startActivity(intent);
             }
         });

@@ -32,7 +32,7 @@
                 android:id="@+id/head_logo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/logo_merchant_default" />
+                android:src="@drawable/default_image" />
 
             <ImageView
                 android:id="@+id/icon_gender"

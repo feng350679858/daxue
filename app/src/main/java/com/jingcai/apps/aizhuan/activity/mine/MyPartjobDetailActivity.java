@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -266,7 +265,7 @@ public class MyPartjobDetailActivity extends BaseActivity {
         /*
          * 兼职信息
          */
-        bitmapUtil.getImage(mIvPartjobLogo, mJoininfo.getLogopath(), true, R.drawable.logo_merchant_default);
+        bitmapUtil.getImage(mIvPartjobLogo, mJoininfo.getLogopath(), true, R.drawable.default_image);
         mTvPartjobTitle.setText(mJoininfo.getTitle());
 
         PartjobListAdapter.setWorkdays(mTvPartjobWorkdays, mJoininfo.getWorktimetype(), mJoininfo.getWorkdays());

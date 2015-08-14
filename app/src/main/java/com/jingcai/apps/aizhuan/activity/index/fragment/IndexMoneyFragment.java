@@ -358,7 +358,7 @@ public class IndexMoneyFragment extends BaseFragment {
 
             tv_name.setText(label.getName()+"：");
             tv_text.setText(label.getText());
-            bitmapUtil.getImage(iv_logo, label.getImgurl(), R.drawable.logo_merchant_default);
+            bitmapUtil.getImage(iv_logo, label.getImgurl(), R.drawable.default_image);
 
 //            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //            convertView.setLayoutParams(layoutParams);
@@ -417,8 +417,8 @@ public class IndexMoneyFragment extends BaseFragment {
             tv_text.setText(recommend.getName());
             LinearLayout.LayoutParams ivImageLayoutParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             iv_image.setLayoutParams(ivImageLayoutParam);
-            bitmapUtil.getImage(iv_image, recommend.getImgurl(), R.drawable.logo_merchant_default);
-            bitmapUtil.getImage(iv_logo, recommend.getLogopath(), R.drawable.logo_merchant_default);
+            bitmapUtil.getImage(iv_image, recommend.getImgurl(), R.drawable.default_image);
+            bitmapUtil.getImage(iv_logo, recommend.getLogopath(), R.drawable.default_image);
             PartjobListAdapter.setSalary(tv_salary,tv_salary_unit,recommend.getSalary(),recommend.getSalaryunit());
             tv_text.setText(recommend.getText());
             tv_name.setText(recommend.getName());
