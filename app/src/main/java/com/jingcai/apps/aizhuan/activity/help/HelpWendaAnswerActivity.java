@@ -201,6 +201,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                         public void onClick(View v) {
                             //打赏
                             Intent intent = new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class);
+                            intent.putExtra("answerflag", true);
                             intent.putExtra("answerid", answerid);
                             intent.putExtra("receiverid", job.getSourceid());
                             startActivity(intent);
@@ -320,6 +321,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                     startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
                 } else {//打赏
                     Intent intent = new Intent(HelpWendaAnswerActivity.this, HelpWendaRewardActivity.class);
+                    intent.putExtra("answerflag", true);
                     intent.putExtra("answerid", answerid);
                     intent.putExtra("receiverid", job.getSourceid());
                     startActivity(intent);

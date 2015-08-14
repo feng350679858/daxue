@@ -37,6 +37,7 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.DictUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
+import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -132,7 +133,13 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {//举报
-                            Log.d("==", "-----------tv_pop_abuse_report---");
+                            //举报求助
+                            new AbuseReportHandler(HelpJishiDetailActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                                @Override
+                                public void call() {
+                                    showToast("举报成功");
+                                }
+                            }).click(job.getSourceid(), "1", helpid);
                         }
                     });
                 }
@@ -142,6 +149,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {//分享
                             Log.d("==", "-----------tv_pop_share---");
+//                            UmengShareUtil umengShareUtil = new UmengShareUtil(HelpJishiDetailActivity.this);
+//                            umengShareUtil.setShareContent("兼职分享", msg + getShareUrl(), getShareUrl(), logopath);
+//                            umengShareUtil.openShare();
                         }
                     });
                 }

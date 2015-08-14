@@ -49,6 +49,8 @@ public class HelpEvaluateActivity extends BaseActivity {
     private String targetcollege;
     private String content;
     private String targettype;
+    private String targetreftype;
+    private String targetrefid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class HelpEvaluateActivity extends BaseActivity {
         targetname = getIntent().getStringExtra("targetname");
         targetschool = getIntent().getStringExtra("targetschool");
         targetcollege = getIntent().getStringExtra("targetcollege");
+        targetreftype = getIntent().getStringExtra("targetreftype");//1：兼职 2：求助
+        targetrefid = getIntent().getStringExtra("targetrefid");
 
         initView();
 

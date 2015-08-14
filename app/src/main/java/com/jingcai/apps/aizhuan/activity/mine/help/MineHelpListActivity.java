@@ -41,6 +41,8 @@ import java.util.List;
  * Created by lejing on 15/7/23.
  */
 public class MineHelpListActivity extends BaseActivity {
+    public static final int REQUEST_CODE_PROVIDE_JISIH_REWARD = 1101;
+    public static final int REQUEST_CODE_RECEIVE_JISIH_EVALUATE = 1201;
     private MessageHandler messageHandler;
     private XListView groupListView;
     private ViewStub empty_view;
@@ -94,7 +96,7 @@ public class MineHelpListActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 jishiFlag = checkedId == R.id.rb_jishi;
                 groupListView.setVisibility(View.VISIBLE);
-                if(null != empty_view) {
+                if (null != empty_view) {
                     empty_view.setVisibility(View.GONE);
                 }
                 refresh();
@@ -240,5 +242,40 @@ public class MineHelpListActivity extends BaseActivity {
                 messageHandler.postException(e);
             }
         });
+    }
+    private Partjob18Response.Parttimejob provideJishiJob = null;
+    public void setCurrentJob(Partjob18Response.Parttimejob job){
+        provideJishiJob = job;
+    }
+    private Partjob24Response.Parttimejob receiveJishiJob = null;
+    public void setCurrentJob(Partjob24Response.Parttimejob job) {
+        receiveJishiJob= job;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_PROVIDE_JISIH_REWARD: {
+                if(RESULT_OK == resultCode){
+                    if(null != provideJishiJob) {
+                        provideJishiJob.setStatus("6");
+                        commentAdapter.notifyDataSetChanged();
+                    }
+                }
+                break;
+            }
+            case REQUEST_CODE_RECEIVE_JISIH_EVALUATE: {
+                if(RESULT_OK == resultCode){
+                    if(null != receiveJishiJob) {
+                        receiveJishiJob.setEvelflag("1");
+                        commentAdapter.notifyDataSetChanged();
+                    }
+                }
+                break;
+            }
+            default: {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 }
