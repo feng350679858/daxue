@@ -39,8 +39,7 @@
                     android:layout_marginLeft="10dp"
                     android:drawablePadding="4dp"
                     android:text="QQ客服"
-                    android:textColor="@color/important_dark"
-                    android:textSize="14sp" />
+                    style="@style/list_item_left" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,8 +115,7 @@
                     android:layout_marginLeft="10dp"
                     android:drawablePadding="4dp"
                     android:text="电话客服"
-                    android:textColor="@color/important_dark"
-                    android:textSize="14sp" />
+                    style="@style/list_item_left" />
             </LinearLayout>
 
             <LinearLayout
@@ -193,8 +191,7 @@
                     android:layout_marginLeft="10dp"
                     android:drawablePadding="4dp"
                     android:text="微信公众账号"
-                    android:textColor="@color/important_dark"
-                    android:textSize="14sp" />
+                    style="@style/list_item_left" />
             </LinearLayout>
 
             <LinearLayout

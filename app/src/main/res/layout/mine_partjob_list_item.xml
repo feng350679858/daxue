@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                         android:gravity="center_vertical"
                         android:text="￥"
                         android:textColor="@color/red"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/pj_list_item_salary"
@@ -76,7 +76,7 @@
                         android:maxWidth="70dp"
                         android:singleLine="true"
                         android:textColor="@color/red"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/pj_list_item_salaryunit"
@@ -147,7 +147,7 @@
             android:drawablePadding="2dp"
             android:gravity="center"
             android:textColor="@color/normal_grey"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
