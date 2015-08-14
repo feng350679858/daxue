@@ -1,6 +1,5 @@
 package com.jingcai.apps.aizhuan.adapter.mine.help;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpJishiActivity;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob18.Partjob18Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob23.Partjob23Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.DateUtil;
+import com.jingcai.apps.aizhuan.util.DictUtil;
+import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Json Ding on 2015/4/29.
@@ -23,12 +33,12 @@ import java.util.List;
 public class MineHelpListAdapter extends BaseAdapter {
     private boolean provideFlag;
     private boolean jishiFlag;
-    private Activity baseActivity;
-    private List<Base04Response.Body.Region> regionList;
+    private BaseActivity baseActivity;
+    private List<MineHelpListItem> regionList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public MineHelpListAdapter(Activity ctx) {
+    public MineHelpListAdapter(BaseActivity ctx) {
         baseActivity = ctx;
         regionList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
@@ -45,7 +55,7 @@ public class MineHelpListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Base04Response.Body.Region getItem(int position) {
+    public MineHelpListItem getItem(int position) {
         return regionList.get(position);
     }
 
@@ -54,167 +64,286 @@ public class MineHelpListAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
+    public int getViewTypeCount() {
+        return 4;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (provideFlag) {
+            return jishiFlag ? 0 : 1;
+        } else {
+            return jishiFlag ? 2 : 3;
+        }
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (provideFlag && jishiFlag) {
+            return provideJishiView(position, convertView);
+        } else if (provideFlag && !jishiFlag) {
+            return provideWendaView(position, convertView);
+        } else if (!provideFlag && jishiFlag) {
+            return receiveJishiView(position, convertView);
+        } else if (!provideFlag && !jishiFlag) {
+            return receiveWendaView(position, convertView);
+        }
+        return null;
+    }
 
+    //我的求助
+    private View provideJishiView(int position, View convertView) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.mine_help_list_item, null);
+            convertView = mInflater.inflate(R.layout.mine_help_list_provide_jishi, null);
             viewHolder = new ViewHolder();
             convertView.setTag(viewHolder);
             {
-                viewHolder.layout_jishi = convertView.findViewById(R.id.layout_jishi);
-                viewHolder.layout_jishi_content = convertView.findViewById(R.id.layout_jishi_content);
-                viewHolder.tv_jishi_status = (TextView) convertView.findViewById(R.id.tv_jishi_status);
-                viewHolder.tv_jishi_content = (TextView) convertView.findViewById(R.id.tv_jishi_content);
-                viewHolder.btn_jishi_comment = (Button) convertView.findViewById(R.id.btn_jishi_comment);
-                viewHolder.btn_jishi_evaluate = (Button) convertView.findViewById(R.id.btn_jishi_evaluate);
-                viewHolder.btn_jishi_reward = (Button) convertView.findViewById(R.id.btn_jishi_reward);
-            }
-            {
-                viewHolder.layout_wenda = convertView.findViewById(R.id.layout_wenda);
-                viewHolder.layout_wenda_content = convertView.findViewById(R.id.layout_wenda_content);
-                viewHolder.layout_wenda_answer = convertView.findViewById(R.id.layout_wenda_answer);
-                viewHolder.layout_wenda_question = convertView.findViewById(R.id.layout_wenda_question);
-                viewHolder.tv_wenda_status = (TextView) convertView.findViewById(R.id.tv_wenda_status);
-                viewHolder.tv_wenda_income_label = (TextView) convertView.findViewById(R.id.tv_wenda_income_label);
-                viewHolder.tv_wenda_income_money = (TextView) convertView.findViewById(R.id.tv_wenda_income_money);
-                viewHolder.tv_wenda_answer = (TextView) convertView.findViewById(R.id.tv_wenda_answer);
-                viewHolder.tv_wenda_question = (TextView) convertView.findViewById(R.id.tv_wenda_question);
-                viewHolder.btn_wenda_answer = (Button) convertView.findViewById(R.id.btn_wenda_answer);
-                viewHolder.btn_wenda_question = (Button) convertView.findViewById(R.id.btn_wenda_question);
-                viewHolder.btn_wenda_reedit = (Button) convertView.findViewById(R.id.btn_wenda_reedit);
+                viewHolder.layout_content = convertView.findViewById(R.id.layout_content);
+                viewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                viewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
+                viewHolder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
+                viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+                viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_gender_limit);
+
+                viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
+                viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);
+                viewHolder.btn1 = (Button) convertView.findViewById(R.id.btn_comment);
+                viewHolder.btn2 = (Button) convertView.findViewById(R.id.btn_reward);
             }
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        if (jishiFlag) {
-            viewHolder.layout_jishi.setVisibility(View.VISIBLE);
-            viewHolder.layout_wenda.setVisibility(View.GONE);
-            getJishiView(position, viewHolder);
+        final Partjob18Response.Parttimejob job = (Partjob18Response.Parttimejob) getItem(position);
+        viewHolder.tv_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        if (StringUtil.isNotEmpty(job.getMoney())) {
+            viewHolder.tv_money.setText(String.format("%.2f元", Double.parseDouble(job.getMoney())));
         } else {
-            viewHolder.layout_jishi.setVisibility(View.GONE);
-            viewHolder.layout_wenda.setVisibility(View.VISIBLE);
-            getWendaView(position, viewHolder);
+            viewHolder.tv_money.setText("");
         }
+        viewHolder.tv_status.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+        viewHolder.tv_content.setText(job.getContent());
+        viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGender()));
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getTargetimgurl(), true, R.drawable.default_head_img);
+        viewHolder.tv_stu_name.setText(job.getTargetname());
+        viewHolder.layout_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //显示求助详情
+                Intent intent = new Intent(baseActivity, MineHelpJishiActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("provideFlag", provideFlag);
+                baseActivity.startActivity(intent);
+            }
+        });
+        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //查看评论
+                Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("type", "1");//1跑腿 还是 3公告
+                baseActivity.startActivity(intent);
+            }
+        });
+        viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 确认打赏
+                baseActivity.showToast("确认打赏");
+            }
+        });
         return convertView;
     }
 
-    private void getJishiView(int position, ViewHolder viewHolder) {
-        Base04Response.Body.Region region = regionList.get(position);
-        viewHolder.region = region;//将对象存入viewHolder
+    //我的提问
+    private View provideWendaView(int position, View convertView) {
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.mine_help_list_provide_wenda, null);
+            viewHolder = new ViewHolder();
+            convertView.setTag(viewHolder);
+            {
+                viewHolder.layout_content = convertView.findViewById(R.id.layout_content);
+                viewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                viewHolder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
+                viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
 
-        viewHolder.btn_jishi_comment.setVisibility(View.VISIBLE);//查看评论
-        viewHolder.btn_jishi_evaluate.setVisibility(View.GONE);//立即评价
-        viewHolder.btn_jishi_reward.setVisibility(View.GONE);//确认打赏
-
-        viewHolder.tv_jishi_content.setText(region.getRegionname());
-        if(provideFlag){//我的帮助
-            if (1 == position % 5) {
-                viewHolder.btn_jishi_evaluate.setVisibility(View.VISIBLE);
-                viewHolder.tv_jishi_status.setText("已结算");
-            }else if (2 == position % 5) {
-                viewHolder.tv_jishi_status.setText("帮助中");
-            }else if (3 == position % 5) {
-                viewHolder.tv_jishi_status.setText("求助中");
-            }else if (4 == position % 5) {
-                viewHolder.tv_jishi_status.setText("已取消");
-            }else {
-                viewHolder.tv_jishi_status.setText("已超时");
+                viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
+                viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);
+                viewHolder.btn1 = (Button) convertView.findViewById(R.id.btn_view_answer);
             }
-        }else{//我的求助
-            if (1 == position % 5) {
-                viewHolder.btn_jishi_evaluate.setVisibility(View.VISIBLE);
-                viewHolder.tv_jishi_status.setText("已结算");
-            }else if (2 == position % 5) {
-                viewHolder.btn_jishi_reward.setVisibility(View.VISIBLE);
-                viewHolder.tv_jishi_status.setText("帮助中");
-            }else if (3 == position % 5) {
-                viewHolder.tv_jishi_status.setText("求助中");
-            }else if (4 == position % 5) {
-                viewHolder.tv_jishi_status.setText("已取消");
-            }else {
-                viewHolder.tv_jishi_status.setText("已超时");
-            }
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        final boolean jishiFlag = 0 == position % 2;
-        viewHolder.layout_jishi_content.setOnClickListener(new View.OnClickListener() {
+        final Partjob23Response.Parttimejob job = (Partjob23Response.Parttimejob) getItem(position);
+        viewHolder.tv_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        viewHolder.tv_status.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+        viewHolder.tv_content.setText(job.getContent());
+
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getTargetimgurl(), true, R.drawable.default_head_img);
+        viewHolder.tv_stu_name.setText(job.getTargetname());
+        viewHolder.layout_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (provideFlag) {
-                    baseActivity.startActivity(new Intent(baseActivity, MineHelpJishiActivity.class));
-//                } else {
-//                    baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
-                }
+                //TODO 显示求助详情
+                Intent intent = new Intent(baseActivity, MineHelpJishiActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("provideFlag", provideFlag);
+                baseActivity.startActivity(intent);
             }
         });
+        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //查看答案
+                Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                baseActivity.startActivity(intent);
+            }
+        });
+        return convertView;
     }
 
-    private void getWendaView(int position, ViewHolder viewHolder) {
-        Base04Response.Body.Region region = regionList.get(position);
-        viewHolder.region = region;//将对象存入viewHolder
+    //我的帮助
+    private View receiveJishiView(int position, View convertView) {
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.mine_help_list_receive_jishi, null);
+            viewHolder = new ViewHolder();
+            convertView.setTag(viewHolder);
+            {
+                viewHolder.layout_content = convertView.findViewById(R.id.layout_content);
+                viewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                viewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
+                viewHolder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
+                viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+                viewHolder.tv_gender_limit = (TextView) convertView.findViewById(R.id.tv_gender_limit);
 
-        viewHolder.tv_wenda_status.setVisibility(View.GONE);
-        viewHolder.tv_wenda_income_label.setVisibility(View.GONE);
-        viewHolder.tv_wenda_income_money.setVisibility(View.GONE);
-
-        viewHolder.layout_wenda_answer.setVisibility(View.GONE);//答案
-        viewHolder.layout_wenda_question.setVisibility(View.GONE);//问题
-
-        viewHolder.btn_wenda_answer.setVisibility(View.GONE);//查看答案
-        viewHolder.btn_wenda_question.setVisibility(View.GONE);//查看问题
-        viewHolder.btn_wenda_reedit.setVisibility(View.GONE);//
-
-        if(provideFlag) {//我的回答
-            viewHolder.tv_wenda_income_label.setVisibility(View.VISIBLE);
-            viewHolder.tv_wenda_income_money.setVisibility(View.VISIBLE);
-
-            viewHolder.layout_wenda_answer.setVisibility(View.VISIBLE);
-            viewHolder.tv_wenda_answer.setText(region.getRegionname());
-
-            viewHolder.btn_wenda_question.setVisibility(View.VISIBLE);
-            if (1 == position % 2) {//等待回答
-                viewHolder.btn_wenda_reedit.setVisibility(View.VISIBLE);
-            } else {//已关闭
+                viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
+                viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);
+                viewHolder.btn1 = (Button) convertView.findViewById(R.id.btn_comment);
+                viewHolder.btn2 = (Button) convertView.findViewById(R.id.btn_evaluate);
             }
-        }else{//我的提问
-            viewHolder.tv_wenda_status.setVisibility(View.VISIBLE);
-
-            viewHolder.layout_wenda_question.setVisibility(View.VISIBLE);
-            viewHolder.tv_wenda_question.setText(region.getRegionname());
-
-            viewHolder.btn_wenda_answer.setVisibility(View.VISIBLE);
-            if (1 == position % 2) {
-                viewHolder.tv_wenda_status.setText("等待回答");
-            } else {
-                viewHolder.tv_wenda_status.setText("已关闭");
-            }
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        final boolean jishiFlag = 0 == position % 2;
-        viewHolder.layout_wenda_content.setOnClickListener(new View.OnClickListener() {
+        final Partjob24Response.Parttimejob job = (Partjob24Response.Parttimejob) getItem(position);
+        viewHolder.tv_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        if (StringUtil.isNotEmpty(job.getMoney())) {
+            viewHolder.tv_money.setText(String.format("%.2f元", Double.parseDouble(job.getMoney())));
+        } else {
+            viewHolder.tv_money.setText("");
+        }
+        viewHolder.tv_status.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+        viewHolder.tv_content.setText(job.getContent());
+        viewHolder.tv_gender_limit.setText(DictUtil.get(DictUtil.Item.gender, job.getGender()));
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_head_img);
+        viewHolder.tv_stu_name.setText(job.getSourcename());
+        viewHolder.layout_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (jishiFlag) {
-//                    baseActivity.startActivity(new Intent(baseActivity, HelpJishiDetailActivity.class));
-//                } else {
-//                    baseActivity.startActivity(new Intent(baseActivity, HelpWendaDetailActivity.class));
-//                }
+                //TODO 显示求助详情
+                Intent intent = new Intent(baseActivity, MineHelpJishiActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("provideFlag", provideFlag);
+                baseActivity.startActivity(intent);
             }
         });
+        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //查看评论
+                Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("type", "1");//1跑腿 还是 3公告
+                baseActivity.startActivity(intent);
+            }
+        });
+        viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 立即评价
+                baseActivity.showToast("立即评价");
+            }
+        });
+        return convertView;
+    }
+
+    //我的回答
+    private View receiveWendaView(int position, View convertView) {
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.mine_help_list_receive_wenda, null);
+            viewHolder = new ViewHolder();
+            convertView.setTag(viewHolder);
+            {
+                viewHolder.layout_content = convertView.findViewById(R.id.layout_content);
+                viewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+                viewHolder.tv_money_label = (TextView) convertView.findViewById(R.id.tv_money_label);
+                viewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
+                viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+
+                viewHolder.civ_head_logo = (CircleImageView) convertView.findViewById(R.id.civ_head_logo);
+                viewHolder.tv_stu_name = (TextView) convertView.findViewById(R.id.tv_stu_name);
+                viewHolder.btn1 = (Button) convertView.findViewById(R.id.btn_view_question);
+                viewHolder.btn2 = (Button) convertView.findViewById(R.id.btn_reedit);
+            }
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        final Partjob27Response.Parttimejob job = (Partjob27Response.Parttimejob) getItem(position);
+        viewHolder.tv_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
+        if (StringUtil.isNotEmpty(job.getSalary())) {
+            viewHolder.tv_money_label.setVisibility(View.VISIBLE);
+            viewHolder.tv_money.setVisibility(View.VISIBLE);
+            viewHolder.tv_money.setText(String.format("%.2f元", Double.parseDouble(job.getSalary())));
+        } else {
+            viewHolder.tv_money_label.setVisibility(View.GONE);
+            viewHolder.tv_money.setVisibility(View.GONE);
+        }
+        viewHolder.tv_content.setText(job.getContent());
+        bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_head_img);
+        viewHolder.tv_stu_name.setText(job.getSourcename());
+        viewHolder.layout_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 显示详情
+                Intent intent = new Intent(baseActivity, MineHelpJishiActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                intent.putExtra("provideFlag", provideFlag);
+                baseActivity.startActivity(intent);
+            }
+        });
+        viewHolder.btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //查看问题
+                Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);
+                intent.putExtra("helpid", job.getHelpid());
+                baseActivity.startActivity(intent);
+            }
+        });
+        viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 编辑
+                baseActivity.showToast("编辑");
+            }
+        });
+        return convertView;
     }
 
     public void clearData() {
         regionList.clear();
     }
 
-    public void addData(List<Base04Response.Body.Region> list) {
+    public void addData(List<MineHelpListItem> list) {
         regionList.addAll(list);
     }
 
-    public Base04Response.Body.Region getMerchant(int position) {
+    public MineHelpListItem getMerchant(int position) {
         if (position >= regionList.size()) {
             return null;
         }
@@ -226,26 +355,17 @@ public class MineHelpListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public Base04Response.Body.Region region;
-        public View layout_jishi;
-        public View layout_jishi_content;
-        public TextView tv_jishi_status;
-        public TextView tv_jishi_content;
-        public Button btn_jishi_comment;
-        public Button btn_jishi_evaluate;
-        public Button btn_jishi_reward;
-
-        public View layout_wenda;
-        public View layout_wenda_content;
-        public View layout_wenda_answer;
-        public View layout_wenda_question;
-        public TextView tv_wenda_status;
-        public TextView tv_wenda_income_label;
-        public TextView tv_wenda_income_money;
-        public TextView tv_wenda_answer;
-        public TextView tv_wenda_question;
-        public Button btn_wenda_answer;
-        public Button btn_wenda_question;
-        public Button btn_wenda_reedit;
+        public MineHelpListItem region;
+        public View layout_content;
+        public TextView tv_time;
+        public TextView tv_money_label;
+        public TextView tv_money;
+        public TextView tv_status;
+        public TextView tv_content;
+        public TextView tv_gender_limit;
+        public CircleImageView civ_head_logo;
+        public TextView tv_stu_name;
+        public Button btn1;
+        public Button btn2;
     }
 }

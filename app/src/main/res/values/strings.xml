@@ -37,7 +37,7 @@
     <string name="sd_card_does_not_exist">未挂载SD卡</string>
     <string name="send_fail">发送失败</string>
     <string name="connect_failuer_toast">网络接连失败</string>
-    <string name="Download_the_pictures_new">图片加载中...</string>
+    <string name="Download_the_pictures_new">图片加载中…</string>
 
     <!-- 提示信息 -->
     <string name="message_title">提示</string>
@@ -64,4 +64,11 @@
     <!--提现-->
     <string name="gold_withdraw_tip">提现每天最多提三次，1&#8211;2个工作日到账，30.0元起提！</string>
     <string name="identity_authentication_tip">账号验证将影响您的账号安全及现金提取，请您尽快验证您的身份证信息。提交审核后将在1&#8211;3个工作日时间完成，请您耐心等待。</string>
+    <string name="about_us_intro">
+           \t\t“8090”，“低调”，“个性张扬”…任何标签都适合我们。 杭州最帅的创业团队， 成员帅，作风帅，产品更帅。成员有分别来自阿里，网易，360等各大互联网巨头里的精英！也有刚出校园，充满活力与激情的90后！\n
+            \t\t我们曾创造了爱赚，专属于大学生自己的兼职平台。现在我们打造大了个学，就是想让在这个被大学上的悲剧时代，让大学生真正的上大学。跑腿，代购，在线求助……只要是你需要的，在这里都能实现！\n
+            \t\t最酷炫的创业团队，带你们大了个学！
+    </string>
+    <string name="about_us_copyright">Copyright © 2015 izhuan365.com All Rights Reserved</string>
+    <string name="about_us_version">Android V2.0</string>
 </resources>

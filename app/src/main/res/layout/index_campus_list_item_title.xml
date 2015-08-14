@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:background="@color/main_yellow"
+            android:background="@drawable/tv_yellow_rectangle_bg"
             android:gravity="center"
             android:text=""
             android:textColor="@color/important_dark"

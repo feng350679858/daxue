@@ -23,8 +23,10 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@color/important_dark"
+        android:background="@drawable/yellow_btn_bg_selector"
         android:padding="5dp"
         android:text="地点"
+        android:drawablePadding="2dp"
         android:drawableRight="@drawable/help_jishi_arrow1_down"/>
     <TextView
         android:id="@+id/tv_content"

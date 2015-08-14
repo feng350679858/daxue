@@ -1,4 +1,4 @@
-package com.jingcai.apps.aizhuan.service.business.partjob.partjob20;
+package com.jingcai.apps.aizhuan.service.business.partjob.partjob26;
 
 import com.jingcai.apps.aizhuan.service.base.BaseRequest;
 import com.jingcai.apps.aizhuan.service.business.BizConstant;
@@ -6,11 +6,11 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
 /**
  * Created by Administrator on 2015/7/18.
  */
-public class Partjob20Request extends BaseRequest {
+public class Partjob26Request extends BaseRequest {
 
     @Override
     public String getTranscode() {
-        return BizConstant.BIZ_PARTTIME_JOB_20;
+        return BizConstant.BIZ_PARTTIME_JOB_33;
     }
 
     private Parttimejob parttimejob;
@@ -24,16 +24,16 @@ public class Partjob20Request extends BaseRequest {
     }
 
     public class Parttimejob {
-        private String helpid;
         private String studentid;
-        private String peroid;
+        private String helpid;
+        private String type;
 
-        public String getPeroid() {
-            return peroid;
+        public String getType() {
+            return type;
         }
 
-        public void setPeroid(String peroid) {
-            this.peroid = peroid;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getHelpid() {

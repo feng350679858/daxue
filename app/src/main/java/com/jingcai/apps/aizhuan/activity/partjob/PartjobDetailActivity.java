@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -38,7 +35,6 @@ import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -103,7 +99,7 @@ public class PartjobDetailActivity extends BaseActivity {
         });
         ImageView tv_info = (ImageView) findViewById(R.id.iv_func);
         tv_info.setVisibility(View.VISIBLE);
-        tv_info.setImageDrawable(getResources().getDrawable(R.drawable.share));
+        tv_info.setImageDrawable(getResources().getDrawable(R.drawable.icon_partjob_detail_share));
         tv_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

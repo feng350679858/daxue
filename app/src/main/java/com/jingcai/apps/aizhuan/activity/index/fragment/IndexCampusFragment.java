@@ -436,12 +436,8 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 2:{
                     try {
-                        try {
-                            groupListView.setVisibility(View.GONE);
-                            ((ViewStub)mBaseView.findViewById(R.id.stub_empty_view)).inflate();
-                        }finally {
-                            actionLock.unlock();
-                        }
+                        groupListView.setVisibility(View.GONE);
+                        ((ViewStub)mBaseView.findViewById(R.id.stub_empty_view)).inflate();
                     }finally {
                         actionLock.unlock();
                     }

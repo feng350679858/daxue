@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_header"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/header_height"
-    android:background="@color/main_yellow"
-    android:orientation="horizontal">
+<RelativeLayout android:id="@+id/layout_header"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height"
+                android:background="@color/main_yellow"
+                android:orientation="horizontal">
 
     <ImageButton
         android:id="@+id/ib_back"
@@ -12,17 +12,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:background="@color/main_yellow"
-        android:src="@drawable/icon_left_arrow" />
-
-    <!--    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:divider="@drawable/field_divider_grey"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:showDividers="middle">-->
-
+        android:src="@drawable/icon_left_arrow"/>
 
     <RadioGroup
         android:id="@+id/rg_title"
@@ -41,11 +31,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/yellow_radius_btn_bg_selector"
             android:button="@null"
-            android:padding="5dp"
-            android:text="我的帮助"
             android:checked="true"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:text="我的帮助"
             android:textColor="@color/important_dark"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <RadioButton
             android:id="@+id/rb_wenda"
@@ -53,10 +46,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/yellow_radius_btn_bg_selector"
             android:button="@null"
-            android:padding="5dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
             android:text="我的回答"
             android:textColor="@color/important_dark"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
         <!--
         <CheckBox
             android:id="@+id/cb_jishi"

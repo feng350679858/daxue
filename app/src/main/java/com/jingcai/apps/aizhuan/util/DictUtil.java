@@ -16,6 +16,7 @@ public class DictUtil {
         }}),
         //即时帮助-状态
         help_jishi_status(new HashMap<String, String>() {{
+            put("0", "派单中");
             put("1", "求助中");
             put("2", "帮助中");
             put("3", "取消中");

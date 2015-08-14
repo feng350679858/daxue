@@ -8,6 +8,7 @@
     <include layout="@layout/include_header" />
 
     <LinearLayout
+        android:id="@+id/ll_subscribe_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -46,18 +47,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/contact_service_weixin_subscribe" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="每日推送学生党们关注热点话题，精选兼职信息！" />
+                android:textSize="12sp"
+                android:textColor="@color/important_dark"
+                android:text="每日推送学生党们关注热点话题，尽情展示校园百态！" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_service_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -96,13 +100,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/contact_service_weixin_service" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/important_dark"
                 android:text="定期活动推送，参与的小伙伴大奖不断哦~" />
         </LinearLayout>
 

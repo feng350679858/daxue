@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,12 +14,19 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpListAdapter;
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpListItem;
+import com.jingcai.apps.aizhuan.adapter.mine.help.MineHelpResponse;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
-import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob18.Partjob18Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob18.Partjob18Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob23.Partjob23Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob23.Partjob23Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob27.Partjob27Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DateUtil;
@@ -33,9 +41,9 @@ import java.util.List;
  * Created by lejing on 15/7/23.
  */
 public class MineHelpListActivity extends BaseActivity {
-
     private MessageHandler messageHandler;
     private XListView groupListView;
+    private ViewStub empty_view;
     private MineHelpListAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private boolean provideFlag = true;//true我的帮助 false我的求助
@@ -47,10 +55,10 @@ public class MineHelpListActivity extends BaseActivity {
         messageHandler = new MessageHandler(this);
         setContentView(R.layout.mine_help_list);
 
-        provideFlag = getIntent().getBooleanExtra("provideFlag", true);
+        provideFlag = getIntent().getBooleanExtra("provideFlag", provideFlag);
         commentAdapter = new MineHelpListAdapter(this);
         commentAdapter.setProvideFlag(provideFlag);
-        commentAdapter.setJishiFlag(true);
+        commentAdapter.setJishiFlag(jishiFlag);
 
         initHeader();
 
@@ -65,20 +73,17 @@ public class MineHelpListActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(MineHelpListActivity.this, MineHelpListActivity.class);
-                intent.putExtra("provideFlag", !provideFlag);
-                startActivity(intent);
             }
         });
 
         RadioButton rb_jishi = (RadioButton) findViewById(R.id.rb_jishi);
         RadioButton rb_wenda = (RadioButton) findViewById(R.id.rb_wenda);
         if (provideFlag) {
-            rb_jishi.setText("我的帮助");
-            rb_wenda.setText("我的回答");
-        } else {
             rb_jishi.setText("我的求助");
             rb_wenda.setText("我的提问");
+        } else {
+            rb_jishi.setText("我的帮助");
+            rb_wenda.setText("我的回答");
         }
     }
 
@@ -88,7 +93,11 @@ public class MineHelpListActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 jishiFlag = checkedId == R.id.rb_jishi;
-                groupListView.autoRefresh();
+                groupListView.setVisibility(View.VISIBLE);
+                if(null != empty_view) {
+                    empty_view.setVisibility(View.GONE);
+                }
+                refresh();
             }
         });
 
@@ -97,18 +106,10 @@ public class MineHelpListActivity extends BaseActivity {
         groupListView.setPullRefreshEnable(true);
         groupListView.setPullLoadEnable(true);
         groupListView.setAutoLoadEnable(true);
-
-        commentAdapter.setJishiFlag(true);
-
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
-                commentAdapter.clearData();
-                commentAdapter.setJishiFlag(jishiFlag);
-
-                mCurrentStart = 0;
-                groupListView.setPullLoadEnable(true);
-                initGroupData();
+                refresh();
             }
 
             @Override
@@ -118,6 +119,15 @@ public class MineHelpListActivity extends BaseActivity {
         });
     }
 
+    private void refresh() {
+        commentAdapter.clearData();
+        commentAdapter.setJishiFlag(jishiFlag);
+
+        mCurrentStart = 0;
+        groupListView.setPullLoadEnable(true);
+        initGroupData();
+    }
+
     private void onLoad() {
         groupListView.stopRefresh();
         groupListView.stopLoadMore();
@@ -125,6 +135,7 @@ public class MineHelpListActivity extends BaseActivity {
     }
 
     class MessageHandler extends BaseHandler {
+
         public MessageHandler(Context ctx) {
             super(ctx);
         }
@@ -135,14 +146,14 @@ public class MineHelpListActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        List<Base04Response.Body.Region> list = (List<Base04Response.Body.Region>) msg.obj;
-                        if(list==null)
-                            list=new ArrayList<>();
-                        commentAdapter.addData(list);
-                        commentAdapter.notifyDataSetChanged();
-                        mCurrentStart += list.size();
+                        List<MineHelpListItem> list = (List<MineHelpListItem>) msg.obj;
+                        if(null != list) {
+                            commentAdapter.addData(list);
+                            commentAdapter.notifyDataSetChanged();
+                            mCurrentStart += list.size();
+                        }
                         onLoad();
-                        if (list.size() < GlobalConstant.PAGE_SIZE) {
+                        if (null == list || list.size() < GlobalConstant.PAGE_SIZE) {
                             groupListView.setPullLoadEnable(false);
                         }
                     } finally {
@@ -158,14 +169,20 @@ public class MineHelpListActivity extends BaseActivity {
                     }
                     break;
                 }
-//                case 2:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
+                case 2:{
+                    try {
+                        groupListView.setVisibility(View.GONE);
+                        if(null == empty_view) {
+                            empty_view = (ViewStub) findViewById(R.id.stub_empty_view);
+                            empty_view.inflate();
+                        }else{
+                            empty_view.setVisibility(View.VISIBLE);
+                        }
+                    }finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -174,68 +191,54 @@ public class MineHelpListActivity extends BaseActivity {
     }
 
     private void initGroupData() {
-        //TODO 接入服务端接口
-        if (actionLock.tryLock()) {
-            showProgressDialog("获取圈子中...");
-            new AzExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (GlobalConstant.debugFlag) {
-                        List<Base04Response.Body.Region> regionList = new ArrayList<Base04Response.Body.Region>();
-                        for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                            Base04Response.Body.Region region = new Base04Response.Body.Region();
-                            region.setRegionid("" + (i + mCurrentStart));
-                            if (provideFlag) {
-                                if (jishiFlag) {
-                                    region.setRegionname("我的帮助我的帮助我的帮助\n我的帮助\n我的帮助我的帮助" + (i + mCurrentStart));
-                                } else {
-                                    region.setRegionname("我的回答我的回答我的回答\n我的回答\n我的回答我的回答" + (i + mCurrentStart));
-                                }
-                            } else {
-                                if (jishiFlag) {
-                                    region.setRegionname("我的求助我的求助我的求助\n我的求助\n我的求助我的求助" + (i + mCurrentStart));
-                                } else {
-                                    region.setRegionname("我的提问我的提问我的提问\n我的提问\n我的提问我的提问" + (i + mCurrentStart));
-                                }
-                            }
-                            regionList.add(region);
-                        }
-                        try { Thread.sleep(1000); } catch (InterruptedException e) { }
-                        messageHandler.postMessage(0, regionList);
-                    } else {
-                        final AzService azService = new AzService(MineHelpListActivity.this);
-                        final Base04Request req = new Base04Request();
-                        final Base04Request.Region region = req.new Region();
-                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-                        region.setAreacode(GlobalConstant.gis.getAreacode());
-                        region.setStart(String.valueOf(mCurrentStart));
-                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                        req.setRegion(region);
-                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
-                            @Override
-                            public void success(Base04Response response) {
-                                ResponseResult result = response.getResult();
-                                if (!"0".equals(result.getCode())) {
-                                    messageHandler.postMessage(1, result.getMessage());
-                                } else {
-                                    Base04Response.Body partjob07Body = response.getBody();
-                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    //    messageHandler.postMessage(2);
-                                    //} else {
-                                    messageHandler.postMessage(0, regionList);
-                                    //}
-                                }
-                            }
-
-                            @Override
-                            public void fail(AzException e) {
-                                messageHandler.postException(e);
-                            }
-                        });
+        if (!actionLock.tryLock()) {
+            return;
+        }
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (provideFlag) {
+                    if (jishiFlag) {//我的求助 partjob18
+                        Partjob18Request req = new Partjob18Request(UserSubject.getStudentid(), String.valueOf(mCurrentStart), String.valueOf(GlobalConstant.PAGE_SIZE));
+                        doTrans(req, Partjob18Response.class);
+                    } else {//我的提问 partjob23
+                        Partjob23Request req = new Partjob23Request(UserSubject.getStudentid(), String.valueOf(mCurrentStart), String.valueOf(GlobalConstant.PAGE_SIZE));
+                        doTrans(req, Partjob23Response.class);
+                    }
+                } else {
+                    if (jishiFlag) {//我的帮助 partjob24
+                        Partjob24Request req = new Partjob24Request(UserSubject.getStudentid(), String.valueOf(mCurrentStart), String.valueOf(GlobalConstant.PAGE_SIZE));
+                        doTrans(req, Partjob24Response.class);
+                    } else {//我的回答 partjob27
+                        Partjob27Request req = new Partjob27Request(UserSubject.getStudentid(), String.valueOf(mCurrentStart), String.valueOf(GlobalConstant.PAGE_SIZE));
+                        doTrans(req, Partjob27Response.class);
                     }
                 }
-            });
-        }
+            }
+        });
+    }
+
+    private <Resp extends MineHelpResponse> void doTrans(final Partjob18Request req, final Class<Resp> cls) {
+        new AzService().doTrans(req, cls, new AzService.Callback<Resp>() {
+            @Override
+            public void success(Resp resp) {
+                if ("0".equals(resp.getResultCode())) {
+                    List<MineHelpListItem> list = resp.getList();
+                    if ((null == list || list.size() < 1) && 0 == mCurrentStart) {
+                        messageHandler.postMessage(2);
+                    } else {
+                        messageHandler.postMessage(0, list);
+                    }
+                } else {
+                    messageHandler.postMessage(1, resp.getResultMessage());
+                }
+            }
+
+            @Override
+            public void fail(AzException e) {
+                actionLock.unlock();
+                messageHandler.postException(e);
+            }
+        });
     }
 }

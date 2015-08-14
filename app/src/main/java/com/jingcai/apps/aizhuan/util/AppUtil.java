@@ -6,23 +6,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
-import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
-import java.io.File;
 import java.util.Properties;
 
 /**
  * Created by lejing on 15/4/28.
  */
 public class AppUtil {
-
-    public static final String CROP_IMAGE_PATH = "/dalegexue/image/crop/";
-    public static final String CAPTURE_IMAGE_PATH = "/dalegexue/image/capture/";
 
     public static void loadProperties(Context context) {
         Properties props = new Properties();
@@ -84,28 +78,6 @@ public class AppUtil {
         }
 
         return false;
-    }
-
-    /**
-     * 使用前提：用户已登陆
-     * 获取照片存放的uri
-     *
-     * @return
-     */
-    public static Uri getCaptureImageUri() {
-        final File path = new File(Environment.getExternalStorageDirectory()+CAPTURE_IMAGE_PATH);
-        if(!path.exists()){
-            path.mkdirs();
-        }
-        return Uri.fromFile(new File(path.getAbsolutePath(),"CAPTURE_"+UserSubject.getStudentid()).getAbsoluteFile());
-    }
-
-    public static Uri getCropImageUri() {
-        final File path = new File(Environment.getExternalStorageDirectory()+CROP_IMAGE_PATH);
-        if(!path.exists()){
-            path.mkdirs();
-        }
-        return Uri.fromFile(new File(path.getAbsolutePath(),"CROP_"+UserSubject.getStudentid()).getAbsoluteFile());
     }
 
     public static boolean isApkInstalled(Context context, String packageName) {
