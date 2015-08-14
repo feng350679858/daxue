@@ -45,6 +45,7 @@ public class Partjob02Response extends BaseResponse<Partjob02Response.Partjob02B
             private String gisx;
             private String gisy;
             private String ismutifyaddr;
+            private String worktypeimgurl;
             private ArrayList<Schoolmate> schoolmate_list;
 
             public class Schoolmate{
@@ -93,6 +94,14 @@ public class Partjob02Response extends BaseResponse<Partjob02Response.Partjob02B
                 public void setCollege(String college) {
                     this.college = college;
                 }
+            }
+
+            public String getWorktypeimgurl() {
+                return worktypeimgurl;
+            }
+
+            public void setWorktypeimgurl(String worktypeimgurl) {
+                this.worktypeimgurl = worktypeimgurl;
             }
 
             public String getHeightupperlimit() {

@@ -149,6 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
+                android:paddingRight="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -435,6 +436,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/important_dark"
+                android:background="@drawable/btn_yellow_boarded_bg_selector"
                 android:textSize="17sp" />
 
 

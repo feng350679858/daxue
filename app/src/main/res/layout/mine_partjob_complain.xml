@@ -24,14 +24,19 @@
                 android:text="我要投诉："
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/iv_mine_partjob_detail_complain_logopath"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+            <LinearLayout
+                android:layout_width="122dp"
+                android:layout_height="122dp"
                 android:background="@drawable/img_border_gray"
-                android:scaleType="fitCenter"
-                android:padding="2dp"
-                android:src="@drawable/logo_merchant_default" />
+                android:padding="2dp">
+
+                <ImageView
+                    android:id="@+id/iv_mine_partjob_detail_complain_logopath"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_merchant_default" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="0dp"

@@ -90,13 +90,12 @@ public class IndexMoneyFragment extends BaseFragment {
       //  initHeader();
     }
     private void initHeader(){
-        ((ImageView)mainView.findViewById(R.id.ib_back)).setVisibility(View.INVISIBLE);
+        mainView.findViewById(R.id.ib_back).setVisibility(View.INVISIBLE);
         ((TextView)mainView.findViewById(R.id.tv_content)).setText("爱赚");
-        ((TextView)mainView.findViewById(R.id.tv_content)).setVisibility(View.VISIBLE);
-        ((ImageView)mainView.findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
-        ((ImageView)mainView.findViewById(R.id.iv_func)).setVisibility(View.VISIBLE);
-        ((ImageView)mainView.findViewById(R.id.iv_func)).setImageResource(R.drawable.search);
-        ((TextView)mainView.findViewById(R.id.tv_func)).setVisibility(View.INVISIBLE);
+        final ImageView IvFunc = (ImageView) mainView.findViewById(R.id.iv_func);
+        IvFunc.setVisibility(View.VISIBLE);
+        IvFunc.setImageResource(R.drawable.icon_money_index_search);
+
         tv_address=(TextView)mainView.findViewById(R.id.tv_back);
         tv_address.setVisibility(View.VISIBLE);
 
@@ -118,13 +117,13 @@ public class IndexMoneyFragment extends BaseFragment {
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
-        ((ImageView)mainView.findViewById(R.id.iv_func)).setOnClickListener(new View.OnClickListener() {
+        IvFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-   //             Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-    //            intent.putExtra("address",tv_address.getTag().toString());
-    //            intent.putExtra("cancel","visible");
-                Intent intent=new Intent(getActivity(), ProfileImproveActivity.class);
+                //             Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                //            intent.putExtra("address",tv_address.getTag().toString());
+                //            intent.putExtra("cancel","visible");
+                Intent intent = new Intent(getActivity(), ProfileImproveActivity.class);
                 startActivity(intent);
             }
         });

@@ -147,7 +147,7 @@ public class StringUtil {
      */
     public static String hiddenPhone(String phone){
         if(phone.length() < 11){
-            return "位数不足11位";
+            return phone;
         }
         char[] chars = phone.toCharArray();
         for (int i = 0; i < chars.length; i++) {
