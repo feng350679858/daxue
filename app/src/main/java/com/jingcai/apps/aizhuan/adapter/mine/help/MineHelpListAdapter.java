@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpEvaluateActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaRewardActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpJishiActivity;
+import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
 import com.jingcai.apps.aizhuan.service.business.partjob.Partjob24.Partjob24Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob18.Partjob18Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob23.Partjob23Response;
@@ -33,12 +36,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MineHelpListAdapter extends BaseAdapter {
     private boolean provideFlag;
     private boolean jishiFlag;
-    private BaseActivity baseActivity;
+    private MineHelpListActivity baseActivity;
     private List<MineHelpListItem> regionList;
     private LayoutInflater mInflater;
     private BitmapUtil bitmapUtil;
 
-    public MineHelpListAdapter(BaseActivity ctx) {
+    public MineHelpListAdapter(MineHelpListActivity ctx) {
         baseActivity = ctx;
         regionList = new ArrayList<>();
         mInflater = LayoutInflater.from(ctx);
@@ -147,13 +150,25 @@ public class MineHelpListAdapter extends BaseAdapter {
                 baseActivity.startActivity(intent);
             }
         });
-        viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 确认打赏
-                baseActivity.showToast("确认打赏");
-            }
-        });
+        //已帮助5状态下，确认打赏->已结算6
+        if("5".equals(job.getStatus())) {
+            viewHolder.btn2.setVisibility(View.VISIBLE);
+            viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //确认打赏
+                    Intent intent = new Intent(baseActivity, HelpWendaRewardActivity.class);
+                    intent.putExtra("answerflag", false);
+                    intent.putExtra("helpid", job.getHelpid());
+                    intent.putExtra("jishiHelpMoney", job.getMoney());
+                    baseActivity.setCurrentJob(job);
+                    baseActivity.startActivityForResult(intent, MineHelpListActivity.REQUEST_CODE_PROVIDE_JISIH_REWARD);
+                }
+            });
+        }else{
+            viewHolder.btn2.setVisibility(View.GONE);
+            viewHolder.btn2.setOnClickListener(null);
+        }
         return convertView;
     }
 
@@ -244,7 +259,7 @@ public class MineHelpListAdapter extends BaseAdapter {
         viewHolder.layout_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 显示求助详情
+                //显示求助详情
                 Intent intent = new Intent(baseActivity, MineHelpJishiActivity.class);
                 intent.putExtra("helpid", job.getHelpid());
                 intent.putExtra("provideFlag", provideFlag);
@@ -261,13 +276,32 @@ public class MineHelpListAdapter extends BaseAdapter {
                 baseActivity.startActivity(intent);
             }
         });
-        viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 立即评价
-                baseActivity.showToast("立即评价");
-            }
-        });
+        if("0".equals(job.getEvelflag())){
+            viewHolder.btn2.setVisibility(View.VISIBLE);
+            viewHolder.btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 立即评价
+                    Intent intent = new Intent(baseActivity, HelpEvaluateActivity.class);
+                    intent.putExtra("forceflag", false);
+                    intent.putExtra("content", job.getContent());
+                    intent.putExtra("targetid", job.getSourceid());
+                    intent.putExtra("targettype", "1");//1：学生 2：联系人 3：商家
+                    intent.putExtra("targetimgurl", job.getSourceimgurl());
+                    intent.putExtra("targetname", job.getSourcename());
+                    intent.putExtra("targetschool", job.getSourceschool());
+                    intent.putExtra("targetcollege", job.getSourcecollege());
+                    intent.putExtra("targetreftype", "2");//1：兼职 2：求助
+                    intent.putExtra("targetrefid", job.getHelpid());
+
+                    baseActivity.setCurrentJob(job);
+                    baseActivity.startActivityForResult(intent, MineHelpListActivity.REQUEST_CODE_RECEIVE_JISIH_EVALUATE);
+                }
+            });
+        }else{
+            viewHolder.btn2.setVisibility(View.GONE);
+            viewHolder.btn2.setOnClickListener(null);
+        }
         return convertView;
     }
 
@@ -367,5 +401,15 @@ public class MineHelpListAdapter extends BaseAdapter {
         public TextView tv_stu_name;
         public Button btn1;
         public Button btn2;
+    }
+
+    private Callback callback;
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public class Callback{
+
     }
 }
