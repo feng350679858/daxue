@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/content_background"
     android:orientation="vertical">
 
     <include layout="@layout/include_header" />
@@ -39,7 +40,7 @@
                     android:drawablePadding="4dp"
                     android:text="QQ客服"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -61,7 +62,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_qq"
-                    android:textColor="@color/assist_grey"
+                    android:textColor="@color/normal_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -116,7 +117,7 @@
                     android:drawablePadding="4dp"
                     android:text="电话客服"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +139,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_tel"
-                    android:textColor="@color/assist_grey"
+                    android:textColor="@color/normal_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
@@ -191,9 +192,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:drawablePadding="4dp"
-                    android:text="微信客服"
+                    android:text="微信公众账号"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -215,7 +216,7 @@
                     android:layout_marginLeft="10dp"
                     android:lineSpacingMultiplier="1.2"
                     android:text="@string/mine_contact_service_wechat"
-                    android:textColor="@color/assist_grey"
+                    android:textColor="@color/normal_grey"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
