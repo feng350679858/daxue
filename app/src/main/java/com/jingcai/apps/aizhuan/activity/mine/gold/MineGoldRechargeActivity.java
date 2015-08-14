@@ -309,7 +309,14 @@ public class MineGoldRechargeActivity extends BaseActivity {
                             showToast("支付结果确认中");
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            showToast("支付失败");
+                            if(TextUtils.equals(resultStatus, "6001")){
+                                showToast("您取消了充值操作");
+                            }else if(TextUtils.equals(resultStatus, "6002")){
+                                showToast("网络连接出错");
+                            }else{
+                                showToast("支付失败");
+
+                            }
                         }
                     }
                     break;
