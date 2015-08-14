@@ -42,7 +42,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                style="@style/list_item_right" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_jingxuan"
@@ -64,14 +64,14 @@
                         android:padding="5dp"
                         android:text="优质精选"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/important_dark"
-                        android:textSize="14sp" />
+                        style="@style/list_item_left" />
 
                     <TextView
                         android:id="@+id/label_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
                         android:layout_centerVertical="true"
                         android:background="@color/white"
                         android:drawablePadding="5dp"
@@ -79,7 +79,7 @@
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/important_dark"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
                 <HorizontalScrollView
@@ -119,8 +119,7 @@
                         android:layout_centerVertical="true"
                         android:text="同城短期"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/important_dark"
-                        android:textSize="14sp" />
+                        style="@style/list_item_left" />
                     <TextView
                         android:id="@+id/partjob_city_more"
                         android:layout_width="wrap_content"
@@ -128,11 +127,12 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:drawablePadding="5dp"
+                        android:layout_marginRight="5dp"
                         android:drawableRight="@drawable/icon_right_triangle"
                         android:padding="5dp"
                         android:text="更多"
                         android:textColor="@color/important_dark"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
                 <LinearLayout

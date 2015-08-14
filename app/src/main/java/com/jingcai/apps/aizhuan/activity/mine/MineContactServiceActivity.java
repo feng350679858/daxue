@@ -94,7 +94,7 @@ public class MineContactServiceActivity extends BaseActivity {
             }
         });
 
-        //微信客服
+        //微信公众账号
         findViewById(R.id.rl_mine_contact_service_wechat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

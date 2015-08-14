@@ -94,7 +94,7 @@ public class MineGoldIncomeActivity extends BaseActivity implements XListView.IX
                     account.setStart(String.valueOf(mCurrentStart));
                     account.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
                     account.setOptype("credit");
-                    account.setWalletcode("gold");
+                    account.setWalletcode("cash");
                     account.setEnddate(DateUtil.formatDate(new Date(), "yyyyMMdd"));
                     account.setBegindate(DateUtil.formatDate(DateUtil.getDateMonthsAgo(1), "yyyyMMdd"));
                     req.setAccount(account);
