@@ -69,7 +69,7 @@ public class AccountStreamListAdapter extends BaseAdapter {
         if ("credit".equals(account.getOptype())) {
 
             String url = account.getImgurl();
-            bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
+            bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.default_image);
 
             //标题
             viewHolder.tv_time.setText(account.getOptime());

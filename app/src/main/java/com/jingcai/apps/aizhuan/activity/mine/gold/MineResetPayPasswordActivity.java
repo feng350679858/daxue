@@ -57,17 +57,6 @@ public class MineResetPayPasswordActivity extends BaseActivity {
     private void reloadByState(int stage){
         mCurrentStage = stage;
         clearPswPad();  //清除密码框
-        switch (mCurrentStage) {
-            case RESET_PASSWORD_STAGE_1:
-                showToast("请输入当前支付密码");
-                break;
-            case RESET_PASSWORD_STAGE_2:
-                showToast("请输入新的支付密码");
-                break;
-            case RESET_PASSWORD_STAGE_3:
-                showToast("请再输一次");
-                break;
-        }
         initHeader();
         initView();
     }

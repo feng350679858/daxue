@@ -105,7 +105,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                             .setContentView(contentView)
                             .build();
                     //logo
-                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(getResources().getDrawable(R.drawable.logo_merchant_default));
+                    ((ImageView) contentView.findViewById(R.id.iv_contact_merchant_dialog_logo)).setImageDrawable(getResources().getDrawable(R.drawable.default_image));
                     //title
                     ((TextView) contentView.findViewById(R.id.tv_contact_merchant_dialog_title)).setText("联系人");
                     //phone

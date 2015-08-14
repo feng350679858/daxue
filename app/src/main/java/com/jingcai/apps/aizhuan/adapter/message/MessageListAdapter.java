@@ -171,7 +171,7 @@ public class MessageListAdapter extends BaseAdapter {
             final ConversationBean message = mMessages.get(position - CATEGORY_TYPE_COUNT);
 
             holderCon.mTvName.setText(message.getName());
-            mBitmapUtil.getImage(holderCon.mIvLogo, message.getLogourl(),true,R.drawable.logo_merchant_default);
+            mBitmapUtil.getImage(holderCon.mIvLogo, message.getLogourl(),true,R.drawable.default_image);
 
             holderCon.mTvContent.setText(SmileUtils.getSmiledText(mContext,message.getContent()));
             holderCon.mTvTime.setText(message.getTime());
