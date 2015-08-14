@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,24 +22,20 @@ import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.help.HelpEvaluateActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpJishiDeployActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
-import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin;
-import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
-import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
+import com.jingcai.apps.aizhuan.activity.help.HelpWendaRewardActivity;
+import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob20.Partjob20Request;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob22.Partjob22Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob26.Partjob26Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob33.Partjob33Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.DES3Util;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
@@ -53,6 +50,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by lejing on 15/7/24.
  */
 public class MineHelpJishiActivity extends BaseActivity {
+    public static final int REQUEST_CODE_PROVIDE_JISIH_REWARD = 1101;
+    public static final int REQUEST_CODE_RECEIVE_JISIH_EVALUATE = 1201;
     private String helpid;
     private boolean provideFlag = true;
     private AzExecutor azExecutor = new AzExecutor();
@@ -61,34 +60,44 @@ public class MineHelpJishiActivity extends BaseActivity {
     private MineHelpProcessUtil mineHelpProcessUtil = new MineHelpProcessUtil(this);
     private MessageHandler messageHandler;
     private CheckBox cb_tip;
-    private TextView tv_status;
-    private TextView tv_time;
-    private TextView tv_money;
-    private TextView tv_private_content;
-    private TextView tv_public_content;
+    private TextView tv_status, tv_time, tv_money, tv_private_content, tv_public_content, tv_stu_name;
     private Button btn_action;
     private CircleImageView civ_head_logo;
-    private TextView tv_stu_name;
     private long timeout, receiveTimestamp;
+
+    private Partjob19Response.Parttimejob job;
+
+    private boolean updateFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageHandler = new MessageHandler(this);
-        setContentView(R.layout.mine_help_jishi);
-
         helpid = getIntent().getStringExtra("helpid");
         provideFlag = getIntent().getBooleanExtra("provideFlag", provideFlag);
-
         if (StringUtil.isEmpty(helpid)) {
-            finish();
+            finishWithResult();
         } else {
+            messageHandler = new MessageHandler(this);
+
+            setContentView(R.layout.mine_help_jishi);
+
             initHeader();
 
             initView();
 
             initData();
         }
+    }
+
+    private void finishWithResult() {
+        if (updateFlag) {
+            Intent intent = new Intent();
+            intent.putExtra("status", job.getStatus());
+            setResult(RESULT_OK, intent);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
     }
 
     private void initHeader() {
@@ -102,7 +111,6 @@ public class MineHelpJishiActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 int dp10_px = MineHelpJishiActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
-                Log.d("==", "---------" + dp10_px);
                 View contentView = LayoutInflater.from(MineHelpJishiActivity.this).inflate(R.layout.help_wenda_answer_setting_pop, null);
                 PopupWin groupWin = PopupWin.Builder.create(MineHelpJishiActivity.this)
                         .setWidth(dp10_px * 17)
@@ -121,7 +129,13 @@ public class MineHelpJishiActivity extends BaseActivity {
                         tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {//举报
-                                Log.d("==", "-----------tv_pop_abuse_report---");
+                                //举报求助
+                                new AbuseReportHandler(MineHelpJishiActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                                    @Override
+                                    public void call() {
+                                        showToast("举报成功");
+                                    }
+                                }).click(job.getSourceid(), "1", helpid);
                             }
                         });
                     }
@@ -129,7 +143,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                     tv_pop_share.setVisibility(View.VISIBLE);
                     tv_pop_share.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {//分享
+                        public void onClick(View v) {//TODO 分享
                             Log.d("==", "-----------tv_pop_share---");
                         }
                     });
@@ -142,7 +156,7 @@ public class MineHelpJishiActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult();
             }
         });
     }
@@ -159,21 +173,11 @@ public class MineHelpJishiActivity extends BaseActivity {
 
         civ_head_logo = (CircleImageView) findViewById(R.id.civ_head_logo);
         tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
-//        cb_tip.setChecked(false);
 
         View btn_view_comment = findViewById(R.id.btn_view_comment);
         btn_view_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                PayPwdWin payPwdWin = new PayPwdWin(MineHelpJishiActivity.this);
-//                payPwdWin.setTitle("确认结算");
-//                payPwdWin.setCallback(new PayPwdWin.Callback() {
-//                    @Override
-//                    public void call(String pwd) {
-//                        showToast("----------");
-//                    }
-//                });
-//                payPwdWin.showPay(Double.parseDouble("3.51"));
                 //查看评论
                 Intent intent = new Intent(MineHelpJishiActivity.this, HelpJishiDetailActivity.class);
                 intent.putExtra("helpid", helpid);
@@ -205,7 +209,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                             Partjob19Response.Parttimejob job = response.getBody().getParttimejob();
                             messageHandler.postMessage(0, job);
                         } else {
-                            messageHandler.postMessage(1, result.getMessage());
+                            messageHandler.postMessage(9, result.getMessage());
                         }
                     }
 
@@ -229,8 +233,8 @@ public class MineHelpJishiActivity extends BaseActivity {
             switch (msg.what) {
                 case 0: {
                     try {
-                        Partjob19Response.Parttimejob job = (Partjob19Response.Parttimejob) msg.obj;
-                        setValues(job);
+                        job = (Partjob19Response.Parttimejob) msg.obj;
+                        setValues();
                     } finally {
                         actionLock.unlock();
                     }
@@ -252,10 +256,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                 case 20: {
                     try {
                         showToast("取消求助成功，等待确认");
-                        Intent data = new Intent();
-                        data.putExtra("status", "3");//取消中
-                        setResult(RESULT_OK, data);
-                        finish();
+                        finishWithResult();
                     } finally {
                         actionLock.unlock();
                     }
@@ -264,10 +265,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                 case 21: {
                     try {
                         showToast("成功完成帮助");
-                        Intent data = new Intent();
-                        //data.putExtra("status", "3");//取消中
-                        setResult(RESULT_OK, data);
-                        finish();
+                        finishWithResult();
                     } finally {
                         actionLock.unlock();
                     }
@@ -276,48 +274,30 @@ public class MineHelpJishiActivity extends BaseActivity {
                 case 22: {
                     try {
                         showToast("取消处理成功");
-                        Intent data = new Intent();
-                        //data.putExtra("status", "3");//取消中
-                        setResult(RESULT_OK, data);
-                        finish();
+                        boolean agreeCancelFlag = (boolean) msg.obj;
+                        if(agreeCancelFlag){//状态改为已取消4
+                            job.setStatus("4");
+                        }else{
+                            job.setStatus("2");//状态改为帮助中
+                        }
+                        setStatusAndAction();
                     } finally {
                         actionLock.unlock();
                     }
                     break;
                 }
-//                case 23: {
+//                case 25: {
 //                    try {
-//                        showToast("重新发布成功");
+//                        showToast("结算成功");
 //                        Intent data = new Intent();
 //                        //data.putExtra("status", "3");//取消中
 //                        setResult(RESULT_OK, data);
-//                        finish();
+//                        finishWithResult();
 //                    } finally {
 //                        actionLock.unlock();
 //                    }
 //                    break;
 //                }
-//                case 24: {
-//                    try {
-//                        PayInsufficientWin win = new PayInsufficientWin(MineHelpJishiActivity.this);
-//                        win.show();
-//                    } finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
-                case 25: {
-                    try {
-                        showToast("结算成功");
-                        Intent data = new Intent();
-                        //data.putExtra("status", "3");//取消中
-                        setResult(RESULT_OK, data);
-                        finish();
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -332,7 +312,25 @@ public class MineHelpJishiActivity extends BaseActivity {
         return String.format("剩余时间 %02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    private void setValues(Partjob19Response.Parttimejob job) {
+    private View.OnClickListener studentClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            View parentView = MineHelpJishiActivity.this.getWindow().getDecorView();
+            View contentView = LayoutInflater.from(MineHelpJishiActivity.this).inflate(R.layout.mine_help_jishi_connect, null);
+
+            PopupWin win = PopupWin.Builder.create(MineHelpJishiActivity.this)
+                    .setParentView(parentView)
+                    .setContentView(contentView)
+                    .build();
+            win.findTextViewById(R.id.tv_stu_name).setText(provideFlag?job.getTargetname():job.getSourcename());
+            win.findTextViewById(R.id.tv_stu_school).setText(provideFlag?job.getTargetschool():job.getSourceschool());
+            win.findTextViewById(R.id.tv_stu_college).setText(provideFlag?job.getTargetcollege():job.getSourcecollege());
+
+            win.show();
+        }
+    };
+
+    private void setValues() {
         if (StringUtil.isNotEmpty(job.getMoney())) {
             tv_money.setText(String.format("%.2f元", Double.parseDouble(job.getMoney())));
         } else {
@@ -341,28 +339,39 @@ public class MineHelpJishiActivity extends BaseActivity {
         tv_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
         tv_public_content.setText(job.getPubliccontent());
         tv_private_content.setText(job.getPrivatecontent());
-        bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
-        tv_stu_name.setText(job.getSourcename());
-        tv_stu_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View parentView = MineHelpJishiActivity.this.getWindow().getDecorView();
-                View contentView = LayoutInflater.from(MineHelpJishiActivity.this).inflate(R.layout.mine_help_jishi_connect, null);
-
-                PopupWin groupWin = PopupWin.Builder.create(MineHelpJishiActivity.this)
-                        .setParentView(parentView)
-                        .setContentView(contentView)
-                        .build();
-                groupWin.show();
-            }
-        });
-
-        setTipProcess(job);
-
-        setAction(job);
+        if(provideFlag) {
+            bitmapUtil.getImage(civ_head_logo, job.getTargetimgurl(), R.drawable.default_head_img);
+            tv_stu_name.setText(job.getTargetname());
+        }else{
+            bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
+            tv_stu_name.setText(job.getSourcename());
+        }
+        civ_head_logo.setOnClickListener(studentClick);
+        tv_stu_name.setOnClickListener(studentClick);
+        setStatusAndAction();
     }
 
-    private void setAction(final Partjob19Response.Parttimejob job) {
+
+    private void setTipProcess() {
+        if ("1".equals(job.getEvelflag())) {
+            job.setStatus("99");
+        }
+        Tip tip = tipMap.get((provideFlag ? "provide" : "receive") + job.getStatus());
+        tv_status.setText(tip.tip);
+        if (null != tip.subtip) {
+            cb_tip.setText(tip.subtip);
+            cb_tip.setChecked(!tip.over);//显示灰色
+        } else if (StringUtil.isNotEmpty(job.getTimeout())) {
+            timeout = Long.parseLong(job.getTimeout());
+            azExecutor.execute(timeTask);
+        }
+        mineHelpProcessUtil.setProcess(tip.nodeCount, tip.selectCount, tip.strs);
+    }
+
+    private void setStatusAndAction() {
+
+        setTipProcess();
+
         final String status = job.getStatus();
         if ("1".equals(status)) {//求助中
             if (provideFlag) {
@@ -457,119 +466,52 @@ public class MineHelpJishiActivity extends BaseActivity {
         });
     }
 
-    //TODO 立即评价
+    //立即评价
     private void doEvaluate(Partjob19Response.Parttimejob job) {
+        // 立即评价
         Intent intent = new Intent(this, HelpEvaluateActivity.class);
-
-        startActivity(intent);
+        intent.putExtra("forceflag", false);
+        intent.putExtra("content", job.getPubliccontent());
+        intent.putExtra("targetreftype", "2");//1：兼职 2：求助
+        intent.putExtra("targetrefid", helpid);
+        intent.putExtra("targettype", "1");//1：学生 2：联系人 3：商家
+        if(provideFlag){
+            intent.putExtra("targetid", job.getTargetid());
+            intent.putExtra("targetimgurl", job.getTargetimgurl());
+            intent.putExtra("targetname", job.getTargetname());
+            intent.putExtra("targetschool", job.getTargetschool());
+            intent.putExtra("targetcollege", job.getTargetcollege());
+        }else {
+            intent.putExtra("targetid", job.getSourceid());
+            intent.putExtra("targetimgurl", job.getSourceimgurl());
+            intent.putExtra("targetname", job.getSourcename());
+            intent.putExtra("targetschool", job.getSourceschool());
+            intent.putExtra("targetcollege", job.getSourcecollege());
+        }
+        startActivityForResult(intent, REQUEST_CODE_RECEIVE_JISIH_EVALUATE);
     }
 
-    //TODO 马上结算
+    // 马上结算
     private void doBalanceNow(final Partjob19Response.Parttimejob job) {
-        PayPwdWin payPwdWin = new PayPwdWin(this);
-        payPwdWin.setCallback(new PayPwdWin.Callback() {
-            @Override
-            public void call(String pwd) {
-                doBalanceNowInner(job, pwd);
-            }
-        });
-        payPwdWin.setTitle("马上结算");
-        payPwdWin.showPay(Double.parseDouble(job.getMoney()));
+        Intent intent = new Intent(this, HelpWendaRewardActivity.class);
+        intent.putExtra("answerflag", false);
+        intent.putExtra("helpid", helpid);
+        intent.putExtra("jishiHelpMoney", job.getMoney());
+        startActivityForResult(intent, MineHelpListActivity.REQUEST_CODE_PROVIDE_JISIH_REWARD);
     }
 
-    private void doBalanceNowInner(Partjob19Response.Parttimejob job, final String pwd) {
-        if (!actionLock.tryLock()) return;
-        azExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Partjob22Request req = new Partjob22Request();
-                Partjob22Request.Parttimejob job = req.new Parttimejob();
-                job.setStudentid(UserSubject.getStudentid());
-                job.setHelpid(helpid);
-                job.setPaypassword(DES3Util.encrypt(pwd));
-                req.setParttimejob(job);
-                azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
-                    @Override
-                    public void success(BaseResponse resp) {
-                        if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(25);
-                        } else {
-                            messageHandler.postMessage(9, "结算失败:" + resp.getResultMessage());
-                        }
-                    }
-
-                    @Override
-                    public void fail(AzException e) {
-                        messageHandler.postException(e);
-                    }
-                });
-            }
-        });
-    }
-
-    //TODO 重新发布
+    //重新发布
     private void doRedeploy(final Partjob19Response.Parttimejob job) {
-//        PayPwdWin payPwdWin = new PayPwdWin(this);
-//        payPwdWin.setCallback(new PayPwdWin.Callback() {
-//            @Override
-//            public void call(String pwd) {
-//                doDeploy(job, pwd);
-//            }
-//        });
-//        payPwdWin.setTitle("确认支付");
-//
-//        payPwdWin.showPay(Double.parseDouble(job.getMoney()));
         Intent intent = new Intent(this, HelpJishiDeployActivity.class);
-        //
+        intent.putExtra("genderlimit", job.getGenderlimit());
+        intent.putExtra("money", job.getMoney());
+        intent.putExtra("publiccontent", job.getPubliccontent());
+        intent.putExtra("privatecontent", job.getPrivatecontent());
+        //intent.putExtra("validtime", null);
         startActivity(intent);
     }
 
-//    private void doDeploy(final Partjob19Response.Parttimejob job, final String pwd) {
-//        if (!actionLock.tryLock()) {
-//            return;
-//        }
-//        showProgressDialog("发布中...");
-//        new AzExecutor().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                Partjob16Request req = new Partjob16Request();
-//                Partjob16Request.Parttimejob reqjob = req.new Parttimejob();
-//                reqjob.setStudentid(UserSubject.getStudentid());
-//                reqjob.setType("2");
-//                reqjob.setPaypassword(DES3Util.encrypt(pwd));
-//                reqjob.setFriendid(job.getFriendid());
-//                reqjob.setGenderlimit(job.getGenderlimit());
-//                reqjob.setGisx(GlobalConstant.getGis().getGisx());
-//                reqjob.setGisy(GlobalConstant.getGis().getGisy());
-//                reqjob.setMoney(job.getMoney());
-//                reqjob.setPubliccontent(job.getPubliccontent());
-//                reqjob.setPrivatecontent(job.getPrivatecontent());
-//                reqjob.setRegionid(job.getRegionid());
-//                reqjob.setValidtime(job.getValidtime());
-//                //job.setPaypassword(UserSubject.get);
-//                req.setParttimejob(reqjob);
-//                new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
-//                    @Override
-//                    public void success(BaseResponse resp) {
-//                        if ("0".equals(resp.getResultCode())) {
-//                            messageHandler.postMessage(23);
-//                        } else if ("S012".equals(resp.getResultCode())) {//余额不足
-//                            messageHandler.postMessage(24);
-//                        } else {
-//                            messageHandler.postMessage(9, "重新发布失败:"+resp.getResultMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void fail(AzException e) {
-//                        messageHandler.postException(e);
-//                    }
-//                });
-//            }
-//        });
-//    }
-
-    //TODO 取消处理
+    // 取消处理
     private void dealwithCancel(Partjob19Response.Parttimejob job) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("1", "同意");
@@ -593,7 +535,7 @@ public class MineHelpJishiActivity extends BaseActivity {
                                     @Override
                                     public void success(BaseResponse resp) {
                                         if ("0".equals(resp.getResultCode())) {
-                                            messageHandler.postMessage(22);
+                                            messageHandler.postMessage(22, "1".equals(key));
                                         } else {
                                             messageHandler.postMessage(9, "处理失败:" + resp.getResultMessage());
                                         }
@@ -613,7 +555,7 @@ public class MineHelpJishiActivity extends BaseActivity {
         genderWin.show();
     }
 
-    //TODO 完成帮助
+    // 完成帮助
     private void doFinishHelp(Partjob19Response.Parttimejob job) {
         if (!actionLock.tryLock()) return;
         azExecutor.execute(new Runnable() {
@@ -643,7 +585,7 @@ public class MineHelpJishiActivity extends BaseActivity {
         });
     }
 
-    //TODO 取消求助
+    // 取消求助
     private void doCancelHelp(Partjob19Response.Parttimejob job) {
         if (!actionLock.tryLock()) return;
         azExecutor.execute(new Runnable() {
@@ -674,21 +616,29 @@ public class MineHelpJishiActivity extends BaseActivity {
             }
         });
     }
-
-    private void setTipProcess(Partjob19Response.Parttimejob job) {
-        if ("1".equals(job.getEvelflag())) {
-            job.setStatus("99");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_PROVIDE_JISIH_REWARD: {
+                if(RESULT_OK == resultCode){
+                    updateFlag = true;
+                    job.setStatus("6");
+                    setStatusAndAction();
+                }
+                break;
+            }
+            case REQUEST_CODE_RECEIVE_JISIH_EVALUATE: {
+                if(RESULT_OK == resultCode){
+                    updateFlag = true;
+                    job.setEvelflag("1");
+                    setStatusAndAction();
+                }
+                break;
+            }
+            default: {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
         }
-        Tip tip = tipMap.get((provideFlag ? "provide" : "receive") + job.getStatus());
-        tv_status.setText(tip.tip);
-        if (null != tip.subtip) {
-            cb_tip.setText(tip.subtip);
-            cb_tip.setChecked(!tip.over);//显示灰色
-        } else if (StringUtil.isNotEmpty(job.getTimeout())) {
-            timeout = Long.parseLong(job.getTimeout());
-            azExecutor.execute(timeTask);
-        }
-        mineHelpProcessUtil.setProcess(tip.nodeCount, tip.selectCount, tip.strs);
     }
 
     private boolean timerStopFlag = false;
@@ -757,5 +707,15 @@ public class MineHelpJishiActivity extends BaseActivity {
             this.selectCount = selectCount;
             this.strs = strs;
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithResult();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

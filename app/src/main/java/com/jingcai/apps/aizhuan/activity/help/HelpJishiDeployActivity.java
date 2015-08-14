@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,11 +19,9 @@ import com.jingcai.apps.aizhuan.activity.common.MoneyWatcher;
 import com.jingcai.apps.aizhuan.activity.common.NumberWatcher;
 import com.jingcai.apps.aizhuan.activity.common.WordCountWatcher;
 import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin;
-import com.jingcai.apps.aizhuan.activity.util.PayInsufficientWin2;
 import com.jingcai.apps.aizhuan.activity.util.PayPwdWin;
 import com.jingcai.apps.aizhuan.adapter.help.GroupAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
-import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
@@ -43,6 +39,7 @@ import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +49,8 @@ import java.util.Map;
  */
 public class HelpJishiDeployActivity extends BaseActivity {
     public static final int REQUEST_CODE_FRIEND = 1101;
+    private String genderlimit, money, publiccontent, privatecontent, validtime;
+
     private MessageHandler messageHandler;
     private PopupWin groupWin;
     private PopupWin end_timeWin;
@@ -72,16 +71,40 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private TextView tv_secret_tip;
     private TextView tv_content_tip;
     private PayPwdWin payPwdWin;
+    private static final Map<String, String> genderMap = new HashMap<String, String>(){{
+        put("0", "男");
+        put("1", "女");
+        put("2", "不限");;
+    }};
+    private static final  Map<String, String> endTimeMap = new LinkedHashMap<String, String>(){{
+        put("10", "10分钟");
+        put("30", "30分钟");
+        put("60", "1小时");
+        put("180", "3小时");
+        put("360", "6小时");
+        put("720", "12小时");
+        put("1440", "24小时");
+        put("-1", "自定义");
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        genderlimit = getIntent().getStringExtra("genderlimit");
+        money = getIntent().getStringExtra("money");
+        publiccontent = getIntent().getStringExtra("publiccontent");
+        privatecontent = getIntent().getStringExtra("privatecontent");
+        validtime = getIntent().getStringExtra("validtime");
+
         setContentView(R.layout.help_jishi_deploy);
         messageHandler = new MessageHandler(this);
 
         initHeader();
+
         initView();
+
+        initData();
     }
 
     private void initHeader() {
@@ -127,13 +150,9 @@ public class HelpJishiDeployActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null == genderWin) {
-                    Map<String, String> map = new LinkedHashMap<>();
-                    map.put("0", "男");
-                    map.put("1", "女");
-                    map.put("2", "不限");
                     View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
                     genderWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
-                            .setData(map, new PopupWin.Callback() {
+                            .setData(genderMap, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
                                     tv_gender.setTag(key);
@@ -236,18 +255,9 @@ public class HelpJishiDeployActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null == end_timeWin) {
-                    Map<String, String> map = new LinkedHashMap<>();
-                    map.put("10", "10分钟");
-                    map.put("30", "30分钟");
-                    map.put("60", "1小时");
-                    map.put("180", "3小时");
-                    map.put("360", "6小时");
-                    map.put("720", "12小时");
-                    map.put("1440", "24小时");
-                    map.put("-1", "自定义");
                     View parentView = HelpJishiDeployActivity.this.getWindow().getDecorView();
                     end_timeWin = PopupWin.Builder.create(HelpJishiDeployActivity.this)
-                            .setData(map, new PopupWin.Callback() {
+                            .setData(endTimeMap, new PopupWin.Callback() {
                                 @Override
                                 public void select(String key, String val) {
                                     if ("-1".equals(key)) {
@@ -286,6 +296,38 @@ public class HelpJishiDeployActivity extends BaseActivity {
         });
     }
 
+    private void initData(){
+        if(null != publiccontent){
+            et_content.setText(publiccontent);
+        }
+        if(null != privatecontent){
+            et_secret.setText(privatecontent);
+        }
+        if(null != genderlimit){
+            String val = genderMap.get(genderlimit);
+            if(null != val){
+                tv_gender.setText(val);
+                tv_gender.setTag(genderlimit);
+            }
+        }
+        if(null != money){
+            et_pay_money.setText(money);
+        }
+        if(null != validtime){
+            String val = null;
+            try {
+                val = endTimeMap.get(validtime);
+                if (null == val) {
+                    val = String.format("%d小时", Integer.parseInt(validtime) / 60);
+                }
+            }catch (Exception e){}
+            if(null != val){
+                tv_end_time.setText(val);
+                tv_end_time.setTag(validtime);
+            }
+        }
+
+    }
 
     private void showSelectWin(boolean selectFlag) {
         if (selectFlag) {
@@ -512,7 +554,6 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 job.setPrivatecontent(et_secret.getText().toString());
                 job.setRegionid(tv_group.getTag().toString());
                 job.setValidtime(tv_end_time.getTag().toString());
-                //job.setPaypassword(UserSubject.get);
                 req.setParttimejob(job);
                 new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                     @Override
