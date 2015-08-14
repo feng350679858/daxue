@@ -1,26 +1,20 @@
 package com.jingcai.apps.aizhuan.adapter.help;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
-import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu10.Stu10Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,8 +73,10 @@ public class HelpFriendAdapter extends BaseAdapter {
 
         //将对象存入viewHolder
         Stu10Response.Item region = regionList.get(position);
+        final boolean online = "1".equals(region.getStatus());
         viewHolder.region = region;
-        bitmapUtil.getImage(viewHolder.civ_head_logo, region.getTargetimgurl(), R.drawable.default_head_img);
+        bitmapUtil.getImage(viewHolder.civ_head_logo, region.getTargetimgurl(), R.drawable.default_head_img,online);
+
         String targetlevel = region.getTargetlevel();
         if(StringUtil.isNotEmpty(targetlevel)) {
             viewHolder.ltv_level.setLevel(Integer.parseInt(targetlevel));
@@ -89,7 +85,6 @@ public class HelpFriendAdapter extends BaseAdapter {
         viewHolder.tv_stu_school.setText(region.getTargetschool());
         viewHolder.tv_stu_college.setText(region.getTargetcollege());
 
-        final boolean online = "1".equals(region.getStatus());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
