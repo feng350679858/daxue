@@ -77,7 +77,7 @@ public class AccountTypeListAdapter extends BaseAdapter {
 
         Account04Response.Account04Body.Bank bank = mTypeList.get(position);
         viewHolder.bank = bank;
-        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(), R.drawable.logo_merchant_default);
+        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(), R.drawable.default_image);
         viewHolder.tv_title.setText(bank.getName());
 
         if(!mIsFooterDividerEnable){

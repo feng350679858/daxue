@@ -70,11 +70,11 @@ public class AccountStreamListAdapter extends BaseAdapter {
         Account02Response.Account02Body.Account account = accountList.get(position);
 
         String url = account.getImgurl();
-        bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
+        bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.default_image);
 
         //标题
-        Date date=DateUtil.parseDate(account.getOptime(),"yyyy-MM-dd hh:mm:ss.S");
-        String time=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+        Date date = DateUtil.parseDate(account.getOptime(), "yyyy-MM-dd hh:mm:ss.S");
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
         viewHolder.tv_time.setText(time);
         viewHolder.tv_title.setText(account.getTitle());
         setMoney(viewHolder.tv_money, account.getOptype(), account.getOpmoney());
@@ -84,7 +84,7 @@ public class AccountStreamListAdapter extends BaseAdapter {
     }
 
     private void setStatus(TextView tv_status, String status) {
-        if(status==null)
+        if (status == null)
             return;
         switch (status) {
             case "1":

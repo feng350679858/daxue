@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
@@ -72,7 +71,7 @@ public class PartjobListAdapter extends BaseAdapter {
         viewHolder.partjob = parttimejob;
 
         String url = parttimejob.getLogopath();
-        bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
+        bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.default_image);
 
         //标题
         viewHolder.tv_title.setText(parttimejob.getTitle());
