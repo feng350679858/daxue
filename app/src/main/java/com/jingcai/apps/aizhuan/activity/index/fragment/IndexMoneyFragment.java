@@ -107,13 +107,11 @@ public class IndexMoneyFragment extends BaseFragment {
             currentAreaname = GlobalConstant.AREA_NAME_HANGZHOU;
         }
         tv_address.setText(currentAreaname);
-        tv_address.setTag(currentAreacode);
 
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LocationCityActivity.class);
-                intent.putExtra("address",tv_address.getTag().toString());
                 startActivityForResult(intent, REQUEST_CODE_ADDRESS);
             }
         });
@@ -134,8 +132,8 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                intent.putExtra("address",tv_address.getTag().toString());
-                intent.putExtra("cancel","gone");
+                intent.putExtra("address", currentAreacode);
+                intent.putExtra("cancel", "gone");
                 startActivity(intent);
             }
         });
@@ -144,8 +142,8 @@ public class IndexMoneyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                intent.putExtra("address",tv_address.getTag().toString());
-                intent.putExtra("cancel","gone");
+                intent.putExtra("address", currentAreacode);
+                intent.putExtra("cancel", "gone");
                 startActivity(intent);
             }
         });
@@ -155,11 +153,9 @@ public class IndexMoneyFragment extends BaseFragment {
         linearLayout_label = (LinearLayout) mainView.findViewById(R.id.linearLayout_label);
         linearlout_left = (LinearLayout) mainView.findViewById(R.id.linearlout_left);
         linearlout_right = (LinearLayout) mainView.findViewById(R.id.linearlout_right);
-
-
-
-
     }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_ADDRESS: {
@@ -168,8 +164,9 @@ public class IndexMoneyFragment extends BaseFragment {
                     String code = data.getStringExtra("code");
                     String name = data.getStringExtra("name");
                     Log.i(TAG, "code=" + code + " name=" + name);
-                    tv_address.setTag(code);
                     tv_address.setText(name);
+                    currentAreacode = code;
+                    currentAreaname = name;
                     // 检索
                     initData();
                 }
@@ -188,21 +185,28 @@ public class IndexMoneyFragment extends BaseFragment {
             public void run() {
                 Advice05Request req = new Advice05Request();
                 Advice05Request.Notice notice = req.new Notice();
-                if (GlobalConstant.gis.hasGis()) {
-                    notice.setGisx(GlobalConstant.gis.getGisx());
-                    notice.setGisy(GlobalConstant.gis.getGisy());
-                    notice.setProvincename(GlobalConstant.gis.getProvincename());
-                    notice.setCityname(GlobalConstant.gis.getCityname());
-                }
+
                 String areacode = null, areacode2 = null;
-                if(StringUtil.isNotEmpty(GlobalConstant.getGis().getAreacode())){
-                    areacode = GlobalConstant.getGis().getAreacode();
-                    areacode2 = GlobalConstant.getGis().getAreacode2();
-                }else{
-                    areacode = GlobalConstant.AREA_CODE_HANGZHOU;
+                if(StringUtil.isNotEmpty(currentAreacode)){
+                    notice.setAreacode(currentAreacode);
+                }else {
+                    if (GlobalConstant.gis.hasGis()) {
+                        notice.setGisx(GlobalConstant.gis.getGisx());
+                        notice.setGisy(GlobalConstant.gis.getGisy());
+                        notice.setProvincename(GlobalConstant.gis.getProvincename());
+                        notice.setCityname(GlobalConstant.gis.getCityname());
+                    } else {
+
+                        if (StringUtil.isNotEmpty(GlobalConstant.getGis().getAreacode())) {
+                            areacode = GlobalConstant.getGis().getAreacode();
+                            areacode2 = GlobalConstant.getGis().getAreacode2();
+                        } else {
+                            areacode = GlobalConstant.AREA_CODE_HANGZHOU;
+                        }
+                        notice.setAreacode(areacode);
+                        notice.setAreacode2(areacode2);
+                    }
                 }
-                notice.setAreacode(areacode);
-                notice.setAreacode2(areacode2);
                 req.setNotice(notice);
                 azService.doTrans(req, Advice05Response.class, new AzService.Callback<Advice05Response>() {
                     @Override
@@ -264,20 +268,37 @@ public class IndexMoneyFragment extends BaseFragment {
                 reco.setType(GlobalConstant.BUSINESS_TYPE_PARTJOB);
                 req.setRecommend(reco);
                 Busi02Request.Parttimejob partjob = req.new Parttimejob();
-                if(null != GlobalConstant.gis) {
-                    partjob.setGisx(GlobalConstant.gis.getGisx());
-                    partjob.setGisy(GlobalConstant.gis.getGisy());
-                    partjob.setAreacode(tv_address.getTag().toString());
-                    partjob.setAreacode2(GlobalConstant.gis.getAreacode2());
-                    partjob.setProvincename(GlobalConstant.gis.getProvincename());
-                    partjob.setCityname(GlobalConstant.gis.getCityname());
+
+                String areacode = null, areacode2 = null;
+                if(StringUtil.isNotEmpty(currentAreacode)){
+                    partjob.setAreacode(currentAreacode);
+                }else {
+                    if (GlobalConstant.gis.hasGis()) {
+                        partjob.setGisx(GlobalConstant.gis.getGisx());
+                        partjob.setGisy(GlobalConstant.gis.getGisy());
+                        partjob.setProvincename(GlobalConstant.gis.getProvincename());
+                        partjob.setCityname(GlobalConstant.gis.getCityname());
+                    } else {
+                        if (StringUtil.isNotEmpty(GlobalConstant.getGis().getAreacode())) {
+                            areacode = GlobalConstant.getGis().getAreacode();
+                            areacode2 = GlobalConstant.getGis().getAreacode2();
+                        } else {
+                            areacode = GlobalConstant.AREA_CODE_HANGZHOU;
+                        }
+                        partjob.setAreacode(areacode);
+                        partjob.setAreacode2(areacode2);
+                    }
                 }
                 req.setParttimejob(partjob);
                 azService.doTrans(req, Busi02Response.class, new AzService.Callback<Busi02Response>() {
                     @Override
                     public void success(Busi02Response resp) {
                         if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(5, resp.getBody().getRecommend_list());
+                            List<Busi02Response.Body.Recommend> recommend_list = resp.getBody().getRecommend_list();
+                            if(null == recommend_list){
+                                recommend_list = new ArrayList<>();
+                            }
+                            messageHandler.postMessage(5, recommend_list);
                         } else {
                             messageHandler.postMessage(6, resp.getResultMessage());
                         }
@@ -373,7 +394,7 @@ public class IndexMoneyFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("labelid", labelid);
                     bundle.putString("labelname", labelname);
-                    intent.putExtra("address",tv_address.getTag().toString());
+                    intent.putExtra("address",currentAreacode);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
