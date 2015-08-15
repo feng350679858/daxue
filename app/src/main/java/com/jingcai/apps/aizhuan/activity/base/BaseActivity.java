@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
+import com.jingcai.apps.aizhuan.activity.util.BaseReceiver;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.util.InnerLock;
 import com.jingcai.apps.widget.TopToast2;
@@ -31,10 +33,12 @@ public class BaseActivity extends Activity {
 
     private ProgressDialog progressDialog = null;
     protected final InnerLock actionLock = new InnerLock();
+    private BaseReceiver baseReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        baseReceiver = new BaseReceiver(this);
         {
             density = getApplicationContext().getResources().getDisplayMetrics().density;
             Point point = new Point();
@@ -175,5 +179,18 @@ public class BaseActivity extends Activity {
         super.onPause();
 //        MobclickAgent.onPause(this);//友盟sdk
 //        JPushInterface.onPause(this);
+    }
+
+
+    @Override
+    protected void onStart() {
+        registerReceiver(baseReceiver, new IntentFilter(BaseReceiver.ACTION_JISHI_DISPATCH_REQUEST));
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(baseReceiver);
+        super.onStop();
     }
 }

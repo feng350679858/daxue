@@ -51,13 +51,13 @@ public class BaseHandler extends Handler {
                 if (msg.obj != null) {
                     showInnerToast(String.valueOf(msg.obj));
                 } else {
-                    showInnerToast("网络连接失败！");
+                    showInnerToast("网络连接失败！", 0);
                 }
                 break;
             }
             case 1001: {//解析返回异常
                 Log.e(TAG, String.valueOf(msg.obj));
-                showInnerToast("解析服务端返回异常");
+                showInnerToast("解析服务端返回异常", 0);
                 break;
             }
             case 1002: {//未登录异常
@@ -65,19 +65,19 @@ public class BaseHandler extends Handler {
                 if (UserSubject.isLogin()) {
                     relogin();//重新尝试登录系统
                 } else {
-                    showInnerToast("请重新登录");
+                    showInnerToast("请重新登录", 0);
                     UserSubject.loginFail();
                 }
                 break;
             }
             case 1003: {//超时
                 Log.e(TAG, String.valueOf(msg.obj));
-                showInnerToast("请求超时，请重试");
+                showInnerToast("请求超时，请重试", 0);
                 break;
             }
             case 1004: {//已重新登录
                 Log.e(TAG, String.valueOf(msg.obj));
-                showInnerToast("会话过期，已重新登录，请重试");
+                showInnerToast("会话过期，已重新登录，请重试", 0);
                 break;
             }
         }
