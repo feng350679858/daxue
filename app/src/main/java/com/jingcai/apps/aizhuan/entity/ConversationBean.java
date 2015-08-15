@@ -37,6 +37,11 @@ public class ConversationBean implements Parcelable{
         }
     };
 
+    public ConversationBean(String studentid, String logourl, String name) {
+        this.studentid = studentid;
+        this.logourl = logourl;
+        this.name = name;
+    }
     private ConversationBean(Parcel source){
         studentid = source.readString();
         logourl = source.readString();

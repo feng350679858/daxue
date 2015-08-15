@@ -165,7 +165,7 @@ public class MainActivity extends BaseFragmentActivity {
         bindService(new Intent(MainActivity.this, UnreadMsgService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 
 
-        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
+//        registerReceiver(mReceiver, new IntentFilter(ACTION_UPDATE_BADGE));
         HXHelper.getInstance().regNewMessageReceiver(this, broadcastReceiver, 3);
     }
 

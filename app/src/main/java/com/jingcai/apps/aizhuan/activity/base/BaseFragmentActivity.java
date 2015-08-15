@@ -1,10 +1,12 @@
 package com.jingcai.apps.aizhuan.activity.base;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
+import com.jingcai.apps.aizhuan.activity.util.BaseReceiver;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 
 /**
@@ -13,16 +15,29 @@ import com.jingcai.apps.aizhuan.persistence.UserSubject;
 public class BaseFragmentActivity extends FragmentActivity {
     private static final String TAG = "BaseFragmentActivity";
     private final int REQUEST_CODE_LOGIN = 101;
-
-    private BaseFragmentActivity mBaseActivity;
+    private BaseReceiver baseReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBaseActivity = this;
+
+        baseReceiver = new BaseReceiver(this);
+
 //        IntentFilter intentFilter = new IntentFilter();
 //        intentFilter.addAction(GlobalConstant.ACTION_UPDATE_BADGE);
 //        registerReceiver(mReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onStart() {
+        registerReceiver(baseReceiver, new IntentFilter(BaseReceiver.ACTION_JISHI_DISPATCH_REQUEST));
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(baseReceiver);
+        super.onStop();
     }
 
     /**

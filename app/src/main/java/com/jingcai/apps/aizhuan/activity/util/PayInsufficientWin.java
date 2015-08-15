@@ -1,11 +1,14 @@
 package com.jingcai.apps.aizhuan.activity.util;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.view.Gravity;
 import android.view.View;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
+import com.jingcai.apps.aizhuan.activity.base.BaseFragmentActivity;
 import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldRechargeActivity;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 
@@ -14,10 +17,10 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
  */
 public class PayInsufficientWin {
 
-    private final BaseActivity baseActivity;
+    private final Activity baseActivity;
     private PopupWin mPopWin;
 
-    public PayInsufficientWin(BaseActivity baseActivity) {
+    public PayInsufficientWin(Activity baseActivity) {
         this.baseActivity = baseActivity;
         init();
     }
@@ -30,7 +33,15 @@ public class PayInsufficientWin {
         View contentView = View.inflate(baseActivity, R.layout.pop_pay_insufficient, null);
         View parentView = baseActivity.getWindow().getDecorView();
 
-        int w = baseActivity.getScreenWidth() * 80 / 100;
+        int w = 0;
+        if(baseActivity instanceof BaseActivity){
+            w = ((BaseActivity)baseActivity).getScreenWidth() * 80 / 100;
+        }else {
+            Point point = new Point();
+            baseActivity.getWindowManager().getDefaultDisplay().getSize(point);
+            w = point.x * 80 / 100;
+        }
+
         mPopWin = PopupWin.Builder.create(baseActivity)
                 .setParentView(parentView)
                 .setContentView(contentView)

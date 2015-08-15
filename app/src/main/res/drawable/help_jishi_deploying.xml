@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--   
+    根标签为animation-list，其中oneshot代表着是否只展示一遍，设置为false会不停的循环播放动画  
+    根标签下，通过item标签对动画中的每一个图片进行声明  
+    android:duration 表示展示所用的该图片的时间长度  
+ -->
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false"
+    >
+    <item android:drawable="@drawable/help_jishi_deploying1" android:duration="100"></item>
+    <item android:drawable="@drawable/help_jishi_deploying2" android:duration="100"></item>
+    <item android:drawable="@drawable/help_jishi_deploying3" android:duration="200"></item>
+    <item android:drawable="@drawable/help_jishi_deploying4" android:duration="200"></item>
+    <item android:drawable="@drawable/help_jishi_deploying5" android:duration="200"></item>
+    <item android:drawable="@drawable/help_jishi_deploying6" android:duration="200"></item>
+    <item android:drawable="@drawable/help_jishi_deploying7" android:duration="200"></item>
+    <item android:drawable="@drawable/help_jishi_deploying8" android:duration="100"></item>
+</animation-list>
