@@ -40,7 +40,7 @@
                     android:drawablePadding="4dp"
                     android:text="订阅号"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <ImageView
@@ -93,7 +93,7 @@
                     android:drawablePadding="4dp"
                     android:text="服务号"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <ImageView

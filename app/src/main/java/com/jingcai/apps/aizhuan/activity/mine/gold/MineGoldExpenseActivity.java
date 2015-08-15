@@ -94,7 +94,7 @@ public class MineGoldExpenseActivity extends BaseActivity implements XListView.I
                     Account02Request.Account account = req.new Account();
                     account.setStart(String.valueOf(mCurrentStart));
                     account.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                    account.setWalletcode("gold");
+                    account.setWalletcode("cash");
                     account.setOptype("debit");
                     account.setEnddate(DateUtil.formatDate(new Date(), "yyyyMMdd"));
                     account.setBegindate(DateUtil.formatDate(DateUtil.getDateMonthsAgo(1), "yyyyMMdd"));
