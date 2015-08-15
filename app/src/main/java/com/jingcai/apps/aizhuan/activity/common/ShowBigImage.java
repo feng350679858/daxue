@@ -102,7 +102,7 @@ public class ShowBigImage extends BaseActivity {
 		image.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				ShowBigImage.this.finish();
 			}
 		});
 	}

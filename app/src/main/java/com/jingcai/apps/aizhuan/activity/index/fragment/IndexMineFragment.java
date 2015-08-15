@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseFragment;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineContactServiceActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineCreditActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MinePersonalDataActivity;
@@ -25,6 +26,7 @@ import com.jingcai.apps.aizhuan.activity.mine.gold.MineAccountActivity;
 import com.jingcai.apps.aizhuan.activity.mine.help.MineHelpListActivity;
 import com.jingcai.apps.aizhuan.activity.sys.SettingsActivity;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
+import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -109,9 +111,20 @@ public class IndexMineFragment extends BaseFragment {
     private void initHeader() {
 
         ((TextView) mainView.findViewById(R.id.tv_content)).setText("我的");
-        ((ImageView) mainView.findViewById(R.id.ib_back)).setImageDrawable(getResources
-                ().getDrawable(R.drawable.icon_index_mine_twodimensioncode));
+        final ImageView ibBack = (ImageView) mainView.findViewById(R.id.ib_back);
         ImageView ivFunc = (ImageView) mainView.findViewById(R.id.iv_func);
+
+        ibBack.setImageDrawable(getResources
+                ().getDrawable(R.drawable.icon_index_mine_twodimensioncode));
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(baseActivity, IndexBannerDetailActivity.class);
+                intent.putExtra("title","我的二维码");
+                intent.putExtra("url", GlobalConstant.h5Url+"/student/qrcode?studentid="+UserSubject.getStudentid());
+                startActivity(intent);
+            }
+        });
         ivFunc.setVisibility(View.VISIBLE);
         ivFunc.setImageDrawable(getResources
                 ().getDrawable(R.drawable.icon_index_mine_settings));

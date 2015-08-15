@@ -13,9 +13,12 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.business.account.account02.Account02Response;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
+import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,7 +57,6 @@ public class AccountStreamListAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.mine_gold_account_steam_detail_list_item, null);
-
             viewHolder = new ViewHolder();
             viewHolder.iv_logo = (ImageView) convertView.findViewById(R.id.iv_stream_detail_logo);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.iv_stream_detail_title);
@@ -66,23 +68,24 @@ public class AccountStreamListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Account02Response.Account02Body.Account account = accountList.get(position);
-        if ("credit".equals(account.getOptype())) {
 
-            String url = account.getImgurl();
-            bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.logo_merchant_default);
+        String url = account.getImgurl();
+        bitmapUtil.getImage(viewHolder.iv_logo, url, true, R.drawable.default_image);
 
-            //标题
-            viewHolder.tv_time.setText(account.getOptime());
-            viewHolder.tv_title.setText(account.getTitle());
-            setMoney(viewHolder.tv_money, account.getOptype(), account.getOpmoney());
-            setStatus(viewHolder.tv_status, account.getStatus());
+        //标题
+        Date date = DateUtil.parseDate(account.getOptime(), "yyyy-MM-dd hh:mm:ss.S");
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+        viewHolder.tv_time.setText(time);
+        viewHolder.tv_title.setText(account.getTitle());
+        setMoney(viewHolder.tv_money, account.getOptype(), account.getOpmoney());
+        setStatus(viewHolder.tv_status, account.getStatus());
 
-            return convertView;
-        }
-        return null;
+        return convertView;
     }
 
     private void setStatus(TextView tv_status, String status) {
+        if (status == null)
+            return;
         switch (status) {
             case "1":
                 tv_status.setText("进行中");
@@ -111,7 +114,6 @@ public class AccountStreamListAdapter extends BaseAdapter {
             money += "+";
         } else {
             money += "-";
-            return;
         }
         try {
             float fMoney = Float.parseFloat(opmoney);

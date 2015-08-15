@@ -88,7 +88,7 @@ public class AccountBankListAdapter extends BaseAdapter {
                 viewHolder.iv_divider.setVisibility(View.VISIBLE);
             }
         }
-        mBitmapUtil.getImage(viewHolder.iv_logo,mBankList.get(position).getImgurl(), R.drawable.logo_merchant_default);
+        mBitmapUtil.getImage(viewHolder.iv_logo,mBankList.get(position).getImgurl(), R.drawable.default_image);
         viewHolder.tv_title.setText(mBankList.get(position).getName());
         String cardno = mBankList.get(position).getCardno();
 

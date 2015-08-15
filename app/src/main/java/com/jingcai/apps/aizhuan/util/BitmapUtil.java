@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 public class BitmapUtil {
     private RequestQueue queue;
     private ImageLoader imageLoader;
+
     private static ImageLoader.ImageCache bitmapCache = new ImageLoader.ImageCache() {
         private int maxSize = (int) Runtime.getRuntime().maxMemory()/8;
         private LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(maxSize) {
@@ -68,8 +69,13 @@ public class BitmapUtil {
      * @param defaultImageResId
      */
     public void getImage(final ImageView imageView, final String imgpath, @DrawableRes final int defaultImageResId) {
-        getImage(imageView, imgpath, false, defaultImageResId, defaultImageResId);
+        getImage(imageView, imgpath, false, defaultImageResId, defaultImageResId,true);
     }
+
+    public void getImage(final ImageView imageView, final String imgpath, @DrawableRes final int defaultImageResId,boolean online) {
+        getImage(imageView, imgpath, true, defaultImageResId, defaultImageResId,online);
+    }
+
 
     /**
      * 根据网址获得图片，优先从本地获取，本地没有则从网络下载
@@ -80,7 +86,7 @@ public class BitmapUtil {
      * @param defaultImageResId
      */
     public void getImage(final ImageView imageView, final String imgpath, final boolean saveToDisk, final int defaultImageResId) {
-        getImage(imageView, imgpath, saveToDisk, defaultImageResId, defaultImageResId);
+        getImage(imageView, imgpath, saveToDisk, defaultImageResId, defaultImageResId,true);
     }
 
     /**
@@ -92,7 +98,7 @@ public class BitmapUtil {
      * @param defaultImageResId
      * @param errorImageResId
      */
-    public void getImage(final ImageView imageView, final String imgpath, final boolean saveToDisk, final int defaultImageResId, final int errorImageResId) {
+    public void getImage(final ImageView imageView, final String imgpath, final boolean saveToDisk, final int defaultImageResId, final int errorImageResId, final boolean online) {
         if(null == imageView){
             return;
         }
@@ -102,7 +108,11 @@ public class BitmapUtil {
         }
         File file = getImageFile(imgpath);
         if (file.exists()) {
-            imageView.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
+            Bitmap bm = BitmapFactory.decodeFile(file.getPath());
+            if(!online){
+                bm = convertGreyImg(bm);
+            }
+            imageView.setImageBitmap(bm);
             return;
         }
         if (defaultImageResId != 0) {
@@ -118,10 +128,12 @@ public class BitmapUtil {
 
             @Override
             public void success(Bitmap bitmap) {
+                if (!online) {
+                    bitmap = convertGreyImg(bitmap);
+                }
                 imageView.setImageBitmap(bitmap);
             }
         });
-
     }
 
     public interface Callback {
@@ -220,6 +232,32 @@ public class BitmapUtil {
             file.mkdirs();
         }
         return file.getPath();
+    }
+
+    public static Bitmap convertGreyImg(Bitmap img) {
+        int width = img.getWidth();         //获取位图的宽
+        int height = img.getHeight();       //获取位图的高
+
+        int []pixels = new int[width * height]; //通过位图的大小创建像素点数组
+
+        img.getPixels(pixels, 0, width, 0, 0, width, height);
+        int alpha = 0xFF << 24;
+        for(int i = 0; i < height; i++)  {
+            for(int j = 0; j < width; j++) {
+                int grey = pixels[width * i + j];
+
+                int red = ((grey  & 0x00FF0000 ) >> 16);
+                int green = ((grey & 0x0000FF00) >> 8);
+                int blue = (grey & 0x000000FF);
+
+                grey = (int)((float) red * 0.3 + (float)green * 0.59 + (float)blue * 0.11);
+                grey = alpha | (grey << 16) | (grey << 8) | grey;
+                pixels[width * i + j] = grey;
+            }
+        }
+        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        result.setPixels(pixels, 0, width, 0, 0, width, height);
+        return result;
     }
 
 }

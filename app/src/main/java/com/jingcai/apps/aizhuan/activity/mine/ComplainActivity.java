@@ -115,7 +115,7 @@ public class ComplainActivity extends BaseActivity {
      */
     private void initData() {
         BitmapUtil bitmapUtil = new BitmapUtil(this);
-        bitmapUtil.getImage(mImageLogopath, getIntent().getStringExtra("logopath"), true, R.drawable.logo_merchant_default);
+        bitmapUtil.getImage(mImageLogopath, getIntent().getStringExtra("logopath"), true, R.drawable.default_image);
         mTxtTitle.setText(getIntent().getStringExtra("title"));
     }
 
