@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,12 +32,15 @@ import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob12.Partjob12Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -58,11 +63,13 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private AzService azService = new AzService();
     private BitmapUtil bitmapUtil = new BitmapUtil();
     private MessageHandler messageHandler;
+    private CommentItem selectedRegion;
     private XListView groupListView;
     private HelpCommentAdapter commentAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private CheckBox cb_jishi_help;
     private EditText et_reploy_comment;
+    private Button btn_jishi_comment;
     private ImageView iv_func;
     private ImageView civ_head_logo;
     private LevelTextView ltv_level;
@@ -103,6 +110,17 @@ public class HelpJishiDetailActivity extends BaseActivity {
         }
     }
 
+    private void finishWithResult() {
+        Intent intent = new Intent();
+        intent.putExtra("status", job.getStatus());
+        intent.putExtra("praiseid", job.getPraiseid());
+        intent.putExtra("praiseflag", job.getPraiseflag());
+        intent.putExtra("praisecount", job.getPraisecount());
+        intent.putExtra("commentcount", job.getCommentcount());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("求助详情");
@@ -114,8 +132,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //setResult(RESULT_CANCELED);
-                finish();
+                finishWithResult();
             }
         });
     }
@@ -168,10 +185,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         groupListView.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onRefresh() {
-                commentAdapter.clearData();
-                mCurrentStart = 0;
-                groupListView.setPullLoadEnable(true);
-                initGroupData();
+                refresh();
             }
 
             @Override
@@ -187,8 +201,10 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 commentAdapter.clearSelected();
                 if (!selected) {
                     region.setSelected(!selected);
+                    selectedRegion = region;
                     et_reploy_comment.setHint("回复：" + region.getSourcename());
                 } else {
+                    selectedRegion = null;
                     et_reploy_comment.setHint("评论");
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -210,7 +226,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         region.setPraiseid(null);
                         region.setPraisecount(checkBox.getText().toString());
                     }
-                }).click("1", helpid, region.getPraiseid(), checkBox);
+                }).click("4", region.getContentid(), region.getPraiseid(), checkBox);
             }
 
             @Override
@@ -226,13 +242,64 @@ public class HelpJishiDetailActivity extends BaseActivity {
         });
 
         et_reploy_comment = (EditText) findViewById(R.id.et_reploy_comment);
+        btn_jishi_comment = (Button)findViewById(R.id.btn_jishi_comment);
+        btn_jishi_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideInputMethodDialog(HelpJishiDetailActivity.this);
+                doComment();
+            }
+        });
+    }
+    private void refresh() {
+        commentAdapter.clearData();
+        mCurrentStart = 0;
+        groupListView.setPullLoadEnable(true);
+        initGroupData();
+    }
+
+    private void doComment() {
+        if (!actionLock.tryLock()) return;
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob12Request req = new Partjob12Request();
+                Partjob12Request.Parttimejob job = req.new Parttimejob();
+                job.setSourceid(UserSubject.getStudentid());
+                if (null == selectedRegion) {
+                    job.setTargettype("1");//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
+                    job.setTargetid(helpid);
+                } else {
+                    job.setTargettype("4");
+                    job.setTargetid(selectedRegion.getContentid());
+                }
+                job.setOptype("1");//评论类型 1：评论 2：点赞
+                job.setContent(et_reploy_comment.getText().toString());
+                req.setParttimejob(job);
+                new AzService().doTrans(req, Partjob12Response.class, new AzService.Callback<Partjob12Response>() {
+                    @Override
+                    public void success(Partjob12Response resp) {
+                        if ("0".equals(resp.getResultCode())) {
+                            String praisecount = resp.getBody().getParttimejob().getCount();
+                            messageHandler.postMessage(3, praisecount);
+                        } else {
+                            messageHandler.postMessage(4, "评论失败:" + resp.getResultMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     private void setViewData() {
         if (null == job) {
             return;
         }
-        final boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
         iv_func.setVisibility(View.VISIBLE);
         iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +321,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
                 View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
 
+                boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
                 if (selfFlag || "3".equals(type)) {//公告不能举报
                     tv_pop_abuse_report.setVisibility(View.GONE);
                 } else {
@@ -317,7 +385,11 @@ public class HelpJishiDetailActivity extends BaseActivity {
         } else {
             cb_jishi_comment.setText(job.getCommentcount());
         }
+        setStatus();
+    }
 
+    private void setStatus(){
+        boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
         //即时帮助-求助中,helperid为空表示有还未有人请求帮助
         if(!selfFlag && "1".equals(type) && "1".equals(job.getStatus())) {
             cb_jishi_help.setText("帮TA");
@@ -330,12 +402,17 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         @Override
                         public void run() {
                             Partjob37Request req = new Partjob37Request(helpid, UserSubject.getStudentid());
-                            azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                            azService.doTrans(req, Partjob37Response.class, new AzService.Callback<Partjob37Response>() {
                                 @Override
-                                public void success(BaseResponse resp) {
+                                public void success(Partjob37Response resp) {
                                     ResponseResult result = resp.getResult();
                                     if ("0".equals(result.getCode())) {
-                                        messageHandler.postMessage(11);//检查通过，显示确认对话框
+                                        Partjob37Response.Parttimejob job2 = resp.getBody().getParttimejob();
+                                        if ("0".equals(job2.getCode())) {
+                                            messageHandler.postMessage(11);//检查通过，显示确认对话框
+                                        } else {
+                                            messageHandler.postMessage(10, job2);
+                                        }
                                     } else {
                                         messageHandler.postMessage(9, "接单失败:" + resp.getResultMessage());
                                     }
@@ -351,6 +428,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
             });
         } else {//显示状态
             cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+            layout_jishi_help.setOnClickListener(null);
         }
     }
 
@@ -378,14 +456,6 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-                case 9: {
-                    try {
-                        showToast(String.valueOf(msg.obj));
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
                 case 2: {
                     try {
                         List<CommentItem> list = (List<CommentItem>) msg.obj;
@@ -396,6 +466,49 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         if (list.size() < GlobalConstant.PAGE_SIZE) {
                             groupListView.setPullLoadEnable(false);
                         }
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 3: {
+                    showToast((null == selectedRegion?"评论":"回复")+"成功");
+                    actionLock.unlock();
+                    //设置评论数
+                    job.setCommentcount(String.valueOf(msg.obj));
+                    cb_jishi_comment.setText(job.getCommentcount());
+
+                    commentAdapter.clearSelected();
+                    commentAdapter.notifyDataSetChanged();
+                    selectedRegion = null;
+                    et_reploy_comment.setText("");
+                    et_reploy_comment.setHint("评论");
+
+                    refresh();
+                    break;
+                }
+                case 4: {
+                    try {
+                        showToast(String.valueOf(msg.obj));
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 9: {
+                    try {
+                        showToast(String.valueOf(msg.obj));
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 10: {
+                    try {
+                        Partjob37Response.Parttimejob job2 = (Partjob37Response.Parttimejob) msg.obj;
+                        job.setStatus(job2.getStatus());//状态设置为帮助中
+                        setStatus();
+                        showToast("接单失败:" + job2.getDescription());
                     } finally {
                         actionLock.unlock();
                     }
@@ -556,5 +669,14 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithResult();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -21,9 +21,12 @@ import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Request;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DES3Util;
 import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.StringUtil;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by lejing on 15/4/27.
@@ -32,7 +35,9 @@ public class LoginActivity extends BaseActivity {
     private final int REQUEST_CODE_REGIST = 101;
     private final int REQUEST_CODE_FORGET_PWD = 102;
     private EditText et_username, et_password;
+    private BitmapUtil bitmapUtil = new BitmapUtil();
     private MessageHandler messageHandler;
+    private CircleImageView civ_head_logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initViews() {
+        civ_head_logo = (CircleImageView) findViewById(R.id.civ_head_logo);
+        bitmapUtil.getImage(civ_head_logo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
+
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
 

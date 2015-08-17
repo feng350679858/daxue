@@ -33,7 +33,7 @@ public class Partjob34Response extends BaseResponse<Partjob34Response.Body> {
         private String sourcecollege;
         private String optime;
         private String praisecount;
-        private String commentcount;
+        private String answercount;
         private String anonflag;
         private String helpflag;
         private String helperid;
@@ -88,12 +88,12 @@ public class Partjob34Response extends BaseResponse<Partjob34Response.Body> {
             this.anonflag = anonflag;
         }
 
-        public String getCommentcount() {
-            return commentcount;
+        public String getAnswercount() {
+            return answercount;
         }
 
-        public void setCommentcount(String commentcount) {
-            this.commentcount = commentcount;
+        public void setAnswercount(String answercount) {
+            this.answercount = answercount;
         }
 
         public String getContent() {

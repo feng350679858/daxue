@@ -2,20 +2,15 @@ package com.jingcai.apps.aizhuan.activity.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.help.HelpJishiDetailActivity;
-import com.jingcai.apps.aizhuan.activity.mine.gold.MineGoldRechargeActivity;
-import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;

@@ -36,12 +36,21 @@ public class Partjob11Response extends BaseResponse<Partjob11Response.Body> {
         private String sourcecollege;
         private String optime;
         private String praisecount;
+        private String answercount;
         private String commentcount;
         private String status;
         private String helpflag;
         private String helperid;
         private String praiseflag;
         private String praiseid;
+
+        public String getAnswercount() {
+            return answercount;
+        }
+
+        public void setAnswercount(String answercount) {
+            this.answercount = answercount;
+        }
 
         public String getPraiseid() {
             return praiseid;
