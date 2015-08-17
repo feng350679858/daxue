@@ -105,6 +105,7 @@ public class HelpFriendOnlineActivity extends BaseActivity {
                 Intent intent = new Intent();
                 Stu10Response.Item item = holder.region;
                 intent.putExtra("userid", item.getTargetid());
+                intent.putExtra("logoimgurl", item.getTargetimgurl());
                 intent.putExtra("username", item.getTargetname());
                 intent.putExtra("schoolname", item.getTargetschool());
                 intent.putExtra("collegename", item.getTargetcollege());

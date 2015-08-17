@@ -30,6 +30,15 @@ public class Partjob37Request extends BaseRequest {
 
     class Parttimejob {
         private String helpid;
+        private String studentid;
+
+        public String getStudentid() {
+            return studentid;
+        }
+
+        public void setStudentid(String studentid) {
+            this.studentid = studentid;
+        }
 
         public String getHelpid() {
             return helpid;

@@ -32,6 +32,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DES3Util;
 import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
@@ -45,6 +46,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by lejing on 15/7/14.
  */
@@ -53,6 +56,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private String genderlimit, money, publiccontent, privatecontent, validtime;
 
     private MessageHandler messageHandler;
+    private BitmapUtil bitmapUtil = new BitmapUtil();
     private PopupWin groupWin;
     private PopupWin end_timeWin;
     private EditText et_end_time;
@@ -66,6 +70,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
     private Button btn_jishi_help;
     private EditText et_content, et_secret, et_pay_money;
     private View iv_friend_clear, layout_friend_selected;
+    private CircleImageView civ_friend_imgurl;
     private TextView tv_gender, tv_group, tv_friend, tv_end_time;
     private TextView tv_friend_name, tv_friend_school_college;
     private String oldfriendid;
@@ -137,6 +142,7 @@ public class HelpJishiDeployActivity extends BaseActivity {
         iv_friend_clear = findViewById(R.id.iv_friend_clear);
         layout_friend_selected = findViewById(R.id.layout_friend_selected);
         tv_friend = (TextView) findViewById(R.id.tv_friend);
+        civ_friend_imgurl = (CircleImageView) findViewById(R.id.civ_friend_imgurl);
         tv_friend_name = (TextView) findViewById(R.id.tv_friend_name);
         tv_friend_school_college = (TextView) findViewById(R.id.tv_friend_school_college);
         et_pay_money = (EditText) findViewById(R.id.et_pay_money);
@@ -231,20 +237,6 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_CODE_FRIEND);
             }
         });
-//        tv_friend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(HelpJishiDeployActivity.this, HelpFriendOnlineActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE_FRIEND);
-//            }
-//        });
-//        layout_friend_selected.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(HelpJishiDeployActivity.this, HelpFriendOnlineActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE_FRIEND);
-//            }
-//        });
         iv_friend_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -503,8 +495,10 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 if (resultCode == RESULT_OK) {
                     oldfriendid = data.getStringExtra("userid");
                     String username = data.getStringExtra("username");
+                    String logoimgurl = data.getStringExtra("logoimgurl");
                     String schoolname = data.getStringExtra("schoolname");
                     String collegename = data.getStringExtra("collegename");
+                    bitmapUtil.getImage(civ_friend_imgurl, logoimgurl, true, R.drawable.default_head_img);
                     tv_friend_name.setText(username);
                     tv_friend_school_college.setText(schoolname + "-" + collegename);
                     showSelectWin(true);
