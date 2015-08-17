@@ -49,17 +49,7 @@ public class LoginActivity extends BaseActivity {
             doLogin(UserSubject.getPhone(), DES3Util.decrypt(UserSubject.getPassword()));
         }
     }
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event){
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            if (MainActivity.instance != null)
-//                MainActivity.instance.finish();
-//            finish();
-//
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+
     private void initViews() {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);

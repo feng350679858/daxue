@@ -44,8 +44,7 @@ import java.util.List;
  */
 public class MainActivity extends BaseFragmentActivity {
     private static final String TAG = "MainActivity";
-//    public static MainActivity instance=null;
-
+    private static MainActivity instance;
     //Tab相关
     private LinearLayout mLlCampus, mLlMessgage, mLlMoney, mLlMine;
     private ImageButton mBtnRelease;
@@ -132,8 +131,8 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.main_activity);
-//        instance = this;
         initView();
     }
 
@@ -259,6 +258,12 @@ public class MainActivity extends BaseFragmentActivity {
         unreadMsgService.startCount();
         unbindService(serviceConnection);
         super.onDestroy();
+    }
+
+    public static void logout(){
+        if(null != instance){
+            instance.finish();
+        }
     }
 
     /**

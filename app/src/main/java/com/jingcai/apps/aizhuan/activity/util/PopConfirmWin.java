@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -38,10 +39,8 @@ public class PopConfirmWin {
                 .setContentViewLayout(R.layout.pop_confirm)
                 .setParentView(parentView)
                 .build();
-        win.findTextViewById(R.id.tv_title).setText("确认？");
-        win.findTextViewById(R.id.tv_content).setText("确认立即帮助？");
 
-        win.setAction(R.id.tv_cancel, new View.OnClickListener() {
+        setCancelAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 win.dismiss();
@@ -51,6 +50,9 @@ public class PopConfirmWin {
 
 
     public PopConfirmWin setTitle(String txt) {
+        if (null == txt || txt.length() < 1) {
+            win.findTextViewById(R.id.tv_title).setVisibility(View.GONE);
+        }
         win.findTextViewById(R.id.tv_title).setText(txt);
         return this;
     }
@@ -60,9 +62,38 @@ public class PopConfirmWin {
         return this;
     }
 
-    public PopConfirmWin setAction(int resid, View.OnClickListener listener) {
-        win.setAction(resid, listener);
+    public PopConfirmWin setOkAction(View.OnClickListener listener) {
+        return setOkAction("确定", listener);
+    }
+
+    public PopConfirmWin setOkAction(String txt, View.OnClickListener listener) {
+        Button btn = win.findButtonById(R.id.btn_confirm);
+        if (null == listener) {
+            btn.setVisibility(View.GONE);
+            return this;
+        }
+        btn.setText(txt);
+        btn.setOnClickListener(listener);
         return this;
+    }
+
+    public PopConfirmWin setCancelAction(View.OnClickListener listener) {
+        return setCancelAction("取消", listener);
+    }
+
+    public PopConfirmWin setCancelAction(String txt, View.OnClickListener listener) {
+        Button btn = win.findButtonById(R.id.btn_cancel);
+        if (null == listener) {
+            btn.setVisibility(View.GONE);
+            return this;
+        }
+        btn.setText(txt);
+        btn.setOnClickListener(listener);
+        return this;
+    }
+
+    public boolean inShowing(){
+        return win.isShowing();
     }
 
     public void show() {
