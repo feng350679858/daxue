@@ -69,8 +69,6 @@ public class HelpJishiDeployingActivity extends BaseActivity {
 
             initView();
 
-            registerReceiver(mReceiver, new IntentFilter(ACTION_JISHI_DEPLOY_SUCCESS));
-
             new AzExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -105,14 +103,14 @@ public class HelpJishiDeployingActivity extends BaseActivity {
         AnimationDrawable animationDrawable = (AnimationDrawable) tv_loading.getDrawable();
         animationDrawable.start();
 
-        tv_loading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ACTION_JISHI_DEPLOY_SUCCESS);
-                intent.putExtra("helpid", helpid);
-                sendBroadcast(intent);
-            }
-        });
+//        tv_loading.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ACTION_JISHI_DEPLOY_SUCCESS);
+//                intent.putExtra("helpid", helpid);
+//                sendBroadcast(intent);
+//            }
+//        });
     }
 
     private void doCancel() {
@@ -211,9 +209,20 @@ public class HelpJishiDeployingActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        registerReceiver(mReceiver, new IntentFilter(ACTION_JISHI_DEPLOY_SUCCESS));
+        super.onStart();
+    }
+
+    @Override
     protected void onStop() {
-        stopFlag = true;
         unregisterReceiver(mReceiver);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopFlag = true;
+        super.onDestroy();
     }
 }

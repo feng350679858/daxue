@@ -3,21 +3,12 @@ package com.jingcai.apps.aizhuan.activity.partjob;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
-import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
-import com.jingcai.apps.aizhuan.persistence.UserSubject;
-import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 
 /**
@@ -46,7 +37,7 @@ public class PartjobJoinSuccessActivity extends BaseActivity {
     private void initHeader(){
         ((TextView)findViewById(R.id.tv_content)).setText("报名成功");
         findViewById(R.id.ib_back).setVisibility(View.GONE);
-        ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.INVISIBLE);
+        ((ImageView)findViewById(R.id.iv_func)).setVisibility(View.GONE);
         ((ImageView)findViewById(R.id.iv_bird_badge)).setVisibility(View.INVISIBLE);
         TextView tv_info=(TextView)findViewById(R.id.tv_func);
         tv_info.setVisibility(View.VISIBLE);

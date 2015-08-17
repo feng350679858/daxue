@@ -102,10 +102,8 @@ public class BaseReceiver extends BroadcastReceiver {
                 case 21: {
                     try {
                         Object[] objs = (Object[]) msg.obj;
-                        String helpid = String.valueOf(objs[0]);
+//                        String helpid = String.valueOf(objs[0]);
                         String studentid = String.valueOf(objs[1]);
-//                        IOSPopWin win = new IOSPopWin(baseFragmentActivity);
-//                        win.showWindow("你收到一条新的求助", "求助。。。。", "查看详情");
                         PopJishiDispatchRequestWin win = new PopJishiDispatchRequestWin(baseActivity);
                         win.setTitle("你收到一条新的求助");
                         win.setActionText("确认接单");
@@ -156,5 +154,4 @@ public class BaseReceiver extends BroadcastReceiver {
             }
         }
     }
-
 }

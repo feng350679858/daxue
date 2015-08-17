@@ -105,6 +105,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
+        Log.e("==", "----error---", ex);
 //        AlertDialog dialog = new AlertDialog.Builder(mContext)
 ////                .setTitle(R.string.message_title)
 ////                .setMessage(R.string.del_prompt)

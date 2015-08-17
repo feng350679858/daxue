@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/content_background"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/include_header" />
@@ -28,8 +28,7 @@
             android:layout_marginTop="20dp"
             android:text="哎哟喂，报名成功了~"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/important_dark"
-            android:textSize="18sp" />
+            style="@style/title" />
 
         <TextView
             android:layout_below="@+id/tv1"
@@ -39,8 +38,7 @@
             android:layout_marginTop="10dp"
             android:text="请立即与商家联系，确认工作事项。"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/assist_grey"
-            android:textSize="16sp" />
+           style="@style/sub_title" />
 
         <RelativeLayout
             android:layout_above="@+id/button"
@@ -65,8 +63,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:text="我想要"
-                android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                style="@style/title" />
 
             <View
                 android:layout_width="match_parent"
@@ -83,7 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:showDividers="none">
 
             <TextView
                 android:id="@+id/btn_share"
