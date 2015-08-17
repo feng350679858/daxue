@@ -22,28 +22,22 @@
             android:padding="15dp">
 
             <TextView
+                style="@style/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mine_partjob_cancel_tip"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:text="@string/mine_partjob_cancel_tip" />
 
             <TextView
                 android:id="@+id/tv_mine_partjob_cancel_mention"
+                style="@style/sub_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/assist_grey"
-                android:textSize="16sp" />
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <include layout="@layout/include_confirm_buttons" />
-        </LinearLayout>
+        <include layout="@layout/include_confirm_buttons" />
+
     </LinearLayout>
 </LinearLayout>
