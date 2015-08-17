@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.activity.mine.MineSuggestionActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
@@ -255,11 +256,10 @@ public class SettingsActivity extends BaseActivity {
                     new JpushUtil(SettingsActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
 
-                    Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    finish();
+                    MainActivity.logout();
 
-                    SettingsActivity.this.finish();
+                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
                     break;
                 }
                 case 3: {

@@ -232,6 +232,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         if (null == job) {
             return;
         }
+        final boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
         iv_func.setVisibility(View.VISIBLE);
         iv_func.setImageResource(R.drawable.icon__header_more);
         iv_func.setOnClickListener(new View.OnClickListener() {
@@ -253,8 +254,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
                 View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
 
-                final boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
-                if (selfFlag) {
+                if (selfFlag || "3".equals(type)) {//公告不能举报
                     tv_pop_abuse_report.setVisibility(View.GONE);
                 } else {
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
@@ -275,7 +275,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     tv_pop_share.setVisibility(View.VISIBLE);
                     tv_pop_share.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {//分享
+                        public void onClick(View v) {//TODO 分享
                             Log.d("==", "-----------tv_pop_share---");
 //                            UmengShareUtil umengShareUtil = new UmengShareUtil(HelpJishiDetailActivity.this);
 //                            umengShareUtil.setShareContent("兼职分享", msg + getShareUrl(), getShareUrl(), logopath);
@@ -319,7 +319,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         }
 
         //即时帮助-求助中,helperid为空表示有还未有人请求帮助
-        if("1".equals(type) && "1".equals(job.getStatus())) {
+        if(!selfFlag && "1".equals(type) && "1".equals(job.getStatus())) {
             cb_jishi_help.setText("帮TA");
             layout_jishi_help.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -329,7 +329,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     azExecutor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            Partjob37Request req = new Partjob37Request(helpid);
+                            Partjob37Request req = new Partjob37Request(helpid, UserSubject.getStudentid());
                             azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                                 @Override
                                 public void success(BaseResponse resp) {
@@ -337,7 +337,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                                     if ("0".equals(result.getCode())) {
                                         messageHandler.postMessage(11);//检查通过，显示确认对话框
                                     } else {
-                                        messageHandler.postMessage(12, resp.getResultMessage());
+                                        messageHandler.postMessage(9, "接单失败:" + resp.getResultMessage());
                                     }
                                 }
 
@@ -378,9 +378,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-                case 1: {
+                case 9: {
                     try {
-                        showToast("获取详情失败:" + msg.obj);
+                        showToast(String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
@@ -401,20 +401,12 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-                case 3: {
-                    try {
-                        showToast("获取评论失败:" + msg.obj);
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
                 case 11: {
                     try {
                         if (null == helpConfirmWin) {
                             //显示立即帮助确认对话框
                             helpConfirmWin = new PopConfirmWin(HelpJishiDetailActivity.this);
-                            helpConfirmWin.setTitle("确认？").setContent("确认立即帮助？").setAction(R.id.tv_confirm, new View.OnClickListener() {
+                            helpConfirmWin.setTitle("确认接单").setContent("你确定现在有时间与精力帮助这位同学？").setOkAction(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     doJishiHelp();
@@ -422,14 +414,6 @@ public class HelpJishiDetailActivity extends BaseActivity {
                             });
                         }
                         helpConfirmWin.show();
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
-                case 12: {
-                    try {
-                        showToast("接单失败:" + String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
@@ -479,7 +463,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                             Partjob19Response.Parttimejob job = response.getBody().getParttimejob();
                             messageHandler.postMessage(0, job);
                         } else {
-                            messageHandler.postMessage(1, result.getMessage());
+                            messageHandler.postMessage(9, "获取详情失败:" + result.getMessage());
                         }
                     }
 
@@ -514,7 +498,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                             }
                             messageHandler.postMessage(2, parttimejob_list);
                         } else {
-                            messageHandler.postMessage(3, result.getMessage());
+                            messageHandler.postMessage(9, "获取评论失败:" + result.getMessage());
                         }
                     }
 
@@ -562,7 +546,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                         if ("0".equals(result.getCode())) {
                             messageHandler.postMessage(13);
                         } else {
-                            messageHandler.postMessage(12, result.getMessage());
+                            messageHandler.postMessage(9, "接单失败:" + result.getMessage());
                         }
                     }
 

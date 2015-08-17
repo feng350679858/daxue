@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_radius_bg"
@@ -13,63 +14,56 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:text="标题"
+        android:text=""
         android:textColor="@color/important_dark"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        android:lineSpacingMultiplier="1.5"
         android:padding="10dp"
-        android:text="尚未设置确认内容"
+        android:text="为了促进平台的健康发展并保证用户双方的安全，我们需要对帮助者进行学生信息认证，还请见谅"
         android:textColor="@color/normal_grey"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/field_divider_grey" />
+        android:layout_height="1px"
+        android:background="@drawable/field_divider_grey"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/field_divider_grey"
+        android:dividerPadding="5dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:showDividers="middle">
 
-        <TextView
-            android:id="@+id/tv_confirm"
+        <Button
+            android:id="@+id/btn_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:background="@null"
             android:text="确定"
             android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/field_divider_grey" />
-
-        <TextView
-            android:id="@+id/tv_cancel"
+        <Button
+            android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:background="@null"
             android:text="取消"
             android:textColor="@color/normal_grey"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
     </LinearLayout>
 </LinearLayout>

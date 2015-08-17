@@ -22,6 +22,7 @@ import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaEditActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
+import com.jingcai.apps.aizhuan.activity.util.CheckCertificationUtil;
 import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
@@ -36,7 +37,6 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
-import com.jingcai.apps.aizhuan.service.business.stu.stu08.Stu08Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -61,9 +61,10 @@ public class IndexCampusFragment extends BaseFragment {
     private CampusAdapter campusAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private ImageView ivFunc;
-    private PopConfirmWin helpConfirmWin;
+    private PopConfirmWin onlineConfirmWin, helpConfirmWin;
     private ImageView iv_banner;
     private Partjob11Response.Parttimejob selectedJob;
+    private CheckCertificationUtil checkCertificationUtil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,6 +80,20 @@ public class IndexCampusFragment extends BaseFragment {
         if (null == mBaseView) {
             messageHandler = new MessageHandler(baseActivity);
             mBaseView = inflater.inflate(R.layout.index_campus_fragment, null);
+            checkCertificationUtil = new CheckCertificationUtil(baseActivity);
+            checkCertificationUtil.setCallback(new CheckCertificationUtil.Callback() {
+                @Override
+                public void online(boolean onlineFlag) {
+                    if (onlineFlag) {
+                        ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
+                    } else {
+                        ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
+                    }
+                    if(null != onlineConfirmWin && onlineConfirmWin.inShowing()){
+                        onlineConfirmWin.dismiss();
+                    }
+                }
+            });
             changeHeader();
             initView();
             initGroupData();
@@ -92,7 +107,11 @@ public class IndexCampusFragment extends BaseFragment {
 
     private void changeHeader() {
         TextView tvTitle = (TextView) mBaseView.findViewById(R.id.tv_content);
-        tvTitle.setText("校园");
+        String title = "校园-" + UserSubject.getSchoolname();
+        if (title.length() > 9) {
+            title = title.substring(0, 9) + "...";
+        }
+        tvTitle.setText(title);
         mBaseView.findViewById(R.id.ib_back).setVisibility(View.GONE);
 
         ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
@@ -106,39 +125,28 @@ public class IndexCampusFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //上下线
-                if (actionLock.tryLock()) {
-                    azExecutor.execute(new Runnable() {
+                if (!checkCertificationUtil.checkCertification()) {
+                    return;
+                }
+                if (null == onlineConfirmWin) {
+                    onlineConfirmWin = new PopConfirmWin(baseActivity);
+                    onlineConfirmWin.setOkAction(new View.OnClickListener() {
                         @Override
-                        public void run() {
-                            Stu08Request req = new Stu08Request();
-                            Stu08Request.Student stu = req.new Student();
-                            stu.setStudentid(UserSubject.getStudentid());
-                            stu.setOptype(UserSubject.getOnlineFlag() ? "2" : "1");
-                            stu.setGisx(GlobalConstant.gis.getGisx());
-                            stu.setGisy(GlobalConstant.gis.getGisy());
-                            req.setStudent(stu);
-                            azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
-                                @Override
-                                public void success(BaseResponse resp) {
-                                    ResponseResult result = resp.getResult();
-                                    if ("0".equals(result.getCode())) {
-                                        messageHandler.postMessage(9);
-                                    } else {
-                                        messageHandler.postMessage(10, result.getMessage());
-                                    }
-                                }
-
-                                @Override
-                                public void fail(AzException e) {
-                                    messageHandler.postException(e);
-                                }
-                            });
+                        public void onClick(View v) {
+                            checkCertificationUtil.onoffline(!UserSubject.getOnlineFlag());
                         }
                     });
                 }
+                if (UserSubject.getOnlineFlag()) {
+                    onlineConfirmWin.setTitle("下线确认").setContent("下线以后你就再也不会收到主动推送过来帮助了，是否确认下线?");
+                } else {
+                    onlineConfirmWin.setTitle("上线确认").setContent("上线之后，我们会将最合适你的订单派发给你，请确保你有时间完成这些请求?");
+                }
+                onlineConfirmWin.show();
             }
         });
     }
+
 
     private void initView() {
         iv_banner = (ImageView) mBaseView.findViewById(R.id.iv_banner);
@@ -166,6 +174,15 @@ public class IndexCampusFragment extends BaseFragment {
 
         campusAdapter.setCallback(new CampusAdapter.Callback() {
             @Override
+            public void online(boolean onlineFlag) {
+                if (onlineFlag) {
+                    ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
+                } else {
+                    ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
+                }
+            }
+
+            @Override
             public void jishi_like(final CheckBox checkBox, final Partjob11Response.Parttimejob job) {
                 selectedJob = job;
                 onLickClick(checkBox);
@@ -185,7 +202,7 @@ public class IndexCampusFragment extends BaseFragment {
                 azExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        Partjob37Request req = new Partjob37Request(job.getHelpid());
+                        Partjob37Request req = new Partjob37Request(job.getHelpid(), UserSubject.getStudentid());
                         azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                             @Override
                             public void success(BaseResponse resp) {
@@ -193,7 +210,7 @@ public class IndexCampusFragment extends BaseFragment {
                                 if ("0".equals(result.getCode())) {
                                     messageHandler.postMessage(11);//检查通过，显示确认对话框
                                 } else {
-                                    messageHandler.postMessage(12, resp.getResultMessage());
+                                    messageHandler.postMessage(9, "接单失败:" + resp.getResultMessage());
                                 }
                             }
 
@@ -458,21 +475,7 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 9: {
                     try {
-                        UserSubject.setOnlineFlag(!UserSubject.getOnlineFlag());
-                        if (UserSubject.getOnlineFlag()) {
-                            ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
-                        } else {
-                            ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
-                        }
-                        showToast((UserSubject.getOnlineFlag() ? "上线" : "下线") + "成功");
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
-                case 10: {
-                    try {
-                        showToast("上下线失败");
+                        showToast(String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
@@ -482,12 +485,7 @@ public class IndexCampusFragment extends BaseFragment {
                     try {
                         if (null == helpConfirmWin) {
                             helpConfirmWin = new PopConfirmWin(baseActivity);
-                            helpConfirmWin.setTitle("确认？").setContent("确认立即帮助？").setAction(R.id.tv_cancel, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    helpConfirmWin.dismiss();
-                                }
-                            }).setAction(R.id.tv_confirm, new View.OnClickListener() {
+                            helpConfirmWin.setTitle("确认接单").setContent("你确定现在有时间与精力帮助这位同学？").setOkAction(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     doJishiHelp();
@@ -495,14 +493,6 @@ public class IndexCampusFragment extends BaseFragment {
                             });
                         }
                         helpConfirmWin.show();
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
-                case 12: {
-                    try {
-                        showToast("接单失败:" + String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
@@ -583,7 +573,7 @@ public class IndexCampusFragment extends BaseFragment {
                             if ("0".equals(result.getCode())) {
                                 messageHandler.postMessage(13);
                             } else {
-                                messageHandler.postMessage(12, result.getMessage());
+                                messageHandler.postMessage(9, "接单失败:" + result.getMessage());
                             }
                         }
 

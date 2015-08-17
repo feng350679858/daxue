@@ -8,9 +8,10 @@ import com.jingcai.apps.aizhuan.service.business.BizConstant;
  */
 public class Partjob37Request extends BaseRequest {
 
-    public Partjob37Request(String helpid){
+    public Partjob37Request(String helpid, String studentid){
         this.parttimejob = new Parttimejob();
         this.parttimejob.setHelpid(helpid);
+        this.parttimejob.setStudentid(studentid);
     }
 
     @Override
