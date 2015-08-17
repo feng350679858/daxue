@@ -1,5 +1,6 @@
 package com.jingcai.apps.aizhuan.activity.index.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -70,7 +72,7 @@ public class IndexMineFragment extends BaseFragment {
             mBitmapUtil = new BitmapUtil(baseActivity);
             initHeader();
             initView();
-            initDate();
+            initExp();
         }
         ViewGroup parent = (ViewGroup) mainView.getParent();
         if (parent != null) {
@@ -83,7 +85,8 @@ public class IndexMineFragment extends BaseFragment {
     public void onResume(){
         super.onResume();
         mBitmapUtil.getImage(head_logo, UserSubject.getLogourl(), true, R.drawable.default_head_img);
-        initAuthState();
+
+        initData();
     }
 
     /**
@@ -218,11 +221,10 @@ public class IndexMineFragment extends BaseFragment {
         });
     }
 
-    private void initDate() {
-        showProgressDialog("数据加载中...");
-        initExp();
+    private void initData() {
         initCredit();
         initHelpAndSeekCount();
+        initAuthState();
     }
 
     private void initHelpAndSeekCount() {
@@ -380,9 +382,18 @@ public class IndexMineFragment extends BaseFragment {
     }
 
     private void fillExp(Stu14Response.Body.Student student) {
-        level.setLevel(Integer.parseInt(student.getLevel()));
-        exp.setText("经验值：" + student.getExp() + "[" + student.getPercent() + "%]");
-        progressBar.setProgress((int) Float.parseFloat(student.getPercent()));
+        if(null != student) {
+            level.setLevel(Integer.parseInt(student.getLevel()));
+
+            int percent = 0;
+            try {
+                percent = (int) (Float.parseFloat(student.getPercent()) * 100);
+            } catch (NumberFormatException e) {Log.w(TAG,"exp number is not format.");}
+            exp.setText("经验值：" + student.getExp() + " [" + percent + "%]");
+            ObjectAnimator progressAnim = ObjectAnimator.ofInt(progressBar, "progress", 0, percent).setDuration(1000);
+            progressAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+            progressAnim.start();
+        }
     }
 
     private void fillCredit(Stu11Response.Body.Student student) {
