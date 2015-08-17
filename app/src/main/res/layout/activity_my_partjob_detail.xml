@@ -30,11 +30,10 @@
                 android:padding="10dp">
 
                 <TextView
+                    style="@style/list_item_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="兼职信息"
-                    android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:text="兼职信息" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="工作信息"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -96,14 +95,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="工作时间:"
-                        android:textColor="@color/assist_grey" />
+                        android:textColor="@color/assist_grey"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_mine_partjob_detail_worktime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/normal_grey" />
+                        android:textColor="@color/normal_grey"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,14 +117,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="工作报酬:"
-                        android:textColor="@color/assist_grey" />
+                        android:textColor="@color/assist_grey"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_mine_partjob_detail_salary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/normal_grey" />
+                        android:textColor="@color/normal_grey"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_mine_partjob_detail_salaryunit"
@@ -150,24 +153,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="工作地点:"
-                        android:textColor="@color/assist_grey" />
+                        android:textColor="@color/assist_grey"
+                        android:textSize="12sp" />
 
-                    <LinearLayout
-                        android:id="@+id/layout_address"
+
+                    <TextView
+                        android:id="@+id/tv_mine_partjob_detail_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/list_item_bg"
-                        android:orientation="horizontal">
+                        android:drawablePadding="5dp"
+                        android:textColor="@color/normal_grey"
+                        android:textSize="12sp"/>
 
-                        <TextView
-                            android:id="@+id/tv_mine_partjob_detail_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="5dp"
-                            android:textColor="@color/normal_grey"/>
-
-                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -195,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:text="时间表"
                     android:textColor="@color/important_dark"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -224,5 +222,6 @@
         </LinearLayout>
 
     </LinearLayout>
-        <include layout="@layout/include_confirm_buttons" />
+
+    <include layout="@layout/include_confirm_buttons" />
 </LinearLayout>

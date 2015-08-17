@@ -126,19 +126,6 @@ public class MyPartjobDetailActivity extends BaseActivity {
         mTvWorkSalaryUnit = (TextView) findViewById(R.id.tv_mine_partjob_detail_salaryunit);
         mTvWorkSettlelength = (TextView) findViewById(R.id.tv_mine_partjob_detail_settlelength);
         mTvWorkAddress = (TextView) findViewById(R.id.tv_mine_partjob_detail_address);
-        findViewById(R.id.layout_address).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (StringUtil.isNotEmpty(mJoininfo.getGisx()) && StringUtil.isNotEmpty(mJoininfo.getGisy())) {
-                    Intent intent = new Intent(MyPartjobDetailActivity.this, PartjobDetailMapActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("gisx", mJoininfo.getGisx());
-                    bundle.putString("gisy", mJoininfo.getGisy());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            }
-        });
         //时间表
         mLvWorkDays = (ListView) findViewById(R.id.lv_mine_partjob_detail_workday_list);
         mTvWorkDaysEmptyTip = (TextView) findViewById(R.id.tv_mine_partjob_detail_workdays_list_empty);

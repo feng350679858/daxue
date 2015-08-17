@@ -42,7 +42,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textAlignment="center"
-                style="@style/list_item_right" />
+                style="@style/list_item_left" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_jingxuan"

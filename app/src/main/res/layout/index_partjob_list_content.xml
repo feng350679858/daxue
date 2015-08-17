@@ -38,11 +38,11 @@
                 android:src="@drawable/index_partjob_list_search_item1" />
 
             <TextView
+                style="@style/list_item_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="全部"
-                android:textSize="14dp" />
+                android:text="全部" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,11 +61,11 @@
                 android:src="@drawable/index_partjob_list_search_item2" />
 
             <TextView
+                style="@style/list_item_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="老东家"
-                android:textSize="14dp" />
+                android:text="老东家" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,11 +84,11 @@
                 android:src="@drawable/index_partjob_list_search_item3" />
 
             <TextView
+                style="@style/list_item_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="周末汇"
-                android:textSize="14dp" />
+                android:text="周末汇" />
         </LinearLayout>
 
         <LinearLayout
@@ -107,11 +107,11 @@
                 android:src="@drawable/index_partjob_list_search_item4" />
 
             <TextView
+                style="@style/list_item_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="紧急令"
-                android:textSize="14dp" />
+                android:text="紧急令" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

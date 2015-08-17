@@ -33,6 +33,7 @@
 
             <com.jingcai.apps.aizhuan.view.ClearableEditText
                 android:id="@+id/profile_improve_name_input"
+                style="@style/list_item_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -40,10 +41,8 @@
                 android:inputType="text"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-                android:textColor="@color/important_dark"
                 android:textColorHint="@color/important_dark"
-                android:textCursorDrawable="@drawable/yellow_cursor"
-                android:textSize="16sp" />
+                android:textCursorDrawable="@drawable/yellow_cursor" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -62,6 +61,7 @@
 
             <EditText
                 android:id="@+id/profile_improve_gender_input"
+                style="@style/list_item_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -71,9 +71,7 @@
                 android:focusableInTouchMode="false"
                 android:hint="性别"
                 android:paddingTop="10dp"
-                android:textColor="@color/important_dark"
-                android:textColorHint="@color/important_dark"
-                android:textSize="16sp" />
+                android:textColorHint="@color/important_dark" />
         </android.support.design.widget.TextInputLayout>
 
         <View
@@ -91,6 +89,7 @@
 
             <EditText
                 android:id="@+id/profile_improve_location_input"
+                style="@style/list_item_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -100,9 +99,7 @@
                 android:focusableInTouchMode="false"
                 android:hint="地区"
                 android:paddingTop="10dp"
-                android:textColor="@color/important_dark"
-                android:textColorHint="@color/important_dark"
-                android:textSize="16sp" />
+                android:textColorHint="@color/important_dark" />
         </android.support.design.widget.TextInputLayout>
 
         <View
@@ -120,6 +117,7 @@
 
             <com.jingcai.apps.aizhuan.view.ClearableEditText
                 android:id="@+id/profile_improve_spreading_code_input"
+                style="@style/list_item_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -127,10 +125,8 @@
                 android:hint="推广码"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-                android:textColor="@color/important_dark"
                 android:textColorHint="@color/important_dark"
-                android:textCursorDrawable="@drawable/yellow_cursor"
-                android:textSize="16sp" />
+                android:textCursorDrawable="@drawable/yellow_cursor" />
         </android.support.design.widget.TextInputLayout>
 
         <View
@@ -145,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/important_dark"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/profile_improve_next"
