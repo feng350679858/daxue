@@ -81,6 +81,7 @@ public class CommentReplyActivity extends BaseActivity {
     private void initHeader() {
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
+        findViewById(R.id.rl_iv_func_container).setVisibility(View.GONE);
         TextView tvFunc = (TextView) findViewById(R.id.tv_func);
         tvFunc.setVisibility(View.VISIBLE);
         tvFunc.setText("发送");

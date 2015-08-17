@@ -29,6 +29,7 @@ import com.jingcai.apps.aizhuan.service.base.ResponseResult;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Request;
 import com.jingcai.apps.aizhuan.service.business.base.base04.Base04Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob16.Partjob16Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.DES3Util;
@@ -415,7 +416,11 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 }
                 case 2: {
                     try {
-                        showToast("发布即时帮助成功！");
+                        showToast("发布即时帮助成功", 0);
+                        String helpid = String.valueOf(msg.obj);
+                        Intent intent = new Intent(HelpJishiDeployActivity.this, HelpJishiDeployingActivity.class);
+                        intent.putExtra("helpid", helpid);
+                        startActivity(intent);
                         finish();
                     } finally {
                         actionLock.unlock();
@@ -555,11 +560,11 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 job.setRegionid(tv_group.getTag().toString());
                 job.setValidtime(tv_end_time.getTag().toString());
                 req.setParttimejob(job);
-                new AzService().doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                new AzService().doTrans(req, Partjob16Response.class, new AzService.Callback<Partjob16Response>() {
                     @Override
-                    public void success(BaseResponse resp) {
+                    public void success(Partjob16Response resp) {
                         if ("0".equals(resp.getResultCode())) {
-                            messageHandler.postMessage(2);
+                            messageHandler.postMessage(2, resp.getBody().getParttimejob().getHelpid());
                         } else if("S012".equals(resp.getResultCode())){//余额不足
                             messageHandler.postMessage(5);
                         } else {

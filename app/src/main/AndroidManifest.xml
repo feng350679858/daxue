@@ -95,6 +95,9 @@
 
         <!-- help -->
         <activity android:name=".activity.help.HelpJishiDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpJishiDeployingActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpJishiDeploySuccessActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.help.HelpJishiDeployFailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpFriendOnlineActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpJishiDetailActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.help.HelpWendaDeployActivity" android:screenOrientation="portrait" android:windowSoftInputMode="adjustPan" />

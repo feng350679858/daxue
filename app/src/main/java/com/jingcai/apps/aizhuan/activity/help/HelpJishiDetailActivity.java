@@ -1,6 +1,7 @@
 package com.jingcai.apps.aizhuan.activity.help;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.util.BaseReceiver;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
@@ -37,7 +39,6 @@ import com.jingcai.apps.aizhuan.util.DateUtil;
 import com.jingcai.apps.aizhuan.util.DictUtil;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
-import com.jingcai.apps.aizhuan.util.UmengShareUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
 import java.util.ArrayList;
@@ -433,61 +434,53 @@ public class HelpJishiDetailActivity extends BaseActivity {
         azExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                if (GlobalConstant.debugFlag) {
-                    List<CommentItem> regionList = new ArrayList<CommentItem>();
-                    for (int i = 0; i < 10 && mCurrentStart < 24; i++) {
-                        Partjob29Response.Parttimejob region = new Partjob29Response.Parttimejob();
-                        region.setSourcename("学生" + (i + mCurrentStart));
-                        region.setSourcelevel("19");
-                        region.setSourceschool("浙江大学");
-                        region.setSourcecollege("计算机学院");
-                        region.setOptime("20150801233341");
-                        if (i % 4 == 0) {
-                            region.setRefcomment(new Partjob29Response.Refcomment());
-                            region.getRefcomment().setRefname("花仙子");
-                            region.getRefcomment().setRefcontent("你是一个大SB");
-                        }
-                        if (i % 2 == 0) {
-                            region.setPraiseflag("1");
-                            region.setPraiseid("23232332");
-                        }
-                        region.setPraisecount("23");
-                        region.setContent("浙江大学浙江大学浙江大学浙江大学\n浙江大学" + (i + mCurrentStart));
-                        regionList.add(region);
-                    }
-                    messageHandler.postMessage(2, regionList);
-                } else {
-                    Partjob29Request req = new Partjob29Request();
-                    Partjob29Request.Parttimejob job = req.new Parttimejob();
-                    job.setReceiverid(UserSubject.getStudentid());
-                    job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
-                    job.setTargetid(helpid);
-                    job.setCommenttype("1");//1评论
-                    job.setStart("" + mCurrentStart);
-                    job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                    req.setParttimejob(job);
-                    azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
-                        @Override
-                        public void success(Partjob29Response response) {
-                            ResponseResult result = response.getResult();
-                            if ("0".equals(result.getCode())) {
-                                List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
-                                if (null == parttimejob_list) {
-                                    parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
-                                }
-                                messageHandler.postMessage(2, parttimejob_list);
-                            } else {
-                                messageHandler.postMessage(3, result.getMessage());
+                Partjob29Request req = new Partjob29Request();
+                Partjob29Request.Parttimejob job = req.new Parttimejob();
+                job.setReceiverid(UserSubject.getStudentid());
+                job.setTargettype("1".equals(type) ? "1" : "5");//1求助 5求助公告
+                job.setTargetid(helpid);
+                job.setCommenttype("1");//1评论
+                job.setStart("" + mCurrentStart);
+                job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                req.setParttimejob(job);
+                azService.doTrans(req, Partjob29Response.class, new AzService.Callback<Partjob29Response>() {
+                    @Override
+                    public void success(Partjob29Response response) {
+                        ResponseResult result = response.getResult();
+                        if ("0".equals(result.getCode())) {
+                            List<Partjob29Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
+                            if (null == parttimejob_list) {
+                                parttimejob_list = new ArrayList<Partjob29Response.Parttimejob>();
                             }
+                            messageHandler.postMessage(2, parttimejob_list);
+                        } else {
+                            messageHandler.postMessage(3, result.getMessage());
                         }
+                    }
 
-                        @Override
-                        public void fail(AzException e) {
-                            messageHandler.postException(e);
-                        }
-                    });
-                }
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String notiicationtype = getIntent().getStringExtra("notiicationtype");
+        Intent intent = new Intent(BaseReceiver.ACTION_JISHI_DISPATCH_REQUEST);
+        intent.putExtra("notiicationtype", notiicationtype);
+        if ("2".equals(notiicationtype)) {
+            intent.putExtra("helpid", helpid);
+            intent.putExtra("studentid", getIntent().getStringExtra("studentid"));
+            intent.putExtra("timestamp", getIntent().getLongExtra("timestamp", -1));
+        }else if("3".equals(notiicationtype)){
+            intent.putExtra("helpid", helpid);
+            intent.putExtra("studentid", getIntent().getStringExtra("studentid"));
+        }
+        sendBroadcast(intent);
     }
 }

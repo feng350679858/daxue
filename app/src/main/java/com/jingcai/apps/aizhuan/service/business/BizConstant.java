@@ -65,11 +65,13 @@ public interface BizConstant {
     String BIZ_PARTTIME_JOB_29 = "partjob29";//评论列表查询
     String BIZ_PARTTIME_JOB_30 = "partjob30";//取消评论、取消赞
     String BIZ_PARTTIME_JOB_31 = "partjob31";//打赏
+    String BIZ_PARTTIME_JOB_32 = "partjob32";//进行中求助和帮助数量查询
     String BIZ_PARTTIME_JOB_33 = "partjob33";//完成帮助
     String BIZ_PARTTIME_JOB_34 = "partjob34";//提问详情
     String BIZ_PARTTIME_JOB_35 = "partjob35";//匿名和非匿名切换
     String BIZ_PARTTIME_JOB_36 = "partjob36";//答案详情
     String BIZ_PARTTIME_JOB_37 = "partjob37";//即时型帮助检测
+    String BIZ_PARTTIME_JOB_38 = "partjob38";//确认接单
     String BIZ_PARTTIME_JOB_39 = "partjob39";//修改答案
 
     /**

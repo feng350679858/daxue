@@ -315,6 +315,7 @@ public class MineHelpJishiActivity extends BaseActivity {
     private View.OnClickListener studentClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //TODO
             View parentView = MineHelpJishiActivity.this.getWindow().getDecorView();
             View contentView = LayoutInflater.from(MineHelpJishiActivity.this).inflate(R.layout.mine_help_jishi_connect, null);
 
@@ -596,7 +597,6 @@ public class MineHelpJishiActivity extends BaseActivity {
                 job.setHelpid(helpid);
                 job.setPeroid("1");//1发布成功后取消
                 job.setStudentid(UserSubject.getStudentid());
-                job.setHelpid(helpid);
                 req.setParttimejob(job);
                 azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                     @Override

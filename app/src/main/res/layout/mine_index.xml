@@ -205,6 +205,7 @@
                         style="@style/list_item_left" />
 
                     <TextView
+                        android:id="@+id/tv_seek_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -239,6 +240,7 @@
                         style="@style/list_item_left" />
 
                     <TextView
+                        android:id="@+id/tv_help_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -248,9 +250,7 @@
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/icon_right_triangle"
                         android:gravity="center_vertical"
-                        android:text=""
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
+                        style="@style/list_item_left" />
                 </RelativeLayout>
 
                 <RelativeLayout

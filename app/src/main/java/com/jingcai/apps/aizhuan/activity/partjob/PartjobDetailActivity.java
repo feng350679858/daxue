@@ -44,7 +44,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class PartjobDetailActivity extends BaseActivity {
     private final String TAG = "PartjobDetailActivity";
-    private String partjobid, logopath;
+    private String partjobid;
+    private volatile String logopath;
     private UmengShareUtil umengShareUtil;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil;
@@ -76,7 +77,7 @@ public class PartjobDetailActivity extends BaseActivity {
         umengShareUtil = new UmengShareUtil(PartjobDetailActivity.this);
         format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
         partjobid = getIntent().getStringExtra("partjobid");
-        logopath = getIntent().getStringExtra("logopath");
+//        logopath = getIntent().getStringExtra("logopath");
         setContentView(R.layout.activity_partjob_detail);
         if (StringUtil.isEmpty(partjobid)) {
             finish();
@@ -242,6 +243,7 @@ public class PartjobDetailActivity extends BaseActivity {
         /*
          * 兼职详情
          */
+        logopath = mParttimejob.getLogopath();
 //        fillTopPicture(mParttimejob.getWorktype());//填充置顶图片
         bitmapUtil.getImage(partjob_content_top, mParttimejob.getWorktypeimgurl(), true, R.drawable.partjob_detail_type9);
         bitmapUtil.getImage(partjob_content_logo, mParttimejob.getLogopath(), true, R.drawable.default_image);

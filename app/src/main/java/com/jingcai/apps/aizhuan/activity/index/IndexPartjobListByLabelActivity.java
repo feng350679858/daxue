@@ -19,7 +19,6 @@ import com.jingcai.apps.aizhuan.adapter.partjob.PartjobListAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob01.Partjob01Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob10.Partjob10Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob10.Partjob10Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -146,15 +145,15 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                     req.setLabel(label);
                     final Partjob10Request.Parttimejob job = req.new Parttimejob();
                     GlobalConstant.Gis gis = GlobalConstant.getGis();
-                    if (gis.isAvail()) {
+                    if(StringUtil.isNotEmpty(areacode)){
+                        job.setAreacode(areacode);
+                    }else{
                         job.setAreacode(gis.getAreacode());
                         job.setAreacode2(gis.getAreacode2());
                         job.setGisx(gis.getGisx());
                         job.setGisy(gis.getGisy());
                         job.setProvincename(gis.getProvincename());
                         job.setCityname(gis.getCityname());
-                    } else {
-                        job.setAreacode(areacode);
                     }
                     job.setStart(String.valueOf(mCurrentStart));
                     job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
@@ -169,7 +168,7 @@ public class IndexPartjobListByLabelActivity extends BaseActivity {
                                 Partjob10Response.Body body = response.getBody();
                                 List<Partjob10Response.Body.Parttimejob> messageList = body.getParttimejob_list();
                                 if(messageList==null)
-                                    messageList=new ArrayList<Partjob01Response.Body.Parttimejob>();
+                                    messageList=new ArrayList<>();
                                 if (0 == mCurrentStart && messageList.size() < 1) {
                                     messageHandler.postMessage(2);//无数据
                                 } else {
