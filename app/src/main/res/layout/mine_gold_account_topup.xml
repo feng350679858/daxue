@@ -31,7 +31,7 @@
                 android:gravity="center_vertical"
                 android:text="金库余额"
                 android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_mine_gold_topup_rest"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="充值数量（元）"
             android:textColor="@color/important_dark"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/et_mine_gold_topup_count"
@@ -72,28 +72,26 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="最少充值10元"
-            android:maxLength="7"
             android:inputType="numberDecimal"
+            android:maxLength="7"
             android:textColor="@color/important_dark"
             android:textColorHint="@color/hint_grey"
             android:textCursorDrawable="@drawable/yellow_cursor"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
 
-
-
-        <TextView
-            android:id="@+id/tv_gold_withdraw_limit_time_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_warn1"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:textColor="@color/assist_grey"
-            android:text="充值不限次数，立即到账，每次充值至少10元" />
-
+    <TextView
+        android:id="@+id/tv_gold_withdraw_limit_time_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:drawableLeft="@drawable/icon_warn1"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:text="充值不限次数，立即到账，每次充值至少10元!"
+        android:textColor="@color/assist_grey"
+        android:textSize="12sp" />
 
 
     <LinearLayout
@@ -114,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="需要支付"
                 android:textColor="@color/important_dark"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="0dp"
@@ -133,8 +131,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"
-            android:background="@color/divider_color"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:background="@color/divider_color" />
 
         <ListView
             android:id="@+id/lv_mine_account_topup_choice_list"

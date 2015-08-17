@@ -131,8 +131,7 @@ public class IndexMineFragment extends BaseFragment {
             }
         });
         ivFunc.setVisibility(View.VISIBLE);
-        ivFunc.setImageDrawable(getResources
-                ().getDrawable(R.drawable.icon_index_mine_settings));
+        ivFunc.setImageDrawable(getResources().getDrawable(R.drawable.icon_index_mine_settings));
         ivFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

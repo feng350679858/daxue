@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="选择提现帐号"
-        android:textColor="@color/normal_grey"
+        android:textColor="@color/assist_grey"
         android:textSize="12sp" />
 
     <RelativeLayout
@@ -44,7 +44,7 @@
         android:drawablePadding="5dp"
         android:paddingTop="5dp"
         android:text="@string/gold_withdraw_tip"
-        android:textColor="@color/normal_grey"
+        android:textColor="@color/assist_grey"
         android:textSize="12sp" />
 
     <RelativeLayout
@@ -70,7 +70,6 @@
             android:inputType="numberDecimal"
             android:layout_toRightOf="@+id/tv1"
             android:background="@null"
-            android:hint="当前可提金额350元"
             android:textColor="@color/important_dark"
             android:textColorHint="@color/assist_grey"
             android:textCursorDrawable="@drawable/yellow_cursor"

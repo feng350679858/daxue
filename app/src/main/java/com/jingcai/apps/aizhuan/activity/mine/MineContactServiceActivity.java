@@ -73,6 +73,7 @@ public class MineContactServiceActivity extends BaseActivity {
                             Intent intent = new Intent(Intent.ACTION_CALL);
                             intent.setData(Uri.parse("tel:" + R.string.mine_contact_service_tel_num));
                             startActivity(intent);
+                            popupWin.dismiss();
                         }
                     });
                 }

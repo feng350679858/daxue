@@ -2,11 +2,16 @@ package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +46,8 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -56,6 +63,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private XListView mListSchool, mListProfessional;
     private SchoolListAdapter mListSchoolAdapter, mListProfessionalAdapter;
     private PopupWin college_popupWin, joindate_popupWin, connectionWin;
+    private TextView warning;
 
     private AzService azService;
     private String mSchoolSearchKey = "";
@@ -64,7 +72,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private int mSchoolCurrentStart = 0;  //当前的开始
     private int mProfessionalCurrentStart = 0;
     private int flag = 4;
-    private boolean mSchoolSelected, mProfessionalSelected, isempty;
+    private boolean mSchoolSelected, mProfessionalSelected, isSchoolEmpty,isProfessionalEmpty;
 
     private MyTextWatcher myTextWatcher = new MyTextWatcher();
 
@@ -124,6 +132,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                             Intent intent = new Intent(Intent.ACTION_CALL);
                             intent.setData(Uri.parse("tel:" + phone.getText().toString()));
                             startActivity(intent);
+                            connectionWin.dismiss();
                         }
                     });
                 }
@@ -143,6 +152,7 @@ public class ProfileImprove2Activity extends BaseActivity {
         joindate = (TextInputLayout) findViewById(R.id.profile_improve_joindate);
         joindate_input = joindate.getEditText();
         joindate_input.addTextChangedListener(myTextWatcher);
+        warning=(TextView)findViewById(R.id.profile_improve_warning);
         //学校列表
         mListSchool = (XListView) findViewById(R.id.lv_mine_profile_improve_school);
         mListSchool.setPullRefreshEnable(false);
@@ -182,9 +192,9 @@ public class ProfileImprove2Activity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if ("".equals(s.toString()))
-                    isempty = true;
+                    isSchoolEmpty = true;
                 else
-                    isempty = false;
+                    isSchoolEmpty = false;
             }
 
             @Override
@@ -194,9 +204,11 @@ public class ProfileImprove2Activity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ("".equals(s.toString()) && !isempty)
+                college_input.setText("");
+                college_input.setTag(null);
+                if ("".equals(s.toString()) && !isSchoolEmpty)
                     flag++;
-                if (!"".equals(s.toString()) && isempty)
+                if ((!"".equals(s.toString())) && isSchoolEmpty)
                     flag--;
                 if (0 == flag)
                     next.setEnabled(true);
@@ -274,9 +286,9 @@ public class ProfileImprove2Activity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if ("".equals(s.toString()))
-                    isempty = true;
+                    isProfessionalEmpty = true;
                 else
-                    isempty = false;
+                    isProfessionalEmpty = false;
 
             }
 
@@ -286,9 +298,9 @@ public class ProfileImprove2Activity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ("".equals(s.toString()) && !isempty)
+                if ("".equals(s.toString()) && !isProfessionalEmpty)
                     flag++;
-                if (!"".equals(s.toString()) && isempty)
+                if (!"".equals(s.toString()) && isProfessionalEmpty)
                     flag--;
                 if (0 == flag)
                     next.setEnabled(true);
@@ -344,7 +356,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String selected = years.get(position).get("name");
-                            joindate_input.setText(selected+"0901");
+                            joindate_input.setText(selected + "0901");
                             joindate_popupWin.dismiss();
                             clearAllFocus();
                         }
@@ -398,6 +410,13 @@ public class ProfileImprove2Activity extends BaseActivity {
 //            }
 //
 //        });
+        //在TextVew中加入图片
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.msg_state_fail_resend);
+        ImageSpan imgSpan = new ImageSpan(this, b);
+        SpannableString spanString = new SpannableString("icon");
+        spanString.setSpan(imgSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        warning.setText(spanString);
+        warning.append(getResources().getString(R.string.profile_improve_warning));
         next = (Button) findViewById(R.id.profile_improve_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -442,8 +461,6 @@ public class ProfileImprove2Activity extends BaseActivity {
             joindate_input.setText(getIntent().getStringExtra("joindate"));
             joindate_input.setEnabled(false);
         }
-        if("1".equals(UserSubject.getLevel()))
-            next.setEnabled(false);
         clearAllFocus();
     }
 
@@ -742,7 +759,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     }
 
     protected class MyTextWatcher implements TextWatcher {
-
+        boolean isempty;
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             if ("".equals(s.toString()))
@@ -769,16 +786,16 @@ public class ProfileImprove2Activity extends BaseActivity {
             System.out.println(flag);
         }
 
-        public void addFlag() {
-            flag++;
-            System.out.println(flag);
-        }
-
-        public void subFlag() {
-            flag--;
-            if (0 == flag)
-                next.setEnabled(true);
-            System.out.println(flag);
-        }
+//        public void addFlag() {
+//            flag++;
+//            System.out.println(flag);
+//        }
+//
+//        public void subFlag() {
+//            flag--;
+//            if (0 == flag)
+//                next.setEnabled(true);
+//            System.out.println(flag);
+//        }
     }
 }

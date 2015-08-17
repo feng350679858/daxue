@@ -264,7 +264,8 @@ public class PartjobDetailActivity extends BaseActivity {
         endtime = format.format(DateUtil.parseDate(mParttimejob.getEndtime()));
         partjob_content_endtime.setText(endtime);
         partjob_content_address.setText(mParttimejob.getAddress());
-        if (null != mParttimejob.getGisx() && null != mParttimejob.getGisy()) {
+        if (null != mParttimejob.getGisx() && 0 != Double.parseDouble(mParttimejob.getGisx())
+                && null != mParttimejob.getGisy() && 0 != Double.parseDouble(mParttimejob.getGisy())) {
             partjob_content_address.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.location), null);
             partjob_content_address.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -411,6 +412,7 @@ public class PartjobDetailActivity extends BaseActivity {
                             "！有没有一起的，还有" + num + "个名额，，快点击：";
                     tel = mParttimejob.getPhone();
                     joinSuccess();
+                    partjobdetailWin.dismiss();
                 }
             });
         }
