@@ -92,6 +92,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/tv_yellow_rectangle_bg"
             android:gravity="center"
+            android:padding="2dp"
             android:text=""
             android:textColor="@color/important_dark"
             android:textSize="14sp" />

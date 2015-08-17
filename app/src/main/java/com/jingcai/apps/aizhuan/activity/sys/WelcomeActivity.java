@@ -1,17 +1,21 @@
 package com.jingcai.apps.aizhuan.activity.sys;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
@@ -28,66 +32,98 @@ import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 
-import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-public class WelcomeActivity extends BaseActivity implements AnimationListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class WelcomeActivity extends BaseActivity { //implements AnimationListener {
     private MessageHandler messageHandler;
     private AzExecutor azExecutor = new AzExecutor();
     private AzService azService = new AzService();
     private boolean loginSuccessFlag = false;
     private CountDownLatch latch;
+    private ImageView mIvWelcomeText;
+    private LinearLayout mLlLogoContainer;
+    private CircleImageView mCivHeadImg;
+    private TextView mTvSchoolName;
+
+    private BitmapUtil mBitmapUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.sys_welcome);
-        ImageView imageView = new ImageView(this);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        imageView.setLayoutParams(layoutParams);
-
-        boolean hasLoadingImg = false;
-        String loadingImgUrl = Preferences.getInstance().getString(Preferences.Sys.WELCOME_LOADING_IMG_URL, null);
-        if (null != loadingImgUrl) {
-            File file = BitmapUtil.getImageFile(loadingImgUrl);
-            if (file.exists()) {
-                imageView.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
-                hasLoadingImg = true;
-            }
-        }
-        if (!hasLoadingImg) {
-            imageView.setImageResource(R.drawable.sys_welcome);
-        }
-        setContentView(imageView);
+        setContentView(R.layout.sys_welcome);
+        mBitmapUtil = new BitmapUtil(this);
 
         messageHandler = new MessageHandler(this);
+        initViews();
         if (GlobalConstant.debugFlag) {
             latch = new CountDownLatch(1);
         } else {
             latch = new CountDownLatch(2);
-            Animation alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.sys_welcome_alpha);
-            alphaAnimation.setFillEnabled(true); // 启动Fill保持
-            alphaAnimation.setFillAfter(true); // 设置动画的最后一帧是保持在View上面
-            alphaAnimation.setAnimationListener(this); // 为动画设置监听
-
-//            LinearLayout imageView2 = (LinearLayout) findViewById(R.id.welcome_image_view);
-            imageView.setAnimation(alphaAnimation);
+            playAnimator();
         }
         autoLogin();
     }
 
-    @Override
-    public void onAnimationStart(Animation animation) {
+    private void initViews() {
+        mIvWelcomeText = (ImageView) findViewById(R.id.iv_welcome_text);
+        mLlLogoContainer = (LinearLayout) findViewById(R.id.ll_logo_container);
+        mCivHeadImg = (CircleImageView) findViewById(R.id.civ_head_img);
+        mTvSchoolName = (TextView) findViewById(R.id.tv_school_name);
+
+        if (UserSubject.isLogin()) {
+            mBitmapUtil.getImage(mCivHeadImg, UserSubject.getLogourl());
+        } else {
+           mCivHeadImg.setImageResource(R.drawable.default_head_img);
+            mTvSchoolName.setText("欢迎回来");
+        }
     }
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        latch.countDown();
-    }
+    private void playAnimator() {
 
-    @Override
-    public void onAnimationRepeat(Animation animation) {
+        ObjectAnimator fadeOutAnimator = ObjectAnimator.ofFloat(mIvWelcomeText, "alpha", 1.0f, 0f).setDuration(1000);
+        ObjectAnimator fadeInAnimator1 = ObjectAnimator.ofFloat(mCivHeadImg, "alpha", 0f, 1.0f).setDuration(1000);
+        ValueAnimator fadeInAnimator2 = ValueAnimator.ofObject(new ArgbEvaluator(), 0x00222222, 0xff222222).setDuration(1000);
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(mCivHeadImg, "scaleX", 0.3f, 1.0f).setDuration(2000);
+        scaleXAnimator.setInterpolator(new OvershootInterpolator());
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(mCivHeadImg, "scaleY", 0.3f, 1.0f).setDuration(2000);
+        scaleYAnimator.setInterpolator(new OvershootInterpolator());
+        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(mTvSchoolName, "translationY", 100.0f, 0f).setDuration(2000);
+        transAnimator.setInterpolator(new OvershootInterpolator());
+        fadeInAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                mTvSchoolName.setTextColor((Integer) animator.getAnimatedValue());
+            }
+
+        });
+
+        final AnimatorSet animSet = new AnimatorSet();
+        animSet.playTogether(fadeInAnimator1,fadeInAnimator2,scaleXAnimator,scaleYAnimator,transAnimator);
+
+        fadeOutAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mIvWelcomeText.setVisibility(View.GONE);
+                mLlLogoContainer.setVisibility(View.VISIBLE);
+                animSet.start();
+            }
+        });
+
+
+        animSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                latch.countDown();
+            }
+        });
+
+        fadeOutAnimator.setStartDelay(1000);
+        fadeOutAnimator.start();
+
+
     }
 
     private void autoLogin() {
@@ -142,6 +178,7 @@ public class WelcomeActivity extends BaseActivity implements AnimationListener {
     };
 
     private final int REQUEST_CODE_INTRO = 101;
+
     private class MessageHandler extends BaseHandler {
         public MessageHandler(Context con) {
             super(con);
