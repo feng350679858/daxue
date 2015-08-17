@@ -19,7 +19,7 @@
             android:text="请上传学生证内页"
             android:textColor="@color/normal_grey"
             android:layout_margin="10dp"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_mine_student_certification_inside"
@@ -36,7 +36,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
             android:textColor="@color/normal_grey"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_mine_student_certification_back"
@@ -53,6 +53,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:textSize="16sp"
             android:enabled="false"
             android:background="@drawable/btn_yellow_boarded_bg_selector"
             android:textColor="@color/assist_grey"

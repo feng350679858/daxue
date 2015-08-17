@@ -141,7 +141,7 @@
     </style>
     <!--TextInputLayout样式-->
     <style name="text_input_layout" parent="@android:style/TextAppearance">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/main_yellow</item>
         <item name="colorAccent">@color/main_yellow</item>

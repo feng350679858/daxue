@@ -30,10 +30,11 @@
                 android:drawableLeft="@drawable/icon_choose_account_add"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/icon_choose_account_add"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="添加绑定账号"
-                android:textColor="@color/normal_grey"
-                android:textSize="18sp" />
+
+                android:textColor="@color/assist_grey"
+                android:textSize="14sp" />
 
             <ImageView
                 android:layout_width="wrap_content"

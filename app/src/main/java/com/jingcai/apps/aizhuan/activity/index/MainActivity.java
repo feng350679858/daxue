@@ -30,7 +30,9 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
+import com.jingcai.apps.aizhuan.activity.mine.ProfileImproveActivity;
 import com.jingcai.apps.aizhuan.persistence.Preferences;
+import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupWin;
@@ -134,6 +136,14 @@ public class MainActivity extends BaseFragmentActivity {
         initView();
     }
 
+    private void isLevel() {
+        String level = UserSubject.getLevel();
+        Log.i(TAG, level);
+        if ("0".equals(level)) {
+            Intent intent = new Intent(MainActivity.this, ProfileImproveActivity.class);
+            startActivity(intent);
+        }
+    }
     private void initView() {
         mLlCampus = (LinearLayout) findViewById(R.id.ll_campus);
         mLlMessgage = (LinearLayout) findViewById(R.id.ll_message);
@@ -209,6 +219,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onResume() {
         Log.d("==", "--------------onResume-----");
         super.onResume();
+        isLevel();//判断是否完善资料
     }
 
     @Override

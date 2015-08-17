@@ -10,13 +10,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/content_background">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/picture"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/partjob_join_success_happy" />
 
@@ -76,34 +76,34 @@
         <LinearLayout
             android:id="@+id/button"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="30dp"
+            android:paddingBottom="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
             android:showDividers="none">
 
-            <Button
+            <TextView
                 android:id="@+id/btn_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/content_background"
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/share_selector"
                 android:padding="10dp"
+                android:gravity="center_horizontal"
                 android:text="分享兼职"
                 android:textColor="@color/important_dark"
                 android:textSize="14sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_connect_merchant"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:background="@color/content_background"
                 android:drawablePadding="10dp"
+                android:gravity="center_horizontal"
                 android:drawableTop="@drawable/connect_selector"
                 android:padding="10dp"
                 android:text="联系商家"

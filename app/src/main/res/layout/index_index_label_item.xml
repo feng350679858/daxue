@@ -27,16 +27,16 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="爱秀"
+        android:text="爱秀:"
         android:textColor="@color/normal_grey"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="展现最美的自我"
-        android:textColor="@color/assist_grey"
+        android:textColor="@color/normal_grey"
         android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
