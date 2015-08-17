@@ -30,6 +30,8 @@ import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob32.Partjob32Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob32.Partjob32Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu14.Stu14Request;
@@ -121,7 +123,7 @@ public class IndexMineFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(baseActivity, IndexBannerDetailActivity.class);
                 intent.putExtra("title","我的二维码");
-                intent.putExtra("url", GlobalConstant.h5Url+"/student/qrcode?studentid="+UserSubject.getStudentid());
+                intent.putExtra("url", GlobalConstant.h5Url + "/student/qrcode?studentid=" + UserSubject.getStudentid());
                 startActivity(intent);
             }
         });
@@ -221,6 +223,38 @@ public class IndexMineFragment extends BaseFragment {
         showProgressDialog("数据加载中...");
         initExp();
         initCredit();
+        initHelpAndSeekCount();
+    }
+
+    private void initHelpAndSeekCount() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                azService = new AzService(getActivity());
+                Partjob32Request req = new Partjob32Request();
+                Partjob32Request.Parttimejob parttimejob = req.new Parttimejob();
+                parttimejob.setStudentid(UserSubject.getStudentid());
+                req.setParttimejob(parttimejob);
+
+                azService.doTrans(req, Partjob32Response.class, new AzService.Callback<Partjob32Response>() {
+
+                    @Override
+                    public void success(Partjob32Response resp) {
+                        ResponseResult result = resp.getResult();
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(5, result.getMessage());
+                        } else {
+                            messageHandler.postMessage(4, resp.getBody().getParttimejob());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     private void initCredit() {
@@ -309,9 +343,39 @@ public class IndexMineFragment extends BaseFragment {
                     Log.i(TAG, "获取信用积分失败：" + msg.obj);
                     break;
                 }
+                case 4:{
+                    fillSeekAndHelpCount(((Partjob32Response.Body.Parttimejob) msg.obj));
+                    break;
+                }
+                case 5:{
+                    showToast("获取求助、帮助数失败");
+                    Log.i(TAG, "获取求助、帮助数失败：" + msg.obj);
+                    break;
+                }
                 default:
                     super.handleMessage(msg);
                     break;
+            }
+        }
+    }
+
+
+    private void fillSeekAndHelpCount(Partjob32Response.Body.Parttimejob parttimejob) {
+        if(null != parttimejob) {
+            int helpCount;
+            int seekCount;
+            try {
+                seekCount = Integer.parseInt(parttimejob.getSeekcount());
+                helpCount = Integer.parseInt(parttimejob.getHelpcount());
+            } catch (NumberFormatException e) {
+                seekCount = 0;
+                helpCount = 0;
+            }
+            if(helpCount > 0){
+                ((TextView) mainView.findViewById(R.id.tv_help_count)).setText(parttimejob.getHelpcount());
+            }
+            if(seekCount > 0){
+                ((TextView) mainView.findViewById(R.id.tv_seek_count)).setText(parttimejob.getSeekcount());
             }
         }
     }
