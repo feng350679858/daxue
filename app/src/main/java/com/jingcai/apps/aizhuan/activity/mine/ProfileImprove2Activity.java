@@ -194,6 +194,8 @@ public class ProfileImprove2Activity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                college_input.setText("");
+                college_input.setTag(null);
                 if ("".equals(s.toString()) && !isempty)
                     flag++;
                 if (!"".equals(s.toString()) && isempty)
