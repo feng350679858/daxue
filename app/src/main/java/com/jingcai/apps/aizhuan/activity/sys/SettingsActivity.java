@@ -256,10 +256,10 @@ public class SettingsActivity extends BaseActivity {
                     new JpushUtil(SettingsActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
 
-                    finish();
                     MainActivity.logout();
-
-                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+//                    finish();
+//                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
+                    startActivityForLogin();
                     break;
                 }
                 case 3: {
@@ -278,5 +278,18 @@ public class SettingsActivity extends BaseActivity {
         if (null != progressDialog) {
             progressDialog.dismiss();
         }
+    }
+
+
+    @Override
+    protected void afterLoginSuccess() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void afterLoginFail() {
+        finish();
     }
 }
