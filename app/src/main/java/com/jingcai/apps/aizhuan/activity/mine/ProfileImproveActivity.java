@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,10 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.index.MainActivity;
+import com.jingcai.apps.aizhuan.activity.sys.LoginActivity;
 import com.jingcai.apps.aizhuan.adapter.mine.AreaAdapter;
+import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -33,8 +37,11 @@ import com.jingcai.apps.aizhuan.service.business.school.school03.School03Respons
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
 import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu03.Stu03Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu05.Stu05Response;
+import com.jingcai.apps.aizhuan.service.business.sys.sys05.Sys05Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
+import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.view.ClearableEditText;
 
@@ -76,16 +83,34 @@ public class ProfileImproveActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_improve);
         messageHandler = new MessageHandler(this);
+
         initHeader();
         initView();
         initDate();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            logout();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+
+
     private void initHeader() {
         ((TextView) findViewById(R.id.tv_content)).setText("资料完善");
         findViewById(R.id.iv_bird_badge).setVisibility(View.GONE);
         findViewById(R.id.iv_func).setVisibility(View.GONE);
-        findViewById(R.id.ib_back).setVisibility(View.GONE);
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
         ((TextView) findViewById(R.id.tv_func)).setText("联系客服");
         ((TextView) findViewById(R.id.tv_func)).setVisibility(View.VISIBLE);
         ((TextView) findViewById(R.id.tv_func)).setOnClickListener(new View.OnClickListener() {
@@ -180,7 +205,7 @@ public class ProfileImproveActivity extends BaseActivity {
         location_input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearAllFocus();
+//                clearAllFocus();
                 location_input.requestFocus();
                 areaWin.show();
             }
@@ -218,6 +243,34 @@ public class ProfileImproveActivity extends BaseActivity {
         spanString.setSpan(imgSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         warning.setText(spanString);
         warning.append(getResources().getString(R.string.profile_improve_warning));
+    }
+
+    private void logout() {
+        new AzExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                final Sys05Request req = new Sys05Request();
+                Sys05Request.Student student = req.new Student();
+                student.setStudentid(UserSubject.getStudentid());
+                req.setStudent(student);
+                azService.doTrans(req, Stu05Response.class, new AzService.Callback<Stu05Response>() {
+                    @Override
+                    public void success(Stu05Response resp) {
+                        ResponseResult result = resp.getResult();
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(9, result.getMessage());
+                        } else {
+                            messageHandler.postMessage(8);
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     private void clearAllFocus() {
@@ -539,6 +592,23 @@ public class ProfileImproveActivity extends BaseActivity {
                     areaList = (List<School03Response.Body.Areainfo>) msg.obj;
                     Log.i(TAG, areaList.toString());
                     initAreaWheel();//加载区域滚轮
+                    break;
+                }
+                case 8: {
+                    UserSubject.loginFail();
+                    new JpushUtil(ProfileImproveActivity.this).logout();
+                    HXHelper.getInstance().logout();  //环信连接
+
+                    Intent intent = new Intent(ProfileImproveActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    ProfileImproveActivity.this.finish();
+                    break;
+                }
+                case 9: {
+                    showToast("退出登录失败");
+                    Log.i(TAG, "退出登录失败:" + msg.obj);
                     break;
                 }
                 default: {

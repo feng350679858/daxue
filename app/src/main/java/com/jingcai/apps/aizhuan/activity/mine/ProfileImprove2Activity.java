@@ -72,7 +72,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private int mSchoolCurrentStart = 0;  //当前的开始
     private int mProfessionalCurrentStart = 0;
     private int flag = 4;
-    private boolean mSchoolSelected, mProfessionalSelected, isempty;
+    private boolean mSchoolSelected, mProfessionalSelected, isSchoolEmpty,isProfessionalEmpty;
 
     private MyTextWatcher myTextWatcher = new MyTextWatcher();
 
@@ -192,9 +192,9 @@ public class ProfileImprove2Activity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if ("".equals(s.toString()))
-                    isempty = true;
+                    isSchoolEmpty = true;
                 else
-                    isempty = false;
+                    isSchoolEmpty = false;
             }
 
             @Override
@@ -206,9 +206,9 @@ public class ProfileImprove2Activity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 college_input.setText("");
                 college_input.setTag(null);
-                if ("".equals(s.toString()) && !isempty)
+                if ("".equals(s.toString()) && !isSchoolEmpty)
                     flag++;
-                if (!"".equals(s.toString()) && isempty)
+                if ((!"".equals(s.toString())) && isSchoolEmpty)
                     flag--;
                 if (0 == flag)
                     next.setEnabled(true);
@@ -286,9 +286,9 @@ public class ProfileImprove2Activity extends BaseActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if ("".equals(s.toString()))
-                    isempty = true;
+                    isProfessionalEmpty = true;
                 else
-                    isempty = false;
+                    isProfessionalEmpty = false;
 
             }
 
@@ -298,9 +298,9 @@ public class ProfileImprove2Activity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ("".equals(s.toString()) && !isempty)
+                if ("".equals(s.toString()) && !isProfessionalEmpty)
                     flag++;
-                if (!"".equals(s.toString()) && isempty)
+                if (!"".equals(s.toString()) && isProfessionalEmpty)
                     flag--;
                 if (0 == flag)
                     next.setEnabled(true);
@@ -356,7 +356,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String selected = years.get(position).get("name");
-                            joindate_input.setText(selected+"0901");
+                            joindate_input.setText(selected + "0901");
                             joindate_popupWin.dismiss();
                             clearAllFocus();
                         }
@@ -461,8 +461,6 @@ public class ProfileImprove2Activity extends BaseActivity {
             joindate_input.setText(getIntent().getStringExtra("joindate"));
             joindate_input.setEnabled(false);
         }
-        if("1".equals(UserSubject.getLevel()))
-            next.setEnabled(false);
         clearAllFocus();
     }
 
@@ -761,7 +759,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     }
 
     protected class MyTextWatcher implements TextWatcher {
-
+        boolean isempty;
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             if ("".equals(s.toString()))
@@ -788,16 +786,16 @@ public class ProfileImprove2Activity extends BaseActivity {
             System.out.println(flag);
         }
 
-        public void addFlag() {
-            flag++;
-            System.out.println(flag);
-        }
-
-        public void subFlag() {
-            flag--;
-            if (0 == flag)
-                next.setEnabled(true);
-            System.out.println(flag);
-        }
+//        public void addFlag() {
+//            flag++;
+//            System.out.println(flag);
+//        }
+//
+//        public void subFlag() {
+//            flag--;
+//            if (0 == flag)
+//                next.setEnabled(true);
+//            System.out.println(flag);
+//        }
     }
 }

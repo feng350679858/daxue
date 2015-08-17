@@ -118,10 +118,10 @@ public class IndexMoneyFragment extends BaseFragment {
         IvFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //             Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
-                //            intent.putExtra("address",tv_address.getTag().toString());
-                //            intent.putExtra("cancel","visible");
-                Intent intent = new Intent(getActivity(), ProfileImproveActivity.class);
+                             Intent intent = new Intent(getActivity(), PartjobSearchActivity.class);
+                            intent.putExtra("address",currentAreacode);
+                            intent.putExtra("cancel","visible");
+//                Intent intent = new Intent(getActivity(), ProfileImproveActivity.class);
                 startActivity(intent);
             }
         });

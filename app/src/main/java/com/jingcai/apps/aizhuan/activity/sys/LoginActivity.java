@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
+import com.jingcai.apps.aizhuan.activity.index.MainActivity;
 import com.jingcai.apps.aizhuan.jpush.JpushUtil;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -47,7 +49,17 @@ public class LoginActivity extends BaseActivity {
             doLogin(UserSubject.getPhone(), DES3Util.decrypt(UserSubject.getPassword()));
         }
     }
-
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event){
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (MainActivity.instance != null)
+//                MainActivity.instance.finish();
+//            finish();
+//
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
     private void initViews() {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password = (EditText) findViewById(R.id.et_password);
