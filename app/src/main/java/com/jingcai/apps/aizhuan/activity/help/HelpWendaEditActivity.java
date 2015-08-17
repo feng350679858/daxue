@@ -109,6 +109,7 @@ public class HelpWendaEditActivity extends BaseActivity {
         });
 
 
+        findViewById(R.id.rl_iv_func_container).setVisibility(View.GONE);
         tv_func = (TextView) findViewById(R.id.tv_func);
         tv_func.setVisibility(View.VISIBLE);
         tv_func.setText("发布");

@@ -33,6 +33,8 @@
     <color name="red">#e33839</color>
     <!-- 带有透明度的红色 -->
     <color name="trans_red">#777d0703</color>
+    <!-- 半透明效果用于蒙板 -->
+    <color name="cover_alpha">#AA000000</color>
     <!--兼职项-->
     <color name="font_blue">#3ea2ff</color>
     <color name="font_purple">#c889d8</color>

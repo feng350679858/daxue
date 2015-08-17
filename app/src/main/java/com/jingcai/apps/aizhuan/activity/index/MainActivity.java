@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import com.jingcai.apps.aizhuan.activity.index.fragment.IndexCampusFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMessageFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMineFragment;
 import com.jingcai.apps.aizhuan.activity.index.fragment.IndexMoneyFragment;
+import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.service.local.UnreadMsgService;
 import com.jingcai.apps.aizhuan.util.HXHelper;
 import com.jingcai.apps.aizhuan.util.PopupWin;
@@ -69,6 +71,17 @@ public class MainActivity extends BaseFragmentActivity {
             focusTapedIcon(mCurrentTabIndex);
             //切换当前显示的Fragment到指定的fragment
             changeFragment(mCurrentTabIndex);
+
+            if (v.getId() == R.id.ll_message && !Preferences.getInstance(Preferences.TYPE.guide).getBoolean(Preferences.Guide.PARAM_GUIDE_SYS_MESSAGE, false)) {
+                final View stub_guide_message = ((ViewStub) findViewById(R.id.stub_guide_message)).inflate();
+                stub_guide_message.findViewById(R.id.iv_guide_message).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Preferences.getInstance(Preferences.TYPE.guide).update(Preferences.Guide.PARAM_GUIDE_SYS_MESSAGE, true);
+                        stub_guide_message.setVisibility(View.GONE);
+                    }
+                });
+            }
         }
     };
     private View.OnClickListener releaseClickListener = new View.OnClickListener() {
@@ -85,7 +98,7 @@ public class MainActivity extends BaseFragmentActivity {
                     .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                     .build();
             String html = "正有<font color='red'>100+位</font>在线帮助您";
-            ((TextView)selfdeftimeWin.findViewById(R.id.tv_school_num)).setText(android.text.Html.fromHtml(html));
+            ((TextView) selfdeftimeWin.findViewById(R.id.tv_school_num)).setText(android.text.Html.fromHtml(html));
             selfdeftimeWin.setAction(R.id.btn_cancel, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,6 +124,7 @@ public class MainActivity extends BaseFragmentActivity {
     };
     private ImageView iv_campus_badge;
     private ImageView iv_message_badge;
+    private View stub_guide_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +161,27 @@ public class MainActivity extends BaseFragmentActivity {
         focusTapedIcon(mCurrentTabIndex);
         //切换当前显示的Fragment到指定的fragment
         changeFragment(mCurrentTabIndex);
+
+        if (!Preferences.getInstance(Preferences.TYPE.guide).getBoolean(Preferences.Guide.PARAM_GUIDE_MAIN_ACTIVITY, false)) {
+            stub_guide_view = ((ViewStub) findViewById(R.id.stub_guide)).inflate();
+            stub_guide_view.findViewById(R.id.iv_guide_online).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideGuide();
+                }
+            });
+            stub_guide_view.findViewById(R.id.iv_guide_deploy).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideGuide();
+                }
+            });
+        }
+    }
+
+    private void hideGuide() {
+        Preferences.getInstance(Preferences.TYPE.guide).update(Preferences.Guide.PARAM_GUIDE_MAIN_ACTIVITY, true);
+        stub_guide_view.setVisibility(View.GONE);
     }
 
     private void initService() {

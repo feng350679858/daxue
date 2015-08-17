@@ -14,7 +14,7 @@ public class Preferences {
 
 
     public enum TYPE {
-        config, partjob
+        config, partjob, guide
     }
 
     private static Context context;
@@ -52,6 +52,12 @@ public class Preferences {
     public interface Partjob {
         String SEARCH_INDEX = "search_index";                                 //loading图url
         String SEARCH_KEY_PREFIX = "search_key_prefix";                     //loading图url
+    }
+    //教程
+    public interface Guide{
+        String PARAM_GUIDE_MAIN_ACTIVITY = "guide_main_activity";           //首页向导
+        String PARAM_GUIDE_WENDA_ANSWER = "guide_wenda_answer";             //答案详情
+        String PARAM_GUIDE_SYS_MESSAGE = "guide_sys_message";               //消息
     }
 
 //    private static boolean introstatus;

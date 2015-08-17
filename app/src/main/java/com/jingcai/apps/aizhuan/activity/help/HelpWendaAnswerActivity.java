@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -21,6 +22,7 @@ import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.AnonHandler;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
+import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob35.Partjob35Response;
@@ -64,7 +66,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         answerid = getIntent().getStringExtra("answerid");
-        if(StringUtil.isEmpty(answerid)){
+        if (StringUtil.isEmpty(answerid)) {
             finishWithResult();
         } else {
             messageHandler = new MessageHandler(this);
@@ -79,8 +81,8 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     }
 
     private void initData() {
-        if(!actionLock.tryLock()){
-            return ;
+        if (!actionLock.tryLock()) {
+            return;
         }
         new AzExecutor().execute(new Runnable() {
             @Override
@@ -221,18 +223,18 @@ public class HelpWendaAnswerActivity extends BaseActivity {
         });
     }
 
-    private void initView(){
-        civ_head_logo = (CircleImageView)findViewById(R.id.civ_head_logo);
-        ltv_level = (LevelTextView)findViewById(R.id.ltv_level);
-        tv_stu_name = (TextView)findViewById(R.id.tv_stu_name);
-        tv_deploy_time = (TextView)findViewById(R.id.tv_deploy_time);
-        tv_stu_college = (TextView)findViewById(R.id.tv_stu_college);
-        tv_detail_content = (TextView)findViewById(R.id.tv_detail_content);
+    private void initView() {
+        civ_head_logo = (CircleImageView) findViewById(R.id.civ_head_logo);
+        ltv_level = (LevelTextView) findViewById(R.id.ltv_level);
+        tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
+        tv_deploy_time = (TextView) findViewById(R.id.tv_deploy_time);
+        tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
+        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
 
         layout_wenda_like = findViewById(R.id.layout_wenda_like);
-        cb_wenda_like = (CheckBox)findViewById(R.id.cb_wenda_like);
+        cb_wenda_like = (CheckBox) findViewById(R.id.cb_wenda_like);
         layout_wenda_comment = findViewById(R.id.layout_wenda_comment);
-        cb_wenda_comment = (CheckBox)findViewById(R.id.cb_wenda_comment);
+        cb_wenda_comment = (CheckBox) findViewById(R.id.cb_wenda_comment);
 
         layout_wenda_help = findViewById(R.id.layout_wenda_help);
         tv_reward = findViewById(R.id.cb_wenda_reward);
@@ -274,31 +276,34 @@ public class HelpWendaAnswerActivity extends BaseActivity {
     }
 
     private void initViewData() {
-        if(null == job) return ;
+        if (null == job) return;
         iv_func.setVisibility(View.VISIBLE);
 
         bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
-        try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
+        try {
+            ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
+        } catch (Exception e) {
+        }
         tv_stu_name.setText(job.getSourcename());
-        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {
+        if (UserSubject.getSchoolname().equals(job.getSourceschool())) {
             tv_stu_college.setText(job.getSourcecollege());
-        }else{
+        } else {
             tv_stu_college.setText(job.getSourceschool());
         }
         tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
         tv_detail_content.setText(job.getContent());
 
         //点赞
-        if("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())){
+        if ("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())) {
             cb_wenda_like.setText("");
-        }else {
+        } else {
             cb_wenda_like.setText(job.getPraisecount());
         }
         cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
         //评论
-        if("0".equals(job.getCommentcount()) || StringUtil.isEmpty(job.getCommentcount())){
+        if ("0".equals(job.getCommentcount()) || StringUtil.isEmpty(job.getCommentcount())) {
             cb_wenda_comment.setText("");
-        }else {
+        } else {
             cb_wenda_comment.setText(job.getCommentcount());
         }
 
@@ -328,21 +333,33 @@ public class HelpWendaAnswerActivity extends BaseActivity {
                 }
             }
         });
+
+        //打赏别人的引导，作者显示再次编辑
+        if (!selfFlag && !Preferences.getInstance(Preferences.TYPE.guide).getBoolean(Preferences.Guide.PARAM_GUIDE_WENDA_ANSWER, false)) {
+            final View stub_guide_view = ((ViewStub) findViewById(R.id.stub_guide)).inflate();
+            stub_guide_view.findViewById(R.id.iv_guide_reward).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Preferences.getInstance(Preferences.TYPE.guide).update(Preferences.Guide.PARAM_GUIDE_WENDA_ANSWER, true);
+                    stub_guide_view.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case REQUEST_CODE_ANSWER_EDIT:{
-                if(Activity.RESULT_OK == resultCode){
+        switch (requestCode) {
+            case REQUEST_CODE_ANSWER_EDIT: {
+                if (Activity.RESULT_OK == resultCode) {
                     //更新内容和匿名状态
                     initData();
                     updateFlag = true;
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER_COMMENT:{
-                if(Activity.RESULT_OK == resultCode){
+            case REQUEST_CODE_ANSWER_COMMENT: {
+                if (Activity.RESULT_OK == resultCode) {
                     //更新评论数量
                     String commentCount = data.getStringExtra("commentCount");
                     cb_wenda_comment.setText(commentCount);
@@ -388,6 +405,7 @@ public class HelpWendaAnswerActivity extends BaseActivity {
             }
         }
     }
+
     private void finishWithResult() {
         if (updateFlag) {
             Intent intent = new Intent();
