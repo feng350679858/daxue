@@ -146,9 +146,8 @@ public class CampusAdapter extends BaseAdapter {
                 viewHolder.cb_jishi_comment.setText(job.getCommentcount());
             }
 
-            //即时帮助-求助中,helperid为空表示有还未有人请求帮助
-            if("1".equals(job.getType()) && "1".equals(job.getStatus())
-                    && StringUtil.isEmpty(job.getHelperid())) {
+            //即时帮助-求助中
+            if("1".equals(job.getType()) && "1".equals(job.getStatus())) {
                 final CheckBox cb_jishi_help = viewHolder.cb_jishi_help;
                 cb_jishi_help.setText("帮TA");
                 viewHolder.layout_jishi_help.setOnClickListener(new View.OnClickListener() {
@@ -212,11 +211,9 @@ public class CampusAdapter extends BaseAdapter {
         }
 
         bitmapUtil.getImage(viewHolder.civ_head_logo, job.getSourceimgurl(), true, R.drawable.default_head_img);
-        if(StringUtil.isNotEmpty(job.getSourcelevel())) {
+        try {
             viewHolder.ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
-        }else{
-            viewHolder.ltv_level.setLevel(1);
-        }
+        }catch (Exception e){}
         viewHolder.tv_stu_name.setText(job.getSourcename());
         if(UserSubject.getSchoolname().equals(job.getSourceschool())) {//同校的显示学院信息
             viewHolder.tv_stu_college.setText(job.getSourcecollege());

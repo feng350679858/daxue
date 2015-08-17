@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.jingcai.apps.aizhuan.activity.help.HelpWendaAnswerActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaDetailActivity;
 import com.jingcai.apps.aizhuan.activity.help.HelpWendaEditActivity;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.adapter.index.CampusAdapter;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
@@ -36,13 +36,11 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
-import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Response;
 import com.jingcai.apps.aizhuan.service.business.stu.stu08.Stu08Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
 import com.jingcai.apps.aizhuan.util.DateUtil;
-import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
@@ -63,7 +61,7 @@ public class IndexCampusFragment extends BaseFragment {
     private CampusAdapter campusAdapter;
     private int mCurrentStart = 0;  //当前的开始
     private ImageView ivFunc;
-    private PopupWin helpConfirmWin;
+    private PopConfirmWin helpConfirmWin;
     private ImageView iv_banner;
     private Partjob11Response.Parttimejob selectedJob;
 
@@ -98,12 +96,12 @@ public class IndexCampusFragment extends BaseFragment {
         mBaseView.findViewById(R.id.ib_back).setVisibility(View.GONE);
 
         ivFunc = (ImageView) mBaseView.findViewById(R.id.iv_func);
+        ivFunc.setVisibility(View.VISIBLE);
         if (UserSubject.getOnlineFlag()) {
             ivFunc.setImageResource(R.drawable.icon_index_campus_bird_online);
         } else {
             ivFunc.setImageResource(R.drawable.icon_index_campus_bird_offline);
         }
-        ivFunc.setVisibility(View.VISIBLE);
         ivFunc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,43 +167,38 @@ public class IndexCampusFragment extends BaseFragment {
         campusAdapter.setCallback(new CampusAdapter.Callback() {
             @Override
             public void jishi_like(final CheckBox checkBox, final Partjob11Response.Parttimejob job) {
-                onLickClick(checkBox, job);
+                selectedJob = job;
+                onLickClick(checkBox);
             }
 
             @Override
             public void wenda_like(CheckBox checkBox, Partjob11Response.Parttimejob job) {
-                onLickClick(checkBox, job);
+                selectedJob = job;
+                onLickClick(checkBox);
             }
 
             @Override
             public void jishi_help(CheckBox checkBox, final Partjob11Response.Parttimejob job) {
-//                if(StringUtil.isNotEmpty(job.getHelperid())){
-//                    //TODO 已经有人帮助了
-//                }
-                //TODO 检查是否可以帮助，可以帮助显示确认对话框
+                selectedJob = job;
+                // 检查是否可以帮助，可以帮助显示确认对话框
+                if (!actionLock.tryLock()) return;
                 azExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
                         Partjob37Request req = new Partjob37Request(job.getHelpid());
-                        azService.doTrans(req, Partjob37Response.class, new AzService.Callback<Partjob37Response>() {
+                        azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                             @Override
-                            public void success(Partjob37Response response) {
-                                ResponseResult result = response.getResult();
+                            public void success(BaseResponse resp) {
+                                ResponseResult result = resp.getResult();
                                 if ("0".equals(result.getCode())) {
-                                    String status = response.getBody().getParttimejob().getStatus();
-                                    if ("1".equals(status)) {//求助中
-                                        messageHandler.postMessage(11, job.getHelpid());//检查通过，显示确认对话框
-                                    } else {
-                                        messageHandler.postMessage(12, "此帮助已被其他人认领，请选择其他帮助");
-                                    }
+                                    messageHandler.postMessage(11);//检查通过，显示确认对话框
                                 } else {
-                                    messageHandler.postMessage(12, "检查帮助状态失败");
+                                    messageHandler.postMessage(12, resp.getResultMessage());
                                 }
                             }
 
                             @Override
                             public void fail(AzException e) {
-                                messageHandler.postException(e);
                             }
                         });
                     }
@@ -290,108 +283,106 @@ public class IndexCampusFragment extends BaseFragment {
      * 即时、问答 点赞
      *
      * @param checkBox
-     * @param job
      */
-    private void onLickClick(final CheckBox checkBox, final Partjob11Response.Parttimejob job) {
+    private void onLickClick(final CheckBox checkBox) {
         String targettype = null;//1：求助  2：问题 3：答案 4：评论本身 5、求助公告
-        if ("1".equals(job.getType())) {
+        if ("1".equals(selectedJob.getType())) {
             targettype = "1";
-        } else if ("2".equals(job.getType())) {
+        } else if ("2".equals(selectedJob.getType())) {
             targettype = "2";
-        } else if ("3".equals(job.getType())) {
+        } else if ("3".equals(selectedJob.getType())) {
             targettype = "5";
         }
         new LikeHandler(baseActivity).setCallback(new LikeHandler.Callback() {
             @Override
             public void like(String praiseid, CheckBox checkBox) {
-                job.setPraiseflag("1");
-                job.setPraiseid(praiseid);
-                job.setPraisecount(checkBox.getText().toString());
+                selectedJob.setPraiseflag("1");
+                selectedJob.setPraiseid(praiseid);
+                selectedJob.setPraisecount(checkBox.getText().toString());
             }
 
             @Override
             public void unlike(CheckBox checkBox) {
-                job.setPraiseflag("0");
-                job.setPraiseid(null);
-                job.setPraisecount(checkBox.getText().toString());
+                selectedJob.setPraiseflag("0");
+                selectedJob.setPraiseid(null);
+                selectedJob.setPraisecount(checkBox.getText().toString());
             }
-        }).click(targettype, job.getHelpid(), job.getPraiseid(), checkBox);
+        }).click(targettype, selectedJob.getHelpid(), selectedJob.getPraiseid(), checkBox);
     }
 
     private void initGroupData() {
-        //TODO 接入服务端接口
-        if (actionLock.tryLock()) {
+        if (!actionLock.tryLock())
+            return;
 //            showProgressDialog("获取圈子中...");
-            azExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    final Base01Request req = new Base01Request();
-                    final Base01Request.Banner banner = req.new Banner();
-                    banner.setPlatform(GlobalConstant.TERMINAL_TYPE_ANDROID);
-                    banner.setType("1");//1 兼职 2任务
-                    req.setBanner(banner);
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Base01Request req = new Base01Request();
+                final Base01Request.Banner banner = req.new Banner();
+                banner.setPlatform(GlobalConstant.TERMINAL_TYPE_ANDROID);
+                banner.setType("1");//1 兼职 2任务
+                req.setBanner(banner);
 
-                    azService.doTrans(req, Base01Response.class, new AzService.Callback<Base01Response>() {
-                        @Override
-                        public void success(Base01Response response) {
-                            ResponseResult result = response.getResult();
-                            if ("0".equals(result.getCode())) {
-                                Base01Response.Body body = response.getBody();
-                                List<Base01Response.Body.Banner> regionList = body.getBanner_list();
-                                messageHandler.postMessage(15, regionList);
+                azService.doTrans(req, Base01Response.class, new AzService.Callback<Base01Response>() {
+                    @Override
+                    public void success(Base01Response response) {
+                        ResponseResult result = response.getResult();
+                        if ("0".equals(result.getCode())) {
+                            Base01Response.Body body = response.getBody();
+                            List<Base01Response.Body.Banner> regionList = body.getBanner_list();
+                            messageHandler.postMessage(15, regionList);
+                        } else {
+                            messageHandler.postMessage(15, null);
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
+
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                final Partjob11Request req = new Partjob11Request();
+                final Partjob11Request.Parttimejob job = req.new Parttimejob();
+                job.setStudentid(UserSubject.getStudentid());
+                job.setGisx(GlobalConstant.gis.getGisx());
+                job.setGisy(GlobalConstant.gis.getGisy());
+                job.setStart(String.valueOf(mCurrentStart));
+                job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
+                req.setParttimejob(job);
+
+                azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
+                    @Override
+                    public void success(Partjob11Response response) {
+                        ResponseResult result = response.getResult();
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(1, result.getMessage());
+                        } else {
+                            Partjob11Response.Body body = response.getBody();
+                            List<Partjob11Response.Parttimejob> regionList = null == body ? null : body.getParttimejob_list();
+                            if (null == regionList) {
+                                regionList = new ArrayList<Partjob11Response.Parttimejob>();
+                            }
+                            if (regionList.size() < 1 && 0 == mCurrentStart) {
+                                messageHandler.postMessage(2);
                             } else {
-                                messageHandler.postMessage(15, null);
+                                messageHandler.postMessage(0, regionList);
                             }
                         }
+                    }
 
-                        @Override
-                        public void fail(AzException e) {
-                            messageHandler.postException(e);
-                        }
-                    });
-                }
-            });
-
-            azExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    final Partjob11Request req = new Partjob11Request();
-                    final Partjob11Request.Parttimejob job = req.new Parttimejob();
-                    job.setStudentid(UserSubject.getStudentid());
-                    job.setGisx(GlobalConstant.gis.getGisx());
-                    job.setGisy(GlobalConstant.gis.getGisy());
-                    job.setStart(String.valueOf(mCurrentStart));
-                    job.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-                    req.setParttimejob(job);
-
-                    azService.doTrans(req, Partjob11Response.class, new AzService.Callback<Partjob11Response>() {
-                        @Override
-                        public void success(Partjob11Response response) {
-                            ResponseResult result = response.getResult();
-                            if (!"0".equals(result.getCode())) {
-                                messageHandler.postMessage(1, result.getMessage());
-                            } else {
-                                Partjob11Response.Body body = response.getBody();
-                                List<Partjob11Response.Parttimejob> regionList = null == body?null:body.getParttimejob_list();
-                                if(null == regionList){
-                                    regionList = new ArrayList<Partjob11Response.Parttimejob>();
-                                }
-                                if (regionList.size() < 1 && 0 == mCurrentStart) {
-                                    messageHandler.postMessage(2);
-                                } else {
-                                    messageHandler.postMessage(0, regionList);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void fail(AzException e) {
-                            messageHandler.postException(e);
-                        }
-                    });
-                }
-            });
-        }
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
 
     }
 
@@ -434,11 +425,11 @@ public class IndexCampusFragment extends BaseFragment {
                     }
                     break;
                 }
-                case 2:{
+                case 2: {
                     try {
                         groupListView.setVisibility(View.GONE);
-                        ((ViewStub)mBaseView.findViewById(R.id.stub_empty_view)).inflate();
-                    }finally {
+                        ((ViewStub) mBaseView.findViewById(R.id.stub_empty_view)).inflate();
+                    } finally {
                         actionLock.unlock();
                     }
                     break;
@@ -488,41 +479,30 @@ public class IndexCampusFragment extends BaseFragment {
                     break;
                 }
                 case 11: {
-                    final String helpid = String.valueOf(msg.obj);
-                    if (null == helpConfirmWin) {
-                        //显示立即帮助确认对话框
-                        View parentView = baseActivity.getWindow().getDecorView();
-                        helpConfirmWin = PopupWin.Builder.create(baseActivity)
-                                .setWidth((int) (screen_width * 0.8))
-                                .setAnimstyle(R.anim.dialog_appear)
-                                .setContentViewLayout(R.layout.pop_confirm)
-                                .setParentView(parentView)
-                                .build();
-                        helpConfirmWin.findTextViewById(R.id.tv_title).setText("确认？");
-                        helpConfirmWin.findTextViewById(R.id.tv_content).setText("确认立即帮助？");
-
-                        helpConfirmWin.setAction(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                helpConfirmWin.dismiss();
-                            }
-                        });
-                    }
-                    helpConfirmWin.setAction(R.id.tv_confirm, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            doJishiHelp(helpid);
+                    try {
+                        if (null == helpConfirmWin) {
+                            helpConfirmWin = new PopConfirmWin(baseActivity);
+                            helpConfirmWin.setTitle("确认？").setContent("确认立即帮助？").setAction(R.id.tv_cancel, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    helpConfirmWin.dismiss();
+                                }
+                            }).setAction(R.id.tv_confirm, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    doJishiHelp();
+                                }
+                            });
                         }
-                    });
-                    helpConfirmWin.show(Gravity.CENTER, 0, 0);
+                        helpConfirmWin.show();
+                    } finally {
+                        actionLock.unlock();
+                    }
                     break;
                 }
                 case 12: {
                     try {
-                        showToast("请求帮助成功");
-                        if (null != helpConfirmWin) {
-                            helpConfirmWin.dismiss();
-                        }
+                        showToast("接单失败:" + String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
@@ -530,18 +510,12 @@ public class IndexCampusFragment extends BaseFragment {
                 }
                 case 13: {
                     try {
-                        showToast("请求帮助成功");
+                        showToast("接单成功");
                         if (null != helpConfirmWin) {
                             helpConfirmWin.dismiss();
                         }
-                    } finally {
-                        actionLock.unlock();
-                    }
-                    break;
-                }
-                case 14: {
-                    try {
-                        showToast("请求帮助失败:" + msg.obj);
+                        selectedJob.setStatus("2");//状态设置为帮助中
+                        campusAdapter.notifyDataSetChanged();
                     } finally {
                         actionLock.unlock();
                     }
@@ -591,16 +565,16 @@ public class IndexCampusFragment extends BaseFragment {
         }
     }
 
-    private void doJishiHelp(final String helpid) {
+    private void doJishiHelp() {
         if (actionLock.tryLock()) {
             azExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     Partjob13Request req = new Partjob13Request();
-                    Partjob13Request.Parttimejob job = req.new Parttimejob();
-                    job.setHelpid(helpid);
-                    job.setSourceid(UserSubject.getStudentid());
-                    req.setParttimejob(job);
+                    Partjob13Request.Parttimejob job2 = req.new Parttimejob();
+                    job2.setHelpid(selectedJob.getHelpid());
+                    job2.setSourceid(UserSubject.getStudentid());
+                    req.setParttimejob(job2);
 
                     azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
                         @Override
@@ -609,13 +583,12 @@ public class IndexCampusFragment extends BaseFragment {
                             if ("0".equals(result.getCode())) {
                                 messageHandler.postMessage(13);
                             } else {
-                                messageHandler.postMessage(14, result.getMessage());
+                                messageHandler.postMessage(12, result.getMessage());
                             }
                         }
 
                         @Override
                         public void fail(AzException e) {
-                            messageHandler.postException(e);
                         }
                     });
                 }

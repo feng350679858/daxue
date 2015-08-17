@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/content_background"
+    android:background="@drawable/white_radius_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:text="标题"
-        android:textColor="@color/normal_grey"
+        android:textColor="@color/important_dark"
         android:textSize="16sp" />
 
 
@@ -24,9 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:padding="10dp"
         android:text="尚未设置确认内容"
-        android:textColor="@color/important_dark"
+        android:textColor="@color/normal_grey"
         android:textSize="14sp" />
 
     <View

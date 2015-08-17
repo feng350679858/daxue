@@ -20,6 +20,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.util.BaseReceiver;
 import com.jingcai.apps.aizhuan.activity.util.LevelTextView;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.adapter.help.AbuseReportHandler;
 import com.jingcai.apps.aizhuan.adapter.help.CommentItem;
 import com.jingcai.apps.aizhuan.adapter.help.HelpCommentAdapter;
@@ -27,11 +28,14 @@ import com.jingcai.apps.aizhuan.adapter.help.LikeHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
+import com.jingcai.apps.aizhuan.service.base.BaseResponse;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob19.Partjob19Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob29.Partjob29Response;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -73,12 +77,14 @@ public class HelpJishiDetailActivity extends BaseActivity {
     private View layout_jishi_help;
     private Partjob19Response.Parttimejob job;
     private TextView tv_gender_limit;
+    private PopConfirmWin helpConfirmWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         helpid = getIntent().getStringExtra("helpid");
         type = getIntent().getStringExtra("type");//1立即帮助 3公告
+
         if (StringUtil.isEmpty(helpid)) {
             finish();
         } else {
@@ -86,6 +92,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
                 type = "1";
             }
             messageHandler = new MessageHandler(this);
+
             setContentView(R.layout.help_jishi_detail);
 
             initHeader();
@@ -101,65 +108,7 @@ public class HelpJishiDetailActivity extends BaseActivity {
         tvTitle.setText("求助详情");
 
         iv_func = (ImageView) findViewById(R.id.iv_func);
-        if (GlobalConstant.debugFlag) {
-            iv_func.setVisibility(View.VISIBLE);
-        } else {
-            iv_func.setVisibility(View.GONE);
-        }
-        iv_func.setImageResource(R.drawable.icon__header_more);
-        iv_func.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null == job && !GlobalConstant.debugFlag) {
-                    return;
-                }
-                int dp10_px = HelpJishiDetailActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
-                View contentView = LayoutInflater.from(HelpJishiDetailActivity.this).inflate(R.layout.help_wenda_answer_setting_pop, null);
-                PopupWin groupWin = PopupWin.Builder.create(HelpJishiDetailActivity.this)
-                        .setWidth(dp10_px * 17)
-                        .setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
-                        .setAnimstyle(0)//取消动画
-                        .setParentView(iv_func)
-                        .setContentView(contentView)
-                        .build();
-
-                View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
-                View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
-
-                final boolean selfFlag = GlobalConstant.debugFlag ? false : UserSubject.getStudentid().equals(job.getSourceid());
-                if (selfFlag) {
-                    tv_pop_abuse_report.setVisibility(View.GONE);
-                } else {
-                    tv_pop_abuse_report.setVisibility(View.VISIBLE);
-                    tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {//举报
-                            //举报求助
-                            new AbuseReportHandler(HelpJishiDetailActivity.this).setCallback(new AbuseReportHandler.Callback() {
-                                @Override
-                                public void call() {
-                                    showToast("举报成功");
-                                }
-                            }).click(job.getSourceid(), "1", helpid);
-                        }
-                    });
-                }
-                {
-                    tv_pop_share.setVisibility(View.VISIBLE);
-                    tv_pop_share.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {//分享
-                            Log.d("==", "-----------tv_pop_share---");
-//                            UmengShareUtil umengShareUtil = new UmengShareUtil(HelpJishiDetailActivity.this);
-//                            umengShareUtil.setShareContent("兼职分享", msg + getShareUrl(), getShareUrl(), logopath);
-//                            umengShareUtil.openShare();
-                        }
-                    });
-                }
-
-                groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
-            }
-        });
+        iv_func.setVisibility(View.GONE);
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.ib_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -187,37 +136,29 @@ public class HelpJishiDetailActivity extends BaseActivity {
         layout_jishi_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != job) {
-                    new LikeHandler(HelpJishiDetailActivity.this).setCallback(new LikeHandler.Callback() {
-                        @Override
-                        public void like(String praiseid, CheckBox checkBox) {
-                            job.setPraiseflag("1");
-                            job.setPraiseid(praiseid);
-                            job.setPraisecount(checkBox.getText().toString());
-                        }
+                if (null == job) return;
+                new LikeHandler(HelpJishiDetailActivity.this).setCallback(new LikeHandler.Callback() {
+                    @Override
+                    public void like(String praiseid, CheckBox checkBox) {
+                        job.setPraiseflag("1");
+                        job.setPraiseid(praiseid);
+                        job.setPraisecount(checkBox.getText().toString());
+                    }
 
-                        @Override
-                        public void unlike(CheckBox checkBox) {
-                            job.setPraiseflag("0");
-                            job.setPraiseid(null);
-                            job.setPraisecount(checkBox.getText().toString());
-                        }
-                    }).click("1".equals(type) ? "1" : "5", helpid, job.getPraiseid(), cb_jishi_like);
-                }
+                    @Override
+                    public void unlike(CheckBox checkBox) {
+                        job.setPraiseflag("0");
+                        job.setPraiseid(null);
+                        job.setPraisecount(checkBox.getText().toString());
+                    }
+                }).click("1".equals(type) ? "1" : "5", helpid, job.getPraiseid(), cb_jishi_like);
             }
         });
         cb_jishi_like = (CheckBox) findViewById(R.id.cb_jishi_like);
         cb_jishi_comment = (CheckBox) findViewById(R.id.cb_jishi_comment);
-        layout_jishi_help = findViewById(R.id.layout_jishi_help);
-        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
-        layout_jishi_help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-                showToast("显示帮助确认弹窗");
-            }
-        });
 
+        cb_jishi_help = (CheckBox) findViewById(R.id.cb_jishi_help);
+        layout_jishi_help = findViewById(R.id.layout_jishi_help);
 
         groupListView = (XListView) findViewById(R.id.xlv_list);
         groupListView.setAdapter(commentAdapter = new HelpCommentAdapter(this));
@@ -292,7 +233,61 @@ public class HelpJishiDetailActivity extends BaseActivity {
             return;
         }
         iv_func.setVisibility(View.VISIBLE);
-        //tv_main_tip.setText(job.getTopiccontent());
+        iv_func.setImageResource(R.drawable.icon__header_more);
+        iv_func.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null == job) {
+                    return;
+                }
+                int dp10_px = HelpJishiDetailActivity.this.getResources().getDimensionPixelSize(R.dimen.dp_10);
+                View contentView = LayoutInflater.from(HelpJishiDetailActivity.this).inflate(R.layout.help_wenda_answer_setting_pop, null);
+                PopupWin groupWin = PopupWin.Builder.create(HelpJishiDetailActivity.this)
+                        .setWidth(dp10_px * 17)
+                        .setHeight(WindowManager.LayoutParams.WRAP_CONTENT)
+                        .setAnimstyle(0)//取消动画
+                        .setParentView(iv_func)
+                        .setContentView(contentView)
+                        .build();
+
+                View tv_pop_abuse_report = groupWin.findViewById(R.id.tv_pop_abuse_report);
+                View tv_pop_share = groupWin.findViewById(R.id.tv_pop_share);
+
+                final boolean selfFlag = UserSubject.getStudentid().equals(job.getSourceid());
+                if (selfFlag) {
+                    tv_pop_abuse_report.setVisibility(View.GONE);
+                } else {
+                    tv_pop_abuse_report.setVisibility(View.VISIBLE);
+                    tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {//举报
+                            //举报求助
+                            new AbuseReportHandler(HelpJishiDetailActivity.this).setCallback(new AbuseReportHandler.Callback() {
+                                @Override
+                                public void call() {
+                                    showToast("举报成功");
+                                }
+                            }).click(job.getSourceid(), "1", helpid);
+                        }
+                    });
+                }
+                {
+                    tv_pop_share.setVisibility(View.VISIBLE);
+                    tv_pop_share.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {//分享
+                            Log.d("==", "-----------tv_pop_share---");
+//                            UmengShareUtil umengShareUtil = new UmengShareUtil(HelpJishiDetailActivity.this);
+//                            umengShareUtil.setShareContent("兼职分享", msg + getShareUrl(), getShareUrl(), logopath);
+//                            umengShareUtil.openShare();
+                        }
+                    });
+                }
+
+                groupWin.show(Gravity.TOP | Gravity.RIGHT, dp10_px, dp10_px * 6);
+            }
+        });
+
         bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
         try {
             ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
@@ -321,6 +316,41 @@ public class HelpJishiDetailActivity extends BaseActivity {
             cb_jishi_comment.setText("");
         } else {
             cb_jishi_comment.setText(job.getCommentcount());
+        }
+
+        //即时帮助-求助中,helperid为空表示有还未有人请求帮助
+        if("1".equals(type) && "1".equals(job.getStatus())) {
+            cb_jishi_help.setText("帮TA");
+            layout_jishi_help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 检查是否可以帮助，可以帮助显示确认对话框
+                    if (!actionLock.tryLock()) return;
+                    azExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Partjob37Request req = new Partjob37Request(helpid);
+                            azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                                @Override
+                                public void success(BaseResponse resp) {
+                                    ResponseResult result = resp.getResult();
+                                    if ("0".equals(result.getCode())) {
+                                        messageHandler.postMessage(11);//检查通过，显示确认对话框
+                                    } else {
+                                        messageHandler.postMessage(12, resp.getResultMessage());
+                                    }
+                                }
+
+                                @Override
+                                public void fail(AzException e) {
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } else {//显示状态
+            cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
         }
     }
 
@@ -379,14 +409,46 @@ public class HelpJishiDetailActivity extends BaseActivity {
                     }
                     break;
                 }
-//                case 3:{
-//                    try {
-//                        groupListView.setVisibility(View.GONE);
-//                    }finally {
-//                        actionLock.unlock();
-//                    }
-//                    break;
-//                }
+                case 11: {
+                    try {
+                        if (null == helpConfirmWin) {
+                            //显示立即帮助确认对话框
+                            helpConfirmWin = new PopConfirmWin(HelpJishiDetailActivity.this);
+                            helpConfirmWin.setTitle("确认？").setContent("确认立即帮助？").setAction(R.id.tv_confirm, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    doJishiHelp();
+                                }
+                            });
+                        }
+                        helpConfirmWin.show();
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 12: {
+                    try {
+                        showToast("接单失败:" + String.valueOf(msg.obj));
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 13: {
+                    try {
+                        showToast("接单成功");
+                        if (null != helpConfirmWin) {
+                            helpConfirmWin.dismiss();
+                        }
+                        job.setStatus("2");//状态设置为帮助中
+                        cb_jishi_help.setText(DictUtil.get(DictUtil.Item.help_jishi_status, job.getStatus()));
+                        layout_jishi_help.setOnClickListener(null);
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
                 default: {
                     super.handleMessage(msg);
                 }
@@ -395,11 +457,9 @@ public class HelpJishiDetailActivity extends BaseActivity {
     }
 
     private void initGroupData() {
-        //TODO 接入服务端接口
         if (!actionLock.tryLock()) {
             return;
         }
-        //showProgressDialog("获取圈子中...");
         //获取详情
         azExecutor.execute(new Runnable() {
             @Override
@@ -477,10 +537,40 @@ public class HelpJishiDetailActivity extends BaseActivity {
             intent.putExtra("helpid", helpid);
             intent.putExtra("studentid", getIntent().getStringExtra("studentid"));
             intent.putExtra("timestamp", getIntent().getLongExtra("timestamp", -1));
-        }else if("3".equals(notiicationtype)){
+        } else if ("3".equals(notiicationtype)) {
             intent.putExtra("helpid", helpid);
             intent.putExtra("studentid", getIntent().getStringExtra("studentid"));
         }
         sendBroadcast(intent);
+    }
+
+    private void doJishiHelp() {
+        if (!actionLock.tryLock()) return;
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Partjob13Request req = new Partjob13Request();
+                Partjob13Request.Parttimejob job = req.new Parttimejob();
+                job.setHelpid(helpid);
+                job.setSourceid(UserSubject.getStudentid());
+                req.setParttimejob(job);
+
+                azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                    @Override
+                    public void success(BaseResponse response) {
+                        ResponseResult result = response.getResult();
+                        if ("0".equals(result.getCode())) {
+                            messageHandler.postMessage(13);
+                        } else {
+                            messageHandler.postMessage(12, result.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                    }
+                });
+            }
+        });
     }
 }
