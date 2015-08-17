@@ -45,7 +45,7 @@
                             android:gravity="bottom"
                             android:text="￥"
                             android:textColor="@color/red"
-                            android:textSize="16sp" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/partjob_detail_popup_salary"
@@ -53,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:textColor="@color/red"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/partjob_detail_popup_salaryunit"
@@ -61,7 +61,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
                             android:textColor="@color/normal_grey"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/partjob_detail_popup_settlelength"
@@ -71,8 +71,8 @@
                             android:background="@color/main_yellow"
 
                             android:gravity="center"
-                            android:padding="2dp"
-                            android:textColor="@color/important_dark"
+                            android:padding="1dp"
+                            android:textColor="#000000"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:gravity="center"
                 android:text="你确定要报名吗？"
                 android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <include layout="@layout/include_confirm_buttons" />
         </LinearLayout>

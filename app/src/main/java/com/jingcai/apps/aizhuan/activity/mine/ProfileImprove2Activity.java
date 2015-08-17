@@ -2,11 +2,16 @@ package com.jingcai.apps.aizhuan.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +46,8 @@ import com.jingcai.apps.aizhuan.util.PopupWin;
 import com.jingcai.apps.aizhuan.util.StringUtil;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -56,6 +63,7 @@ public class ProfileImprove2Activity extends BaseActivity {
     private XListView mListSchool, mListProfessional;
     private SchoolListAdapter mListSchoolAdapter, mListProfessionalAdapter;
     private PopupWin college_popupWin, joindate_popupWin, connectionWin;
+    private TextView warning;
 
     private AzService azService;
     private String mSchoolSearchKey = "";
@@ -124,6 +132,7 @@ public class ProfileImprove2Activity extends BaseActivity {
                             Intent intent = new Intent(Intent.ACTION_CALL);
                             intent.setData(Uri.parse("tel:" + phone.getText().toString()));
                             startActivity(intent);
+                            connectionWin.dismiss();
                         }
                     });
                 }
@@ -143,6 +152,7 @@ public class ProfileImprove2Activity extends BaseActivity {
         joindate = (TextInputLayout) findViewById(R.id.profile_improve_joindate);
         joindate_input = joindate.getEditText();
         joindate_input.addTextChangedListener(myTextWatcher);
+        warning=(TextView)findViewById(R.id.profile_improve_warning);
         //学校列表
         mListSchool = (XListView) findViewById(R.id.lv_mine_profile_improve_school);
         mListSchool.setPullRefreshEnable(false);
@@ -400,6 +410,13 @@ public class ProfileImprove2Activity extends BaseActivity {
 //            }
 //
 //        });
+        //在TextVew中加入图片
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.msg_state_fail_resend);
+        ImageSpan imgSpan = new ImageSpan(this, b);
+        SpannableString spanString = new SpannableString("icon");
+        spanString.setSpan(imgSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        warning.setText(spanString);
+        warning.append(getResources().getString(R.string.profile_improve_warning));
         next = (Button) findViewById(R.id.profile_improve_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override

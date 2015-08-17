@@ -30,7 +30,7 @@
     <!-- 用于图片边缘border -->
     <color name="circle_image_border">#dddddd</color>
     <!-- 红色  -->
-    <color name="red">#e33839</color>
+    <color name="red">#f93240</color>
     <!-- 带有透明度的红色 -->
     <color name="trans_red">#777d0703</color>
     <!--兼职项-->

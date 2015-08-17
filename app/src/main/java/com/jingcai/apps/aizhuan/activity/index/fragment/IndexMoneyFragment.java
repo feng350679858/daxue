@@ -380,9 +380,6 @@ public class IndexMoneyFragment extends BaseFragment {
             tv_name.setText(label.getName()+"：");
             tv_text.setText(label.getText());
             bitmapUtil.getImage(iv_logo, label.getImgurl(), R.drawable.default_image);
-
-//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            convertView.setLayoutParams(layoutParams);
             linearLayout_label.addView(convertView);
 
             final String labelid = label.getId();
@@ -463,27 +460,27 @@ public class IndexMoneyFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onStart() {
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        // 当Activity显示出来后，每3秒钟切换一次图片显示
-        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            private int currentItem = 0;
-
-            public void run() {
-                currentItem = (currentItem + 1) % pageViews.length;
-                messageHandler.postMessage(9, currentItem);
-            }
-        }, 3, 3, TimeUnit.SECONDS);
-        super.onStop();
-    }
-
-    @Override
-    public void onStop() {
-        // 当Activity不可见的时候停止切换
-        scheduledExecutorService.shutdown();
-        super.onStop();
-    }
+//    @Override
+//    public void onStart() {
+//        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+//        // 当Activity显示出来后，每3秒钟切换一次图片显示
+//        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+//            private int currentItem = 0;
+//
+//            public void run() {
+//                currentItem = (currentItem + 1) % pageViews.length;
+//                messageHandler.postMessage(9, currentItem);
+//            }
+//        }, 3, 3, TimeUnit.SECONDS);
+//        super.onStop();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        // 当Activity不可见的时候停止切换
+//        scheduledExecutorService.shutdown();
+//        super.onStop();
+//    }
 
     @Override
     public void onDestroyView() {
