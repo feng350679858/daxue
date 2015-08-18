@@ -433,7 +433,6 @@ public class HelpJishiDeployActivity extends BaseActivity {
                 }
                 case 5: {
                     try {
-//                        PayInsufficientWin2 win = new PayInsufficientWin2(HelpJishiDeployActivity.this);
                         PayInsufficientWin win = new PayInsufficientWin(HelpJishiDeployActivity.this);
                         win.show();
                     } finally {
