@@ -598,12 +598,11 @@ public class ProfileImproveActivity extends BaseActivity {
                     UserSubject.loginFail();
                     new JpushUtil(ProfileImproveActivity.this).logout();
                     HXHelper.getInstance().logout();  //环信连接
-
-                    Intent intent = new Intent(ProfileImproveActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                    ProfileImproveActivity.this.finish();
+                    MainActivity.logout();
+//                    Intent intent = new Intent(ProfileImproveActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                    ProfileImproveActivity.this.finish();
+                    startActivityForLogin();
                     break;
                 }
                 case 9: {
@@ -649,5 +648,17 @@ public class ProfileImproveActivity extends BaseActivity {
         schoolname = student.getSchoolname();
         professional = student.getProfessional();
         clearAllFocus();
+    }
+
+    @Override
+    protected void afterLoginSuccess() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void afterLoginFail() {
+        finish();
     }
 }
