@@ -64,8 +64,9 @@
 
                 <ImageButton
                     android:id="@+id/btn_emotion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:background="@color/white"
                     android:padding="5dp"
