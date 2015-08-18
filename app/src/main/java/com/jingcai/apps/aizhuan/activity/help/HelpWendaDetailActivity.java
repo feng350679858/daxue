@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -72,7 +73,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         helpid = getIntent().getStringExtra("helpid");
-        if(StringUtil.isEmpty(helpid)){
+        if (StringUtil.isEmpty(helpid)) {
             finish();
         } else {
             messageHandler = new MessageHandler(this);
@@ -86,14 +87,26 @@ public class HelpWendaDetailActivity extends BaseActivity {
         }
     }
 
+    private void finishWithResult() {
+        Intent intent = new Intent();
+        intent.putExtra("helpflag", job.getHelpflag());
+        intent.putExtra("helperid", job.getHelperid());
+        intent.putExtra("praiseflag", job.getPraiseflag());
+        intent.putExtra("praiseid", job.getPraiseid());
+        intent.putExtra("praisecount", job.getPraisecount());
+        intent.putExtra("answercount", job.getAnswercount());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     private void initHeader() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_content);
         tvTitle.setText("求问详情");
 
         iv_func = (ImageView) findViewById(R.id.iv_func);
-        if(GlobalConstant.debugFlag){
+        if (GlobalConstant.debugFlag) {
             iv_func.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             iv_func.setVisibility(View.GONE);
         }
         iv_func.setImageResource(R.drawable.icon__header_more);
@@ -116,7 +129,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 TextView tv_pop_anonymous = win.findTextViewById(R.id.tv_pop_anonymous);
                 TextView tv_pop_abuse_report = win.findTextViewById(R.id.tv_pop_abuse_report);
 
-                final boolean selfFlag = GlobalConstant.debugFlag?false:UserSubject.getStudentid().equals(job.getSourceid());
+                final boolean selfFlag = GlobalConstant.debugFlag ? false : UserSubject.getStudentid().equals(job.getSourceid());
                 if (selfFlag) {
                     // 发布作者，使用匿名
                     tv_pop_anonymous.setVisibility(View.VISIBLE);
@@ -133,7 +146,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                                 public void call(Partjob35Response.Parttimejob job) {
                                     win.dismiss();
                                     HelpWendaDetailActivity.this.job.setAnonflag("1".equals(HelpWendaDetailActivity.this.job.getAnonflag()) ? "0" : "1");
-                                    if("1".equals(HelpWendaDetailActivity.this.job.getAnonflag())) {
+                                    if ("1".equals(HelpWendaDetailActivity.this.job.getAnonflag())) {
 
                                     }
                                     //所在学校->匿名发布、所在学院->null、姓名->改为匿名、头像->默认头像路径
@@ -142,7 +155,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                         }
                     });
                 }
-                if(!selfFlag || GlobalConstant.debugFlag){
+                if (!selfFlag || GlobalConstant.debugFlag) {
                     tv_pop_anonymous.setVisibility(View.GONE);
                     tv_pop_abuse_report.setVisibility(View.VISIBLE);
                     tv_pop_abuse_report.setOnClickListener(new View.OnClickListener() {
@@ -167,14 +180,14 @@ public class HelpWendaDetailActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishWithResult();
             }
         });
     }
 
     private void initView() {
-        tv_main_tip = (TextView)findViewById(R.id.tv_main_tip);
-        civ_head_logo = (ImageView)findViewById(R.id.civ_head_logo);
+        tv_main_tip = (TextView) findViewById(R.id.tv_main_tip);
+        civ_head_logo = (ImageView) findViewById(R.id.civ_head_logo);
         ltv_level = (LevelTextView) findViewById(R.id.ltv_level);
         tv_stu_name = (TextView) findViewById(R.id.tv_stu_name);
         tv_stu_college = (TextView) findViewById(R.id.tv_stu_college);
@@ -194,6 +207,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                             job.setPraiseid(praiseid);
                             job.setPraisecount(checkBox.getText().toString());
                         }
+
                         @Override
                         public void unlike(CheckBox checkBox) {
                             job.setPraiseflag("0");
@@ -271,35 +285,38 @@ public class HelpWendaDetailActivity extends BaseActivity {
         });
     }
 
-    private void setViewData(){
-        if(null == job){
+    private void setViewData() {
+        if (null == job) {
             return;
         }
         iv_func.setVisibility(View.VISIBLE);
         tv_main_tip.setText(job.getTopiccontent());
         bitmapUtil.getImage(civ_head_logo, job.getSourceimgurl(), R.drawable.default_head_img);
-        try {ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));}catch (Exception e){}
+        try {
+            ltv_level.setLevel(Integer.parseInt(job.getSourcelevel()));
+        } catch (Exception e) {
+        }
         tv_stu_name.setText(job.getSourcename());
-        if(UserSubject.getSchoolname().equals(job.getSourceschool())) {
+        if (UserSubject.getSchoolname().equals(job.getSourceschool())) {
             tv_stu_college.setText(job.getSourcecollege());
-        }else{
+        } else {
             tv_stu_college.setText(job.getSourceschool());
         }
         tv_deploy_time.setText(DateUtil.getHumanlityDateString(job.getOptime()));
         tv_detail_content.setText(job.getContent());
 
         //点赞
-        if("0".equals(job.getPraisecount())||StringUtil.isEmpty(job.getPraisecount())) {
+        if ("0".equals(job.getPraisecount()) || StringUtil.isEmpty(job.getPraisecount())) {
             cb_wenda_like.setText("");
-        }else {
+        } else {
             cb_wenda_like.setText(job.getPraisecount());
         }
         cb_wenda_like.setChecked("1".equals(job.getPraiseflag()));//本人是否已经点赞
         //评论
-        if("0".equals(job.getCommentcount())||StringUtil.isEmpty(job.getCommentcount())) {
+        if ("0".equals(job.getAnswercount()) || StringUtil.isEmpty(job.getAnswercount())) {
             cb_wenda_comment.setText("");
-        }else {
-            cb_wenda_comment.setText(job.getCommentcount());
+        } else {
+            cb_wenda_comment.setText(job.getAnswercount());
         }
 
         showHelpLayout();
@@ -307,7 +324,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
 
     private void showHelpLayout() {
         final boolean selfHelpFlag = "1".equals(job.getHelpflag());
-        if(selfHelpFlag){
+        if (selfHelpFlag) {
             cb_wenda_help_my.setVisibility(View.VISIBLE);
             cb_wenda_help.setVisibility(View.GONE);
         } else {
@@ -317,7 +334,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
         layout_wenda_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selfHelpFlag){//我的答案
+                if (selfHelpFlag) {//我的答案
                     Intent intent = new Intent(HelpWendaDetailActivity.this, HelpWendaAnswerActivity.class);
                     intent.putExtra("answerid", job.getHelperid());
                     startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW2);
@@ -333,9 +350,9 @@ public class HelpWendaDetailActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case REQUEST_CODE_ANSWER_VIEW1:{//列表答案
-                if(resultCode == RESULT_OK) {
+        switch (requestCode) {
+            case REQUEST_CODE_ANSWER_VIEW1: {//列表答案
+                if (resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
 //                    groupListView.autoRefresh();
 //                    String praisecount = data.getStringExtra("");
@@ -357,15 +374,15 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER_VIEW2:{//我的答案
-                if(resultCode == RESULT_OK) {
+            case REQUEST_CODE_ANSWER_VIEW2: {//我的答案
+                if (resultCode == RESULT_OK) {
                     //答案信息有改动，刷新本页面
                     groupListView.autoRefresh();
                 }
                 break;
             }
-            case REQUEST_CODE_ANSWER_EDIT:{
-                if(resultCode == RESULT_OK) {
+            case REQUEST_CODE_ANSWER_EDIT: {
+                if (resultCode == RESULT_OK) {
                     //正常发布完成，显示我的答案页面，刷新列表
                     String helperid = data.getStringExtra("helperid");
                     job.setHelpflag("1");
@@ -375,7 +392,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                 }
                 break;
             }
-            default:{
+            default: {
                 super.onActivityResult(requestCode, resultCode, data);
             }
         }
@@ -494,7 +511,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                             region.setSourceschool("浙江大学");
                             region.setSourcecollege("计算机学院");
                             region.setOptime("20150801233341");
-                            if(i%2 == 0) {
+                            if (i % 2 == 0) {
                                 region.setPraiseflag("1");
                                 region.setPraiseid("23232332");
                             }
@@ -518,7 +535,7 @@ public class HelpWendaDetailActivity extends BaseActivity {
                                 ResponseResult result = response.getResult();
                                 if ("0".equals(result.getCode())) {
                                     List<Partjob15Response.Parttimejob> parttimejob_list = response.getBody().getParttimejob_list();
-                                    if(null == parttimejob_list){
+                                    if (null == parttimejob_list) {
                                         parttimejob_list = new ArrayList<Partjob15Response.Parttimejob>();
                                     }
                                     messageHandler.postMessage(2, parttimejob_list);
@@ -533,40 +550,18 @@ public class HelpWendaDetailActivity extends BaseActivity {
                             }
                         });
                     }
-//                        final AzService azService = new AzService(HelpWendaDetailActivity.this);
-//                        final Base04Request req = new Base04Request();
-//                        final Base04Request.Region region = req.new Region();
-//                        region.setStudentid(UserSubject.getStudentid());  //从UserSubject中获取studentId
-//                        region.setAreacode(GlobalConstant.gis.getAreacode());
-//                        region.setStart(String.valueOf(mCurrentStart));
-//                        region.setPagesize(String.valueOf(GlobalConstant.PAGE_SIZE));
-//                        req.setRegion(region);
-//                        azService.doTrans(req, Base04Response.class, new AzService.Callback<Base04Response>() {
-//                            @Override
-//                            public void success(Base04Response response) {
-//                                ResponseResult result = response.getResult();
-//                                if (!"0".equals(result.getCode())) {
-//                                    messageHandler.postMessage(1, result.getMessage());
-//                                } else {
-//                                    Base04Response.Body partjob07Body = response.getBody();
-//                                    List<Base04Response.Body.Region> regionList = partjob07Body.getRegion_list();
-//                                    //if (regionList.size() < 1 && 0 == mCurrentStart) {
-//                                    //    messageHandler.postMessage(2);
-//                                    //} else {
-//                                    messageHandler.postMessage(0, regionList);
-//                                    //}
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void fail(AzException e) {
-//                                messageHandler.postException(e);
-//                            }
-//                        });
-//                    }
                 }
             });
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishWithResult();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -201,11 +201,10 @@ public class CampusAdapter extends BaseAdapter {
             });
 
             //评论
-            //评论
-            if ("0".equals(job.getCommentcount()) || StringUtil.isEmpty(job.getCommentcount())) {
+            if ("0".equals(job.getAnswercount()) || StringUtil.isEmpty(job.getAnswercount())) {
                 viewHolder.cb_wenda_comment.setText("");
             } else {
-                viewHolder.cb_wenda_comment.setText(job.getCommentcount());
+                viewHolder.cb_wenda_comment.setText(job.getAnswercount());
             }
 
             //本人问答帮助

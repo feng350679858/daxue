@@ -43,7 +43,6 @@ import java.util.List;
 public class HelpWendaCommentActivity extends BaseActivity {
     private String answerid;
     private String commentCount = null;
-//    private String selectCommentId = null;
     private CommentItem selectedRegion;
     private MessageHandler messageHandler;
     private XListView groupListView;
@@ -129,7 +128,6 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 commentAdapter.clearSelected();
                 if (!selected) {
                     region.setSelected(!selected);
-                    //selectCommentId = region.getContentid();
                     selectedRegion = region;
                     et_reploy_comment.setHint("回复：" + region.getSourcename());
                 } else {
@@ -205,7 +203,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                             String praisecount = resp.getBody().getParttimejob().getCount();
                             messageHandler.postMessage(3, praisecount);
                         } else {
-                            messageHandler.postMessage(4, "取消赞失败");
+                            messageHandler.postMessage(1, "评论失败:" + resp.getResultMessage());
                         }
                     }
 
@@ -250,15 +248,17 @@ public class HelpWendaCommentActivity extends BaseActivity {
                 }
                 case 1: {
                     try {
+                        showToast(String.valueOf(msg.obj));
                     } finally {
                         actionLock.unlock();
                     }
+                    break;
                 }
                 case 3: {
+                    showToast((null == selectedRegion?"评论":"回复")+"成功");
                     actionLock.unlock();
-
+                    //保存评论数
                     commentCount = String.valueOf(msg.obj);
-
                     commentAdapter.clearSelected();
                     commentAdapter.notifyDataSetChanged();
                     selectedRegion = null;
@@ -266,12 +266,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                     et_reploy_comment.setHint("评论");
 
                     refresh();
-                }
-                case 4: {
-                    try {
-                    } finally {
-                        actionLock.unlock();
-                    }
+                    break;
                 }
                 default: {
                     super.handleMessage(msg);
@@ -305,7 +300,7 @@ public class HelpWendaCommentActivity extends BaseActivity {
                             }
                             messageHandler.postMessage(0, parttimejob_list);
                         } else {
-                            messageHandler.postMessage(1, result.getMessage());
+                            messageHandler.postMessage(1, "获取评论失败："+result.getMessage());
                         }
                     }
 

@@ -37,6 +37,7 @@ import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Requ
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob11.Partjob11Response;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob13.Partjob13Request;
 import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Request;
+import com.jingcai.apps.aizhuan.service.business.partjob.partjob37.Partjob37Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
@@ -203,12 +204,17 @@ public class IndexCampusFragment extends BaseFragment {
                     @Override
                     public void run() {
                         Partjob37Request req = new Partjob37Request(job.getHelpid(), UserSubject.getStudentid());
-                        azService.doTrans(req, BaseResponse.class, new AzService.Callback<BaseResponse>() {
+                        azService.doTrans(req, Partjob37Response.class, new AzService.Callback<Partjob37Response>() {
                             @Override
-                            public void success(BaseResponse resp) {
+                            public void success(Partjob37Response resp) {
                                 ResponseResult result = resp.getResult();
                                 if ("0".equals(result.getCode())) {
-                                    messageHandler.postMessage(11);//检查通过，显示确认对话框
+                                    Partjob37Response.Parttimejob job2 = resp.getBody().getParttimejob();
+                                    if ("0".equals(job2.getCode())) {
+                                        messageHandler.postMessage(11);//检查通过，显示确认对话框
+                                    } else {
+                                        messageHandler.postMessage(10, job2);
+                                    }
                                 } else {
                                     messageHandler.postMessage(9, "接单失败:" + resp.getResultMessage());
                                 }
@@ -228,7 +234,7 @@ public class IndexCampusFragment extends BaseFragment {
                 selectedJob = job;
                 Intent intent = new Intent(baseActivity, HelpWendaEditActivity.class);
                 intent.putExtra("helpid", job.getHelpid());
-                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
+                startActivityForResult(intent, REQUEST_CODE_ANSWER_EDIT);
             }
 
             //查看我的答案
@@ -237,7 +243,7 @@ public class IndexCampusFragment extends BaseFragment {
                 selectedJob = job;
                 Intent intent = new Intent(baseActivity, HelpWendaAnswerActivity.class);
                 intent.putExtra("answerid", job.getHelperid());
-                baseActivity.startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
+                startActivityForResult(intent, REQUEST_CODE_ANSWER_VIEW);
             }
 
             @Override
@@ -247,11 +253,11 @@ public class IndexCampusFragment extends BaseFragment {
                     Intent intent = new Intent(baseActivity, HelpJishiDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
                     intent.putExtra("type", job.getType());//1跑腿 还是 3公告
-                    baseActivity.startActivityForResult(intent, REQUEST_CODE_JISHI_DETAIL);
+                    startActivityForResult(intent, REQUEST_CODE_JISHI_DETAIL);
                 } else {
                     Intent intent = new Intent(baseActivity, HelpWendaDetailActivity.class);
                     intent.putExtra("helpid", job.getHelpid());
-                    baseActivity.startActivityForResult(intent, REQUEST_CODE_WENDA_DETAIL);
+                    startActivityForResult(intent, REQUEST_CODE_WENDA_DETAIL);
                 }
             }
         });
@@ -262,22 +268,46 @@ public class IndexCampusFragment extends BaseFragment {
         switch (requestCode) {
             case REQUEST_CODE_JISHI_DETAIL: {
                 if (Activity.RESULT_OK == resultCode) {
-                    //TODO 更新点赞、评论数量
+                    // 更新点赞、评论数量、状态
+                    String status = data.getStringExtra("status");
+                    String praiseid = data.getStringExtra("praiseid");
+                    String praiseflag = data.getStringExtra("praiseflag");
+                    String praisecount = data.getStringExtra("praisecount");
+                    String commentcount = data.getStringExtra("commentcount");
+                    selectedJob.setStatus(status);
+                    selectedJob.setPraiseid(praiseid);
+                    selectedJob.setPraiseflag(praiseflag);
+                    selectedJob.setPraisecount(praisecount);
+                    selectedJob.setCommentcount(commentcount);
+
+                    campusAdapter.notifyDataSetChanged();
                 }
                 break;
             }
             case REQUEST_CODE_WENDA_DETAIL: {
                 if (Activity.RESULT_OK == resultCode) {
-                    //TODO 更新点赞、评论数量、我的答案
+                    // 更新点赞、评论数量、我的答案
+                    String helpflag = data.getStringExtra("helpflag");
+                    String helperid = data.getStringExtra("helperid");
+                    String praiseflag = data.getStringExtra("praiseflag");
+                    String praiseid = data.getStringExtra("praiseid");
+                    String praisecount = data.getStringExtra("praisecount");
+                    String answercount = data.getStringExtra("answercount");
+                    selectedJob.setHelpflag(helpflag);
+                    selectedJob.setHelperid(helperid);
+                    selectedJob.setPraiseflag(praiseflag);
+                    selectedJob.setPraiseid(praiseid);
+                    selectedJob.setPraisecount(praisecount);
+                    selectedJob.setAnswercount(answercount);
+
+                    campusAdapter.notifyDataSetChanged();
                 }
                 break;
             }
             case REQUEST_CODE_ANSWER_EDIT: {
                 if (Activity.RESULT_OK == resultCode) {
-                    //TODO 撰写变为我的答案
+                    // 撰写变为我的答案
                     String answerid = data.getStringExtra("answerid");
-//                    String helpContent = data.getStringExtra("helpContent");
-//                    String anonFlag = data.getStringExtra("anonFlag");
                     selectedJob.setHelpflag("1");
                     selectedJob.setHelperid(answerid);
                     campusAdapter.notifyDataSetChanged();
@@ -286,7 +316,7 @@ public class IndexCampusFragment extends BaseFragment {
             }
             case REQUEST_CODE_ANSWER_VIEW: {
                 if (Activity.RESULT_OK == resultCode) {
-                    //TODO 更新点赞数量
+                    // 不做更新，修改的是答案的信息，跟帮助无直接关系
                 }
                 break;
             }
@@ -476,6 +506,17 @@ public class IndexCampusFragment extends BaseFragment {
                 case 9: {
                     try {
                         showToast(String.valueOf(msg.obj));
+                    } finally {
+                        actionLock.unlock();
+                    }
+                    break;
+                }
+                case 10: {
+                    try {
+                        Partjob37Response.Parttimejob job2 = (Partjob37Response.Parttimejob) msg.obj;
+                        selectedJob.setStatus(job2.getStatus());
+                        campusAdapter.notifyDataSetChanged();
+                        showToast("接单失败:" + job2.getDescription());
                     } finally {
                         actionLock.unlock();
                     }
