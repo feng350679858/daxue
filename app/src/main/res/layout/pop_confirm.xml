@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="确定"
-            android:textColor="@color/normal_grey"
+            android:textColor="@color/main_yellow"
             android:textSize="14sp"/>
 
         <Button
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="取消"
-            android:textColor="@color/normal_grey"
+            android:textColor="@color/main_yellow"
             android:textSize="14sp"/>
 
     </LinearLayout>

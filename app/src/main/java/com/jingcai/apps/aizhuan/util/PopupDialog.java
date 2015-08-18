@@ -282,9 +282,16 @@ public class PopupDialog {
         }
     }
 
+    public void show(int gravity) {
+        popupWindow.getWindow().setGravity(gravity);
+        popupWindow.show();
+    }
+
     public void show() {
         popupWindow.show();
     }
+
+
 
     public PopupDialog setAction(@IdRes int viewId, View.OnClickListener clickListener) {
         View view = findViewById(viewId);

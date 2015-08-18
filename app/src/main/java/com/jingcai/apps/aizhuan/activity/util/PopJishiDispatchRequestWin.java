@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ import com.jingcai.apps.aizhuan.service.business.stu.stu11.Stu11Response;
 import com.jingcai.apps.aizhuan.util.AzException;
 import com.jingcai.apps.aizhuan.util.AzExecutor;
 import com.jingcai.apps.aizhuan.util.BitmapUtil;
-import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.PopupDialog;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,7 +30,7 @@ public class PopJishiDispatchRequestWin {
     private final Activity baseActivity;
     private MessageHandler messageHandler;
     private BitmapUtil bitmapUtil = new BitmapUtil();
-    private PopupWin mPopWin;
+    private PopupDialog mPopWin;
     private TextView tv_title;
     private CircleImageView civ_head_logo;
     private TextView tv_stu_name;
@@ -50,7 +49,6 @@ public class PopJishiDispatchRequestWin {
 
     private void init() {
         View contentView = View.inflate(baseActivity, R.layout.pop_jishi_dispatch_request, null);
-        View parentView = baseActivity.getWindow().getDecorView();
 
         int w = 0;
         if(baseActivity instanceof BaseActivity){
@@ -61,11 +59,9 @@ public class PopJishiDispatchRequestWin {
             w = point.x * 80 / 100;
         }
 
-        mPopWin = PopupWin.Builder.create(baseActivity)
-                .setParentView(parentView)
+        mPopWin = PopupDialog.Builder.create(baseActivity)
                 .setContentView(contentView)
                 .setAnimstyle(0)
-//                .setFocusable(false)
                 .setWidth(w)
                 .build();
         tv_title = mPopWin.findTextViewById(R.id.tv_title);
@@ -164,7 +160,7 @@ public class PopJishiDispatchRequestWin {
                     Stu02Response.Stu02Body.Student student = (Stu02Response.Stu02Body.Student) msg.obj;
                     bitmapUtil.getImage(civ_head_logo, student.getLogopath(), true, R.drawable.default_head_img);
                     tv_stu_name.setText(student.getName());
-                    mPopWin.show(Gravity.CENTER, 0, 0);
+                    mPopWin.show();
                     break;
                 }
                 case 21: {

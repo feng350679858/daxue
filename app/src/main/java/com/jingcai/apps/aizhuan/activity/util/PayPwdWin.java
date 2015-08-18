@@ -2,11 +2,13 @@ package com.jingcai.apps.aizhuan.activity.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.mine.SafeCheckActivity;
+import com.jingcai.apps.aizhuan.util.PopupDialog;
 import com.jingcai.apps.aizhuan.util.PopupWin;
 
 /**
@@ -20,7 +22,7 @@ public class PayPwdWin {
     private View[] inputTextViewArr = new View[6];
     private Activity baseActivity;
     private StringBuilder mPayPsw = new StringBuilder();
-    private PopupWin mPopWin;
+    private PopupDialog mPopWin;
     private Callback callback;
 
     public PayPwdWin(Activity baseActivity) {
@@ -30,10 +32,8 @@ public class PayPwdWin {
 
     private void init() {
         View contentView = View.inflate(baseActivity, R.layout.pop_pay_psw, null);
-        View parentView = baseActivity.getWindow().getDecorView();
 
-        mPopWin = PopupWin.Builder.create(baseActivity)
-                .setParentView(parentView)
+        mPopWin = PopupDialog.Builder.create(baseActivity)
                 .setContentView(contentView)
 //                .setFocusable(false)
                 .build();
@@ -77,14 +77,14 @@ public class PayPwdWin {
     public void show() {
         setPwdOnly(true);
         clearAll();
-        mPopWin.show();
+        mPopWin.show(Gravity.BOTTOM);
     }
 
     public void showPay(double money) {
         setPwdOnly(false);
         ((TextView) mPopWin.findViewById(R.id.tv_pay_num)).setText(String.format("%.2f元",money));
         clearAll();
-        mPopWin.show();
+        mPopWin.show(Gravity.BOTTOM);
     }
 
     public void setCallback(Callback callback) {
