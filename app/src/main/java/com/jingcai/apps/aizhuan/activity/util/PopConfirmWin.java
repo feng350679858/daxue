@@ -2,20 +2,19 @@ package com.jingcai.apps.aizhuan.activity.util;
 
 import android.app.Activity;
 import android.graphics.Point;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
-import com.jingcai.apps.aizhuan.util.PopupWin;
+import com.jingcai.apps.aizhuan.util.PopupDialog;
 
 /**
  * Created by lejing on 15/8/15.
  */
 public class PopConfirmWin {
     private final Activity activity;
-    private PopupWin win;
+    private PopupDialog win;
 
     public PopConfirmWin(Activity activity) {
         this.activity = activity;
@@ -24,7 +23,6 @@ public class PopConfirmWin {
 
     private void init() {
         //显示立即帮助确认对话框
-        View parentView = activity.getWindow().getDecorView();
         int screen_width = 0;
         if (activity instanceof BaseActivity) {
             screen_width = ((BaseActivity) activity).getScreenWidth();
@@ -33,11 +31,10 @@ public class PopConfirmWin {
             activity.getWindowManager().getDefaultDisplay().getSize(point);
             screen_width = point.x;
         }
-        win = PopupWin.Builder.create(activity)
+        win = PopupDialog.Builder.create(activity)
                 .setWidth((int) (screen_width * 0.8))
                 .setAnimstyle(R.anim.dialog_appear)
                 .setContentViewLayout(R.layout.pop_confirm)
-                .setParentView(parentView)
                 .build();
 
         setCancelAction(new View.OnClickListener() {
@@ -97,7 +94,7 @@ public class PopConfirmWin {
     }
 
     public void show() {
-        win.show(Gravity.CENTER, 0, 0);
+        win.show();
     }
 
     public void dismiss() {

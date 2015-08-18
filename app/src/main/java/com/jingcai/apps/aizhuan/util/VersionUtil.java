@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jingcai.apps.aizhuan.R;
+import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -110,11 +112,23 @@ public class VersionUtil {
 
     private void showDownloadingDialog() {
         if (null == popupDialog) {
-            popupDialog = new PopupDialog(activity, R.layout.sys_setting_update, false, false);
+            int screen_width = 0;
+            if (activity instanceof BaseActivity) {
+                screen_width = ((BaseActivity) activity).getScreenWidth();
+            } else {
+                Point point = new Point();
+                activity.getWindowManager().getDefaultDisplay().getSize(point);
+                screen_width = point.x;
+            }
+            popupDialog = PopupDialog.Builder.create(activity)
+                    .setWidth((int) (screen_width * 0.8))
+                    .setAnimstyle(R.anim.dialog_appear)
+                    .setContentViewLayout(R.layout.sys_setting_update)
+                    .build();
             popupDialog.setAction(R.id.btn_cancel, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(null != downLoadApkTaskTask){
+                    if (null != downLoadApkTaskTask) {
                         downLoadApkTaskTask.cancel(true);
                     }
                     popupDialog.dismiss();
@@ -311,7 +325,7 @@ public class VersionUtil {
                 int count;
                 downloadingSize = 0;
                 while ((count = in.read(bytes)) != -1) {
-                    if (isCancelled()){
+                    if (isCancelled()) {
                         downloadingSize = -1;
                         break;
                     }
@@ -346,7 +360,7 @@ public class VersionUtil {
         protected void onPostExecute(Integer s) {
             try {
                 //取消下载
-                if(downloadingSize < 0) {
+                if (downloadingSize < 0) {
                     return;
                 }
                 downloadingSize = -1;
