@@ -2,19 +2,15 @@ package com.jingcai.apps.aizhuan.activity.partjob;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -145,8 +141,10 @@ public class PartjobSearchActivity extends BaseActivity {
                         int index = pref.getInt(Preferences.Partjob.SEARCH_INDEX, 0);
                         pref.update(Preferences.Partjob.SEARCH_KEY_PREFIX + index, mSearchKey);
                         pref.update(Preferences.Partjob.SEARCH_INDEX, ++index);
+                        ll_index_pj_search_history.setVisibility(View.GONE);
                         hideInputMethodDialog(PartjobSearchActivity.this);
                         doReSearch();
+                        mTxtSearchKey.clearFocus();
                     }
                     if (mDrawer.isOpened()) {
                         mDrawer.animateClose();
