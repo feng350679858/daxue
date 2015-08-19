@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -40,7 +40,7 @@ public class MineAccountActivity extends BaseActivity {
     private TextView mTvBalance;
     private TextView mTvFreeze;
 
-    private IOSPopWin mTipWin;
+    private PopConfirmWin popConfirmWin;
 
 
     @Override
@@ -49,7 +49,6 @@ public class MineAccountActivity extends BaseActivity {
         setContentView(R.layout.mine_gold_index);
         azService = new AzService(this);
         messageHandler = new MessageHandler(this);
-        mTipWin = new IOSPopWin(this);
         initHeader();
         initView();
     }
@@ -84,7 +83,25 @@ public class MineAccountActivity extends BaseActivity {
         switch (idnoauthflag){
             case "0":
                 tip = getString(R.string.gold_withdraw_validate_identity_not_pass);
-                mTipWin.showWindow("身份验证",tip,"下次再说","去吧去吧");
+                popConfirmWin = new PopConfirmWin(MineAccountActivity.this);
+                popConfirmWin.setTitle("身份验证");
+                popConfirmWin.setContent(tip);
+                popConfirmWin.setCancelAction("下次再说", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popConfirmWin.dismiss();
+                    }
+                });
+                popConfirmWin.setOkAction("去吧去吧", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MineAccountActivity.this, IdentityAuthenticationActivity.class);
+                        startActivity(intent);
+                        popConfirmWin.dismiss();
+                        finish();
+                    }
+                });
+                popConfirmWin.show();
                 break;
             case "1":
                 Intent intent = new Intent(MineAccountActivity.this, MineGoldWithdrawActivity.class);
@@ -92,7 +109,16 @@ public class MineAccountActivity extends BaseActivity {
                 break;
             case "2":
                 tip = getString(R.string.gold_withdraw_validate_identity_wait);
-                mTipWin.showWindow("身份验证", tip,"我知道了");
+                popConfirmWin = new PopConfirmWin(MineAccountActivity.this);
+                popConfirmWin.setTitle("身份验证")
+                        .setContent(tip).setCancelAction(null)
+                        .setOkAction("我知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popConfirmWin.dismiss();
+                    }
+                });
+                popConfirmWin.show();
                 break;
         }
     }
@@ -145,21 +171,6 @@ public class MineAccountActivity extends BaseActivity {
         findViewById(R.id.rl_manage_financial_account).setOnClickListener(activityChangeListener);
         findViewById(R.id.btn_mine_gold_account_withdraw).setOnClickListener(activityChangeListener);
         findViewById(R.id.btn_mine_gold_account_topup).setOnClickListener(activityChangeListener);
-
-        mTipWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                Intent intent = new Intent(MineAccountActivity.this, IdentityAuthenticationActivity.class);
-                startActivity(intent);
-                mTipWin.dismiss();
-                finish();
-            }
-        });
     }
 
     private void initData() {

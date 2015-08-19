@@ -26,6 +26,8 @@ import com.jingcai.apps.aizhuan.persistence.Preferences;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Request;
+import com.jingcai.apps.aizhuan.service.business.stu.stu02.Stu02Response;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Request;
 import com.jingcai.apps.aizhuan.service.business.sys.sys04.Sys04Response;
 import com.jingcai.apps.aizhuan.util.AzException;
@@ -62,8 +64,42 @@ public class WelcomeActivity extends BaseActivity { //implements AnimationListen
         } else {
             latch = new CountDownLatch(2);
             playAnimator();
+            if(UserSubject.isLogin()){
+                updateStudentInfo();
+            }
+
         }
         autoLogin();
+    }
+
+    private void updateStudentInfo() {
+        azExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Stu02Request req = new Stu02Request();
+                final Stu02Request.Student stu = req.new Student();
+                stu.setStudentid(UserSubject.getStudentid());
+                req.setStudent(stu);
+                azService.doTrans(req, Stu02Response.class, new AzService.Callback<Stu02Response>() {
+                    @Override
+                    public void success(Stu02Response response) {
+                        ResponseResult result = response.getResult();
+                        if("0".equals(result.getCode())){
+                            Stu02Response.Stu02Body stu02Body = response.getBody();
+                            Stu02Response.Stu02Body.Student student = stu02Body.getStudent();
+                            student.setStudentid(UserSubject.getStudentid());
+                            student.setPassword(UserSubject.getPassword());
+                            UserSubject.loginSuccess(student);
+                        }
+                    }
+
+                    @Override
+                    public void fail(AzException e) {
+                        messageHandler.postException(e);
+                    }
+                });
+            }
+        });
     }
 
     private void initViews() {

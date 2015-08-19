@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.index.IndexBannerDetailActivity;
-import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.persistence.GlobalConstant;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -43,7 +44,7 @@ public class BindAlipayActivity extends BaseActivity {
     private Account04Response.Account04Body.Bank mBank;
     private MessageHandler messageHandler;
 
-    private IOSPopWin mConfirmWin;
+    private PopConfirmWin popConfirmWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,8 @@ public class BindAlipayActivity extends BaseActivity {
         setContentView(R.layout.mine_gold_account_add_alipay);
         messageHandler = new MessageHandler(this);
         mBank = (Account04Response.Account04Body.Bank) LocalValUtil.getVal();
-        mConfirmWin = new IOSPopWin(this);
 
         initHeader();
-
         initView();
     }
 
@@ -63,7 +62,7 @@ public class BindAlipayActivity extends BaseActivity {
         mEtPhone = (EditText) findViewById(R.id.et_account_add_alipay_phone);
         mEtName = (EditText) findViewById(R.id.et_account_add_alipay_name);
         mCbTerms = (CheckBox) findViewById(R.id.cb_account_add_alipay_terms);
-        mBtnBind = (Button)findViewById(R.id.btn_gold_account_add_alipay_bind) ;
+        mBtnBind = (Button) findViewById(R.id.btn_gold_account_add_alipay_bind);
         mEtName.setText(UserSubject.getName());
         mEtName.setEnabled(false);
 
@@ -71,8 +70,8 @@ public class BindAlipayActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BindAlipayActivity.this, IndexBannerDetailActivity.class);
-                intent.putExtra("title","金融服务协议");
-                intent.putExtra("url", GlobalConstant.h5Url+"/jrfuxy.html");
+                intent.putExtra("title", "金融服务协议");
+                intent.putExtra("url", GlobalConstant.h5Url + "/jrfuxy.html");
                 startActivity(intent);
             }
         });
@@ -82,41 +81,55 @@ public class BindAlipayActivity extends BaseActivity {
             public void onClick(View v) {
                 if (checkAndInitDialog()) {
                     String content = "账号：" + mEtPhone.getText().toString() + "\n姓名：" + mEtName.getText().toString();
-                    mConfirmWin.showWindow("绑定账号", content, "取消", "确定");
-                    mConfirmWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
-                        @Override
-                        public void onCancel() {
-
-                        }
-
-                        @Override
-                        public void onConfirm() {
-                            bindAccount();
-                            mConfirmWin.dismiss();
-                        }
-                    });
+                    if (null == popConfirmWin) {
+                        popConfirmWin = new PopConfirmWin(BindAlipayActivity.this);
+                        popConfirmWin.setContent(content);
+                        popConfirmWin.setTitle("绑定账号");
+                        popConfirmWin.setCancelAction(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popConfirmWin.dismiss();
+                            }
+                        });
+                        popConfirmWin.setOkAction(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                bindAccount();
+                                popConfirmWin.dismiss();
+                            }
+                        });
+                    }
+                    popConfirmWin.show();
                 }
             }
         });
 
         mEtPhone.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mCbTerms.isChecked() && s.length()==11){
-                    mBtnBind.setEnabled(true);
-                    mBtnBind.setTextColor(getResources().getColor(R.color.important_dark));
-                }else{
-                    mBtnBind.setEnabled(false);
-                    mBtnBind.setTextColor(getResources().getColor(R.color.assist_grey));
-                }
+                enableButton(mCbTerms.isChecked() && s.length() == 11);
             }
         });
+
+        mCbTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                enableButton(mEtPhone.length() == 11 && isChecked);
+            }
+        });
+    }
+
+    private void enableButton(boolean enable) {
+        mBtnBind.setEnabled(enable);
+        mBtnBind.setTextColor(getResources().getColor(enable ? R.color.important_dark : R.color.assist_grey));
     }
 
     /**
@@ -145,9 +158,9 @@ public class BindAlipayActivity extends BaseActivity {
                     @Override
                     public void success(Account06Response resp) {
                         ResponseResult result = resp.getResult();
-                        if(!"0".equals(result.getCode())){
-                            messageHandler.postMessage(1,result.getMessage());
-                        }else{
+                        if (!"0".equals(result.getCode())) {
+                            messageHandler.postMessage(1, result.getMessage());
+                        } else {
                             messageHandler.postMessage(0);
                         }
                     }
@@ -165,16 +178,16 @@ public class BindAlipayActivity extends BaseActivity {
         String phone = mEtPhone.getText().toString();
         String name = mEtName.getText().toString();
 
-        if(!mCbTerms.isChecked()){
+        if (!mCbTerms.isChecked()) {
             return false;
         }
 
-        if(!StringUtil.isNumber(phone)
-                || phone.length() != 11){
+        if (!StringUtil.isNumber(phone)
+                || phone.length() != 11) {
             showToast("手机号码格式不正确");
             return false;
         }
-        if(StringUtil.isEmpty(name)){
+        if (StringUtil.isEmpty(name)) {
             showToast("姓名不可为空");
             return false;
         }
@@ -182,7 +195,7 @@ public class BindAlipayActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        ((TextView)findViewById(R.id.tv_content)).setText("绑定账号");
+        ((TextView) findViewById(R.id.tv_content)).setText("绑定账号");
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +221,7 @@ public class BindAlipayActivity extends BaseActivity {
                 }
                 case 1: {
                     showToast("绑定失败");
-                    Log.w(TAG,"绑定失败：" + msg.obj);
+                    Log.w(TAG, "绑定失败：" + msg.obj);
                     break;
                 }
                 default:

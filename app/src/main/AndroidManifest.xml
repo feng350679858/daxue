@@ -229,6 +229,40 @@
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
+        <!-- *************************    分享相关的注册 START **************************** -->
+        <!-- 分享内容编辑页 android:theme="@style/Theme.UMDialog"-->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+        <!-- 腾讯SSO授权的Activity注册 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信回调activity -->
+        <activity
+            android:name="com.jingcai.apps.aizhuan.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- *************************    分享相关的注册 END **************************** -->
+
         <!-- meta-data -->
         <meta-data android:name="SECRET_KEY" android:value="123" />
         <meta-data android:name="EASEMOB_APPKEY" android:value="lee513579#izhuanc2ctest" />
@@ -238,9 +272,15 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="203cf5c6a5b762b4d5ff6349" />
         <meta-data android:name="JPUSH_CHANNEL" android:value="A000" />
 
+        <!-- 554b076567e58e474e003a93 -->
+        <meta-data android:name="UMENG_APPKEY" android:value="554b076567e58e474e003a93"/>
+        <meta-data android:name="UMENG_CHANNEL" android:value="A000"/>
+        <!--<meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL_NAME}" />-->
+
         <!-- 百度定位 -->
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
         <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="m9gCeRhDNDDofELWPoaxQ2zL" />
+
     </application>
 
 </manifest>

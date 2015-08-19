@@ -11,10 +11,53 @@ android {
         versionCode 1
         versionName "2.0"
     }
+    signingConfigs {
+        release {
+            storeFile file('../aizhuan_android.jks')
+            keyAlias 'izhuan'
+            storePassword 'izhuan365'
+            keyPassword 'izhuan365.com'
+//			storePassword System.getenv("STORE_PASSWORD")
+//			keyPassword System.getenv("KEY_PASSWORD")
+//			storePassword System.console().readLine("\n\$ Enter keystore password: ")
+//			keyPassword System.console().readLine("\n\$ Enter key password: ")
+        }
+        debug {
+            storeFile file('../debug.keystore')
+            keyAlias 'androiddebugkey'
+            storePassword 'android'
+            keyPassword 'android'
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为boohee_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "Dalegexue_v${defaultConfig.versionName}_${new Date().format('yyyy-MM-dd')}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+        debug{
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
         }
     }
     sourceSets {
@@ -22,7 +65,20 @@ android {
             jniLibs.srcDirs = ['jniLibs']
         }
     }
+
+
+    productFlavors {
+        xiaomi {}
+        _360 {}
+        baidu {}
+        wandoujia {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

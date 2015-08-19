@@ -28,8 +28,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                style="@style/title" />
 
             <ImageView
                 android:layout_width="wrap_content"

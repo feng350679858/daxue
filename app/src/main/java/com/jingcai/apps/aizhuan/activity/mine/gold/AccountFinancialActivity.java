@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.jingcai.apps.aizhuan.R;
 import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
-import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.adapter.mine.gold.AccountBankListAdapter;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
@@ -34,14 +34,13 @@ public class AccountFinancialActivity extends BaseActivity implements AccountBan
     private AccountBankListAdapter mListAdapter;
     private MessageHandler messageHandler;
 
-    private IOSPopWin mConfirmWin;
+    private PopConfirmWin popConfirmWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_gold_account_financial);
         messageHandler = new MessageHandler(this);
-        mConfirmWin = new IOSPopWin(this);
 
         initHeader();
         initView();
@@ -105,19 +104,25 @@ public class AccountFinancialActivity extends BaseActivity implements AccountBan
 
     @Override
     public void OnSwipeListButtonClick(final int position, View view) {
-        mConfirmWin.showWindow("提示", "确定要删除此账号？", "下次再说", "解解解");
-        mConfirmWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onConfirm() {
-                unBindAccount(((Account04Response.Account04Body.Bank) mListAdapter.getItem(position)));
-                mConfirmWin.dismiss();
-            }
-        });
+        if(null == popConfirmWin){
+            popConfirmWin = new PopConfirmWin(AccountFinancialActivity.this);
+            popConfirmWin.setTitle("提示");
+            popConfirmWin.setContent("确定要删除此账号？");
+            popConfirmWin.setOkAction("解解解", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    unBindAccount(((Account04Response.Account04Body.Bank) mListAdapter.getItem(position)));
+                    popConfirmWin.dismiss();
+                }
+            });
+            popConfirmWin.setCancelAction("下次再说", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popConfirmWin.dismiss();
+                }
+            });
+        }
+        popConfirmWin.show();
     }
 
     /**

@@ -129,7 +129,7 @@ public class ComplainActivity extends BaseActivity {
             closeProcessDialog();
             switch (msg.what){
                 case 0:{
-                    showToast("投诉信息提交成功！");
+                    showToast("投诉信息提交成功");
                     finish();
                     break;
                 }

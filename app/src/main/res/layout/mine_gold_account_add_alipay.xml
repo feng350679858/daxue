@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="账号"
                 android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_account_add_alipay_phone"
@@ -49,11 +49,11 @@
                 android:hint="手机号码"
                 android:paddingLeft="10dp"
                 android:lines="1"
-                android:textColorHint="@color/assist_grey"
+                android:textColorHint="@color/hint_grey"
                 android:textColor="@color/important_dark"
                 android:maxLength="11"
                 android:inputType="phone"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="姓名"
                 android:textColor="@color/important_dark"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_account_add_alipay_name"
@@ -89,9 +89,9 @@
                 android:lines="1"
                 android:hint="支付宝所关联姓名"
                 android:textColor="@color/normal_grey"
-                android:textColorHint="@color/assist_grey"
+                android:textColorHint="@color/hint_grey"
                 android:paddingLeft="10dp"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
      <LinearLayout
@@ -125,14 +125,11 @@
     <Button
         android:id="@+id/btn_gold_account_add_alipay_bind"
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/btn_yellow_boarded_bg_selector"
         android:text="确认绑定"
-        android:textColor="@color/important_dark"
-        android:textSize="18sp" />
+        android:enabled="false"
+        android:textColor="@color/assist_grey"
+        android:textSize="16sp" />
 </LinearLayout>
