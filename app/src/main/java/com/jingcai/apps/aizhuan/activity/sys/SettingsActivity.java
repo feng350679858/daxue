@@ -78,7 +78,7 @@ public class SettingsActivity extends BaseActivity {
 
     private void initShareConfig() {
         umengShareUtil = new UmengShareUtil(SettingsActivity.this);
-        umengShareUtil.setShareContent("爱赚万岁", "兼职必备神器，你难道还没用？", "http://www.izhuan365.com");
+        umengShareUtil.setShareContent("大了个学", "大了个学，让你的校园生活更菁彩", "http://www.izhuan365.com");
     }
 
     private void initInvite() {
@@ -93,14 +93,15 @@ public class SettingsActivity extends BaseActivity {
     private void initLogout() {
         findViewById(R.id.btn_sys_setting_logout).setOnClickListener(new View.OnClickListener() {
             PopupWin dialog;
+
             @Override
             public void onClick(View v) {
-                if(mInflater == null){
+                if (mInflater == null) {
                     mInflater = LayoutInflater.from(SettingsActivity.this);
                 }
-                View contentView = mInflater.inflate(R.layout.sys_comfirm_logout_dialog,null);
+                View contentView = mInflater.inflate(R.layout.sys_comfirm_logout_dialog, null);
                 View decorView = SettingsActivity.this.getWindow().getDecorView();
-                if(dialog == null) {
+                if (dialog == null) {
                     dialog = PopupWin.Builder.create(SettingsActivity.this)
                             .setParentView(decorView)
                             .setContentView(contentView)
@@ -167,8 +168,8 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.ll_sys_setting_modify_psw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  Intent intent = new Intent(SettingsActivity.this,ModifyPswActivity.class);
-                 startActivity(intent);
+                Intent intent = new Intent(SettingsActivity.this, ModifyPswActivity.class);
+                startActivity(intent);
             }
         });
     }
