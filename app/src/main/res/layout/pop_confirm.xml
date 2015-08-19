@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:text=""
+        android:text="asdf"
         android:textColor="@color/important_dark"
         android:textSize="16sp"
         android:visibility="gone"/>
@@ -24,10 +23,9 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:lineSpacingMultiplier="1.5"
-        android:padding="10dp"
+        android:padding="20dp"
         android:text="为了促进平台的健康发展并保证用户双方的安全，我们需要对帮助者进行学生信息认证，还请见谅"
         android:textColor="@color/normal_grey"
         android:textSize="14sp"/>
@@ -50,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="@drawable/btn_white_left_bottom_radius_bg"
             android:text="确定"
             android:textColor="@color/main_yellow"
             android:textSize="14sp"/>
@@ -60,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="@drawable/btn_white_right_bottom_radius_bg"
             android:text="取消"
             android:textColor="@color/main_yellow"
             android:textSize="14sp"/>

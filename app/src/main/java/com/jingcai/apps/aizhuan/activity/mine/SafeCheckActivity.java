@@ -18,7 +18,7 @@ import com.jingcai.apps.aizhuan.activity.base.BaseActivity;
 import com.jingcai.apps.aizhuan.activity.common.BaseHandler;
 import com.jingcai.apps.aizhuan.activity.mine.gold.IdentityAuthenticationActivity;
 import com.jingcai.apps.aizhuan.activity.mine.gold.MineResetPayPasswordActivity;
-import com.jingcai.apps.aizhuan.activity.util.IOSPopWin;
+import com.jingcai.apps.aizhuan.activity.util.PopConfirmWin;
 import com.jingcai.apps.aizhuan.persistence.UserSubject;
 import com.jingcai.apps.aizhuan.service.AzService;
 import com.jingcai.apps.aizhuan.service.base.ResponseResult;
@@ -36,13 +36,12 @@ public class SafeCheckActivity extends BaseActivity {
     private EditText mEtIdno;
     private Button next;
 
-    private IOSPopWin mTipWin;
+    private PopConfirmWin popConfirmWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_resetpaypsw2);
-        mTipWin = new IOSPopWin(this);
         messageHandler = new MessageHandler(this);
 
 
@@ -63,11 +62,39 @@ public class SafeCheckActivity extends BaseActivity {
         switch (idnoauthflag) {
             case "0":
                 tip = getString(R.string.gold_modify_pay_psw_validate_identity_not_pass);
-                mTipWin.showWindow("身份验证", tip, "下次再说", "去吧去吧");
+                if (null == popConfirmWin) {
+                    popConfirmWin = new PopConfirmWin(SafeCheckActivity.this);
+                    popConfirmWin.setTitle("身份验证").setContent(tip).setCancelAction("下次再说", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popConfirmWin.dismiss();
+                        }
+                    }).setOkAction("去吧去吧", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(SafeCheckActivity.this, IdentityAuthenticationActivity.class);
+                            startActivity(intent);
+                            popConfirmWin.dismiss();
+                            finish();
+                        }
+                    });
+                }
+                popConfirmWin.show();
                 break;
             case "2":
                 tip = getString(R.string.gold_withdraw_validate_identity_wait);
-                mTipWin.showWindow("身份验证", tip, "我知道了");
+                popConfirmWin = new PopConfirmWin(SafeCheckActivity.this);
+                popConfirmWin.setTitle("身份验证")
+                        .setContent(tip)
+                        .setCancelAction(null)
+                        .setOkAction("我知道了", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                finish();
+                            }
+                        });
+
+                popConfirmWin.show();
                 break;
         }
     }
@@ -112,21 +139,6 @@ public class SafeCheckActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 check();
-            }
-        });
-
-        mTipWin.setButtonClickListener(new IOSPopWin.ButtonClickListener() {
-            @Override
-            public void onCancel() {
-                SafeCheckActivity.this.finish();
-            }
-
-            @Override
-            public void onConfirm() {
-                Intent intent = new Intent(SafeCheckActivity.this, IdentityAuthenticationActivity.class);
-                startActivity(intent);
-                mTipWin.dismiss();
-                finish();
             }
         });
     }

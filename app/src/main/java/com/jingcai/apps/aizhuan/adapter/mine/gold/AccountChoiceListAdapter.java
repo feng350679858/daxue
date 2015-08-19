@@ -81,7 +81,7 @@ public class AccountChoiceListAdapter extends BaseAdapter {
         }
 
         Account04Response.Account04Body.Bank bank = mBankList.get(position);
-        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(), R.drawable.ic_launcher);
+        mBitmapUtil.getImage(viewHolder.iv_logo, bank.getImgurl(), R.drawable.default_image);
         viewHolder.tv_title.setText(bank.getName());
         String cardno = bank.getCardno();
         if (cardno != null) {

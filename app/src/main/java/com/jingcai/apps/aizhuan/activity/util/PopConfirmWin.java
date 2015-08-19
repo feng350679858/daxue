@@ -49,6 +49,8 @@ public class PopConfirmWin {
     public PopConfirmWin setTitle(String txt) {
         if (null == txt || txt.length() < 1) {
             win.findTextViewById(R.id.tv_title).setVisibility(View.GONE);
+        }else{
+            win.findTextViewById(R.id.tv_title).setVisibility(View.VISIBLE);
         }
         win.findTextViewById(R.id.tv_title).setText(txt);
         return this;
@@ -66,6 +68,7 @@ public class PopConfirmWin {
     public PopConfirmWin setOkAction(String txt, View.OnClickListener listener) {
         Button btn = win.findButtonById(R.id.btn_confirm);
         if (null == listener) {
+            win.findButtonById(R.id.btn_cancel).setBackgroundResource(R.drawable.btn_white_bottom_radius_bg);
             btn.setVisibility(View.GONE);
             return this;
         }
@@ -82,6 +85,7 @@ public class PopConfirmWin {
         Button btn = win.findButtonById(R.id.btn_cancel);
         if (null == listener) {
             btn.setVisibility(View.GONE);
+            win.findButtonById(R.id.btn_confirm).setBackgroundResource(R.drawable.btn_white_bottom_radius_bg);
             return this;
         }
         btn.setText(txt);

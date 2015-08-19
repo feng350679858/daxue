@@ -370,7 +370,6 @@ public class MessageConversationActivity extends BaseActivity{
      * @param count
      */
     private void initPagerIndicator(final int count) {
-//        addIndicatorView(count,0);
 
         //改变indicator
         mVpEmotion.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
