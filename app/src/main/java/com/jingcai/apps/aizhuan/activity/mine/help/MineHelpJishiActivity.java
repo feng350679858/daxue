@@ -668,27 +668,27 @@ public class MineHelpJishiActivity extends BaseActivity {
     private final static String[] processStr2_2 = new String[]{"已发布", "已超时"};
 
     private final static String[] processStr3 = new String[]{"帮助中", "已帮助", "已结算"};
-    private final static String[] processStr2_3 = new String[]{"帮助中", "取消中"};
+    private final static String[] processStr2_3 = new String[]{"帮助中", "取消中", "已取消"};
     private final static String[] processStr2_4 = new String[]{"帮助中", "已取消"};
 
     private final static Map<String, Tip> tipMap = new HashMap<String, Tip>() {{
-        put("provide1", new Tip("求助中，等待接单", null, false, 4, 1, processStr4_1));
-        put("provide2", new Tip("帮助中，等待完成", "对方玩命帮助中", false, 4, 2, processStr4_1));
-        put("provide3", new Tip("取消中，等待确认", null, false, 4, 3, processStr4_2));
-        put("provide4", new Tip("已取消，求助结束", "谢谢使用", true, 2, 2, processStr2_1));
-        put("provide5", new Tip("已帮助，等待结算", null, false, 4, 3, processStr4_1));
-        put("provide6", new Tip("已结算，立即评价", "赶快评价一下吧", true, 4, 4, processStr4_1));
-        put("provide7", new Tip("已超时，求助结束", "谢谢使用", true, 2, 2, processStr2_2));
-        put("provide99", new Tip("已评价，帮助完成", "谢谢使用", true, 4, 4, processStr4_1));
+        put("provide1", new Tip("求助中，等待接单", null, 4, 1, processStr4_1));
+        put("provide2", new Tip("帮助中，等待完成", "对方玩命帮助中", 4, 2, processStr4_1));
+        put("provide3", new Tip("取消中，等待确认", null, 4, 3, processStr4_2));
+        put("provide4", new Tip("已取消，求助结束", "谢谢使用", 2, 2, processStr2_1));
+        put("provide5", new Tip("已帮助，等待结算", null, 4, 3, processStr4_1));
+        put("provide6", new Tip("已结算，立即评价", "赶快评价一下吧", 4, 4, processStr4_1));
+        put("provide7", new Tip("已超时，求助结束", "谢谢使用", 2, 2, processStr2_2));
+        put("provide99", new Tip("已评价，帮助完成", "谢谢使用", 4, 4, processStr4_1));
 
-        //put("receive1", new Tip("求助中，等待接单", null, false));
-        put("receive2", new Tip("帮助中，等待完成", "对方玩命帮助中", false, 3, 1, processStr3));
-        put("receive3", new Tip("取消中，等待确认", null, false, 2, 2, processStr2_3));
-        put("receive4", new Tip("已取消，求助结束", "谢谢使用", true, 2, 2, processStr2_4));
-        put("receive5", new Tip("已帮助，等待结算", null, false, 3, 2, processStr3));
-        put("receive6", new Tip("已结算，立即评价", "赶快评价一下吧", true, 3, 3, processStr3));
-        //put("receive7", new Tip("已超时，求助结束", "谢谢使用", true));
-        put("receive99", new Tip("已评价，帮助完成", "谢谢使用", true, 3, 3, processStr3));
+        //put("receive1", new Tip("求助中，等待接单", null));
+        put("receive2", new Tip("帮助中，等待完成", "对方玩命帮助中", 3, 1, processStr3));
+        put("receive3", new Tip("取消中，等待确认", null, 3, 2, processStr2_3));
+        put("receive4", new Tip("已取消，求助结束", "谢谢使用", 2, 2, processStr2_4));
+        put("receive5", new Tip("已帮助，等待结算", null, 3, 2, processStr3));
+        put("receive6", new Tip("已结算，立即评价", "赶快评价一下吧", 3, 3, processStr3));
+        //put("receive7", new Tip("已超时，求助结束", "谢谢使用"));
+        put("receive99", new Tip("已评价，帮助完成", "谢谢使用", 3, 3, processStr3));
     }};
 
     private static class Tip {
@@ -699,13 +699,13 @@ public class MineHelpJishiActivity extends BaseActivity {
         int selectCount;
         String[] strs;
 
-        public Tip(String a, String b, boolean over, int nodeCount, int selectCount, String[] strs) {
+        public Tip(String a, String b, int nodeCount, int selectCount, String[] strs) {
             this.tip = a;
             this.subtip = b;
-            this.over = over;
             this.nodeCount = nodeCount;
             this.selectCount = selectCount;
             this.strs = strs;
+            this.over = nodeCount == selectCount;
         }
     }
 
