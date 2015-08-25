@@ -51,9 +51,7 @@ public class MineHelpProcessUtil {
             status_name_arr[i].setText(label[i]);
             if(i<selectCount) {
                 status_node_arr2[i].setChecked(true);
-                if(i - 1 >=0) {
-                    status_line_arr[i - 1].setChecked(true);
-                }
+                status_line_arr[i].setChecked(true);
             }
         }
         //设置最后一个状态名称
